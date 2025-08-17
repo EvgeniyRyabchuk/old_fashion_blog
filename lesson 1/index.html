@@ -1,0 +1,149 @@
+<!DOCTYPE html> <!-- версию html 5-->
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"> <!-- кодировка -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- сообщить браузеру что мы делаем сайт в том числе и для телефонов  -->
+        <title>Main page</title> <!-- заголовок вкладки  -->
+
+  <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-storage-compat.js"></script>
+   
+
+    </head>
+    <!-- отображаеться все что пользователь видет на странице -->
+    <body>
+           
+      <nav>
+         <ul>
+               <li><a href="./index.html">Home</a></li>
+
+               <li>
+                  <a href="./page2.html">Posts</a>
+                  <ul>
+                     <li><a href="./posts.html">All posts</a></li>
+                     <li><a href="./posts.html">News</a></li> 
+                     <li><a href="./posts.html">Guide</a></li> 
+                  </ul>
+              
+               </li>
+               <li><a href="./galerry.html">Gallery</a></li>
+               <li><a href="./about.html">About</a></li>
+               <li><a href="./contact.html">Contact</a></li>
+
+               <br/>
+               <hr/>
+               <br/>
+               <li><a href="./contact.html">Sign in</a></li>
+
+               <li>
+                  <a href="./contact.html">
+                     Profile
+                  </a>
+                  <ul>
+                     <li><a href="./contact.html">My posts</a></li>
+                     <li><a href="./profile/setting.html">Settings</a></li>
+                     <li><a href="./profile/comments.html">Comments</a></li>   
+                     <li>Logout</li>
+                  </ul>
+               </li>
+         </ul>
+         <br/>
+      </nav>
+
+        <!-- блочный tag -->
+        <div style="background-color: red; height: 17px;"> 
+            
+        </div>
+
+        <div style="background-color: lightcoral; height: 500px         ;">
+            
+        </div>
+
+        <!-- строчный tag -->
+         <br>
+
+         <span>
+            Lorem <strong>ipsum</strong> dolor sit amet consectetur adipisicing elit. 
+            Nemo labore nobis dicta reiciendis, molestias incidunt nam, esse 
+            soluta nisi assumenda tempora! Officia, quos
+             minus? Adipisci voluptas vitae nam praesentium velit!
+         </span>
+
+
+
+         ertert
+         <br>
+         <br>
+         dfgdfg
+
+          <span>
+            2
+         </span>
+
+         <p>
+            Lorem ipsum dolor sit amet consectetur 
+            adipisicing elit. Dolore dicta sit quibusdam
+            ipsum necessitatibus totam ratione deleniti, laborum doloremque!
+            Eum veniam nam nisi aliquam esse dolorem nesciunt saepe nemo aut!
+         </p>
+
+         <hr>
+
+         <!-- link -->
+         <a href="./page2.html">
+            Go to page 2
+         </a>
+         
+         <br><br><br>
+
+         <em>
+            123
+         </em>
+
+         <i>
+            123
+         </i>
+         <mark >
+            123
+         </mark>
+         
+
+         <code>
+            let a = 10; 
+            <pre><code>
+function hello() {
+  console.log("Привет, мир!");
+}
+</code></pre>
+         </code>
+
+
+         <blockquote>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure, explicabo.
+            Magnam soluta exercitationem repudiandae mollitia consequatur porro eveniet fuga fugit.
+            Quam alias, aut consequatur et at est quisquam itaque fugiat.
+         </blockquote>
+
+         <abbr title="HyperText Markup Language">HTML</abbr>
+         <address>Контактная информация</address>
+
+
+         <abbr title="HyperText Markup Language">HTML</abbr>
+<cite>Цитата или источник</cite>
+<q>Короткая цитата</q>
+<blockquote>Длинная цитата</blockquote>
+<address>Контактная информация</address>
+
+<ul id="postsList"></ul>
+
+   <script src="./js/service/index.js"></script>
+   <script src="./js/service/posts.js"></script>
+
+    </body>
+</html>
+
+
