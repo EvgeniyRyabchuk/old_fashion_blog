@@ -16,7 +16,26 @@
     </head>
     <!-- отображаеться все что пользователь видет на странице -->
     <body>
-           
+
+      <div class="upload_container" style="margin: 30px; border: 1px solid black;">
+         <h2>Create Post</h2>
+               <input type="text" id="title" placeholder="Post title"><br><br>
+               <textarea id="content" placeholder="Post content"></textarea><br><br>
+
+               <!-- Image File Selector -->
+               <input type="file" id="imageInput" accept="image/*"><br><br>
+
+               <!-- Upload Button -->
+               <button id="uploadBtn">Upload Image</button>
+               <p id="preview"></p>
+
+               <!-- Save Post -->
+               <button id="savePost">Save Post</button>
+
+      </div>
+
+    
+
       <nav>
          <ul>
                <li><a href="./index.html">Home</a></li>
@@ -52,94 +71,21 @@
                </li>
          </ul>
          <br/>
+
+         <input type="text" placeholder="Search..." />
       </nav>
 
-        <!-- блочный tag -->
-        <div style="background-color: red; height: 17px;"> 
-            
-        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        
+   <ul id="postsList"></ul>
 
-        <div style="background-color: lightcoral; height: 500px         ;">
-            
-        </div>
-
-        <!-- строчный tag -->
-         <br>
-
-         <span>
-            Lorem <strong>ipsum</strong> dolor sit amet consectetur adipisicing elit. 
-            Nemo labore nobis dicta reiciendis, molestias incidunt nam, esse 
-            soluta nisi assumenda tempora! Officia, quos
-             minus? Adipisci voluptas vitae nam praesentium velit!
-         </span>
-
-
-
-         ertert
-         <br>
-         <br>
-         dfgdfg
-
-          <span>
-            2
-         </span>
-
-         <p>
-            Lorem ipsum dolor sit amet consectetur 
-            adipisicing elit. Dolore dicta sit quibusdam
-            ipsum necessitatibus totam ratione deleniti, laborum doloremque!
-            Eum veniam nam nisi aliquam esse dolorem nesciunt saepe nemo aut!
-         </p>
-
-         <hr>
-
-         <!-- link -->
-         <a href="./page2.html">
-            Go to page 2
-         </a>
-         
-         <br><br><br>
-
-         <em>
-            123
-         </em>
-
-         <i>
-            123
-         </i>
-         <mark >
-            123
-         </mark>
-         
-
-         <code>
-            let a = 10; 
-            <pre><code>
-function hello() {
-  console.log("Привет, мир!");
-}
-</code></pre>
-         </code>
-
-
-         <blockquote>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure, explicabo.
-            Magnam soluta exercitationem repudiandae mollitia consequatur porro eveniet fuga fugit.
-            Quam alias, aut consequatur et at est quisquam itaque fugiat.
-         </blockquote>
-
-         <abbr title="HyperText Markup Language">HTML</abbr>
-         <address>Контактная информация</address>
-
-
-         <abbr title="HyperText Markup Language">HTML</abbr>
-<cite>Цитата или источник</cite>
-<q>Короткая цитата</q>
-<blockquote>Длинная цитата</blockquote>
-<address>Контактная информация</address>
-
-<ul id="postsList"></ul>
-
+   <script src="./js/image_upload.js"></script>
    <script src="./js/service/index.js"></script>
    <script src="./js/service/posts.js"></script>
 
