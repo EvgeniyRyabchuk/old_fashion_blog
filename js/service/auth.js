@@ -15,38 +15,24 @@ const firebaseConfig = {
   measurementId: "G-YS39H1B7B1"
 };
 
-
-// const firebaseConfig = {
-//     apiKey: "AIzaSyBb6ith8jViE5Lgm8O72EkL_iDz6S7nc64",
-//     authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-//     projectId: "YOUR_PROJECT_ID",
-//     storageBucket: "YOUR_PROJECT_ID.appspot.com",
-//     messagingSenderId: "YOUR_SENDER_ID",
-//     appId: "YOUR_APP_ID"
-//   };
-
-//   // Initialize Firebase
-//   firebase.initializeApp(firebaseConfig);
-
-//   // Example usage
-//   const auth = firebase.auth();
-//   const db = firebase.firestore();
-//   const storage = firebase.storage();
-
-
  // Initialize Firebase (namespaced style)
-    const app = firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+const app = firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
-    const auth = firebase.auth();
-    const db = firebase.firestore(); 
-    const storage = firebase.storage();
-    const user = null; 
-    const adminsIds = ["AzkfJd3AjmaD3r3hY1idYRS7HqA3"]; // array of admin user ids
-    let isAdmin = false; // default value
+const auth = firebase.auth();
+const db = firebase.firestore(); 
+const storage = firebase.storage();
+// let user = null; 
+const adminsIds = ["AzkfJd3AjmaD3r3hY1idYRS7HqA3"]; // array of admin user ids
+let isAdmin = false; // default value
+let userAddition = null;
 
- 
+async function getUserAddition() {
+  const user = firebase.auth().currentUser;
+  if (!user) return null;
 
+
+}
 
 auth.onAuthStateChanged(user => {
   if (user) {
@@ -69,7 +55,6 @@ auth.onAuthStateChanged(user => {
 });
 
 async function login() {
-
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   
@@ -81,6 +66,8 @@ async function login() {
     
     // addBtn.disabled = false;
     // logoutBtn.disabled = false;
+    const doc = await db.collection("users").doc(user.uid).get();
+    userAddition = doc.data();
 
     return user;
   } catch (error) {
@@ -88,37 +75,45 @@ async function login() {
   }
 }
 
+async function register() {
+  const name = document.getElementById("regName").value;
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPassword").value;
+
+  // try { 
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    const user = userCredential.user; 
+
   
+  await db.collection("users").doc(user.uid).set({
+    name: name,
+    email: user.email,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
 
-  async function register() {
-    const email = document.getElementById("regEmail").value;
-    const password = document.getElementById("regPassword").value;
-
-    try {
-      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-      user = userCredential.user; 
-     
-      /*
-      default role = "user"
-      await setDoc(doc(db, "users", user.uid), {
-        roleId: "user", 
-        createdAt: new Date()
-      });
-    */
+    const doc = await db.collection("users").doc(user.uid).get();
+    userAddition = doc.data();
    
-      document.getElementById("status").innerText = `Registered as: ${user.email}`; 
-    } catch (err) {
-      document.getElementById("status").innerText = err.message;
-    }
-  }
+  // const n = await getUserName(); 
+  // console.log(n);
+  
+  
+  
+  //   document.getElementById("status").innerText = `Registered as: ${user.email}`; 
+  // } catch (err) {
+  //   document.getElementById("status").innerText = err.message;
+  // }
+}
 
-  const logout = () => {
-    auth.signOut().then(() => {
-      console.log("User signed out successfully.");
-      // addBtn.disabled = true;
-      // logoutBtn.disabled = true;
-    }).catch((error) => {
-      console.error("Error signing out:", error);
-    });
-  }
+const logout = () => {
+  auth.signOut().then(() => {
+    console.log("User signed out successfully.");
+    user = null;
+    isAdmin = false; // reset admin status
+    // addBtn.disabled = true;
+    // logoutBtn.disabled = true;
+  }).catch((error) => {
+    console.error("Error signing out:", error);
+  });
+}
 

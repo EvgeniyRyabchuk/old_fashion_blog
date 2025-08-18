@@ -9,5 +9,9 @@
 6. Loadeer 
 7. Filter/Sort 
 8. Adaptive design
+9. Validation
 
-9. Add func to make different template of posts: image+text - vertical |  image+text - horizontal  
+
+
+
+Add func to make different template of posts: image+text - vertical |  image+text - horizontal  
