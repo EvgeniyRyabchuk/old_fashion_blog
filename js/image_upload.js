@@ -1,14 +1,28 @@
- let uploadedImageUrl = "";
 
-  document.getElementById("uploadBtn").addEventListener("click", async () => {
-    const file = document.getElementById("imageInput").files[0];
+
+
+
+// toolbar.addHandler('image', () => {
+//   console.log('Image button clicked');
+  
+//   fileInput.click(); // trigger file select dialog
+// });
+
+
+let uploadedImageUrl = "";
+
+  document.getElementById("imageInput").addEventListener("change", async (event) => {
+    console.log('change');
+    
+    const file = event.target.files[0];
+
     if (!file) {
       alert("Please select an image first.");
       return;
     }
 
     // Prepare FormData for Cloudinary
-    const formData = new FormData();
+    const formData = new FormData(); 
     formData.append("file", file);
     formData.append("upload_preset", "fashion_images"); // unsigned preset from Cloudinary
 
@@ -32,27 +46,4 @@
     }
   });
 
-  // Save post to Firestore
-  document.getElementById("savePost").addEventListener("click", async () => {
-    const title = document.getElementById("title").value;
-    const content = document.getElementById("content").value;
-
-    if (!uploadedImageUrl) {
-      alert("Please upload an image first.");
-      return;
-    }
-
-    try {
-      await db.collection("posts").add({
-        title: title,
-        content: content,
-        imageUrl: uploadedImageUrl,
-        authorId: auth.currentUser.uid,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      alert("Post created!");
-    } catch (err) {
-      console.error("Error adding document:", err);
-      alert("Error: " + err.message);
-    }
-  });
+ 
