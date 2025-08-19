@@ -3,6 +3,7 @@
 
 
 
+`ToDoList` 
 
 1. Text/Image editor 
     1. Category crud 
@@ -28,15 +29,15 @@ Add func to make different template of posts: image+text - vertical |  image+tex
 
 
 
+`Db stucture` 
 
-
-users 
+users:
     createdAt
     email
     name
-tags 
+tags:
     name
-posts 
+posts: 
     categoryId
     content
     coverUrl
@@ -44,13 +45,13 @@ posts
     date_range
     title
     userId
-post_tag 
+post_tag: 
     postId
     tagId
-comments 
+comments:
     content
     createdAt
     userId
-admins 
+admins: 
     userId
 

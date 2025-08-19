@@ -7,6 +7,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <!-- сообщить браузеру что мы делаем сайт в том числе и для телефонов  -->
    <title>Main page</title> <!-- заголовок вкладки  -->
+   <link rel="stylesheet" href="./css/style.css" type="text/css"> 
 
    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app-compat.js"></script>
    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics-compat.js"></script>
@@ -63,66 +64,7 @@
          <div id="tagsContainer" class="tags"></div>
       </div>
 
-      <style>
-         .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 8px;
-         }
 
-         .tag {
-            background: #eee;
-            padding: 5px 10px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-         }
-
-         .tag span {
-            cursor: pointer;
-            font-weight: bold;
-         }
-      </style>
-
-      <script>
-         const tagInput = document.getElementById("tagInput");
-         const tagsContainer = document.getElementById("tagsContainer");
-         let tags = [];
-
-         // Add tag on Enter
-         tagInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" && tagInput.value.trim() !== "") {
-               e.preventDefault();
-               const newTag = tagInput.value.trim();
-
-               if (!tags.includes(newTag)) {
-                  tags.push(newTag);
-                  renderTags();
-               }
-
-               tagInput.value = "";
-            }
-         });
-
-         // Render tags
-         function renderTags() {
-            tagsContainer.innerHTML = "";
-            tags.forEach((tag, index) => {
-               const tagEl = document.createElement("div");
-               tagEl.classList.add("tag");
-               tagEl.innerHTML = `${tag} <span onclick="removeTag(${index})">×</span>`;
-               tagsContainer.appendChild(tagEl);
-            });
-         }
-
-         // Remove tag
-         function removeTag(index) {
-            tags.splice(index, 1);
-            renderTags();
-         }
-      </script>
 
       <!-- Cloudinary unsigned upload -->
       <input type="file" id="quillImageInput" style="display:none">
@@ -273,8 +215,6 @@
 
    <script src="./js/service/index.js"></script>
    <script src="./js/service/auth.js"></script>
-
-   <script src="./js/image_upload.js"></script>
    <script src="./js/service/posts.js"></script>
 
 </body>
