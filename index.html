@@ -34,6 +34,101 @@
       <input type="text" id="title" placeholder="Post title"><br><br>
 
 
+      <!-- category -->
+      <div>
+         <label for="city-select">Category</label>
+         <select name="city" id="city-select">
+            <option value="">-- Select category --</option>
+            <option value="1">50</option>
+            <option value="2">60</option>
+            <option value="3">70</option>
+         </select>
+      </div>
+
+      <!-- date_range  -->
+      <div class="year-range">
+         <label for="startYear">From:</label>
+         <input type="number" id="startYear" name="startYear" min="2000" max="2099" step="1" value="2020">
+
+         <label for="endYear">To:</label>
+         <input type="number" id="endYear" name="endYear" min="2000" max="2099" step="1" value="2025">
+
+         <button id="filterPosts">Filter Posts</button>
+      </div>
+
+      <!-- tags -->
+      <div class="tag-manager">
+         <label for="tagInput">Tags:</label>
+         <input type="text" id="tagInput" placeholder="Type a tag and press Enter">
+         <div id="tagsContainer" class="tags"></div>
+      </div>
+
+      <style>
+         .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+         }
+
+         .tag {
+            background: #eee;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+         }
+
+         .tag span {
+            cursor: pointer;
+            font-weight: bold;
+         }
+      </style>
+
+      <script>
+         const tagInput = document.getElementById("tagInput");
+         const tagsContainer = document.getElementById("tagsContainer");
+         let tags = [];
+
+         // Add tag on Enter
+         tagInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && tagInput.value.trim() !== "") {
+               e.preventDefault();
+               const newTag = tagInput.value.trim();
+
+               if (!tags.includes(newTag)) {
+                  tags.push(newTag);
+                  renderTags();
+               }
+
+               tagInput.value = "";
+            }
+         });
+
+         // Render tags
+         function renderTags() {
+            tagsContainer.innerHTML = "";
+            tags.forEach((tag, index) => {
+               const tagEl = document.createElement("div");
+               tagEl.classList.add("tag");
+               tagEl.innerHTML = `${tag} <span onclick="removeTag(${index})">×</span>`;
+               tagsContainer.appendChild(tagEl);
+            });
+         }
+
+         // Remove tag
+         function removeTag(index) {
+            tags.splice(index, 1);
+            renderTags();
+         }
+      </script>
+
+      <!-- Cloudinary unsigned upload -->
+      <input type="file" id="quillImageInput" style="display:none">
+      <input type="file" id="coverImg" accept="image/*" style="margin-top:10px;" />
+      <p id="preview"></p>
+
       <!-- Add built-in Quill toolbar options -->
       <div id="toolbar">
          <!-- Basic formatting -->
@@ -65,8 +160,8 @@
          <!-- Links, Images, Videos -->
          <span class="ql-formats">
             <button class="ql-link"></button>
-            <!-- <button class="ql-image"></button>
-            <button class="ql-video"></button> -->
+            <button class="ql-image"></button>
+            <button class="ql-video"></button>
          </span>
 
          <!-- Text color and alignment -->
@@ -81,11 +176,11 @@
             <button class="ql-clean"></button>
          </span>
       </div>
+
       <div id="editor" style="height: 300px;"></div>
-      
-       <hr />
-      <br /><br /><br /><br><br/>
-      <input type="file" id="imageInput" accept="image/*" style="margin-top:10px;" />
+
+      <hr />
+      <br /><br /><br /><br><br />
 
 
 
@@ -99,7 +194,7 @@
 
       <!-- Upload Button -->
       <!-- <button id="uploadBtn">Upload Image</button>   -->
-      <p id="preview"></p>
+
 
       <!-- Save Post -->
       <button id="savePost">Save Post</button>

@@ -8,20 +8,90 @@ const quill = new Quill('#editor', {
   }
 });
 
-// Reference hidden file input
-const fileInput = document.getElementById("imageInput");
+// Create hidden file input for Quill image uploads
+const quillImgFile = document.getElementById("quillImageInput");
+const coverImg = document.getElementById("coverImg");
+
 // Override default image handler
-const toolbar = quill.getModule('toolbar');
+quill.getModule("toolbar").addHandler("image", () => {
+  quillImgFile.click(); // open file picker
+});
+
+
+const loadToCloudinary = async (file) => {
+  // Prepare FormData for Cloudinary
+    const formData = new FormData(); 
+    formData.append("file", file);
+    formData.append("upload_preset", "fashion_images"); // unsigned preset from Cloudinary
+
+    const res = await fetch("https://api.cloudinary.com/v1_1/dpbmcoiru/image/upload", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    console.log("Uploaded:", data); 
+    return data.secure_url; 
+}
+
+quillImgFile.addEventListener("change", async (event) => {
+    console.log('change');
+    const file = event.target.files[0];
+
+    if (!file) {
+      alert("Please select an image first.");
+      return;
+    }
+
+    try {    
+      const uploadedImageUrl = await loadToCloudinary(file); 
+      const range = quill.getSelection();
+      quill.insertEmbed(range.index, "image", uploadedImageUrl);
+      console.log("Image uploaded & saved:", uploadedImageUrl);
+    } catch (err) {
+      console.error("Upload failed:", err);
+      alert("Upload failed: " + err.message);
+    }
+});
+
+coverImg.addEventListener("change", async (event) => {
+   const file = event.target.files[0];
+   const fileUrl = URL.createObjectURL(file);
+  // Show preview
+      document.getElementById("preview").innerHTML = 
+        `<img src="${fileUrl}" width="150">`;
+
+  console.log('change');
+});
+
+document.getElementById("filterPosts").addEventListener("click", async () => {
+
+
+});
+
+
 
 
   // Save post to Firestore
-  document.getElementById("savePost").addEventListener("click", async () => {
+document.getElementById("savePost").addEventListener("click", async () => {
     const title = document.getElementById("title").value;
-    const content = quill.root.innerHTML;
+    const content = quill.root.innerHTML; 
+    const coverUrl = await loadToCloudinary(coverImg.files[0]);
+  
+  
+    const startDate = new Date(document.getElementById("startYear").value);
+    const endDate = new Date(document.getElementById("endYear").value);
+    if (!startDate || !endDate) {
+      alert("Please select both dates.");
+      return;
+    }
+    console.log(startDate, endDate); 
+  
+
 
     console.log(content);
  
-    if (!uploadedImageUrl) {
+    if (!coverUrl) {
       alert("Please upload an image first.");
       return;
     }
@@ -30,6 +100,7 @@ const toolbar = quill.getModule('toolbar');
       await db.collection("posts").add({
         title: title,
         content: content,
+        coverUrl: coverUrl, 
         date_range: '80-90s',
         categoryId: "123", 
         userId: auth.currentUser.uid, 
@@ -38,12 +109,25 @@ const toolbar = quill.getModule('toolbar');
 
       //TODO: image adding to db  
 
-      alert("Post created!");
+      console.log("Post created!"); 
+      ("Post created!");
     } catch (err) {
       console.error("Error adding document:", err);
       alert("Error: " + err.message);
     }
-  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
  async function createPostDoc() {
   //  const title = document.getElementById("title").value;
