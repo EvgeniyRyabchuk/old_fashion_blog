@@ -22,6 +22,8 @@ firebase.analytics();
 const auth = firebase.auth();
 const db = firebase.firestore(); 
 const storage = firebase.storage();
+
+
 // let user = null; 
 const adminsIds = ["AzkfJd3AjmaD3r3hY1idYRS7HqA3"]; // array of admin user ids
 let isAdmin = false; // default value

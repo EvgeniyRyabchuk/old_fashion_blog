@@ -22,6 +22,7 @@
 8. Adaptive design
 9. Validation
 
+normalized db in firebase 
 
 
 

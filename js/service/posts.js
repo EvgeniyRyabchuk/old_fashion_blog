@@ -1,4 +1,5 @@
 
+
 const quill = new Quill('#editor', {
   theme: 'snow',
   modules: {
@@ -13,6 +14,7 @@ const coverImg = document.getElementById("coverImg");
 const tagInput = document.getElementById("tagInput");
 const tagsContainer = document.getElementById("tagsContainer");
 let tags = [];
+let selectedPost = null; 
 
 
 // Override default image handler
@@ -225,23 +227,100 @@ async function createPostDoc() {
 }
 
 
-function readPostDocs() {
-  const postsList = document.getElementById("postsList");
-  db.collection("posts").get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => `, doc.data());
+//  <th>Title</th>
+//             <th>Content</th>
+//             <th>coverUrl</th>
+//             <th>Category Id</th>
+//             <th>date_range</th>
+//             <th>userId</th>
+//             <th>createdAt</th>
+async function readPostDocs() {
 
-      const data = doc.data();
-      // Only use title + content
-      const li = document.createElement("li");
-      li.innerHTML = `
-               ${data.title || "Untitled"}: ${data.content || ""}
-                `;
-      postsList.appendChild(li);
+  // TODO: separate func 
+  const postsSnap = await db.collection("posts").get();
+  const posts = postsSnap.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+  
+  loadCategoriesToCollection(posts);
 
+  console.log(posts);
+  
+
+  const tbody = document.querySelector("#postsTable > tbody");
+  tbody.innerHTML = ''; // очищаем tbody перед добавлением новых строк
+
+  for (const post of posts) {
+
+    // создаём строку
+    const tr = document.createElement("tr");
+    const tdId = document.createElement("td");
+    const tdTitle = document.createElement("td");
+    const tdContent = document.createElement("td");
+    const tdImage = document.createElement("td");
+    const tdImageCategoryID = document.createElement("td");
+    const tdDateRange = document.createElement("td");
+    const tdUserId = document.createElement("td");
+    const tdUserCreatedAt = document.createElement("td");
+
+    const tdAction = document.createElement("td");
+    const editButton = document.createElement('button');
+
+    // добавляем колонки
+
+    tdId.innerHTML = post.id || "Untitled";
+    tdTitle.innerHTML = post.title || "Untitled";
+
+    const documentHtml = document.createElement('div');
+    documentHtml.innerHTML = post.content;
+
+    documentHtml.querySelectorAll('img').forEach(img => {
+      img.width = 100;
+      img.height = 100;
     });
-  });
+
+    // create new page with this content 
+    tdContent.innerHTML = documentHtml.innerHTML || "";
+
+    if (post.coverUrl) {
+      tdImage.innerHTML = `<img src="${post.coverUrl}" width="100" height="100">`;
+    }
+
+    tdImageCategoryID.innerHTML = post.category?.id || 'null';
+    tdDateRange.innerHTML = post.date_range;
+    tdUserId.innerHTML = post.userId;
+    tdUserCreatedAt.innerHTML = post.createdAt.toDate().toLocaleString();;
+    tdUserCreatedAt.classList.add("td-date");
+
+    editButton.innerText = 'Edit';
+    editButton.type = 'button';
+    editButton.onclick = () => {
+      console.log('dfgdsfgfgfd');
+
+    }
+
+    tdAction.appendChild(editButton);
+
+    // добавляем колонки в строку
+    tr.appendChild(tdId);
+    tr.appendChild(tdTitle);
+    tr.appendChild(tdContent);
+    tr.appendChild(tdImage);
+    tr.appendChild(tdImageCategoryID);
+    tr.appendChild(tdDateRange);
+    tr.appendChild(tdUserId);
+    tr.appendChild(tdUserCreatedAt);
+    tr.appendChild(tdAction);
+
+
+    // добавляем строку в tbody
+    tbody.appendChild(tr);
+  };
+
 }
+
+readPostDocs();
 
 
 function updatePostDoc(id) {
