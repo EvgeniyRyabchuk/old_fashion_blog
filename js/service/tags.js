@@ -1,5 +1,99 @@
 
+const tagInput = document.getElementById("tagInput");
+const tagsContainer = document.getElementById("tagsContainer");
 
+let tags = [];
+
+// Add tag on Enter
+tagInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && tagInput.value.trim() !== "") {
+    e.preventDefault();
+    const newTag = tagInput.value.trim();
+
+    if (!tags.includes(newTag)) {
+      tags.push(newTag);
+      renderTags(); 
+    }
+
+    tagInput.value = "";
+  }
+});
+
+// Render tags
+function renderTags() {
+  tagsContainer.innerHTML = "";
+  tags.forEach((tag, index) => {
+    const tagEl = document.createElement("div");
+    tagEl.classList.add("tag");
+    tagEl.innerHTML = `${tag} <span onclick="removeTag(${index})">×</span>`;
+    tagsContainer.appendChild(tagEl); 
+  });
+}
+
+// Remove tag
+function removeTag(index) {
+  tags.splice(index, 1);
+  renderTags();
+}
+
+async function deleteTagsByPostId(postId) {
+   const snap = await db.collection("post_tag")
+    .where("postId", "==", postId)
+    .get();
+
+  if (snap.empty) {
+    console.log("No tags found for post:", postId);
+    return;
+  }
+
+  const batch = db.batch();
+  snap.forEach(doc => {
+    batch.delete(db.collection("post_tag").doc(doc.id));
+  });
+
+  await batch.commit();
+  console.log("All tags deleted for post:", postId);
+}
+
+async function addTagsIfNotExist(post) {
+   const batch = db.batch();
+   let existTags = []; 
+  
+  await deleteTagsByPostId(post.id); 
+  console.log(tags); 
+  
+  // const tagsFromHtml = Array.from(document.querySelectorAll('.tag'))
+  //   .map(el => el.firstChild.nodeValue.trim());
+  
+  console.log(tags);
+
+  for (const tag of tags) {
+    const tagRef = db.collection("tags");
+    let existing = await tagRef.where("name", "==", tag).limit(1).get(); 
+
+    if (existing.empty) { 
+      const newTagRef = db.collection("tags").doc(); 
+      batch.set(newTagRef, {
+        name: tag, 
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      
+      existTags.push(newTagRef.id);  
+    } else {
+      existTags.push(existing.docs[0].id); 
+    }
+    
+    // save post tag if not exist 
+    batch.set(db.collection("post_tag").doc(),{
+        tagId: existTags[existTags.length - 1], 
+        postId: post.id, 
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    },  { merge: true });   
+  }
+  // Commit all new tags in one batch
+  await batch.commit();
+
+}
 
 
 const loadTagsToCollection = async (collection) => {
@@ -51,3 +145,5 @@ const loadTagsToCollection = async (collection) => {
   console.log(collection);
   return collection;
 };
+
+

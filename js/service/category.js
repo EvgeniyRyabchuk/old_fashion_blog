@@ -1,4 +1,4 @@
-
+let selectedCategoryId = null; 
 
 const loadCategoriesToCollection = async (collection) => {
     // get categories
@@ -30,3 +30,43 @@ const loadCategoriesToCollection = async (collection) => {
   console.log(collection);
 
 }
+
+
+const readAllCategoires = async () => {
+  try {
+    const snapshot = await db.collection("categories").get();
+    const categories = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    console.log("Categories:", categories);
+    return categories;
+  } catch (err) {
+    console.error("Error loading categories:", err);
+    return [];
+  }
+}
+const loadCategoriesToSelect = async () => {
+  const categories = await readAllCategoires();
+  const select = document.getElementById("category-select");
+  select.innerHTML = ""; // очистить
+  select.onchange = async (e) => {
+    const categoryId = e.target.value; 
+    // const snapshot = await db.collection("categories").doc(categoryId).get();  
+    // const category = snapshot.data(); 
+    selectedCategoryId = categoryId
+    console.log(selectedCategoryId);
+  }
+
+
+  categories.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat.id;
+    option.textContent = cat.name; 
+    select.appendChild(option);
+  });
+};
+
+
+loadCategoriesToSelect();

@@ -11,11 +11,10 @@ const quill = new Quill('#editor', {
 // Create hidden file input for Quill image uploads
 const quillImgFile = document.getElementById("quillImageInput");
 const coverImg = document.getElementById("coverImg");
-const tagInput = document.getElementById("tagInput");
-const tagsContainer = document.getElementById("tagsContainer");
-let tags = [];
-let selectedPost = null; 
+
+
 let allPosts = []; 
+let postToUpdateId = null; 
 
 // Override default image handler
 quill.getModule("toolbar").addHandler("image", () => {
@@ -28,14 +27,14 @@ const loadToCloudinary = async (file) => {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", "fashion_images"); // unsigned preset from Cloudinary
-
+  
   const res = await fetch("https://api.cloudinary.com/v1_1/dpbmcoiru/image/upload", {
     method: "POST",
     body: formData
   });
 
   const data = await res.json();
-  console.log("Uploaded:", data);
+  console.log("Uploaded:", data); 
   return data.secure_url;
 }
 
@@ -61,109 +60,19 @@ quillImgFile.addEventListener("change", async (event) => {
 });
 
 // Cover Preview 
-coverImg.addEventListener("change", async (event) => {
+const createPostPreview = async (event) => {
   const file = event.target.files[0];
   const fileUrl = URL.createObjectURL(file);
   // Show preview
   document.getElementById("preview").innerHTML =
-    `<img src="${fileUrl}" width="150">`;
+    `<img src="${fileUrl}" width="150">`; 
 
   console.log('change');
-});
-
-
-
-// Add tag on Enter
-tagInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && tagInput.value.trim() !== "") {
-    e.preventDefault();
-    const newTag = tagInput.value.trim();
-
-    if (!tags.includes(newTag)) {
-      tags.push(newTag);
-      renderTags(); 
-    }
-
-    tagInput.value = "";
-  }
-});
-
-// Render tags
-function renderTags() {
-  tagsContainer.innerHTML = "";
-  tags.forEach((tag, index) => {
-    const tagEl = document.createElement("div");
-    tagEl.classList.add("tag");
-    tagEl.innerHTML = `${tag} <span onclick="removeTag(${index})">×</span>`;
-    tagsContainer.appendChild(tagEl); 
-  });
 }
 
-// Remove tag
-function removeTag(index) {
-  tags.splice(index, 1);
-  renderTags();
-}
+coverImg.addEventListener("change", createPostPreview);
 
-
-
-async function deleteTagsByPostId(postId) {
-   const snap = await db.collection("post_tag")
-    .where("postId", "==", postId)
-    .get();
-
-  if (snap.empty) {
-    console.log("No tags found for post:", postId);
-    return;
-  }
-
-  const batch = db.batch();
-  snap.forEach(doc => {
-    batch.delete(db.collection("post_tag").doc(doc.id));
-  });
-
-  await batch.commit();
-  console.log("All tags deleted for post:", postId);
-}
-
-async function addTagsIfNotExist(post) {
-   const batch = db.batch();
-   let existTags = []; 
-  
-  await deleteTagsByPostId(post.id); 
-
-  const tags = Array.from(document.querySelectorAll('.tag'))
-    .map(el => el.firstChild.nodeValue.trim());
-  
-  console.log(tags);
-
-  for (const tag of tags) {
-    const tagRef = db.collection("tags");
-    let existing = await tagRef.where("name", "==", tag).limit(1).get(); 
-
-    if (existing.empty) { 
-      const newTagRef = db.collection("tags").doc(); 
-      batch.set(newTagRef, {
-        name: tag, 
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      
-      existTags.push(newTagRef.id);  
-    } else {
-      existTags.push(existing.docs[0].id); 
-    }
-    
-    // save post tag if not exist 
-    batch.set(db.collection("post_tag").doc(),{
-        tagId: existTags[existTags.length - 1], 
-        postId: post.id, 
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    },  { merge: true });   
-  }
-  // Commit all new tags in one batch
-  await batch.commit();
-
-}
+//////////////////////////////////////////////////////////////////////////////
 
 const clearUpTheForm = () => {
   document.getElementById("title").value = ""; 
@@ -175,12 +84,16 @@ const clearUpTheForm = () => {
   renderTags();
 }
 
-
 const createOrUpdatePost = async (postId = null) => {
   const title = document.getElementById("title").value;
   const content = quill.root.innerHTML;
-  let coverUrl = await loadToCloudinary(coverImg.files[0]); 
-
+  let coverUrl = null;
+  // if post is new and cover img loaded then upload it to cloudinary
+  if(coverImg.files[0]) 
+    coverUrl = await loadToCloudinary(coverImg.files[0]); 
+  // if post is new and no cover img load default 
+  else if (!coverUrl && !postId)  
+     coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
 
   const startDate = new Date(document.getElementById("startYear").value); 
   const endDate = new Date(document.getElementById("endYear").value);
@@ -191,26 +104,27 @@ const createOrUpdatePost = async (postId = null) => {
   console.log(startDate, endDate);
   console.log(content);
 
-  if (!coverUrl) {
-    if(!postId) {
-      coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
-    } else { 
-        alert("Load old cover image");
-    } 
-  }
+  // if (!coverUrl) {
+  //   if(!postId) { 
+  //     coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
+  //   } else { 
+  //       alert("Load old cover image");
+  //   } 
+  // }
   
   //TODO: add categoryId 
   //TODO: add loader 
+  //TODO: refactor 
   
-  // try {
+  try {
     let createdOrUpdatedPost = null; 
     if(!postId) {
        createdOrUpdatedPost= await db.collection("posts").add({
         title: title,
-        content: content,
+        content: content, 
         coverUrl: coverUrl,
         date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`, 
-        categoryId: "123",
+        categoryId: selectedCategoryId,
         userId: auth.currentUser.uid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
@@ -223,7 +137,7 @@ const createOrUpdatePost = async (postId = null) => {
         content: content, 
         coverUrl: coverUrl ?? post.coverUrl,  
         date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`,
-        categoryId: "3457345734574576",  
+        categoryId: selectedCategoryId,  
         // updateAt: firebase.firestore.FieldValue.serverTimestamp()
       }); 
       const updatedSnap = await db.collection("posts").doc(postId).get();
@@ -234,70 +148,22 @@ const createOrUpdatePost = async (postId = null) => {
 
     console.log("Post created!");
     ("Post created!");
-  // } catch (err) {
-  //   console.error("Error adding document:", err);
-  //   alert("Error: " + err.message);
-  // }
+  } catch (err) {
+    console.error("Error adding document:", err);
+    alert("Error: " + err.message);
+  }
 
 }
 
 // Save post to Firestore
 document.getElementById("savePost").addEventListener("click", async () => {
-  
   await createOrUpdatePost(postToUpdateId);
   await clearUpTheForm(); 
   await readPostDocs();
   postToUpdateId = null; 
-  
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-async function createPostDoc() {
-  //  const title = document.getElementById("title").value;
-  //  const content = quill.root.innerHTML; // HTML from Quill editor
-  //   console.log(content);
-
-  //  if (!title || !content) {
-  //    alert("Please enter title and content");
-  //    return;
-  //  }
-
-  //  try {
-  //    await db.collection("posts").add({
-  //      title: title,
-  //      content: content,
-  //      imageUrl: uploadedImageUrl || "", 
-  //      authorId: auth.currentUser.uid,
-  //      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  //    });
-  //    alert("Post created!");
-  //  } catch (err) {
-  //    console.error("Error adding post:", err);
-  //    alert("Error: " + err.message);
-  //  }
-}
-
-
-//  <th>Title</th>
-//             <th>Content</th>
-//             <th>coverUrl</th>
-//             <th>Category Id</th>
-//             <th>date_range</th>
-//             <th>userId</th>
-//             <th>createdAt</th>
 async function readPostDocs() {
-
   // TODO: separate func 
   const postsSnap = await db.collection("posts").orderBy("createdAt", "desc").limit(5).get(); 
   const posts = postsSnap.docs.map(doc => ({
@@ -321,13 +187,14 @@ async function readPostDocs() {
     const tdId = document.createElement("td");
     const tdTitle = document.createElement("td");
     const tdContent = document.createElement("td");
+    const contentWrapper = document.createElement("div");
     const tdImage = document.createElement("td");
     const tdImageCategoryID = document.createElement("td");
     const tdDateRange = document.createElement("td");
     const tdUserId = document.createElement("td");
     const tdUserCreatedAt = document.createElement("td");
     const tdTags = document.createElement("td");
-
+    
     const actionWrapper = document.createElement("div");
     const tdAction = document.createElement("td");
     const editButton = document.createElement('button');
@@ -353,7 +220,9 @@ async function readPostDocs() {
     });
 
     // create new page with this content 
-    tdContent.innerHTML = documentHtml.innerHTML || "";
+    contentWrapper.innerHTML = documentHtml.innerHTML || "";
+    contentWrapper.classList.add("td-content");
+    tdContent.appendChild(contentWrapper);  
 
     if (post.coverUrl) {
       tdImage.innerHTML = `<img src="${post.coverUrl}" width="100" height="100">`;
@@ -398,35 +267,8 @@ async function readPostDocs() {
 
 }
 
-
-
-let postToUpdateId = null; 
-const selectPostForUpdate = async (e) => { 
-  const pId = e.target.closest("tr").dataset.postId;
-  const docRef = db.collection("posts").doc(postId);
-  const docSnap = await docRef.get();
-  if (docSnap.exists) {
-    const post = {
-      id: docSnap.id,
-      ...docSnap.data()
-    };
-    console.log("Post:", post);
-    return post;
-  } else {
-    console.log("No such post!");
-    return null;
-  }
-}
-
-
-  // title: 'Update',
-  //       content: 'Update', 
-  //       coverUrl: 'https://www.shutterstock.com/image-vector/grunge-green-updated-square-rubber-260nw-760015012.jpg',
-  //       date_range: '80-90s',
-  //       categoryId: "1",
-
-
   //TODO: cancel button 
+
 
 const onUpdatePostClick = async (e) => {
 
@@ -436,6 +278,9 @@ const onUpdatePostClick = async (e) => {
   
   document.getElementById("title").value = post.title;
   quill.root.innerHTML = post.content;
+
+  coverImg.value = ""; 
+
     // Show preview
   document.getElementById("preview").innerHTML =`<img src="${post.coverUrl}" width="150">`;
 
@@ -446,18 +291,10 @@ const onUpdatePostClick = async (e) => {
   console.log(tags);
   renderTags();
   
-  document.getElementById("category-select").value = post.categoryId; 
+  const selectCat = document.getElementById("category-select");
+  selectCat.value = post.categoryId; 
 
-  return; 
-  try {
-    await createOrUpdatePost(pId); 
-    await readPostDocs(); 
-  } catch (err) {
-    console.error("Error deleting document: ", error);
-  }
 }
-
-
 
 const onDeletePostClick = async (e) => {
   const pId = e.target.closest("tr").dataset.postId;
@@ -473,7 +310,27 @@ const onDeletePostClick = async (e) => {
   
 }
 
+const onResetPostClick = (e) => {
+  postToUpdateId = null;
+  
+  document.getElementById("title").value = '';
+  quill.root.innerHTML = '';
+  coverImg.value = ""; 
 
+    // Show preview
+  document.getElementById("preview").innerHTML =``;
+
+  document.getElementById("startYear").value = '';
+  document.getElementById("endYear").value = '';
+  
+  tags = [];
+  renderTags();
+  
+  selectedCategoryId = null; 
+  const selectCat = document.getElementById("category-select");
+  selectCat.value = ''; 
+  
+}
 
 readPostDocs();
 
