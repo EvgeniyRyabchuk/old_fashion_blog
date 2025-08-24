@@ -182,7 +182,7 @@ const createOrUpdatePost = async (postId = null) => {
   let coverUrl = await loadToCloudinary(coverImg.files[0]); 
 
 
-  const startDate = new Date(document.getElementById("startYear").value);
+  const startDate = new Date(document.getElementById("startYear").value); 
   const endDate = new Date(document.getElementById("endYear").value);
   if (!startDate || !endDate) {
     alert("Please select both dates.");
@@ -192,51 +192,63 @@ const createOrUpdatePost = async (postId = null) => {
   console.log(content);
 
   if (!coverUrl) {
-    coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
-    
-    // alert("Please upload an image first.");
-    // return;
+    if(!postId) {
+      coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
+    } else { 
+        alert("Load old cover image");
+    } 
   }
-
-  try {
+  
+  //TODO: add categoryId 
+  //TODO: add loader 
+  
+  // try {
     let createdOrUpdatedPost = null; 
     if(!postId) {
        createdOrUpdatedPost= await db.collection("posts").add({
         title: title,
         content: content,
         coverUrl: coverUrl,
-        date_range: '80-90s',
+        date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`, 
         categoryId: "123",
         userId: auth.currentUser.uid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
     } else {
-      createdOrUpdatedPost = await db.collection("posts").doc(postId).update({ 
-        title: 'Update',
-        content: 'Update', 
-        coverUrl: 'https://www.shutterstock.com/image-vector/grunge-green-updated-square-rubber-260nw-760015012.jpg',
-        date_range: '80-90s',
-        categoryId: "1",
+      const post = allPosts.find(p => p.id === postId); 
+      console.log('founded' + post.id);
+      
+      await db.collection("posts").doc(postId).update({ 
+        title: title,
+        content: content, 
+        coverUrl: coverUrl ?? post.coverUrl,  
+        date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`,
+        categoryId: "3457345734574576",  
         // updateAt: firebase.firestore.FieldValue.serverTimestamp()
       }); 
+      const updatedSnap = await db.collection("posts").doc(postId).get();
+      createdOrUpdatedPost = { id: updatedSnap.id, ...updatedSnap.data() };
     }
-
+    
     await addTagsIfNotExist(createdOrUpdatedPost); 
 
     console.log("Post created!");
     ("Post created!");
-  } catch (err) {
-    console.error("Error adding document:", err);
-    alert("Error: " + err.message);
-  }
+  // } catch (err) {
+  //   console.error("Error adding document:", err);
+  //   alert("Error: " + err.message);
+  // }
 
 }
 
 // Save post to Firestore
 document.getElementById("savePost").addEventListener("click", async () => {
-  await createOrUpdatePost();
+  
+  await createOrUpdatePost(postToUpdateId);
   await clearUpTheForm(); 
   await readPostDocs();
+  postToUpdateId = null; 
+  
 });
 
 
@@ -287,7 +299,7 @@ async function createPostDoc() {
 async function readPostDocs() {
 
   // TODO: separate func 
-  const postsSnap = await db.collection("posts").orderBy("createdAt", "desc").get(); 
+  const postsSnap = await db.collection("posts").orderBy("createdAt", "desc").limit(5).get(); 
   const posts = postsSnap.docs.map(doc => ({
     id: doc.id, 
     ...doc.data()
@@ -414,16 +426,22 @@ const selectPostForUpdate = async (e) => {
   //       categoryId: "1",
 
 
+  //TODO: cancel button 
+
 const onUpdatePostClick = async (e) => {
+
   const pId = e.target.closest("tr").dataset.postId; 
   const post = allPosts.find(p => p.id === pId); 
-
+  postToUpdateId = pId;
+  
   document.getElementById("title").value = post.title;
   quill.root.innerHTML = post.content;
-  document.getElementById("preview").src = post.coverUrl;
-  document.getElementById("startYear").value = '19' + post.date_range.split('-')[0];   
-  document.getElementById("endYear").value = '19' + post.date_range.split('-')[1];
+    // Show preview
+  document.getElementById("preview").innerHTML =`<img src="${post.coverUrl}" width="150">`;
 
+  document.getElementById("startYear").value = post.date_range.split('-')[0];   
+  document.getElementById("endYear").value = post.date_range.split('-')[1]; 
+  
   tags = post.tags.map(t => t.name); 
   console.log(tags);
   renderTags();
@@ -440,6 +458,7 @@ const onUpdatePostClick = async (e) => {
 }
 
 
+
 const onDeletePostClick = async (e) => {
   const pId = e.target.closest("tr").dataset.postId;
   console.log(pId); 
@@ -454,9 +473,6 @@ const onDeletePostClick = async (e) => {
   
 }
 
-async function deletePostDoc(id) {
-
-}
 
 
 readPostDocs();
