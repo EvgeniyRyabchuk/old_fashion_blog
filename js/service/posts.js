@@ -15,7 +15,7 @@ const tagInput = document.getElementById("tagInput");
 const tagsContainer = document.getElementById("tagsContainer");
 let tags = [];
 let selectedPost = null; 
-
+let allPosts = []; 
 
 // Override default image handler
 quill.getModule("toolbar").addHandler("image", () => {
@@ -95,7 +95,7 @@ function renderTags() {
     const tagEl = document.createElement("div");
     tagEl.classList.add("tag");
     tagEl.innerHTML = `${tag} <span onclick="removeTag(${index})">×</span>`;
-    tagsContainer.appendChild(tagEl);
+    tagsContainer.appendChild(tagEl); 
   });
 }
 
@@ -105,16 +105,44 @@ function removeTag(index) {
   renderTags();
 }
 
+
+
+async function deleteTagsByPostId(postId) {
+   const snap = await db.collection("post_tag")
+    .where("postId", "==", postId)
+    .get();
+
+  if (snap.empty) {
+    console.log("No tags found for post:", postId);
+    return;
+  }
+
+  const batch = db.batch();
+  snap.forEach(doc => {
+    batch.delete(db.collection("post_tag").doc(doc.id));
+  });
+
+  await batch.commit();
+  console.log("All tags deleted for post:", postId);
+}
+
 async function addTagsIfNotExist(post) {
    const batch = db.batch();
    let existTags = []; 
+  
+  await deleteTagsByPostId(post.id); 
+
+  const tags = Array.from(document.querySelectorAll('.tag'))
+    .map(el => el.firstChild.nodeValue.trim());
+  
+  console.log(tags);
 
   for (const tag of tags) {
     const tagRef = db.collection("tags");
     let existing = await tagRef.where("name", "==", tag).limit(1).get(); 
 
-    if (existing.empty) {
-      const newTagRef = db.collection("tags").doc();
+    if (existing.empty) { 
+      const newTagRef = db.collection("tags").doc(); 
       batch.set(newTagRef, {
         name: tag, 
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -125,11 +153,12 @@ async function addTagsIfNotExist(post) {
       existTags.push(existing.docs[0].id); 
     }
     
+    // save post tag if not exist 
     batch.set(db.collection("post_tag").doc(),{
         tagId: existTags[existTags.length - 1], 
         postId: post.id, 
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });   
+    },  { merge: true });   
   }
   // Commit all new tags in one batch
   await batch.commit();
@@ -146,11 +175,11 @@ const clearUpTheForm = () => {
   renderTags();
 }
 
-// Save post to Firestore
-document.getElementById("savePost").addEventListener("click", async () => {
+
+const createOrUpdatePost = async (postId = null) => {
   const title = document.getElementById("title").value;
   const content = quill.root.innerHTML;
-  const coverUrl = await loadToCloudinary(coverImg.files[0]);
+  let coverUrl = await loadToCloudinary(coverImg.files[0]); 
 
 
   const startDate = new Date(document.getElementById("startYear").value);
@@ -163,22 +192,36 @@ document.getElementById("savePost").addEventListener("click", async () => {
   console.log(content);
 
   if (!coverUrl) {
-    alert("Please upload an image first.");
-    return;
+    coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
+    
+    // alert("Please upload an image first.");
+    // return;
   }
 
   try {
-    const createdPost = await db.collection("posts").add({
-      title: title,
-      content: content,
-      coverUrl: coverUrl,
-      date_range: '80-90s',
-      categoryId: "123",
-      userId: auth.currentUser.uid,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    let createdOrUpdatedPost = null; 
+    if(!postId) {
+       createdOrUpdatedPost= await db.collection("posts").add({
+        title: title,
+        content: content,
+        coverUrl: coverUrl,
+        date_range: '80-90s',
+        categoryId: "123",
+        userId: auth.currentUser.uid,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } else {
+      createdOrUpdatedPost = await db.collection("posts").doc(postId).update({ 
+        title: 'Update',
+        content: 'Update', 
+        coverUrl: 'https://www.shutterstock.com/image-vector/grunge-green-updated-square-rubber-260nw-760015012.jpg',
+        date_range: '80-90s',
+        categoryId: "1",
+        // updateAt: firebase.firestore.FieldValue.serverTimestamp()
+      }); 
+    }
 
-    addTagsIfNotExist(createdPost);
+    await addTagsIfNotExist(createdOrUpdatedPost); 
 
     console.log("Post created!");
     ("Post created!");
@@ -186,7 +229,14 @@ document.getElementById("savePost").addEventListener("click", async () => {
     console.error("Error adding document:", err);
     alert("Error: " + err.message);
   }
-  clearUpTheForm();
+
+}
+
+// Save post to Firestore
+document.getElementById("savePost").addEventListener("click", async () => {
+  await createOrUpdatePost();
+  await clearUpTheForm(); 
+  await readPostDocs();
 });
 
 
@@ -237,17 +287,18 @@ async function createPostDoc() {
 async function readPostDocs() {
 
   // TODO: separate func 
-  const postsSnap = await db.collection("posts").get();
+  const postsSnap = await db.collection("posts").orderBy("createdAt", "desc").get(); 
   const posts = postsSnap.docs.map(doc => ({
-    id: doc.id,
+    id: doc.id, 
     ...doc.data()
   }));
   
-  loadCategoriesToCollection(posts);
-
+  // Loading relationships 
+  await loadCategoriesToCollection(posts);
+  await loadTagsToCollection(posts); 
+  allPosts = posts; 
   console.log(posts);
   
-
   const tbody = document.querySelector("#postsTable > tbody");
   tbody.innerHTML = ''; // очищаем tbody перед добавлением новых строк
 
@@ -263,14 +314,23 @@ async function readPostDocs() {
     const tdDateRange = document.createElement("td");
     const tdUserId = document.createElement("td");
     const tdUserCreatedAt = document.createElement("td");
+    const tdTags = document.createElement("td");
 
+    const actionWrapper = document.createElement("div");
     const tdAction = document.createElement("td");
     const editButton = document.createElement('button');
+    const deleteButton = document.createElement('button');
 
     // добавляем колонки
 
+    tr.dataset.postId = post.id; 
     tdId.innerHTML = post.id || "Untitled";
     tdTitle.innerHTML = post.title || "Untitled";
+    
+    tdTags.innerHTML = post.tags.map(tag => tag.name).join(', '); 
+    tdTags.style.whiteSpace = "nowrap"; 
+    tdTags.style.maxWidth = "160px"; 
+    tdTags.style.maxHeight = "100px"; 
 
     const documentHtml = document.createElement('div');
     documentHtml.innerHTML = post.content;
@@ -288,6 +348,7 @@ async function readPostDocs() {
     }
 
     tdImageCategoryID.innerHTML = post.category?.id || 'null';
+    // tdImageCategoryID.id = "categorySelect";
     tdDateRange.innerHTML = post.date_range;
     tdUserId.innerHTML = post.userId;
     tdUserCreatedAt.innerHTML = post.createdAt.toDate().toLocaleString();;
@@ -295,12 +356,16 @@ async function readPostDocs() {
 
     editButton.innerText = 'Edit';
     editButton.type = 'button';
-    editButton.onclick = () => {
-      console.log('dfgdsfgfgfd');
+    editButton.onclick = onUpdatePostClick; 
 
-    }
-
-    tdAction.appendChild(editButton);
+    deleteButton.innerHTML = 'Remove';
+    deleteButton.type = "button"; 
+    deleteButton.onclick = onDeletePostClick; 
+   
+    actionWrapper.style.display = 'flex';    
+    actionWrapper.appendChild(editButton);
+    actionWrapper.appendChild(deleteButton);
+    tdAction.appendChild(actionWrapper);
 
     // добавляем колонки в строку
     tr.appendChild(tdId);
@@ -311,6 +376,7 @@ async function readPostDocs() {
     tr.appendChild(tdDateRange);
     tr.appendChild(tdUserId);
     tr.appendChild(tdUserCreatedAt);
+    tr.appendChild(tdTags);
     tr.appendChild(tdAction);
 
 
@@ -320,32 +386,81 @@ async function readPostDocs() {
 
 }
 
+
+
+let postToUpdateId = null; 
+const selectPostForUpdate = async (e) => { 
+  const pId = e.target.closest("tr").dataset.postId;
+  const docRef = db.collection("posts").doc(postId);
+  const docSnap = await docRef.get();
+  if (docSnap.exists) {
+    const post = {
+      id: docSnap.id,
+      ...docSnap.data()
+    };
+    console.log("Post:", post);
+    return post;
+  } else {
+    console.log("No such post!");
+    return null;
+  }
+}
+
+
+  // title: 'Update',
+  //       content: 'Update', 
+  //       coverUrl: 'https://www.shutterstock.com/image-vector/grunge-green-updated-square-rubber-260nw-760015012.jpg',
+  //       date_range: '80-90s',
+  //       categoryId: "1",
+
+
+const onUpdatePostClick = async (e) => {
+  const pId = e.target.closest("tr").dataset.postId; 
+  const post = allPosts.find(p => p.id === pId); 
+
+  document.getElementById("title").value = post.title;
+  quill.root.innerHTML = post.content;
+  document.getElementById("preview").src = post.coverUrl;
+  document.getElementById("startYear").value = '19' + post.date_range.split('-')[0];   
+  document.getElementById("endYear").value = '19' + post.date_range.split('-')[1];
+
+  tags = post.tags.map(t => t.name); 
+  console.log(tags);
+  renderTags();
+  
+  document.getElementById("category-select").value = post.categoryId; 
+
+  return; 
+  try {
+    await createOrUpdatePost(pId); 
+    await readPostDocs(); 
+  } catch (err) {
+    console.error("Error deleting document: ", error);
+  }
+}
+
+
+const onDeletePostClick = async (e) => {
+  const pId = e.target.closest("tr").dataset.postId;
+  console.log(pId); 
+
+  try {
+    await db.collection("posts").doc(pId).delete(); 
+    await readPostDocs();
+    console.log("Document successfully updated!");
+  } catch (err) {
+    console.error("Error deleting document: ", error);
+  }
+  
+}
+
+async function deletePostDoc(id) {
+
+}
+
+
 readPostDocs();
 
 
-function updatePostDoc(id) {
-  db.collection("posts").doc(id).update({
-      title: "Updated Title 🚀"
-    })
-    .then(() => {
-      console.log("Document successfully updated!");
-    })
-    .catch((error) => {
-      console.error("Error updating document: ", error);
-    });
-}
 
 
-function deletePostDoc(id) {
-  db.collection("posts").doc(id).delete()
-    .then(() => {
-      console.log("Document successfully deleted!");
-    })
-    .catch((error) => {
-      console.error("Error deleting document: ", error);
-    });
-}
-
-
-
-// readPostDocs();
