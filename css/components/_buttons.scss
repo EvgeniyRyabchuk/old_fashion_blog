@@ -1,0 +1,32 @@
+
+@use '../base/index'   as *;     
+
+.btn { 
+  padding: 10px;
+  margin: 5px;
+  font-size: 17px;
+  cursor: pointer; 
+}
+
+.btn-primary { 
+  @extend .btn;
+  background-color: $primary-color; 
+  color: white;
+}
+.btn-secondary { 
+  @extend .btn;
+  background-color: $secondary-color;
+  color: white;
+}
+
+.btn-primary:hover {
+   background-color: $primary-color-hover;
+}
+.btn-primary:active  {
+   background-color: $primary-color-active;
+}
+
+.btn-secondary:hover {
+  background-color: $secondary-color-hover;
+}
+

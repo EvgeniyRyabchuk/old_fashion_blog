@@ -1,0 +1,145 @@
+@charset "UTF-8";
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ └─ main.scss    // точка входа
+*/
+.btn, .btn-secondary, .btn-primary {
+  padding: 10px;
+  margin: 5px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: rgb(63, 97, 236);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: rgb(157, 157, 184);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: rgb(19, 61, 228);
+}
+
+.btn-primary:active {
+  background-color: rgb(116, 142, 244);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(50, 50, 58, 0.667);
+}
+
+.comment_container {
+  box-shadow: 0px 0px 24px 0px rgb(197, 197, 197);
+  padding: 10px;
+  width: 1200px;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+.comment_container #comment-content {
+  width: 100%;
+  resize: vertical;
+  padding: 10px;
+  field-sizing: content;
+  border: 3px solid gray;
+}
+.comment_container .form-row {
+  padding: 10px;
+}
+.comment_container .user-card-small {
+  padding: 10px 10px 10px 5px;
+  display: flex;
+  align-items: center;
+}
+.comment_container .user-card-small > span {
+  font-size: 18px;
+  display: inline-block;
+  padding: 10px 0;
+}
+.comment_container .user-card-small > img {
+  border-radius: 30px;
+  margin: 3px 3px 3px 0px;
+}
+.comment_container .user-name {
+  margin: 3px 10px;
+}
+.comment_container .comment-row {
+  display: flex;
+  align-items: stretch;
+}
+.comment_container .comment-row .btn-primary {
+  margin: 0 0 0 5px;
+  padding: 0;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 52px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+.tags .tag {
+  background: #eee;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.tags .tag span {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.table-wrapper {
+  max-width: 1200px;
+  max-height: 600px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  margin: 0 auto;
+}
+.table-wrapper table {
+  border: 1px solid black;
+  margin: 20px;
+}
+.table-wrapper table td {
+  /* max-width: 300px;
+        max-height: 100px; */
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+}
+.table-wrapper .td-date {
+  white-space: nowrap;
+  color: blue;
+}
+.table-wrapper .td-content {
+  max-width: 300px;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+.table-wrapper button {
+  cursor: pointer;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/*# sourceMappingURL=output.css.map */

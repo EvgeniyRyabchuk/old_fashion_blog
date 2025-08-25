@@ -6,14 +6,14 @@
    <meta charset="UTF-8"> 
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Main page</title>
-   <link rel="stylesheet" href="./css/style.css" type="text/css">
+   <link rel="stylesheet" href="./css/output.css" type="text/css"> 
 
    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app-compat.js"></script>
    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics-compat.js"></script>
    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth-compat.js"></script>
    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore-compat.js"></script>
    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-storage-compat.js"></script>
-
+   
    <!-- Quill CSS -->
    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
    <!-- Quill JS -->
@@ -142,9 +142,97 @@
    
 
       <!-- Save Post -->
-      <button id="savePost">Save Post</button>
-      <button id="reset" onclick="onResetPostClick()">Cancel</button>
+      <button class="btn-primary" id="savePost">Save Post</button>
+      <button class="btn-secondary" id="reset" onclick="onResetPostClick()">Cancel</button>
    </div>
+
+   <style>
+    
+      #list-comment-container {
+         list-style: none;
+         padding: 10px;
+      }
+
+      #list-comment-container hr {
+         border: 0;
+         height: 2px;
+         background: linear-gradient(to right, transparent, rgba(18, 36, 108, 0.2), transparent);
+         margin: 25px 0;
+      }
+
+      #list-comment-container li {
+         margin: 30px 0;
+      } 
+      #list-comment-container .comment-row {
+         text-align: justify;
+         width: 100%;
+         display: block;
+          /* text-align-last: justify;  */
+          padding: 10px; 
+      }
+      .created-at {
+         /* justify-self: self-end; */
+           margin-left: auto; /* уедет вправо */
+           color: grey;
+           font-size: 18px;
+           font-style: oblique;
+      }
+
+   </style>
+
+   
+   <div class="comment_container">
+      <div id="write-comment-container">
+         <div class="form-row">
+            <div class="user-card-small">
+               <img width="45" height="45" src="./images/1960s-minidress4.jpg" alt="">
+               <div class="user-name">User1</div>
+               <div class="created-at">20-01-2025 11:03:12</div>
+            </div> 
+            <div class="comment-row">
+               <textarea  id="comment-content"></textarea>
+               <button class="btn-primary" type="button" id="sendCommentBtn">Send</button> 
+            </div>
+         </div>
+          <hr> 
+      </div>
+      <ul id="list-comment-container">
+         <li>
+              <div class="user-card-small">
+               <img width="45" height="45" src="./images/1960s-minidress4.jpg" alt="">
+               <div class="user-name">Lorem, ipsum.</div>
+               <div class="created-at">20-01-2025 11:03:12</div>
+            </div> 
+            <div class="comment-row">
+               Find the best dirndl jackets and blazers: the best options for Oktoberfest and everyday looks
+               Soon, Munich will be in the Oktoberfest beer fever: dirndls, traditional outfits, and festive 
+               accessories are everywhere. 
+               <br>But the September weather in Bavaria can be unpredictable - sometimes warm like late summer, sometimes chilly autumn. Without the right jacket, it can get cold quickly. A short cardigan or an elegant jacket will not only keep you warm, but also perfectly complement your dirndl look. With the right approach, these pieces can be worn in everyday life, not only at Oktoberfest.
+               In this post, I will show you the most beautiful and timeless dirndl jackets, cardigans, and blazers for women, as well as styling ideas and shopping tips. For more inspiration, read the article “How to Wear Dirndl and Tracht in Everyday Life – Outfit Ideas and Tips”.
+            </div>
+            <hr>
+         </li>
+         <li>
+              <div class="user-card-small">
+               <img width="45" height="45" src="./images/1960s-minidress4.jpg" alt="">
+               <div class="user-name">Lorem, ipsum.</div>
+               <div class="created-at">20-01-2025 11:03:12</div> 
+            </div> 
+            <div class="comment-row">
+               Lorem ipsum dolor sit amet consectetur adipi
+               sicing elit. Recusandae delectus adipisci a corporis quas ev
+               eniet fuga minus quibusdam expedita veritatis? <br>
+               Quam, eum quos ipsam consequatur aspernatur aliquam modi
+                quidem quod pariatur iste, corrupti sunt facilis porro quo illum repudiandae id? <br>
+               Exercitationem provident, repellendus quo labore assumend
+               a perferendis eligendi beatae deserunt, fugiat dolorum eiu
+               s dolore aut, adipisci ea atque hic suscipit. <br>
+            </div>
+          <hr>
+         </li>
+      </ul>
+   </div>
+   
 
    <nav>
       <ul>

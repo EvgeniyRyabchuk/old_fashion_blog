@@ -21,12 +21,8 @@
 7. Filter/Sort 
 8. Adaptive design
 9. Validation
+10. Tailwind/Bootstrap 
 
-normalized db in firebase 
-
-
-
-Add func to make different template of posts: image+text - vertical |  image+text - horizontal  
 
 
 
@@ -50,9 +46,10 @@ post_tag:
     postId
     tagId
 comments:
-    content
+    content 
     createdAt
     userId
+    postId
 admins: 
     userId
 

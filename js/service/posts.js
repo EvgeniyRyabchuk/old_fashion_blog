@@ -1,4 +1,7 @@
-
+  //TODO: add categoryId 
+  //TODO: add loader 
+  //TODO: refactor 
+  
 
 const quill = new Quill('#editor', {
   theme: 'snow',
@@ -112,10 +115,7 @@ const createOrUpdatePost = async (postId = null) => {
   //   } 
   // }
   
-  //TODO: add categoryId 
-  //TODO: add loader 
-  //TODO: refactor 
-  
+
   try {
     let createdOrUpdatedPost = null; 
     if(!postId) {
@@ -163,7 +163,7 @@ document.getElementById("savePost").addEventListener("click", async () => {
   postToUpdateId = null; 
 });
 
-async function readPostDocs() {
+async function readPostDocs() { 
   // TODO: separate func 
   const postsSnap = await db.collection("posts").orderBy("createdAt", "desc").limit(5).get(); 
   const posts = postsSnap.docs.map(doc => ({
@@ -266,8 +266,6 @@ async function readPostDocs() {
   };
 
 }
-
-  //TODO: cancel button 
 
 
 const onUpdatePostClick = async (e) => {

@@ -1,0 +1,38 @@
+
+
+.table-wrapper {
+   max-width: 1200px;
+   max-height: 600px;
+   overflow-y: scroll;
+   overflow-x: scroll;
+  
+   margin: 0 auto;
+
+    table {
+      border: 1px solid black;
+      margin: 20px;
+      td {
+      /* max-width: 300px;
+            max-height: 100px; */
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+      }
+    }
+    
+    .td-date {
+      white-space: nowrap;
+      color: blue;
+    }
+    .td-content {
+      max-width: 300px;
+      max-height: 200px;
+      overflow-y: auto; 
+      overflow-x: auto; 
+    }
+
+    button {
+      cursor: pointer;
+    }
+  
+}
