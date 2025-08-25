@@ -89,7 +89,7 @@ const clearUpTheForm = () => {
 
 const createOrUpdatePost = async (postId = null) => {
   const title = document.getElementById("title").value;
-  const content = quill.root.innerHTML;
+  const content = quill.root.innerHTML; 
   let coverUrl = null;
   // if post is new and cover img loaded then upload it to cloudinary
   if(coverImg.files[0]) 
@@ -141,7 +141,7 @@ const createOrUpdatePost = async (postId = null) => {
         // updateAt: firebase.firestore.FieldValue.serverTimestamp()
       }); 
       const updatedSnap = await db.collection("posts").doc(postId).get();
-      createdOrUpdatedPost = { id: updatedSnap.id, ...updatedSnap.data() };
+      createdOrUpdatedPost = { id: updatedSnap.id, ...updatedSnap.data() }; 
     }
     
     await addTagsIfNotExist(createdOrUpdatedPost); 
@@ -232,7 +232,7 @@ async function readPostDocs() {
     // tdImageCategoryID.id = "categorySelect";
     tdDateRange.innerHTML = post.date_range;
     tdUserId.innerHTML = post.userId;
-    tdUserCreatedAt.innerHTML = post.createdAt.toDate().toLocaleString();;
+    tdUserCreatedAt.innerHTML = post.createdAt.toDate().toLocaleString();
     tdUserCreatedAt.classList.add("td-date");
 
     editButton.innerText = 'Edit';
@@ -297,7 +297,7 @@ const onUpdatePostClick = async (e) => {
 const onDeletePostClick = async (e) => {
   const pId = e.target.closest("tr").dataset.postId;
   console.log(pId); 
-
+  
   try {
     await db.collection("posts").doc(pId).delete(); 
     await readPostDocs();

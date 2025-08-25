@@ -27,14 +27,23 @@ const storage = firebase.storage();
 // let user = null; 
 const adminsIds = ["AzkfJd3AjmaD3r3hY1idYRS7HqA3"]; // array of admin user ids
 let isAdmin = false; // default value
-let userAddition = null;
+let userAddition = null; 
 
 async function getUserAddition() {
-  const user = firebase.auth().currentUser;
+  const user = firebase.auth().currentUser; 
   if (!user) return null;
-
-
+  
+  let snap = await db.collection("users").where("userId", "==", user.uid).limit(1).get(); 
+  if(!snap.docs[0])
+    snap = await db.collection("admins").where("userId", "==", user.uid).limit(1).get(); 
+  if(!snap.docs[0])
+    return null;
+  console.log(snap.docs[0]);
+  
+  return snap.docs[0].data(); 
 }
+
+
 
 auth.onAuthStateChanged(user => {
   if (user) {
@@ -70,7 +79,7 @@ async function login() {
     // logoutBtn.disabled = false;
     const doc = await db.collection("users").doc(user.uid).get();
     userAddition = doc.data();
-
+    
     return user;
   } catch (error) {
     console.error("Login failed:", error.message);

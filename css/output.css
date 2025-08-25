@@ -10,7 +10,7 @@ scss/
  ├─ vendors/     // библиотеки, например normalize.css
  └─ main.scss    // точка входа
 */
-.btn, .btn-secondary, .btn-primary {
+.btn, .btn-danger, .btn-secondary, .btn-primary {
   padding: 10px;
   margin: 5px;
   font-size: 17px;
@@ -24,6 +24,11 @@ scss/
 
 .btn-secondary {
   background-color: rgb(157, 157, 184);
+  color: white;
+}
+
+.btn-danger {
+  background-color: rgba(178, 17, 17, 0.667);
   color: white;
 }
 

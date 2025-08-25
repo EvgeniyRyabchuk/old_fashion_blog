@@ -190,8 +190,9 @@
                <div class="created-at">20-01-2025 11:03:12</div>
             </div> 
             <div class="comment-row">
-               <textarea  id="comment-content"></textarea>
-               <button class="btn-primary" type="button" id="sendCommentBtn">Send</button> 
+               <textarea id="comment-content"></textarea>
+               <button class="btn-primary" type="button" id="sendCommentBtn"
+                  onclick="onSendCommentClick()">Send</button> 
             </div>
          </div>
           <hr> 
@@ -209,7 +210,9 @@
                accessories are everywhere. 
                <br>But the September weather in Bavaria can be unpredictable - sometimes warm like late summer, sometimes chilly autumn. Without the right jacket, it can get cold quickly. A short cardigan or an elegant jacket will not only keep you warm, but also perfectly complement your dirndl look. With the right approach, these pieces can be worn in everyday life, not only at Oktoberfest.
                In this post, I will show you the most beautiful and timeless dirndl jackets, cardigans, and blazers for women, as well as styling ideas and shopping tips. For more inspiration, read the article “How to Wear Dirndl and Tracht in Everyday Life – Outfit Ideas and Tips”.
-            </div>
+            </div> 
+            <button class="btn-danger" type="button" id="deleteCommentBtn"
+                  onclick="onSendCommentClick()">Remove</button> 
             <hr>
          </li>
          <li>
@@ -228,8 +231,8 @@
                a perferendis eligendi beatae deserunt, fugiat dolorum eiu
                s dolore aut, adipisci ea atque hic suscipit. <br>
             </div>
-          <hr>
-         </li>
+          <hr> 
+         </li> 
       </ul>
    </div>
    
@@ -305,6 +308,7 @@
    <script src="./js/service/category.js"></script>
    <script src="./js/service/tags.js"></script>
    <script src="./js/service/posts.js"></script>
+   <script src="./js/service/comments.js"></script>
 
 
 </body>
