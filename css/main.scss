@@ -13,16 +13,12 @@ scss/
  // теперь можно писать просто $main-color
 @use 'abstracts/index'  as abstracts;
 @use 'base/index'       as *;      
-@use 'components/index' as components;  
+@use 'components/index' as components;   
 @use 'layout/index'     as layout;
 @use 'pages/index'      as pages;
 @use 'themes/index'     as themes;
 @use 'vendors/index'    as vendors;
 
-
-* {
-   box-sizing: border-box;
-}
 
 
 

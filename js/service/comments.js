@@ -20,7 +20,6 @@ const addCommentToPost = async () => {
 
 const addCommentToHtml = (container, comment, additionUserInfo) => { 
     const li = document.createElement("li");
-
     // Create user card
     const userCard = document.createElement("div");
     const removeBtn = document.createElement("button");
@@ -37,7 +36,7 @@ const addCommentToHtml = (container, comment, additionUserInfo) => {
     userCard.className = "user-card-small";
 
     const avatar = document.createElement("img");
-    avatar.src = "./images/1960s-minidress4.jpg";
+    avatar.src = additionUserInfo.avatar;
     avatar.width = 45; 
     avatar.height = 45;
     avatar.alt = "User Avatar";
@@ -93,7 +92,8 @@ const deleteComment = async (commentId) => {
     const commentSnap = await db.collection("comments").doc(commentId).get();
     const comment = {
         id: commentSnap.id,
-        ...commentSnap.data()}; 
+        ...commentSnap.data()
+    }; 
 
     if (comment.userId === auth.currentUser.uid) {
         try { 
@@ -110,9 +110,3 @@ const onSendCommentClick = (e) => {
 }
 
 getAllComments();
-
-// document.getElementById("deleteCommentBtn").addEventListener("click", async (e) => {
-//     const commentId = e.target.commentId;
-//     await deleteComment(commentId);
-//     e.target.remove();
-// })

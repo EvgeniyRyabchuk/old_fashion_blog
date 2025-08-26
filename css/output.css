@@ -10,6 +10,18 @@ scss/
  ├─ vendors/     // библиотеки, например normalize.css
  └─ main.scss    // точка входа
 */
+.loader-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .btn, .btn-danger, .btn-secondary, .btn-primary {
   padding: 10px;
   margin: 5px;
@@ -143,8 +155,118 @@ scss/
   cursor: pointer;
 }
 
-* {
-  box-sizing: border-box;
+.loader-wrapper {
+  background-color: rgba(147, 147, 147, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader-wrapper .loader {
+  width: 40%;
+  height: 40%;
+  position: relative;
+}
+.loader-wrapper .loader .circle-wrapper-1 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10%;
+  height: 100%;
+  animation: circleMovement 2s infinite ease-in-out;
+  animation-delay: 0.1s;
+}
+.loader-wrapper .loader .circle-wrapper-1 .circle-1 {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: rgb(42, 79, 189);
+  border-radius: 50%;
+}
+.loader-wrapper .loader .circle-wrapper-2 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10%;
+  height: 100%;
+  animation: circleMovement 2s infinite ease-in-out;
+  animation-delay: 0.2s;
+}
+.loader-wrapper .loader .circle-wrapper-2 .circle-2 {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: rgb(42, 79, 189);
+  border-radius: 50%;
+}
+.loader-wrapper .loader .circle-wrapper-3 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10%;
+  height: 100%;
+  animation: circleMovement 2s infinite ease-in-out;
+  animation-delay: 0.3s;
+}
+.loader-wrapper .loader .circle-wrapper-3 .circle-3 {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: rgb(42, 79, 189);
+  border-radius: 50%;
+}
+.loader-wrapper .loader .circle-wrapper-4 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10%;
+  height: 100%;
+  animation: circleMovement 2s infinite ease-in-out;
+  animation-delay: 0.4s;
+}
+.loader-wrapper .loader .circle-wrapper-4 .circle-4 {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: rgb(42, 79, 189);
+  border-radius: 50%;
+}
+.loader-wrapper .loader .circle-wrapper-5 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10%;
+  height: 100%;
+  animation: circleMovement 2s infinite ease-in-out;
+  animation-delay: 0.5s;
+}
+.loader-wrapper .loader .circle-wrapper-5 .circle-5 {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: rgb(42, 79, 189);
+  border-radius: 50%;
+}
+.loader-wrapper .loader .circle-wrapper-6 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10%;
+  height: 100%;
+  animation: circleMovement 2s infinite ease-in-out;
+  animation-delay: 0.6s;
+}
+.loader-wrapper .loader .circle-wrapper-6 .circle-6 {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: rgb(42, 79, 189);
+  border-radius: 50%;
+}
+
+@keyframes circleMovement {
+  0% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /*# sourceMappingURL=output.css.map */
