@@ -9,9 +9,10 @@ $animation-duration: 2s;
 $base-delay: 0.1s; // delay step
 
 $circle-color: rgb(42, 79, 189);
+$wrapper-bg-color: rgb(147, 147, 147, 0.5);
 
-$loader-wrapper-size: calc(10%);
-$cirle-size-percent: 10%; 
+// $loader-wrapper-size: calc(10%); 
+$cirle-size-percent: 6%; 
 $wrapper-circle-size-percent: 0.4;
 
 
@@ -30,8 +31,7 @@ $wrapper-circle-size-percent: 0.4;
 
 
 .loader-wrapper {
-    @extend %fullScreem; 
-    background-color: rgb(147, 147, 147, 0.5);
+    background-color: $wrapper-bg-color; 
     display: flex;
     justify-content: center; 
     align-items: center; 

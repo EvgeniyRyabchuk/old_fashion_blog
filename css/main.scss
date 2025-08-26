@@ -20,10 +20,151 @@ scss/
 @use 'vendors/index'    as vendors;
 
 
+// TODO: adaptive 
+
+.default-btn {
+    // padding: 15px;   
+    border: 0;
+}
+
+button {
+   @extend .default-btn ;
+}
+
+.full-screen {
+    position: absolute;
+    top: 0;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+ }
+ 
+
+.full-parrent {
+    position: absolute;
+    top: 0;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+ }
 
 
 
 
+ header {
+  padding: 0;
 
+  nav {
+    a {
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+    }
+    #auth-nav-list-wrapper {
+        position: relative;
+        width: 150px;
+        display: flex;
+        justify-content: center;
+        margin: 15px 0 15px auto;
+        > button { background-color:rgb(71, 107, 139); color: white;}
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      padding-left: 0;
+      margin: 15px 15px 15px 0;
+      li {
+        display: block;
+        padding: 15px;
+      
+        &:hover {
+          background-color: rgb(126, 126, 193);
+          cursor: pointer;
+
+          a {
+            color: white;
+          }
+        }
+      } 
+    }
+
+    > ul, 
+    > button {
+    //   @extend .default-btn;
+      padding: 15px; 
+    }
+
+    #authNavList { 
+        position: absolute;
+        background-color: grey;
+        top: 54px; 
+        z-index: 99;
+        margin: 0;
+        width: 100%;
+
+        li {
+            text-align: center;
+        }
+
+        button {
+            // @extend .default-btn; 
+            @extend .btn-danger;
+            margin: 0;
+            padding: 15px 0;
+            width: 100%;
+        }
+
+      
+    }
+  }
+}
+
+#top-menu {
+  width: 1200px;
+  margin: 0 auto;
+
+  > div {
+    display: flex;
+     margin: 0 0px;
+  }
+
+  > button {
+    // @extend .default-btn
+  }
+}
+
+#profileBtn { 
+  cursor: pointer;
+  padding: 15px 30px;
+  width: 100%;
+  &:hover {
+    background-color: rgb(126, 126, 193);
+  }
+}
+
+main {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.right-side {
+  margin-left: auto;
+}
+
+.d-block { 
+    display: block;
+}
+
+.d-none {
+    display: none;
+}
+
+#wrapper {
+  // пусто — добавь стили позже при необходимости
+}
 
  

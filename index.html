@@ -25,28 +25,68 @@
 
 <body>
 
-   <div class="loader-wrapper">
-      <div class="loader">
-         <div class="circle-wrapper-1">
-            <div class="circle-1"></div>
-         </div>
-         <div class="circle-wrapper-2">
-            <div class="circle-2"></div>
-         </div>
-         <div class="circle-wrapper-3">
-            <div class="circle-3"></div>
-         </div>
-         <div class="circle-wrapper-4">
-            <div class="circle-4"></div>
-         </div>
-         <div class="circle-wrapper-5">
-            <div class="circle-5"></div>
-         </div>
-         <div class="circle-wrapper-6">
-            <div class="circle-6"></div>
-         </div>
+   <header>
+      <div>
+         
+         <div style=" width: 1200px;
+  height: 100px;
+  margin: 0 auto;
+  background-image: url('https://retrocat.de/wp-content/uploads/2021/07/RetroCat_Mode.jpg');
+  background-repeat: no-repeat;
+  background-size: auto;      /* keep natural size */
+  background-position: calc(50% + 80px) 20%; /* choose what part shows */
+  overflow: hidden;           /* clip to header size */
+            ">
       </div>
+      <nav id="top-menu">
+         <div>
+            <ul id="guest-nav-list">
+               <li><a href="./index.html">Home</a></li>
+               <li><a href="./posts.html">All posts</a></li>
+               <li><a href="./posts.html">News</a></li>
+               <li><a href="./posts.html">Guide</a></li> 
+               <li><a href="./galerry.html">Gallery</a></li>
+               <li><a href="./about.html">About</a></li>
+               <li><a href="./contact.html">Contact</a></li>
+            </ul>
+            <div id="auth-nav-list-wrapper">
+               <button class="d-block" id="profileBtn">Profile</button>
+               <ul id="authNavList" class="d-block"> 
+                  <li><a href="./auth/login.html">Login</a></li>
+                  <li><a href="./auth/signUp.html">Sign Up</a></li>
+                  <li><a href="./posts.html">My posts</a></li>
+                  <li><a href="./profile/setting.html">Settings</a></li>
+                  <li><a href="./profile/comments.html">Comments</a></li>
+                  <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+               </ul>
+            </div>
+     
+         </div>
+
+      </nav>
+   </header>
+
+
+
+   <div id="wrapper">
+      <main>
+         <nav id="path">
+            <ul>
+               <li></li>
+            </ul>
+   
+         </nav>
+         <article></article>
+
+
+      </main>
+      <aside></aside>
    </div>
+
+   <footer>
+      Footer
+   </footer>
+
 
    <div class="table-wrapper">
       <table id="postsTable">
@@ -220,6 +260,7 @@
          </div>
           <hr> 
       </div>
+      
       <ul id="list-comment-container">
          <li>
               <div class="user-card-small">
@@ -310,7 +351,7 @@
    <br />
 
    <ul id="postsList"></ul>
-
+   
    <div>
       <h2>Sign Up</h2>
       <input id="regName" type="text" placeholder="Name">

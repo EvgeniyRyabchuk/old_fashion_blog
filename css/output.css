@@ -10,19 +10,15 @@ scss/
  ├─ vendors/     // библиотеки, например normalize.css
  └─ main.scss    // точка входа
 */
-.loader-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
 * {
   box-sizing: border-box;
 }
 
-.btn, .btn-danger, .btn-secondary, .btn-primary {
+body {
+  margin: 0;
+}
+
+.btn, .btn-danger, header nav #authNavList button, .btn-secondary, .btn-primary {
   padding: 10px;
   margin: 5px;
   font-size: 17px;
@@ -39,7 +35,7 @@ scss/
   color: white;
 }
 
-.btn-danger {
+.btn-danger, header nav #authNavList button {
   background-color: rgba(178, 17, 17, 0.667);
   color: white;
 }
@@ -54,6 +50,10 @@ scss/
 
 .btn-secondary:hover {
   background-color: rgba(50, 50, 58, 0.667);
+}
+
+.btn-danger:hover, header nav #authNavList button:hover {
+  background-color: rgba(255, 106, 106, 0.667);
 }
 
 .comment_container {
@@ -126,8 +126,10 @@ scss/
 .table-wrapper {
   max-width: 1200px;
   max-height: 600px;
+  height: 600px;
   overflow-y: scroll;
   overflow-x: scroll;
+  position: relative;
   margin: 0 auto;
 }
 .table-wrapper table {
@@ -170,7 +172,7 @@ scss/
   position: absolute;
   top: 0;
   left: 50%;
-  width: 10%;
+  width: 6%;
   height: 100%;
   animation: circleMovement 2s infinite ease-in-out;
   animation-delay: 0.1s;
@@ -185,7 +187,7 @@ scss/
   position: absolute;
   top: 0;
   left: 50%;
-  width: 10%;
+  width: 6%;
   height: 100%;
   animation: circleMovement 2s infinite ease-in-out;
   animation-delay: 0.2s;
@@ -200,7 +202,7 @@ scss/
   position: absolute;
   top: 0;
   left: 50%;
-  width: 10%;
+  width: 6%;
   height: 100%;
   animation: circleMovement 2s infinite ease-in-out;
   animation-delay: 0.3s;
@@ -215,7 +217,7 @@ scss/
   position: absolute;
   top: 0;
   left: 50%;
-  width: 10%;
+  width: 6%;
   height: 100%;
   animation: circleMovement 2s infinite ease-in-out;
   animation-delay: 0.4s;
@@ -230,7 +232,7 @@ scss/
   position: absolute;
   top: 0;
   left: 50%;
-  width: 10%;
+  width: 6%;
   height: 100%;
   animation: circleMovement 2s infinite ease-in-out;
   animation-delay: 0.5s;
@@ -245,7 +247,7 @@ scss/
   position: absolute;
   top: 0;
   left: 50%;
-  width: 10%;
+  width: 6%;
   height: 100%;
   animation: circleMovement 2s infinite ease-in-out;
   animation-delay: 0.6s;
@@ -267,6 +269,117 @@ scss/
   100% {
     transform: rotate(360deg);
   }
+}
+.default-btn, button {
+  border: 0;
+}
+
+.full-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.full-parrent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+header {
+  padding: 0;
+}
+header nav a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+header nav #auth-nav-list-wrapper {
+  position: relative;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 15px auto;
+}
+header nav #auth-nav-list-wrapper > button {
+  background-color: rgb(71, 107, 139);
+  color: white;
+}
+header nav ul {
+  list-style: none;
+  display: flex;
+  padding-left: 0;
+  margin: 15px 15px 15px 0;
+}
+header nav ul li {
+  display: block;
+  padding: 15px;
+}
+header nav ul li:hover {
+  background-color: rgb(126, 126, 193);
+  cursor: pointer;
+}
+header nav ul li:hover a {
+  color: white;
+}
+header nav > ul,
+header nav > button {
+  padding: 15px;
+}
+header nav #authNavList {
+  position: absolute;
+  background-color: grey;
+  top: 54px;
+  z-index: 99;
+  margin: 0;
+  width: 100%;
+}
+header nav #authNavList li {
+  text-align: center;
+}
+header nav #authNavList button {
+  margin: 0;
+  padding: 15px 0;
+  width: 100%;
+}
+
+#top-menu {
+  width: 1200px;
+  margin: 0 auto;
+}
+#top-menu > div {
+  display: flex;
+  margin: 0 0px;
+}
+#profileBtn {
+  cursor: pointer;
+  padding: 15px 30px;
+  width: 100%;
+}
+#profileBtn:hover {
+  background-color: rgb(126, 126, 193);
+}
+
+main {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.right-side {
+  margin-left: auto;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-none {
+  display: none;
 }
 
 /*# sourceMappingURL=output.css.map */

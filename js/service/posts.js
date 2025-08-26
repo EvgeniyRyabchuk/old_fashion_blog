@@ -164,7 +164,7 @@ document.getElementById("savePost").addEventListener("click", async () => {
 });
 
 async function readPostDocs() { 
-  // TODO: separate func 
+  const loader = loaderCircleGenerate(document.querySelector('.table-wrapper')); 
   const postsSnap = await db.collection("posts").orderBy("createdAt", "desc").limit(5).get(); 
   const posts = postsSnap.docs.map(doc => ({
     id: doc.id, 
@@ -264,7 +264,7 @@ async function readPostDocs() {
     // добавляем строку в tbody
     tbody.appendChild(tr);
   };
-
+loader.remove();
 }
 
 
