@@ -10,12 +10,26 @@ scss/
  ├─ vendors/     // библиотеки, например normalize.css
  └─ main.scss    // точка входа
 */
+footer #footer-content .footer-col .footer-data-wrapper, header nav ul, #list-comment-container, #breadcrumbs ul {
+  list-style: none;
+}
+
+footer a, header nav a, #breadcrumbs a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
+  z-index: 9;
   margin: 0;
+  padding: 0;
+  background-image: url(../../images/background_cover.png);
+  background-size: contain;
 }
 
 .btn, .btn-danger, header nav #authNavList button, .btn-secondary, .btn-primary {
@@ -102,6 +116,31 @@ body {
   align-items: center;
   justify-content: center;
   max-height: 52px;
+}
+
+#list-comment-container {
+  padding: 10px;
+}
+#list-comment-container hr {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(18, 36, 108, 0.2), transparent);
+  margin: 25px 0;
+}
+#list-comment-container li {
+  margin: 30px 0;
+}
+#list-comment-container .comment-row {
+  text-align: justify;
+  width: 100%;
+  display: block;
+  padding: 10px;
+}
+#list-comment-container .created-at {
+  margin-left: auto;
+  color: grey;
+  font-size: 18px;
+  font-style: oblique;
 }
 
 .tags {
@@ -270,33 +309,58 @@ body {
     transform: rotate(360deg);
   }
 }
-.default-btn, button {
-  border: 0;
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ └─ main.scss    // точка входа
+*/
+#breadcrumbs {
+  padding: 10px 30px;
 }
-
-.full-screen {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+#breadcrumbs ul {
+  padding: 0;
 }
-
-.full-parrent {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+#breadcrumbs ul li {
+  display: inline-block;
+}
+#breadcrumbs ul li:hover a {
+  color: grey;
 }
 
 header {
   padding: 0;
+  width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+header #headerLable {
+  margin: 0 auto;
+  background-color: rgba(43, 38, 90, 0.8);
+  padding: 10px;
+  color: white;
+  font-size: 2rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+header #header-img-block {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  background-image: url("https://retrocat.de/wp-content/uploads/2021/07/RetroCat_Mode.jpg");
+  background-repeat: no-repeat;
+  background-size: auto;
+  /* keep natural size */
+  background-position: 100% 20%;
+  /* choose what part shows */
+  overflow: hidden;
+  /* clip to header size */
 }
 header nav a {
-  text-decoration: none;
-  color: black;
-  font-size: 18px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 header nav #auth-nav-list-wrapper {
@@ -311,7 +375,6 @@ header nav #auth-nav-list-wrapper > button {
   color: white;
 }
 header nav ul {
-  list-style: none;
   display: flex;
   padding-left: 0;
   margin: 15px 15px 15px 0;
@@ -349,12 +412,28 @@ header nav #authNavList button {
 }
 
 #top-menu {
-  width: 1200px;
   margin: 0 auto;
+  background-color: white;
 }
-#top-menu > div {
+#top-menu > .top-menu-content {
   display: flex;
   margin: 0 0px;
+  box-shadow: 1px 1px 100px rgba(0, 0, 0, 0.2);
+  padding: 0 10px;
+  align-items: center;
+}
+#top-menu > .top-menu-content #burger-menu-btn {
+  display: none;
+  width: 45px;
+  height: 45px;
+  background-image: url("../../images/free-icon-menu-4254068 (1).png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+#top-menu > .top-menu-content #burger-menu-btn:hover {
+  outline: 1px solid black;
+  background-color: rgb(116, 142, 244);
 }
 #profileBtn {
   cursor: pointer;
@@ -365,9 +444,104 @@ header nav #authNavList button {
   background-color: rgb(126, 126, 193);
 }
 
-main {
-  width: 1200px;
+footer {
+  width: 1400px;
   margin: 0 auto;
+  padding: 30px;
+  background-color: white;
+}
+footer #footer-content {
+  display: flex;
+  justify-content: space-around;
+}
+footer #footer-content .footer-col {
+  padding: 10px;
+}
+footer #footer-content .footer-col:last-child .footer-data-wrapper {
+  justify-content: space-between;
+  margin: 20px 0px;
+}
+footer #footer-content .footer-col:last-child .footer-data-wrapper li {
+  margin: 0 !important;
+}
+footer #footer-content .footer-col .footer-data-wrapper {
+  padding: 0;
+}
+footer #footer-content .footer-col .footer-data-wrapper .footer-data-row {
+  margin: 10px 5px;
+}
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ └─ main.scss    // точка входа
+*/
+#main-wrapper {
+  width: 1400px;
+  margin: 0 auto;
+  background-color: white;
+}
+
+@media screen and (max-width: 1400px) {
+  #main-wrapper {
+    width: 100% !important;
+  }
+  header {
+    width: 100% !important;
+  }
+  footer {
+    width: 100% !important;
+  }
+}
+@media screen and (max-width: 992px) {
+  #header-img-block {
+    height: 80px !important;
+  }
+  .top-menu-content {
+    padding: 10px 8px !important;
+  }
+  .top-menu-content #burger-menu-btn {
+    display: block !important;
+  }
+  .top-menu-content #guest-nav-list, .top-menu-content #auth-nav-list-wrapper {
+    display: none;
+  }
+  #footer-content {
+    flex-wrap: wrap;
+  }
+  #footer-content .footer-col {
+    flex: 1 1 auto;
+    min-width: 200px;
+  }
+  #footer-content .footer-col > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  #footer-content .footer-col:last-child {
+    flex-direction: row;
+  }
+}
+/*
+Mobile (portrait)	320px – 480px	iPhone SE, Galaxy S5
+Mobile (landscape)	481px – 767px	iPhone 14 landscape, small Android phones
+Tablet (portrait)	768px – 991px	iPad Mini, Galaxy Tab
+Tablet (landscape)	992px – 1199px	iPad Pro landscape
+Small Desktop	1200px – 1439px	Small laptops, older monitors
+Large Desktop	1440px and up	Full HD monitors, ultrawide screens
+*/
+.default-btn, button {
+  border: 0;
+}
+
+.default-bg {
+  background-color: white !important;
 }
 
 .right-side {
@@ -380,6 +554,26 @@ main {
 
 .d-none {
   display: none;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.full-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.full-parrent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 /*# sourceMappingURL=output.css.map */

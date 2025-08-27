@@ -1,0 +1,14 @@
+
+@use '../abstracts/index' as abstracts;
+
+main {
+
+
+}
+
+
+#main-wrapper {
+  width: abstracts.$xxl-bp; 
+  margin: 0 auto;
+  background-color: white;
+}

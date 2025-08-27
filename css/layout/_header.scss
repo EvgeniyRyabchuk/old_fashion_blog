@@ -1,0 +1,143 @@
+@use '../components/buttons';
+@use '../abstracts/placeholders';
+@use '../abstracts/variables' as variables;
+
+ header {
+
+    padding: 0;
+    width: variables.$xxl-bp;
+    margin: 0 auto;
+    position: relative;
+    #headerLable {
+        margin: 0 auto;
+        background-color: rgba(43, 38, 90, 0.8);
+        padding: 10px; 
+        color: white; 
+        font-size: 2rem;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    }
+  #header-img-block {
+      display: flex; 
+      align-items: center;
+      height: 100px;
+      background-image: url('https://retrocat.de/wp-content/uploads/2021/07/RetroCat_Mode.jpg');
+      background-repeat: no-repeat;
+      background-size: auto;
+      /* keep natural size */
+      background-position: calc(100%) 20%; 
+      /* choose what part shows */
+      overflow: hidden;
+      /* clip to header size */
+  }
+
+  nav {
+    a {
+        @extend %menu-list-item;  
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif; 
+    }
+    #auth-nav-list-wrapper {
+        position: relative;
+        width: 150px;
+        display: flex;
+        justify-content: center;
+        margin: 15px 0 15px auto;
+        > button { background-color:rgb(71, 107, 139); color: white;}
+    }
+
+    ul {
+     @extend %menu-list; 
+      
+      display: flex;
+      padding-left: 0;
+      margin: 15px 15px 15px 0;
+      li {
+        display: block;
+        padding: 15px;
+      
+        &:hover {
+          background-color: rgb(126, 126, 193); 
+          cursor: pointer;
+
+          a {
+            color: white;
+          }
+        }
+      } 
+    }
+
+    > ul, 
+    > button {
+    //   @extend .default-btn;
+      padding: 15px; 
+    }
+
+    #authNavList { 
+        position: absolute;
+        background-color: grey;
+        top: 54px; 
+        z-index: 99;
+        margin: 0;
+        width: 100%;
+
+        li {
+            text-align: center;
+        }
+
+        button {
+            // @extend .default-btn; 
+            @extend .btn-danger;
+            margin: 0;
+            padding: 15px 0;
+            width: 100%;
+        }
+
+      
+    }
+  }
+}
+
+#top-menu {
+//   width:  $xxl-bp;;
+  margin: 0 auto;
+  background-color: white;
+  
+  > .top-menu-content {
+    display: flex;
+    margin: 0 0px; 
+    box-shadow: 1px 1px 100px rgba($color: #000000, $alpha: 0.2);
+    padding: 0 10px;
+    align-items: center;
+
+    $burger-size: 45px;
+    #burger-menu-btn { 
+      display: none;
+      width: $burger-size;
+      height: $burger-size;
+      background-image: url('../../images/free-icon-menu-4254068\ \(1\).png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      cursor: pointer;
+      
+      &:hover {
+        outline: 1px solid black;
+        background-color: variables.$primary-color-active;
+        
+      }
+    }
+  }
+
+  > button {
+    // @extend .default-btn
+  }
+}
+
+#profileBtn { 
+  cursor: pointer;
+  padding: 15px 30px;
+  width: 100%;
+  &:hover {
+    background-color: rgb(126, 126, 193);
+  }
+}

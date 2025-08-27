@@ -1,0 +1,19 @@
+@use '../abstracts/index';
+
+#breadcrumbs {
+    padding: 10px 30px;
+    a {
+        @extend %menu-list-item;  
+    }
+    ul {
+        padding: 0;
+        @extend %menu-list; 
+        li {
+            display: inline-block;
+            &:hover a {
+                color: grey;
+                // background-color: grey;
+            }
+        }
+    }
+}

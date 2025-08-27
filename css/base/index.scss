@@ -3,5 +3,9 @@
 }
 
 body {
+   z-index: 9;
    margin: 0;
+   padding: 0;
+   background-image: url(../../images/background_cover.png);
+   background-size: contain; 
 }

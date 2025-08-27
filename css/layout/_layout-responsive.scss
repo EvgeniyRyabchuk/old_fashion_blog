@@ -1,0 +1,72 @@
+@use '../abstracts/variables' as variables;
+
+
+@media screen and (max-width: variables.$xxl-bp) {
+    #main-wrapper {
+        width: 100% !important;
+        
+    }
+    header {
+        width: 100% !important;
+    }
+    footer {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: variables.$lg-bp) {
+    #header-img-block {
+        height: 80px !important;
+    }
+
+        .top-menu-content {
+        // margin: 10px !important;
+        padding: 10px 8px !important;
+        
+        #burger-menu-btn {
+            display: block !important; 
+        }
+        #guest-nav-list, #auth-nav-list-wrapper {
+            display: none;
+        } 
+    }
+
+
+   #footer-content {
+     flex-wrap: wrap; 
+       .footer-col {
+            flex: 1 1 auto; 
+            min-width: 200px; 
+            > div {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center; 
+            }
+             &:last-child {
+                flex-direction: row; 
+           
+            }
+       }
+   }
+
+}
+
+
+@media screen and (max-width: variables.$md-bp) {
+    main {
+      
+    }
+}
+
+@media screen and (max-width: variables.$sm-bp) {
+    main {
+       
+    }
+}
+
+@media screen and (max-width: variables.$xs-bp) {
+    main {
+       
+    }
+}

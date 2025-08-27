@@ -1,0 +1,45 @@
+@use '../abstracts/placeholders';
+@use '../abstracts/variables'  as variables;
+
+//TODO: placeholders not work but variables work 
+
+footer {
+    width: variables.$xxl-bp;
+    margin: 0 auto;
+    padding: 30px; 
+    background-color: white; 
+    #footer-content {
+      display: flex;
+      justify-content: space-around;
+      
+
+ 
+      
+      .footer-col {
+        padding: 10px;
+           &:last-child {
+             .footer-data-wrapper {
+                justify-content: space-between;
+                margin: 20px 0px;
+                
+             }
+            .footer-data-wrapper li {
+                margin: 0 !important;
+       
+            }
+        }
+        .footer-data-wrapper {
+            @extend %menu-list; 
+            padding: 0;
+            .footer-data-row {
+              margin: 10px 5px; 
+            }
+        }
+      }
+
+
+    }
+    a {
+        @extend %menu-list-item;  
+    }
+}

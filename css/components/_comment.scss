@@ -1,3 +1,4 @@
+@use '../abstracts/placeholders'; 
 
 .comment_container {
     box-shadow: 0px 0px 24px 0px rgba(197, 197, 197, 1);
@@ -53,4 +54,44 @@
             max-height: 52px;
         }
     }
+}
+
+
+
+
+#list-comment-container {
+  @extend %menu-list; 
+  padding: 10px;
+
+  hr {
+    border: 0;
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(18, 36, 108, 0.2),
+      transparent
+    );
+    margin: 25px 0;
+  }
+
+  li {
+    margin: 30px 0;
+  }
+  
+  .comment-row {
+    text-align: justify;
+    width: 100%;
+    display: block;
+    padding: 10px;
+    // text-align-last: justify;
+  }
+
+  .created-at {
+    margin-left: auto; // уезжает вправо
+    color: grey;
+    font-size: 18px;
+    font-style: oblique;
+    // justify-self: self-end;
+  }
 }
