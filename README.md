@@ -26,7 +26,7 @@
 12. Seeder 
 13. Facker 
 
-
+& in scss meaning
 
 `Db stucture` 
 

@@ -1,44 +1,44 @@
+@use '../abstracts/variables'as *;
 
-@use '../abstracts/variables'   as *;     
-
-.btn { 
+.btn {
   padding: 10px;
   margin: 5px;
   font-size: 17px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
-.btn-primary { 
+@mixin createBtn($bgColor, $hColor, $aColor: "") {
+    background-color: $bgColor;
+    color: white;
+    cursor: pointer;
+    
+    &:hover { 
+      background-color: $hColor; 
+    }
+
+    &:active {
+      background-color: $aColor;
+    }
+} 
+
+.btn-info { 
+  // @extend .btn; 
+  @include createBtn($info-color, $primary-color-hover, $primary-color-active); 
+}
+
+.btn-primary {
   @extend .btn;
-  background-color: $primary-color; 
-  color: white;
+  @include createBtn($primary-color, $primary-color-hover, $primary-color-active); 
+
 }
-.btn-secondary { 
+
+.btn-secondary {
   @extend .btn;
-  background-color: $secondary-color;
-  color: white;
+  @include createBtn($secondary-color, $secondary-color-hover); 
 }
-.btn-danger { 
+
+.btn-danger {
   @extend .btn;
-  background-color: $danger-color; 
-  color: white;
+  @include createBtn($danger-color, $danger-color-hover); 
+  
 }
-
-
-
-
-.btn-primary:hover {
-   background-color: $primary-color-hover;
-}
-.btn-primary:active  {
-   background-color: $primary-color-active;
-}
-
-.btn-secondary:hover {
-  background-color: $secondary-color-hover;
-}
-
-.btn-danger:hover {
-    background-color: $danger-color-hover; 
-}
-

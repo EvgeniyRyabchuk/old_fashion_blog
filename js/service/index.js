@@ -33,16 +33,27 @@ const loaderCircleGenerate = (parentContainer = document.body) => {
 }
 
 
-document.getElementById("auth-nav-list-wrapper").addEventListener("mouseenter", (e) => {
+document.getElementById("profile-btn-wrapper").addEventListener("mouseenter", (e) => {
     const authNavList = document.getElementById("authNavList");
     authNavList.classList.remove("d-none");
     authNavList.classList.add("d-block");
-    
 })
 
-document.getElementById("auth-nav-list-wrapper").addEventListener("mouseleave", (e) => {
+document.getElementById("profile-btn-wrapper").addEventListener("mouseleave", (e) => {
     const authNavList = document.getElementById("authNavList");
     authNavList.classList.remove("d-block");
     authNavList.classList.add("d-none");
-    
 })
+
+document.getElementById("burger-menu-btn").addEventListener("click", (e) => {
+    console.log(123);
+    
+    document.getElementById("side-menu").classList.remove("d-none");
+    document.getElementById("side-menu").classList.add("d-block");
+})
+
+document.getElementById("closeSideMenu").addEventListener("click", (e) => {
+    document.getElementById("side-menu").classList.remove("d-block"); 
+    document.getElementById("side-menu").classList.add("d-none"); 
+})
+

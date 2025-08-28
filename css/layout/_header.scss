@@ -39,15 +39,34 @@
     }
     #auth-nav-list-wrapper {
         position: relative;
-        width: 150px;
         display: flex;
-        justify-content: center;
+        justify-content: center; 
         margin: 15px 0 15px auto;
-        > button { background-color:rgb(71, 107, 139); color: white;}
+
+        .form-row {
+          display: flex;
+          margin: 0 5px;
+          align-items: center;
+        }
+
+        #searchInput {
+          width: 200px;
+          height: 30px;
+          font-size: 18px
+        }
+
+        #searchBtn {
+          // @extend deafult-btn
+           height: 30px;
+           &:hover {
+
+           }
+        }
+        
     }
 
     ul {
-     @extend %menu-list; 
+     @extend %menu-list;  
       
       display: flex;
       padding-left: 0;
@@ -66,7 +85,7 @@
         }
       } 
     }
-
+    
     > ul, 
     > button {
     //   @extend .default-btn;
@@ -76,7 +95,8 @@
     #authNavList { 
         position: absolute;
         background-color: grey;
-        top: 54px; 
+        top: 44px; 
+        left: -20px;
         z-index: 99;
         margin: 0;
         width: 100%;
@@ -133,11 +153,65 @@
   }
 }
 
-#profileBtn { 
-  cursor: pointer;
-  padding: 15px 30px;
-  width: 100%;
-  &:hover {
-    background-color: rgb(126, 126, 193);
+// .btn1 {
+//   background-color:rgb(71, 107, 139);
+//   color: white; 
+// }
+
+.btn1 {
+  // background-color:rgb(71, 107, 139);
+  color: black; 
+}
+
+#profile-btn-wrapper {
+  margin-left: 20px;
+    &:hover { 
+      #profileBtn {
+        background-color: rgba(31, 36, 40, 0.1);;
+      }
+      #profileBtn::after {
+          transform: rotate(180deg);
+      }
   }
+}
+
+%profileIconSize {
+  width: 22px;
+  height: 22px; 
+}
+
+@mixin b-img-nr-contain($url) {
+      background-image: url($url);
+      background-repeat: no-repeat;
+      background-size: contain;  
+}
+
+#profileBtn { 
+  margin: 0 20px 0 5px;
+  // @extend .btn1;
+  cursor: pointer;
+  padding: 6px 12px 6px 12px; 
+  font-size: 18px; 
+  display: flex !important;
+  align-items: center;
+  background-color: rgba(0,0,0,0);
+  box-shadow: 0px 0px 30px -14px #000000;
+  // width: 100%;
+
+  
+  &::before, &::after {
+    @extend %profileIconSize;
+    content: "";
+    transition: 0.5s transform ease; 
+    display: block;
+  }
+  &::before {
+     @include b-img-nr-contain('../../images/profile.png'); 
+     margin: 5px 10px 5px 5px;
+  }
+  &::after {
+     @include b-img-nr-contain('../../images/down.png'); 
+     margin: 5px 5px 5px 3px;
+  }
+  
 }

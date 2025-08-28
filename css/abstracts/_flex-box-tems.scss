@@ -1,0 +1,39 @@
+
+
+.d-flex-h-center {
+    display: flex;
+    justify-content: center;
+}
+
+.d-flex-v-center {
+    display: flex;
+    align-items: center;
+}
+
+.d-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.d-flex-h-right-v-center {
+    @extend .d-flex-v-center; 
+    justify-content: right;
+}
+
+.d-flex-h-left-v-center {
+    @extend .d-flex-v-center; 
+    justify-content: left; 
+}
+
+.d-flex-h-center-v-start {
+    @extend .d-flex-h-center;
+    display: flex;
+    align-items: start;
+}
+
+.d-flex-h-center-v-end {
+    @extend .d-flex-h-center;
+    display: flex;
+    align-items: end;
+}

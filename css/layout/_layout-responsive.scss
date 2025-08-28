@@ -10,52 +10,90 @@
         width: 100% !important;
     }
     footer {
-        width: 100% !important;
+        width: 100% !important; 
+    }
+    #side-menu {
+        display: none;
     }
 }
 
-@media screen and (max-width: variables.$lg-bp) {
-    #header-img-block {
-        height: 80px !important;
-    }
-
-        .top-menu-content {
+@media screen and (max-width: variables.$xl-bp) {
+     .top-menu-content {
         // margin: 10px !important;
         padding: 10px 8px !important;
         
         #burger-menu-btn {
             display: block !important; 
         }
-        #guest-nav-list, #auth-nav-list-wrapper {
+        #guest-nav-list {
             display: none;
         } 
+        #header-search { 
+            display: none !important; 
+        }
+    }   
+
+    #side-menu {
+        display: block;
+    }
+    
+}
+
+@media screen and (max-width: variables.$lg-bp) {
+    .post-card  {
+        width: 50% !important;
+    }
+    #header-img-block {
+        height: 80px !important;
+    } 
+    // .top-menu-content {
+    //     // margin: 10px !important;
+    //     padding: 10px 8px !important;
+        
+    //     #burger-menu-btn {
+    //         display: block !important; 
+    //     }
+    //     #guest-nav-list, #auth-nav-list-wrapper {
+    //         display: none;
+    //     } 
+    // }   
+
+    footer {
+        padding: 10px;
     }
 
-
-   #footer-content {
-     flex-wrap: wrap; 
-       .footer-col {
-            flex: 1 1 auto; 
-            min-width: 200px; 
-            > div {
+    #footer-content {
+        flex-wrap: wrap; 
+        justify-content: space-between !important;
+        .footer-col {
+                flex: 1 1 auto; 
+                min-width: 200px; 
+                padding: 10px;
                 display: flex;
                 justify-content: center;
-                flex-direction: column;
-                align-items: center; 
-            }
-             &:last-child {
-                flex-direction: row; 
-           
-            }
-       }
-   }
+                align-items: start;
+                > div {
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    align-items: center; 
+                }
+                &:last-child {
+                    flex-direction: row; 
+                }
+                .footer-data-row {
+                    margin: 15px 0px !important; 
+                }
+        }
+    }
+
 
 }
 
 
 @media screen and (max-width: variables.$md-bp) {
-    main {
-      
+  .post-card  {
+        width: 100% !important;
     }
 }
 

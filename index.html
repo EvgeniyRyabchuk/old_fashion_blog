@@ -26,10 +26,43 @@
 <body>
 
    <header>
+      
+      <!-- <div id="side-menu-wrapper" class="d-block">
+     
+      </div> -->
       <div id="header-img-block">
          <h2 id="headerLable">Old Fashion Blog</h2>
       </div>
       <nav id="top-menu">
+         <aside id="side-menu">
+            <div id="closeSideMenu" style="height: 84px; text-align: center; padding: 20px; font-size: 20px; margin-bottom: 20px; border: 1px solid black;">
+               Close
+            </div>
+            <ul id="side-menu-list">
+               <li class="side-menu-item">
+                  <a href="./index.html">Home</a></li>
+
+               <li class="side-menu-item">
+                  <a href="./posts.html">All posts</a>
+               </li>
+               <li class="side-menu-item">
+                  <a href="./posts.html">News</a></li>
+
+               <li class="side-menu-item">
+                  <a href="./posts.html">Guide</a></li
+                  > 
+               <li class="side-menu-item">
+                  <a href="./galerry.html">Gallery</a>
+               </li> 
+               <li class="side-menu-item">
+                  <a href="./about.html">About</a></li
+                  >
+               <li class="side-menu-item">
+                  <a href="./contact.html">Contact</a>
+               </li>
+   
+            </ul>
+         </aside> 
          <div class="top-menu-content">
             <div id="burger-menu-btn"></div>
             <ul id="guest-nav-list">
@@ -41,9 +74,35 @@
                <li><a href="./about.html">About</a></li>
                <li><a href="./contact.html">Contact</a></li>
             </ul>
-            <input id="search" type="text" placeholder="Search..." />
+          
             <div id="auth-nav-list-wrapper">
-               <button class="d-block" id="profileBtn">Profile</button>
+               <div id="header-search" class="form-row"> 
+                  <input id="searchInput" type="text" placeholder="Search..." />
+                  <button class="btn-info" id="searchBtn" type="button"> 
+                     Search
+                  </button>
+               </div>
+
+                <div class="form-row">
+                  <select id="language-select">
+                     <option value="RU">RU</option>
+                     <option value="UA">UA</option>
+                     <option value="EN">EN</option>
+                  </select>
+               </div>
+          
+               <div id="profile-btn-wrapper">
+                   <div  class="form-row">
+                
+                  <button id="profileBtn">
+                        <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                         Profile 
+                        <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                  </button> 
+                 
+               </div>
+               
+             
                <ul id="authNavList" class="d-none"> 
                   <li><a href="./auth/login.html">Login</a></li>
                   <li><a href="./auth/signUp.html">Sign Up</a></li>
@@ -52,6 +111,8 @@
                   <li><a href="./profile/comments.html">Comments</a></li>
                   <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
                </ul>
+               </div>
+              
             </div>
      
          </div>
@@ -79,197 +140,174 @@
             </ul>
 
          </nav>
+         
+         <section class="content-section" >
+            <h2 id="main-content-title">Posts</h2> 
+            <div id="post-wrapper" class="">
+               <article class="post-card">
+                  <a href="/#">
+                     <div class="post-cover">
+                        <img src="./images/1960s-minidress4.jpg" alt="Post Img">
+                     </div>
+                     <div class="post-title-wrapper">
+                        <span class="post-title">Title</span>
+                     </div>
+                     <div class="post-short-content">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                     </div>
+                     <div class="more-wrapper">
+                        <a href="/#" class="read-more">Read More >></a>
+                     </div>
+                  </a>
 
-         <section class="content-section" style="height: 1000px;">
-            
+               </article>
+               <article class="post-card">
+                  <a href="/#">
+                     <div class="post-cover">
+                        <img src="./images/1960s-minidress4.jpg" alt="Post Img">
+                     </div>
+                     <div class="post-title-wrapper">
+                        <span class="post-title">Title</span>
+                     </div>
+                     <div class="post-short-content">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                     </div>
+                     <div class="more-wrapper">
+                        <a href="/#" class="read-more">Read More >></a>
+                     </div>
+                  </a>
+
+               </article>
+               <article class="post-card">
+                  <a href="/#">
+                     <div class="post-cover">
+                        <img src="./images/1960s-minidress4.jpg" alt="Post Img">
+                     </div>
+                     <div class="post-title-wrapper">
+                        <span class="post-title">Title</span>
+                     </div>
+                     <div class="post-short-content">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                     </div>
+                     <div class="more-wrapper">
+                        <a href="/#" class="read-more">Read More >></a>
+                     </div>
+                  </a>
+
+               </article>
+               <article class="post-card">
+                  <a href="/#">
+                     <div class="post-cover">
+                        <img src="./images/1960s-minidress4.jpg" alt="Post Img">
+                     </div>
+                     <div class="post-title-wrapper">
+                        <span class="post-title">Title</span>
+                     </div>
+                     <div class="post-short-content">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                     </div>
+                     <div class="more-wrapper">
+                        <a href="/#" class="read-more">Read More >></a>
+                     </div>
+                  </a>
+
+               </article>
+               <article class="post-card">
+                  <a href="/#">
+                     <div class="post-cover">
+                        <img src="./images/1960s-minidress4.jpg" alt="Post Img">
+                     </div>
+                     <div class="post-title-wrapper">
+                        <span class="post-title">Title</span>
+                     </div>
+                     <div class="post-short-content">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate mollitia est nam
+                        voluptas quam velit, ad modi voluptates accusamus debitis
+                        fugiat nostrum ipsam iusto veritatis repellendus omnis quis itaque nihil!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Iusto commodi totam corrupti veritatis dicta ipsa eveniet,
+                        assumenda enim laboriosam sed excepturi esse tempore
+                        nesciunt consequatur natus perspiciatis repellendus. Sapiente, quidem.
+                     </div>
+                     <div class="more-wrapper">
+                        <a href="/#" class="read-more">Read More >></a>
+                     </div>
+                  </a>
+
+               </article>
+            </div>
          </section>
 
 
       </main>
 
-      <aside class="d-block">
+      <aside id="filter" class="d-block">
 
       </aside>
       
-      <div class="table-wrapper">
-         <table id="postsTable">
-            <thead>
-               <tr>
-                  <th>ID</th>
-                  <th>Title</th>
-                  <th>Content</th>
-                  <th>coverUrl</th>
-                  <th>Category Id</th>
-                  <th>date_range</th>
-                  <th>userId</th>
-                  <th>createdAt</th>
-                  <th>Tags</th>
-                  <th>Actions</th>
-               </tr>
-            </thead>
-            <tbody>
 
-            </tbody>
-         </table>
-      </div>
 
-      <div class="upload_container" style="margin: 30px; border: 1px solid black;">
-         <h2>Create Post</h2>
-         <input type="text" id="title" placeholder="Post title"><br><br>
 
-         <!-- category -->
-         <div>
-            <label for="category-select">Category</label>
-            <select name="category" id="category-select">
-               <option value="">-- Select category --</option>
-               <option value="1">50</option>
-               <option value="2">60</option>
-               <option value="3">70</option>
-            </select>
-         </div>
-
-         <!-- date_range  -->
-         <div class="year-range">
-            <label for="startYear">From:</label>
-            <input type="number" id="startYear" name="startYear" min="2000" max="2099" step="1" value="2020">
-
-            <label for="endYear">To:</label>
-            <input type="number" id="endYear" name="endYear" min="2000" max="2099" step="1" value="2025">
-
-            <button id="filterPosts">Filter Posts</button>
-         </div>
-
-         <!-- tags -->
-         <div class="tag-manager">
-            <label for="tagInput">Tags:</label>
-            <input type="text" id="tagInput" placeholder="Type a tag and press Enter">
-            <div id="tagsContainer" class="tags"></div>
-         </div>
-
-         <!-- Cloudinary unsigned upload -->
-         <input type="file" id="quillImageInput" style="display:none">
-         <input type="file" id="coverImg" accept="image/*" style="margin-top:10px;" />
-         <p id="preview"></p>
-
-         <!-- Add built-in Quill toolbar options -->
-         <div id="toolbar">
-            <!-- Basic formatting -->
-            <span class="ql-formats">
-               <button class="ql-bold"></button>
-               <button class="ql-italic"></button>
-               <button class="ql-underline"></button>
-               <button class="ql-strike"></button>
-            </span>
-
-            <!-- Headers -->
-            <span class="ql-formats">
-               <select class="ql-header">
-                  <option selected></option>
-                  <option value="1"></option>
-                  <option value="2"></option>
-                  <option value="3"></option>
-               </select>
-            </span>
-
-            <!-- Lists -->
-            <span class="ql-formats">
-               <button class="ql-list" value="ordered"></button>
-               <button class="ql-list" value="bullet"></button>
-               <button class="ql-indent" value="-1"></button>
-               <button class="ql-indent" value="+1"></button>
-            </span>
-
-            <!-- Links, Images, Videos -->
-            <span class="ql-formats">
-               <button class="ql-link"></button>
-               <button class="ql-image"></button>
-               <button class="ql-video"></button>
-            </span>
-
-            <!-- Text color and alignment -->
-            <span class="ql-formats">
-               <select class="ql-color"></select>
-               <select class="ql-background"></select>
-               <select class="ql-align"></select>
-            </span>
-
-            <!-- Clean formatting -->
-            <span class="ql-formats">
-               <button class="ql-clean"></button>
-            </span>
-         </div>
-
-         <div id="editor" style="height: 300px;"></div>
-         <hr />
-
-         <!-- Save Post -->
-         <button class="btn-primary" id="savePost">Save Post</button>
-         <button class="btn-secondary" id="reset" onclick="onResetPostClick()">Cancel</button>
-      </div>
-
-      <div class="comment_container">
-         <div id="write-comment-container">
-            <div class="form-row">
-               <div class="user-card-small">
-                  <img width="45" height="45" src="./images/1960s-minidress4.jpg" alt="">
-                  <div class="user-name">User1</div>
-                  <div class="created-at">20-01-2025 11:03:12</div>
-               </div>
-               <div class="comment-row">
-                  <textarea id="comment-content"></textarea>
-                  <button class="btn-primary" type="button" id="sendCommentBtn"
-                     onclick="onSendCommentClick()">Send</button>
-               </div>
-            </div>
-            <hr>
-         </div>
-
-         <ul id="list-comment-container">
-            <li>
-               <div class="user-card-small">
-                  <img width="45" height="45" src="./images/1960s-minidress4.jpg" alt="">
-                  <div class="user-name">Lorem, ipsum.</div>
-                  <div class="created-at">20-01-2025 11:03:12</div>
-               </div>
-               <div class="comment-row">
-                  Find the best dirndl jackets and blazers: the best options for Oktoberfest and everyday looks
-                  Soon, Munich will be in the Oktoberfest beer fever: dirndls, traditional outfits, and festive
-                  accessories are everywhere.
-                  <br>But the September weather in Bavaria can be unpredictable - sometimes warm like late summer,
-                  sometimes chilly autumn. Without the right jacket, it can get cold quickly. A short cardigan or an
-                  elegant jacket will not only keep you warm, but also perfectly complement your dirndl look. With the
-                  right approach, these pieces can be worn in everyday life, not only at Oktoberfest.
-                  In this post, I will show you the most beautiful and timeless dirndl jackets, cardigans, and blazers
-                  for women, as well as styling ideas and shopping tips. For more inspiration, read the article “How to
-                  Wear Dirndl and Tracht in Everyday Life – Outfit Ideas and Tips”.
-               </div>
-               <button class="btn-danger" type="button" id="deleteCommentBtn"
-                  onclick="onSendCommentClick()">Remove</button>
-               <hr>
-            </li>
-            <li>
-               <div class="user-card-small">
-                  <img width="45" height="45" src="./images/1960s-minidress4.jpg" alt="">
-                  <div class="user-name">Lorem, ipsum.</div>
-                  <div class="created-at">20-01-2025 11:03:12</div>
-               </div>
-               <div class="comment-row">
-                  Lorem ipsum dolor sit amet consectetur adipi
-                  sicing elit. Recusandae delectus adipisci a corporis quas ev
-                  eniet fuga minus quibusdam expedita veritatis? <br>
-                  Quam, eum quos ipsam consequatur aspernatur aliquam modi
-                  quidem quod pariatur iste, corrupti sunt facilis porro quo illum repudiandae id? <br>
-                  Exercitationem provident, repellendus quo labore assumend
-                  a perferendis eligendi beatae deserunt, fugiat dolorum eiu
-                  s dolore aut, adipisci ea atque hic suscipit. <br>
-               </div>
-               <hr>
-            </li>
-         </ul>
-      </div>
-
-      <ul id="postsList"></ul>
-   
+      
       <div>
          <h2>Sign Up</h2>
          <input id="regName" type="text" placeholder="Name">
@@ -284,6 +322,8 @@
          <input id="password" type="password" placeholder="Password">
          <button onclick="login()">Login</button>
       </div>
+
+     
    </div>
 
    <footer>
