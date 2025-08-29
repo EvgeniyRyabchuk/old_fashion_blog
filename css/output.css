@@ -10,11 +10,11 @@ scss/
  ├─ vendors/     // библиотеки, например normalize.css
  └─ main.scss    // точка входа
 */
-footer #footer-content .footer-col .footer-data-wrapper, #side-menu #side-menu-list, header nav ul, #list-comment-container, #breadcrumbs ul {
+footer #footer-content .footer-col .footer-data-wrapper, #side-menu-wrapper #side-menu #side-menu-list, header nav ul, #list-comment-container, #breadcrumbs ul {
   list-style: none;
 }
 
-footer a, #side-menu #side-menu-list .side-menu-item, header nav a, #breadcrumbs a {
+footer a, #side-menu-wrapper #side-menu #side-menu-list .side-menu-item, header nav a, #breadcrumbs a {
   text-decoration: none;
   color: black;
   font-size: 18px;
@@ -25,7 +25,7 @@ footer a, #side-menu #side-menu-list .side-menu-item, header nav a, #breadcrumbs
   text-decoration-line: none;
 }
 
-.d-flex-h-center, .d-flex-h-center-v-end, .d-flex-h-center-v-start {
+.d-flex-h-center, #aside-profile-btn-wrapper .form-row #asideProfileBtn, .d-flex-h-center-v-end, .d-flex-h-center-v-start {
   display: flex;
   justify-content: center;
 }
@@ -35,7 +35,7 @@ footer a, #side-menu #side-menu-list .side-menu-item, header nav a, #breadcrumbs
   align-items: center;
 }
 
-.d-flex-center, #side-menu #side-menu-list .side-menu-item {
+.d-flex-center, #side-menu-wrapper #side-menu #side-menu-list .side-menu-item {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +71,7 @@ body {
   background-size: cover;
 }
 
-.btn, .btn-danger, header nav #authNavList button, .btn-secondary, .btn-primary {
+.btn, .btn-danger, .authNavList button, #aside-profile-btn-wrapper .authNavList button, .btn-secondary, .btn-primary {
   padding: 10px;
   margin: 5px;
   font-size: 17px;
@@ -114,15 +114,15 @@ body {
   background-color: "";
 }
 
-.btn-danger, header nav #authNavList button {
+.btn-danger, .authNavList button, #aside-profile-btn-wrapper .authNavList button {
   background-color: rgba(178, 17, 17, 0.667);
   color: white;
   cursor: pointer;
 }
-.btn-danger:hover, header nav #authNavList button:hover {
+.btn-danger:hover, .authNavList button:hover, #aside-profile-btn-wrapper .authNavList button:hover {
   background-color: rgba(255, 106, 106, 0.667);
 }
-.btn-danger:active, header nav #authNavList button:active {
+.btn-danger:active, .authNavList button:active, #aside-profile-btn-wrapper .authNavList button:active {
   background-color: "";
 }
 
@@ -427,7 +427,6 @@ header nav #auth-nav-list-wrapper {
 }
 header nav #auth-nav-list-wrapper .form-row {
   display: flex;
-  margin: 0 5px;
   align-items: center;
 }
 header nav #auth-nav-list-wrapper #searchInput {
@@ -437,6 +436,9 @@ header nav #auth-nav-list-wrapper #searchInput {
 }
 header nav #auth-nav-list-wrapper #searchBtn {
   height: 30px;
+}
+header nav #profile-btn-wrapper .authNavList {
+  display: none;
 }
 header nav ul {
   display: flex;
@@ -458,19 +460,20 @@ header nav > ul,
 header nav > button {
   padding: 15px;
 }
-header nav #authNavList {
+
+.authNavList {
   position: absolute;
   background-color: grey;
   top: 44px;
-  left: -20px;
+  right: 0;
   z-index: 99;
   margin: 0;
   width: 100%;
 }
-header nav #authNavList li {
+.authNavList li {
   text-align: center;
 }
-header nav #authNavList button {
+.authNavList button {
   margin: 0;
   padding: 15px 0;
   width: 100%;
@@ -488,23 +491,21 @@ header nav #authNavList button {
   align-items: center;
 }
 #top-menu > .top-menu-content #burger-menu-btn {
+  z-index: 999;
   display: none;
   width: 45px;
   height: 45px;
-  background-image: url("../../images/free-icon-menu-4254068 (1).png");
-  background-repeat: no-repeat;
-  background-size: contain;
   cursor: pointer;
 }
 #top-menu > .top-menu-content #burger-menu-btn:hover {
   outline: 1px solid black;
-  background-color: rgb(116, 142, 244);
 }
 .btn1 {
   color: black;
 }
 
 #profile-btn-wrapper {
+  position: relative;
   margin-left: 20px;
 }
 #profile-btn-wrapper:hover #profileBtn {
@@ -514,34 +515,37 @@ header nav #authNavList button {
   transform: rotate(180deg);
 }
 
-#profileBtn::before, #profileBtn::after {
+#profileBtn::before, #profileBtn::after, #asideProfileBtn::before, #asideProfileBtn::after {
   width: 22px;
   height: 22px;
 }
 
 #profileBtn {
-  margin: 0 20px 0 5px;
+  margin: 0;
+}
+
+#profileBtn, #asideProfileBtn {
+  box-shadow: 0px 0px 30px -14px #000000;
   cursor: pointer;
-  padding: 6px 12px 6px 12px;
   font-size: 18px;
+  background-color: rgba(0, 0, 0, 0);
   display: flex !important;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0);
-  box-shadow: 0px 0px 30px -14px #000000;
+  padding: 6px 12px 6px 12px;
 }
-#profileBtn::before, #profileBtn::after {
+#profileBtn::before, #profileBtn::after, #asideProfileBtn::before, #asideProfileBtn::after {
   content: "";
   transition: 0.5s transform ease;
   display: block;
 }
-#profileBtn::before {
-  background-image: url("../../images/profile.png");
+#profileBtn::before, #asideProfileBtn::before {
+  background-image: url("../../../../images/profile.png");
   background-repeat: no-repeat;
   background-size: contain;
   margin: 5px 10px 5px 5px;
 }
-#profileBtn::after {
-  background-image: url("../../images/down.png");
+#profileBtn::after, #asideProfileBtn::after {
+  background-image: url("../../../../images/down.png");
   background-repeat: no-repeat;
   background-size: contain;
   margin: 5px 5px 5px 3px;
@@ -627,6 +631,9 @@ scss/
   #side-menu {
     display: block;
   }
+  #profile-btn-wrapper {
+    display: none;
+  }
 }
 @media screen and (max-width: 992px) {
   .post-card {
@@ -700,20 +707,19 @@ Large Desktop	1440px and up	Full HD monitors, ultrawide screens
   display: flex;
 }
 
-.full-screen {
-  position: absolute;
+.full-screen, .full-screen-fixed, #side-menu-wrapper, .full-screen-abs {
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
 }
 
-.full-parrent {
+.full-screen-abs {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+}
+
+.full-screen-fixed, #side-menu-wrapper {
+  position: fixed;
 }
 
 #arrow-down-icon {
@@ -722,6 +728,18 @@ Large Desktop	1440px and up	Full HD monitors, ultrawide screens
 
 #main-content-title {
   margin: 0 30px;
+}
+
+.open-aside-btn {
+  background-image: url("../../images/free-icon-menu-4254068 (1).png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.close-aside-btn {
+  background-image: url("../../images/close.png");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 #post-wrapper {
@@ -763,7 +781,7 @@ Large Desktop	1440px and up	Full HD monitors, ultrawide screens
 }
 #post-wrapper .post-card .post-short-content {
   text-align: justify;
-  padding: 20px 20px 5px 20px;
+  padding: 5px 20px 5px 20px;
   max-height: 200px;
   overflow-y: hidden;
   -webkit-mask-image: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 80%);
@@ -794,18 +812,81 @@ Large Desktop	1440px and up	Full HD monitors, ultrawide screens
   position: relative;
 }
 
-#side-menu {
+#aside-profile-btn-wrapper {
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 15px;
+}
+#aside-profile-btn-wrapper .form-row #asideProfileBtn {
+  width: 100%;
+  margin: 0;
+  background-color: rgba(31, 36, 40, 0.2);
+}
+#aside-profile-btn-wrapper .form-row #asideProfileBtn::after {
+  transform: rotate(0deg);
+}
+#aside-profile-btn-wrapper .authNavList {
+  transition: 0.3s height ease-in-out;
+  position: static;
+  background-color: grey;
+  display: block;
+  margin: 0;
+  z-index: 0;
+  overflow-y: hidden;
+}
+#aside-profile-btn-wrapper .authNavList.h-0 {
+  height: 0;
+}
+#aside-profile-btn-wrapper .authNavList.h-max-1000 {
+  height: calc-size(auto, size); /* Use auto with calc-size() */
+}
+#aside-profile-btn-wrapper .authNavList li {
+  text-align: center;
+}
+#aside-profile-btn-wrapper .authNavList button {
+  margin: 0;
+  padding: 15px 0;
+  width: 100%;
+}
+
+#side-menu-wrapper {
+  background-color: rgba(209, 209, 209, 0.3);
   z-index: 999;
-  width: 300px;
+}
+#side-menu-wrapper.d-block {
+  background-color: rgba(209, 209, 209, 0.3);
+}
+#side-menu-wrapper #side-menu {
+  transition: 0.5s width ease;
+  overflow: hidden;
+  width: 0px;
   height: 100vh;
   background-color: white;
   position: absolute;
-  top: 0;
-  display: none;
+  top: 80px;
 }
-#side-menu #side-menu-list {
+#side-menu-wrapper #side-menu.w-0 {
+  width: 0;
+}
+#side-menu-wrapper #side-menu.w-auto {
+  width: 300px;
+}
+#side-menu-wrapper #side-menu #top-aside-block {
+  min-width: 300px;
+  height: 67px;
+  text-align: center;
+  padding: 20px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+#side-menu-wrapper #side-menu #side-menu-list {
   display: block !important;
-  margin: 15px !important;
+  margin: 0 !important;
+  padding: 15px;
+  min-width: 300px;
 }
 /*
  $xxl-bp: 1400px; 

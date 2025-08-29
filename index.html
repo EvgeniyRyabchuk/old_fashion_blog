@@ -34,37 +34,55 @@
          <h2 id="headerLable">Old Fashion Blog</h2>
       </div>
       <nav id="top-menu">
-         <aside id="side-menu">
-            <div id="closeSideMenu" style="height: 84px; text-align: center; padding: 20px; font-size: 20px; margin-bottom: 20px; border: 1px solid black;">
-               Close
-            </div>
-            <ul id="side-menu-list">
-               <li class="side-menu-item">
-                  <a href="./index.html">Home</a></li>
+         <div id="side-menu-wrapper">
+            <aside id="side-menu">
+               <div id="top-aside-block">Menu</div>
+               <div id="aside-profile-btn-wrapper">
+                  <div class="form-row">
+                     <button id="asideProfileBtn">
+                        <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                        Profile
+                        <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                     </button>
+                  </div>
+                  <ul class="authNavList h-0" class="d-none">
+                     <li><a href="./auth/login.html">Login</a></li>
+                     <li><a href="./auth/signUp.html">Sign Up</a></li>
+                     <li><a href="./posts.html">My posts</a></li>
+                     <li><a href="./profile/setting.html">Settings</a></li>
+                     <li><a href="./profile/comments.html">Comments</a></li>
+                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                  </ul>
+               </div>
+               <ul id="side-menu-list">
 
-               <li class="side-menu-item">
-                  <a href="./posts.html">All posts</a>
-               </li>
-               <li class="side-menu-item">
-                  <a href="./posts.html">News</a></li>
+                  <li class="side-menu-item">
+                     <a href="./index.html">Home</a></li>
 
-               <li class="side-menu-item">
-                  <a href="./posts.html">Guide</a></li
-                  > 
-               <li class="side-menu-item">
-                  <a href="./galerry.html">Gallery</a>
-               </li> 
-               <li class="side-menu-item">
-                  <a href="./about.html">About</a></li
-                  >
-               <li class="side-menu-item">
-                  <a href="./contact.html">Contact</a>
-               </li>
-   
-            </ul>
-         </aside> 
+                  <li class="side-menu-item">
+                     <a href="./posts.html">All posts</a>
+                  </li>
+                  <li class="side-menu-item">
+                     <a href="./posts.html">News</a></li>
+
+                  <li class="side-menu-item">
+                     <a href="./posts.html">Guide</a></li>
+                  <li class="side-menu-item">
+                     <a href="./galerry.html">Gallery</a>
+                  </li>
+                  <li class="side-menu-item">
+                     <a href="./about.html">About</a></li>
+                  <li class="side-menu-item">
+                     <a href="./contact.html">Contact</a>
+                  </li>
+
+               </ul>
+            </aside>
+         </div>
+        
+
          <div class="top-menu-content">
-            <div id="burger-menu-btn"></div>
+            <div id="burger-menu-btn" class="open-aside-btn"></div>
             <ul id="guest-nav-list">
                <li><a href="./index.html">Home</a></li>
                <li><a href="./posts.html">All posts</a></li>
@@ -92,25 +110,21 @@
                </div>
           
                <div id="profile-btn-wrapper">
-                   <div  class="form-row">
-                
-                  <button id="profileBtn">
+                  <div class="form-row">
+                     <button id="profileBtn">
                         <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
-                         Profile 
+                        Profile
                         <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
-                  </button> 
-                 
-               </div>
-               
-             
-               <ul id="authNavList" class="d-none"> 
-                  <li><a href="./auth/login.html">Login</a></li>
-                  <li><a href="./auth/signUp.html">Sign Up</a></li>
-                  <li><a href="./posts.html">My posts</a></li>
-                  <li><a href="./profile/setting.html">Settings</a></li>
-                  <li><a href="./profile/comments.html">Comments</a></li>
-                  <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
-               </ul>
+                     </button>
+                  </div>
+                  <ul class="authNavList d-none" class="d-none">
+                     <li><a href="./auth/login.html">Login</a></li>
+                     <li><a href="./auth/signUp.html">Sign Up</a></li>
+                     <li><a href="./posts.html">My posts</a></li>
+                     <li><a href="./profile/setting.html">Settings</a></li>
+                     <li><a href="./profile/comments.html">Comments</a></li>
+                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                  </ul>
                </div>
               
             </div>
@@ -387,10 +401,10 @@
 
    <script src="./js/service/index.js"></script>
    <script src="./js/service/auth.js"></script>
-   <script src="./js/service/category.js"></script>
-   <script src="./js/service/tags.js"></script>
+   <!-- <script src="./js/service/category.js"></script> -->
+   <!-- <script src="./js/service/tags.js"></script> -->
    <script src="./js/service/posts.js"></script>
-   <script src="./js/service/comments.js"></script>
+   <!-- <script src="./js/service/comments.js"></script> -->
 
 </body>
 

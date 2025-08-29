@@ -1,0 +1,7 @@
+
+
+@mixin b-img-nr-contain($url) {
+      background-image: url("../../"+$url);
+      background-repeat: no-repeat;
+      background-size: contain;  
+}
