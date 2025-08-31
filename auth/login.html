@@ -1,0 +1,257 @@
+<!DOCTYPE html> 
+
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8"> 
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Login</title>
+   <link rel="stylesheet" href="../css/output.css" type="text/css"> 
+
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-storage-compat.js"></script>
+   
+</head>
+
+<body>
+
+   <header>
+      
+      <!-- <div id="side-menu-wrapper" class="d-block">
+     
+      </div> -->
+    <a class="default-link" href="/">
+        <div id="header-img-block">
+            <h2 id="headerLable">Old Fashion Blog</h2>
+        </div>
+    </a> 
+
+      <nav id="top-menu">
+         <div id="side-menu-wrapper">
+            <aside id="side-menu">
+               <div id="top-aside-block">Menu</div>
+               <div id="aside-profile-btn-wrapper">
+                  <div class="form-row">
+                     <button id="asideProfileBtn">
+                        <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                        Profile
+                        <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                     </button> 
+                  </div>
+                   <div class="form-row">
+                       <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./login.html">Login</a>
+                       <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./register.html">Sign Up</a>
+                    </div>
+                  <ul class="authNavList h-0" class="d-none">
+                     <li><a href="./posts.html">My posts</a></li>
+                     <li><a href="./profile/setting.html">Settings</a></li>
+                     <li><a href="./profile/comments.html">Comments</a></li>
+                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                  </ul>
+               </div>
+               <ul id="side-menu-list">
+
+                  <li class="side-menu-item">
+                     <a href="./index.html">Home</a></li>
+
+                  <li class="side-menu-item">
+                     <a href="./posts.html">All posts</a>
+                  </li>
+                  <li class="side-menu-item">
+                     <a href="./posts.html">News</a></li>
+
+                  <li class="side-menu-item">
+                     <a href="./posts.html">Guide</a></li>
+                  <li class="side-menu-item">
+                     <a href="./galerry.html">Gallery</a>
+                  </li>
+                  <li class="side-menu-item">
+                     <a href="./about.html">About</a></li>
+                  <li class="side-menu-item">
+                     <a href="./contact.html">Contact</a>
+                  </li>
+
+               </ul>
+            </aside>
+         </div>
+        
+
+         <div class="top-menu-content">
+            <div id="burger-menu-btn" class="open-aside-btn"></div>
+            <ul id="guest-nav-list">
+               <li><a href="./index.html">Home</a></li>
+               <li><a href="./posts.html">All posts</a></li>
+               <li><a href="./posts.html">News</a></li>
+               <li><a href="./posts.html">Guide</a></li> 
+               <li><a href="./galerry.html">Gallery</a></li> 
+               <li><a href="./about.html">About</a></li>
+               <li><a href="./contact.html">Contact</a></li>
+            </ul>
+          
+            <!-- TODO: right  nav-list-wrapper --->
+            <div id="auth-nav-list-wrapper">
+               <div class="form-row">
+                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./login.html">Login</a>
+                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./register.html">Sign Up</a>
+               </div>
+               
+               <div id="header-search" class="form-row"> 
+                  <input id="searchInput" type="text" placeholder="Search..." />
+                  <button class="btn-info" id="searchBtn" type="button"> 
+                     Search
+                  </button>
+               </div>
+
+                <div class="form-row">
+                  <select id="language-select">
+                     <option value="RU">RU</option>
+                     <option value="UA">UA</option>
+                     <option value="EN">EN</option>
+                  </select>
+               </div>
+                <div class="form-row">
+                  <select id="theme-select">
+                     <option value="RU">Default</option>
+                     <option value="UA">Light</option>
+                     <option value="EN">Dark</option>
+                  </select>
+               </div>
+          
+               <div id="profile-btn-wrapper">
+                  <div class="form-row">
+                     <button id="profileBtn">
+                        <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                        Profile
+                        <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                     </button>
+                  </div>
+                  <ul class="authNavList d-none" class="d-none">
+                     <li><a href="./auth/login.html">Login</a></li>
+                     <li><a href="./auth/signUp.html">Sign Up</a></li>
+                     <li><a href="./posts.html">My posts</a></li>
+                     <li><a href="./profile/setting.html">Settings</a></li>
+                     <li><a href="./profile/comments.html">Comments</a></li>
+                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                  </ul>
+               </div>
+              
+            </div>
+     
+         </div>
+
+      </nav>
+   </header>
+
+
+   <div id="main-wrapper">
+      <main>
+         <nav id="breadcrumbs">
+            <ul>
+               <li>
+                  <a href="/">Home</a>
+                  <span>/</span>
+               </li>
+               <li>
+                  <a href="/">Products</a>
+                  <span>/</span>
+               </li>
+               <li>
+                  <a href="/">Categories</a>
+                  <span>/</span>
+               </li>
+            </ul>
+
+         </nav>
+
+         <section class="content-section" >
+            <h2 id="main-content-title">Posts</h2> 
+            
+            <div class="login-wrapper">
+                <h2>Login</h2>
+                <div class="input-group">
+                    <input id="email" type="email" placeholder="Email">
+                </div> 
+                <div class="input-group">
+                    <input id="password" type="password" placeholder="Password">
+                </div>
+                <button type="button" onclick="login()">Login</button>
+                <div class="extra">
+                    <p>Don't have an account? <a href="./register.html">Sign up</a></p>
+                </div>
+            </div>
+
+         </section>
+
+
+      </main>
+
+   </div>
+
+   <footer>
+      <div id="footer-content">
+         <div class="footer-col">
+            <div>
+               <span class="footer-lable">Контакти</span>
+               <ul class="footer-data-wrapper">
+                  <li class="footer-data-row">0-800-33-00-16</li>
+                  <li class="footer-data-row">
+                     telegram_button
+                     viber_button
+                  </li>
+                  <li class="footer-data-row">Пн-Нд: 10:00-19:00</li>
+               </ul>
+            </div>
+         </div>
+         <nav class="footer-col">
+            <div>
+               <span class="footer-lable">Про компанію</span>
+               <ul class="footer-data-wrapper">
+                  <li class="footer-data-row">Про нас</li>
+                  <li class="footer-data-row">Нашi магазини</li>
+                  <li class="footer-data-row">Зворотний зв'язок</li>
+                  <li class="footer-data-row">Бонусна програма</li>
+                  <li class="footer-data-row">Мапа сайту</li>
+               </ul>
+            </div>
+         </nav>
+         <nav class="footer-col">
+            <div>
+               <span class="footer-lable">Покупцям</span>
+               <ul class="footer-data-wrapper">
+                  <li class="footer-data-row">Подарункові сертифікати</li>
+                  <li class="footer-data-row">Обмін/Повернення</li>
+                  <li class="footer-data-row">Угода користувача</li>
+                  <li class="footer-data-row">Питання та відповіді</li>
+                  <li class="footer-data-row">Оплата та доставка</li>
+               </ul>
+            </div>
+         </nav>
+         <div class="footer-col">
+            <div>
+               <div>
+                  <span class="footer-lable">Наші соцмережі</span>
+                  <ul class="footer-data-wrapper d-flex">
+                     <li class="footer-data-row">Facebook</li>
+                     <li class="footer-data-row">Instagram</li>
+                  </ul>
+                  <span class="footer-lable">Приймаємо до оплати</span>
+                  <ul class="footer-data-wrapper d-flex">
+                     <li class="footer-data-row">Visa</li>
+                     <li class="footer-data-row">Mastercard</li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+   </footer>
+
+
+
+   <script src="../js/index.js"></script>
+   <script src="../js/service/auth.js"></script>
+
+</body>
+
+</html>

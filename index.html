@@ -30,9 +30,12 @@
       <!-- <div id="side-menu-wrapper" class="d-block">
      
       </div> -->
-      <div id="header-img-block">
-         <h2 id="headerLable">Old Fashion Blog</h2>
-      </div>
+    <a class="default-link" href="/">
+        <div id="header-img-block">
+            <h2 id="headerLable">Old Fashion Blog</h2>
+        </div>
+    </a> 
+
       <nav id="top-menu">
          <div id="side-menu-wrapper">
             <aside id="side-menu">
@@ -43,11 +46,13 @@
                         <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
                         Profile
                         <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
-                     </button>
+                     </button> 
                   </div>
+                   <div class="form-row">
+                       <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="../auth/login.html">Login</a>
+                       <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="../auth/register.html">Sign Up</a>
+                    </div>
                   <ul class="authNavList h-0" class="d-none">
-                     <li><a href="./auth/login.html">Login</a></li>
-                     <li><a href="./auth/signUp.html">Sign Up</a></li>
                      <li><a href="./posts.html">My posts</a></li>
                      <li><a href="./profile/setting.html">Settings</a></li>
                      <li><a href="./profile/comments.html">Comments</a></li>
@@ -93,7 +98,13 @@
                <li><a href="./contact.html">Contact</a></li>
             </ul>
           
+            <!-- TODO: right  nav-list-wrapper --->
             <div id="auth-nav-list-wrapper">
+               <div class="form-row">
+                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/login.html">Login</a>
+                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/register.html">Sign Up</a>
+               </div>
+               
                <div id="header-search" class="form-row"> 
                   <input id="searchInput" type="text" placeholder="Search..." />
                   <button class="btn-info" id="searchBtn" type="button"> 
@@ -107,7 +118,7 @@
                      <option value="UA">UA</option>
                      <option value="EN">EN</option>
                   </select>
-                  
+               </div>
                 <div class="form-row">
                   <select id="theme-select">
                      <option value="RU">Default</option>
@@ -430,35 +441,36 @@
 
                </article>
             </div>
+
+            <div class="paggination-wrapper">
+               <div class="pagination-controls">
+                  <div class="per-page">
+                     <label for="perPage">Posts per page:</label>
+                     <select id="perPage">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                     </select>
+                  </div>
+                  <div class="page-nav">
+                     <button id="prevPage" disabled>Prev</button>
+
+                     <!-- page numbers will be injected here -->
+                     <div id="pageNumbers" class="page-numbers" aria-label="Page numbers"></div>
+
+                     <button id="nextPage">Next</button>
+                    
+                  </div>
+                   <span id="pageInfo" class="page-info">Page 1 of 1</span>
+               </div>
+            </div>
+
+            <!-- Load More button -->
+            <div class="load-more-wrapper">
+               <button id="loadMoreBtn">Load More</button>
+            </div>
          </section>
-
-
       </main>
-
-      <aside id="filter" class="d-block">
-
-      </aside>
-      
-
-
-
-      
-      <div>
-         <h2>Sign Up</h2>
-         <input id="regName" type="text" placeholder="Name">
-         <input id="regEmail" type="email" placeholder="Email">
-         <input id="regPassword" type="password" placeholder="Password">
-         <button onclick="register()">Sign Up</button>
-      </div>
-
-      <div>
-         <h2>Login</h2>
-         <input id="email" type="email" placeholder="Email">
-         <input id="password" type="password" placeholder="Password">
-         <button onclick="login()">Login</button>
-      </div>
-
-     
    </div>
 
    <footer>
@@ -520,11 +532,15 @@
 
 
 
-   <script src="./js/service/index.js"></script>
+   <script src="./js/index.js"></script>
    <script src="./js/service/auth.js"></script>
-   <!-- <script src="./js/service/category.js"></script> -->
+      <!-- <script src="./js/service/category.js"></script> -->
    <!-- <script src="./js/service/tags.js"></script> -->
    <script src="./js/service/posts.js"></script>
+
+   <script src="./js/filter-sort.js"></script>
+   <script src="./js/pagination.js"></script>
+
    <!-- <script src="./js/service/comments.js"></script> -->
 
 </body>

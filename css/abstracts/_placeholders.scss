@@ -14,3 +14,6 @@
     text-decoration-line: none;
 }
 
+.default-link {
+    @extend %default-link; 
+}

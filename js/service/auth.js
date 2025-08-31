@@ -87,9 +87,9 @@ async function login() {
 }
 
 async function register() {
-  const name = document.getElementById("regName").value;
-  const email = document.getElementById("regEmail").value;
-  const password = document.getElementById("regPassword").value;
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   // try { 
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
