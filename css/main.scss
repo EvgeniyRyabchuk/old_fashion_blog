@@ -7,6 +7,7 @@ scss/
  ├─ pages/       // стили отдельных страниц
  ├─ themes/      // темы (dark/light)
  ├─ vendors/     // библиотеки, например normalize.css
+ ├─ utilities/     
  └─ main.scss    // точка входа
 */
 
@@ -18,7 +19,7 @@ scss/
 @use 'pages/index'      as pages;
 @use 'themes/index'     as themes;
 @use 'vendors/index'    as vendors;
-
+@use 'utilities/index'  as utilities;
 
 /*
 Mobile (portrait)	320px – 480px	iPhone SE, Galaxy S5
@@ -28,171 +29,6 @@ Tablet (landscape)	992px – 1199px	iPad Pro landscape
 Small Desktop	1200px – 1439px	Small laptops, older monitors
 Large Desktop	1440px and up	Full HD monitors, ultrawide screens
 */
-
-.default-btn {
-    // padding: 15px;   
-    border: 0;
-}
-
-.default-bg {
-  background-color: white !important;
-}
-
-.right-side { margin-left: auto;}
-
-.d-block { display: block !important; }
-
-.d-none { display: none; }
-
-.d-flex { display: flex; }
-
-button { @extend .default-btn ; }
-
-
-.full-screen {
-    top: 0;
-    left: 0; 
-    right: 0; 
-    bottom: 0;
- }
- .full-screen-abs {
-   @extend .full-screen;
-   position: absolute;
- }
-.full-screen-fixed {
-   @extend .full-screen;
-   position: fixed;
- }
-
-
-
- #arrow-down-icon {
-   transition: transform 0.5s ease !important; 
-}
-
-
-#main-content-title {
-   margin: 0 30px;
-}
-
-
-
-
-
-
-
-
-.open-aside-btn {
-   // url already in root folder 
-  @include abstracts.b-img-nr-contain('images/free-icon-menu-4254068 (1).png');
-}
-.close-aside-btn {
-   @include abstracts.b-img-nr-contain('images/close.png'); 
-}
-
-
-#post-wrapper {
-   padding: 0px 30px 30px 30px;
-   display: flex;
-   // gap: 3px;
-   width: 100%;
-   flex-wrap: wrap;
-
-   //  &:nth-child(3n + 1) {
-   //    ::after {
-   //       content: '';
-   //       border-bottom: 1px solid black;
-   //    }
-   //  }
-   .post-card {
-      position: relative;
-      padding: 10PX;
-      width: calc(100% / 3);
-      min-width: 300px;
-      max-height: 700px;
-      
-
-      &::after {
-         content: '';
-         display: block;
-         height: 3px;
-         background-color: rgba(0, 0, 0);
-         width: 0%;
-         transition: 0.6s width ease-in;
-
-         }
-
-      &:hover {
-         &::after {
-            width: 100%;
-         }
-      }
-
-      .post-cover {
-         img {
-            padding: 20px 20px 10px 20px;
-            width: 100%;
-            height: 100%;
-         }
-      }
-
-      >a {
-         @extend %default-link;
-      }
-
-      .post-title-wrapper {
-         text-align: center;
-         margin-bottom: 10px;
-
-         .post-title {
-
-            font-size: 20px;
-            font-weight: 600;
-         }
-      }
-
-      .post-short-content {
-         text-align: justify;
-         padding: 5px 20px 5px 20px;
-         max-height: 200px;
-         overflow-y: hidden;
-
-         -webkit-mask-image: linear-gradient(to bottom,
-               rgba(0, 0, 0, 1) 0%,
-               rgba(0, 0, 0, 0) 80%);
-         /* 👈 80% блока постепенно исчезает */
-         -webkit-mask-repeat: no-repeat;
-         -webkit-mask-size: 100% 100%;
-         mask-image: linear-gradient(to bottom,
-               rgba(0, 0, 0, 1) 0%,
-               rgba(0, 0, 0, 0) 80%); 
-         mask-repeat: no-repeat;
-         mask-size: 100% 100%;
-      }
-
-      .more-wrapper {
-         position: absolute;
-         bottom: 20px;
-         right: 0px;
-         margin: 0px 35px 10px 10px;
-         text-align: right;
-         
-         .read-more {
-            @extend %default-link;
-            font-size: 18px;
-            color: grey;
-            cursor: pointer;
-            // padding: 20px; 
-
-
-            &:hover {
-               color: cadetblue;
-            }
-         }
-      }
-   }
-}
-
 
 
 // #side-menu-wrapper {
@@ -207,123 +43,6 @@ button { @extend .default-btn ; }
 
 
 
-
-
-#top-menu {
-   position: relative;
-}
-
-
-$size-menu-width: 300px;
-
-#aside-profile-btn-wrapper {
-  min-width: $size-menu-width;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 15px;
-  .form-row {
-   
-    #asideProfileBtn {
-      @extend .d-flex-h-center; 
-      width: 100%; 
-      margin: 0;
-      background-color: rgba(31, 36, 40, 0.2);
-      &::after { 
-        transform: rotate(0deg); 
-      }
-    }
-  }
-
-   .authNavList { 
-      &.h-0 {
-         height: 0; 
-      }
-      &.h-max-1000 {
-         height: calc-size(auto, size); /* Use auto with calc-size() */
-      }
-
-      transition: 0.3s height ease-in-out;
-      position: static;
-      background-color: grey;
-      display: block;
-      margin: 0;
-      z-index: 0;
-      overflow-y: hidden;
-      li {
-            text-align: center;
-      }
-
-      button {
-            // @extend .default-btn; 
-            @extend .btn-danger;
-            margin: 0;
-            padding: 15px 0;
-            width: 100%;
-      }
-   } 
-}
-
-#side-menu-wrapper {
-   @extend .full-screen-fixed;
-   background-color: rgba(209, 209, 209, 0.3);
-   z-index: 999;
-
-   &.d-block {
-      // transform: translateX(0);
-      //TODO: opacity animantion with d-block in the end 
-      background-color: rgba(209, 209, 209, 0.3);
-   }
-   &.d-none {
-      // transform: translateX(+100%);
-      // transition: transform 0.3s ease-in-out;
-   }
-
-   #side-menu {
-      transition: 0.5s width ease; 
-      overflow: hidden;
-      width: 0px;
-      height: 100vh;
-      background-color: white;
-      position: absolute;
-      top: 80px;
-
-      &.w-0 {
-         width: 0;
-      }
-      &.w-auto {
-         width: $size-menu-width;
-      }
-
-      #top-aside-block {
-         min-width: $size-menu-width;
-         height: 67px; 
-         text-align: center; 
-         padding: 20px; 
-         font-size: 20px; 
-         margin-bottom: 20px;
-         border: 1px solid black;
-      }
-
-      #side-menu-list {
-         @extend %menu-list;
-         // TODO: fix 
-         display: block !important;
-         margin: 0 !important;
-         padding: 15px;
-         min-width: $size-menu-width;
-
-         .side-menu-item {
-            @extend .d-flex-center;
-            @extend %menu-list-item;
-
-         }
-      }
-   }
-}
-
-
-
  /*
   $xxl-bp: 1400px; 
   $xl-bp: 1200px;
@@ -333,4 +52,3 @@ $size-menu-width: 300px;
   $xs-bp: 576px; 
  */
 
- 

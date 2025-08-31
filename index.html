@@ -107,6 +107,13 @@
                      <option value="UA">UA</option>
                      <option value="EN">EN</option>
                   </select>
+                  
+                <div class="form-row">
+                  <select id="theme-select">
+                     <option value="RU">Default</option>
+                     <option value="UA">Light</option>
+                     <option value="EN">Dark</option>
+                  </select>
                </div>
           
                <div id="profile-btn-wrapper">
@@ -154,7 +161,121 @@
             </ul>
 
          </nav>
+
+         <section class="d-flex" style="padding: 10px 30px;">
+            <div class="d-flex" style="width: 100%; justify-content: space-between;">
+               <div class="filter-sort">
+                  <!-- Sort is always visible -->
+                  <div class="filter-sort__sort">
+                     <label for="sort">Sort by:</label>
+                     <select id="sort" name="sort">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="popular">Most Popular</option>
+                     </select>
+                  </div>
+               </div>
+               <!-- Filter toggle button (mobile only) -->
+               <button id="filterToggle" class="filter-toggle">Filters</button>
+            </div>
          
+         </section>
+
+         <!-- Filter Drawer (mobile) / Inline (desktop) -->
+         <section class="filter-drawer" id="filterDrawer">
+            <div style="margin: 10px 0;">
+          <button type="button" class="filter-drawer__close" id="filterCloseBtn">&times;</button>
+            </div>
+  
+
+            <form class="filter-drawer__container">
+               <!-- Category -->
+               <div class="filter-drawer__group">
+               <label class="filter-drawer__label">Categories:</label>
+               <div id="categoryCheck" class="filter-drawer__options">
+                  <label><input type="checkbox" value="tech" data-type="category"> Tech</label>
+                  <label><input type="checkbox" value="design" data-type="category"> Design</label>
+                  <label><input type="checkbox" value="lifestyle" data-type="category"> Lifestyle</label>
+                  <label><input type="checkbox" value="news" data-type="category"> News</label>
+                  <label><input type="checkbox" value="tech" data-type="category"> Tech</label>
+                  <label><input type="checkbox" value="design" data-type="category"> Design</label>
+                  <label><input type="checkbox" value="lifestyle" data-type="category"> Lifestyle</label>
+                  <label><input type="checkbox" value="news" data-type="category"> News</label>
+                  <label><input type="checkbox" value="tech" data-type="category"> Tech</label>
+                  <label><input type="checkbox" value="design" data-type="category"> Design</label>
+                  <label><input type="checkbox" value="lifestyle" data-type="category"> Lifestyle</label>
+                  <label><input type="checkbox" value="news" data-type="category"> News</label>
+                  <label><input type="checkbox" value="tech" data-type="category"> Tech</label>
+                  <label><input type="checkbox" value="design" data-type="category"> Design</label>
+                  <label><input type="checkbox" value="lifestyle" data-type="category"> Lifestyle</label>
+                  <label><input type="checkbox" value="news" data-type="category"> News</label>
+                  <label><input type="checkbox" value="tech" data-type="category"> Tech</label>
+                  <label><input type="checkbox" value="design" data-type="category"> Design</label>
+                  <label><input type="checkbox" value="lifestyle" data-type="category"> Lifestyle</label>
+                  <label><input type="checkbox" value="news" data-type="category"> News</label>
+               </div>
+               </div>
+               <!-- Tags -->
+               <div class="filter-drawer__group">
+                  <label class="filter-drawer__label">Tags:</label>
+                  <div class="filter-drawer__tags">
+                     <label><input type="checkbox" value="js"><span class="tags-sign">#</span>JavaScript</label>
+                     <label><input type="checkbox" value="css"><span class="tags-sign">#</span>CSS</label>
+                     <label><input type="checkbox" value="html"><span class="tags-sign">#</span>HTML</label>
+                     <label><input type="checkbox" value="react"><span class="tags-sign">#</span>React</label>
+                     <label><input type="checkbox" value="python"><span class="tags-sign">#</span>Python</label>
+                     <label><input type="checkbox" value="php"> <span class="tags-sign">#</span>PHP</label>
+                     <label><input type="checkbox" value="java"> <span class="tags-sign">#</span>Java</label>
+                     <label><input type="checkbox" value="ruby"><span class="tags-sign">#</span>Ruby</label>
+                     <label><input type="checkbox" value="go"> <span class="tags-sign">#</span>Go</label>
+                     <label><input type="checkbox" value="csharp"><span class="tags-sign">#</span>C#</label>
+                     <label><input type="checkbox" value="js"><span class="tags-sign">#</span>JavaScript</label>
+                     <label><input type="checkbox" value="css"><span class="tags-sign">#</span>CSS</label>
+                     <label><input type="checkbox" value="html"><span class="tags-sign">#</span>HTML</label>
+                     <label><input type="checkbox" value="react"><span class="tags-sign">#</span>React</label>
+                     <label><input type="checkbox" value="python"><span class="tags-sign">#</span>Python</label>
+                     <label><input type="checkbox" value="php"> <span class="tags-sign">#</span>PHP</label>
+                     <label><input type="checkbox" value="java"> <span class="tags-sign">#</span>Java</label>
+                     <label><input type="checkbox" value="ruby"><span class="tags-sign">#</span>Ruby</label>
+                     <label><input type="checkbox" value="go"> <span class="tags-sign">#</span>Go</label>
+                     <label><input type="checkbox" value="csharp"><span class="tags-sign">#</span>C#</label>
+                     <label><input type="checkbox" value="js"><span class="tags-sign">#</span>JavaScript</label>
+                     <label><input type="checkbox" value="css"><span class="tags-sign">#</span>CSS</label>
+                     <label><input type="checkbox" value="html"><span class="tags-sign">#</span>HTML</label>
+                     <label><input type="checkbox" value="react"><span class="tags-sign">#</span>React</label>
+                     <label><input type="checkbox" value="python"><span class="tags-sign">#</span>Python</label>
+                     <label><input type="checkbox" value="php"> <span class="tags-sign">#</span>PHP</label>
+                     <label><input type="checkbox" value="java"> <span class="tags-sign">#</span>Java</label>
+                     <label><input type="checkbox" value="ruby"><span class="tags-sign">#</span>Ruby</label>
+                     <label><input type="checkbox" value="go"> <span class="tags-sign">#</span>Go</label>
+                     <label><input type="checkbox" value="csharp"><span class="tags-sign">#</span>C#</label>
+                     <!-- more… -->
+                  </div>
+               </div>
+               <!-- Date Range -->
+               <div class="filter-drawer__group">
+                  <label>Date Range:</label>
+                  <div class="filter-drawer__date-range">
+                     <input type="date" name="start_date">
+                     <span>—</span>
+                     <input type="date" name="end_date">
+                  </div>
+               </div>
+
+
+            </form>
+            <div class="selected-filters">
+            <span class="selected-filters__label">Selected Filters:</span>
+            <div class="selected-filters__list"></div>
+            </div>
+            <!-- Actions -->
+            <div class="filter-drawer__actions">
+               <button type="submit">Apply</button>
+               <button type="reset">Reset</button>
+            </div>
+         </section>
+
+
          <section class="content-section" >
             <h2 id="main-content-title">Posts</h2> 
             <div id="post-wrapper" class="">
