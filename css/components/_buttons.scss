@@ -26,6 +26,7 @@
   @include createBtn($info-color, $primary-color-hover, $primary-color-active); 
 }
 
+
 .btn-primary {
   @extend .btn;
   @include createBtn($primary-color, $primary-color-hover, $primary-color-active); 
@@ -41,4 +42,10 @@
   @extend .btn;
   @include createBtn($danger-color, $danger-color-hover); 
   
+}
+
+
+.btn-warning { 
+  @extend .btn; 
+  @include createBtn($warning-color, $warning-color-hover, $warning-color-active); 
 }

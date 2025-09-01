@@ -1,11 +1,11 @@
 
-  const postsContainer = document.getElementById("post-wrapper");
-  const perPageSelect = document.getElementById("perPage");
-  const prevBtn = document.getElementById("prevPage");
-  const nextBtn = document.getElementById("nextPage");
-  const pageInfo = document.getElementById("pageInfo");
-  const pageNumbersContainer = document.getElementById("pageNumbers");
-  const loadMoreBtn = document.getElementById("loadMoreBtn");
+const postsContainer = document.getElementById("post-wrappers");
+const perPageSelect = document.getElementById("perPageSelect"); // renamed
+const prevBtn = document.getElementById("prevPage");
+const nextBtn = document.getElementById("nextPage");
+const pageInfo = document.getElementById("pageInfo");
+const pageNumbersContainer = document.getElementById("pageNumbers");
+const loadMoreBtn = document.getElementById("loadMoreBtn");
 
   // demo posts
   let posts = Array.from({length: 53}, (_, i) => `Post #${i + 1}`);
@@ -87,8 +87,8 @@
     list.forEach(item => {
       if (item === "...") {
         const el = document.createElement("span");
-        el.className = "page-ellipsis";
-        el.textContent = "...";
+        el.className = "page-ellipsis"; 
+        el.textContent = "..."; 
         pageNumbersContainer.appendChild(el);
         return;
       }

@@ -1,36 +1,5 @@
 
 
-const loaderCircleGenerate = (parentContainer = document.body) => {
-    
-    // Create the loader wrapper
-    const loaderWrapper = document.createElement('div');
-    loaderWrapper.classList.add('loader-wrapper'); 
-    // loaderWrapper.classList.add('full-screen');
-        loaderWrapper.classList.add('full-parrent');
-    // Create the loader container
-    const loader = document.createElement('div');
-    loader.className = 'loader';
-
-    // Generate 6 circle wrappers and circles
-    for (let i = 1; i <= 6; i++) {
-        const circleWrapper = document.createElement('div');
-        circleWrapper.className = `circle-wrapper-${i}`;
-
-        const circle = document.createElement('div');
-        circle.className = `circle-${i}`;
-
-        circleWrapper.appendChild(circle);
-        loader.appendChild(circleWrapper);
-    }
-    
-    // Append loader to wrapper
-    loaderWrapper.appendChild(loader);
-
-    // Finally, add it to the body or any other container
-    parentContainer.appendChild(loaderWrapper);
-
-    return loaderWrapper; 
-}
 
 const CreateBlockSwitcher = (arr, defaultState = false) => {
     let state = defaultState; 
@@ -99,12 +68,14 @@ classList has methods like:
 
 */
 
-//TODO: animation for mobile menu to disappear over alpha channel 
+//TODO: animation for mobile menu to disappear over alpha channel and animate like filter one 
 //TODL: disanle scroll if modal window called  
 //TODO: post loading with pagination 
 //TODO: filter btn click to left call quit 
 //TODO: date range selection not adding to filter selected constantly but only if confirmed 
 //TODO: remake switcher for classList.toogle 
+//TODO:hide filter if user want to in disktop mode 
+//TODO: post cover Image only for grid, but for post view it's need wallpaper 
 
 
 

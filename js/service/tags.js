@@ -4,8 +4,7 @@ const tagsContainer = document.getElementById("tagsContainer");
 
 let tags = [];
 
-// Add tag on Enter
-tagInput.addEventListener("keydown", (e) => {
+const tagInputKeyDown = (e) => {
   if (e.key === "Enter" && tagInput.value.trim() !== "") {
     e.preventDefault();
     const newTag = tagInput.value.trim();
@@ -17,7 +16,10 @@ tagInput.addEventListener("keydown", (e) => {
 
     tagInput.value = "";
   }
-});
+}
+
+// Add tag on Enter
+tagInput.addEventListener("keydown", tagInputKeyDown);
 
 // Render tags
 function renderTags() {

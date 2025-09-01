@@ -20,16 +20,16 @@ button { @extend .default-btn ; }
 
 
 .full-screen {
-    top: 0;
-    left: 0; 
-    right: 0; 
-    bottom: 0;
- }
- .full-screen-abs {
-   @extend .full-screen;
-   position: absolute;
- }
+  top: 0;
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+} 
+.full-screen-abs {
+  @extend .full-screen;
+  position: absolute;
+}
 .full-screen-fixed {
-   @extend .full-screen;
-   position: fixed;
- }
+  @extend .full-screen;
+  position: fixed;
+}

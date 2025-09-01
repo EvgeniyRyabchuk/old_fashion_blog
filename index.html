@@ -37,9 +37,13 @@
     </a> 
 
       <nav id="top-menu">
-         <div id="side-menu-wrapper">
+         <div id="side-menu-wrapper"> 
             <aside id="side-menu">
                <div id="top-aside-block">Menu</div>
+                 <div class="form-row d-flex-center" style="margin: 20px 0;">
+                       <a class="btn-info" style="display: block; width: 100px; padding: 5px; margin: 0 5px;" href="../auth/login.html">Login</a>
+                       <a class="btn-info" style="display: block; width: 100px; padding: 5px; margin: 0 5px;" href="../auth/register.html">Sign Up</a>
+                    </div>
                <div id="aside-profile-btn-wrapper">
                   <div class="form-row">
                      <button id="asideProfileBtn">
@@ -48,10 +52,7 @@
                         <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
                      </button> 
                   </div>
-                   <div class="form-row">
-                       <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="../auth/login.html">Login</a>
-                       <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="../auth/register.html">Sign Up</a>
-                    </div>
+                 
                   <ul class="authNavList h-0" class="d-none">
                      <li><a href="./posts.html">My posts</a></li>
                      <li><a href="./profile/setting.html">Settings</a></li>
@@ -289,9 +290,9 @@
 
          <section class="content-section" >
             <h2 id="main-content-title">Posts</h2> 
-            <div id="post-wrapper" class="">
+            <div id="posts-wrapper" class="">
                <article class="post-card">
-                  <a href="/#">
+                  <a href="/post.html">
                      <div class="post-cover">
                         <img src="./images/1960s-minidress4.jpg" alt="Post Img">
                      </div>
@@ -318,10 +319,9 @@
                         <a href="/#" class="read-more">Read More >></a>
                      </div>
                   </a>
-
                </article>
                <article class="post-card">
-                  <a href="/#">
+                  <a href="/post.html">
                      <div class="post-cover">
                         <img src="./images/1960s-minidress4.jpg" alt="Post Img">
                      </div>
@@ -348,10 +348,9 @@
                         <a href="/#" class="read-more">Read More >></a>
                      </div>
                   </a>
-
                </article>
                <article class="post-card">
-                  <a href="/#">
+                  <a href="/post.html">
                      <div class="post-cover">
                         <img src="./images/1960s-minidress4.jpg" alt="Post Img">
                      </div>
@@ -378,10 +377,9 @@
                         <a href="/#" class="read-more">Read More >></a>
                      </div>
                   </a>
-
                </article>
                <article class="post-card">
-                  <a href="/#">
+                  <a href="/post.html">
                      <div class="post-cover">
                         <img src="./images/1960s-minidress4.jpg" alt="Post Img">
                      </div>
@@ -408,10 +406,9 @@
                         <a href="/#" class="read-more">Read More >></a>
                      </div>
                   </a>
-
                </article>
                <article class="post-card">
-                  <a href="/#">
+                  <a href="/post.html">
                      <div class="post-cover">
                         <img src="./images/1960s-minidress4.jpg" alt="Post Img">
                      </div>
@@ -438,37 +435,39 @@
                         <a href="/#" class="read-more">Read More >></a>
                      </div>
                   </a>
-
                </article>
             </div>
 
-            <div class="paggination-wrapper">
-               <div class="pagination-controls">
-                  <div class="per-page">
-                     <label for="perPage">Posts per page:</label>
-                     <select id="perPage">
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                     </select>
-                  </div>
-                  <div class="page-nav">
-                     <button id="prevPage" disabled>Prev</button>
+          <div class="pagination-wrapper">
+             <!-- Pagination controls -->
+             <div class="pagination-controls">
+                <!-- per page -->
+                <div class="pagination__per-page">
+                   <label for="perPageSelect">Posts per page:</label>
+                   <select id="perPageSelect">
+                      <option value="5">5</option>
+                      <option value="10" selected>10</option>
+                      <option value="20">20</option>
+                   </select>
+                </div>
 
-                     <!-- page numbers will be injected here -->
-                     <div id="pageNumbers" class="page-numbers" aria-label="Page numbers"></div>
+                <!-- page navigation -->
+                <div class="pagination__nav">
+                   <button id="prevPage" class="prev-page" disabled>Prev</button>
 
-                     <button id="nextPage">Next</button>
-                    
-                  </div>
-                   <span id="pageInfo" class="page-info">Page 1 of 1</span>
-               </div>
-            </div>
+                   <div id="pageNumbers" class="pagination__numbers"></div>
 
-            <!-- Load More button -->
-            <div class="load-more-wrapper">
-               <button id="loadMoreBtn">Load More</button>
-            </div>
+                   <button id="nextPage" class="next-page">Next</button>
+
+                   <span id="pageInfo" class="pagination__info">Page 1 of 10</span>
+                </div>
+             </div>
+             <!-- load more -->
+             <div class="pagination__load-more">
+                <button id="loadMoreBtn">Load More</button>
+             </div>
+         </div>
+
          </section>
       </main>
    </div>

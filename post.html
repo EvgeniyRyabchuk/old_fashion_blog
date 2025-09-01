@@ -1,0 +1,346 @@
+<!DOCTYPE html> 
+
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8"> 
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Post</title>
+   <link rel="stylesheet" href="./css/output.css" type="text/css"> 
+
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-storage-compat.js"></script>
+   
+   <!-- Quill CSS -->
+   <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+   <!-- Quill JS -->
+   <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+   <!-- Quill Image Resize Module -->
+   <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js"></script>
+
+</head>
+
+<body>
+
+   <header>
+    <a class="default-link" href="/">
+        <div id="header-img-block">
+            <h2 id="headerLable">Old Fashion Blog</h2>
+        </div>
+    </a> 
+    <nav id="top-menu">
+        <div id="side-menu-wrapper">
+        <aside id="side-menu">
+            <div id="top-aside-block">Menu</div>
+                <div class="form-row d-flex-center" style="margin: 20px 0;">
+                    <a class="btn-info" style="display: block; width: 100px; padding: 5px; margin: 0 5px;" href="../auth/login.html">Login</a>
+                    <a class="btn-info" style="display: block; width: 100px; padding: 5px; margin: 0 5px;" href="../auth/register.html">Sign Up</a>
+                </div>
+            <div id="aside-profile-btn-wrapper">
+                <div class="form-row">
+                    <button id="asideProfileBtn">
+                    <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                    Profile
+                    <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                    </button> 
+                </div>
+                
+                <ul class="authNavList h-0" class="d-none">
+                    <li><a href="./posts.html">My posts</a></li>
+                    <li><a href="./profile/setting.html">Settings</a></li>
+                    <li><a href="./profile/comments.html">Comments</a></li>
+                    <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                </ul>
+            </div>
+            <ul id="side-menu-list">
+
+                <li class="side-menu-item">
+                    <a href="./index.html">Home</a></li>
+
+                <li class="side-menu-item">
+                    <a href="./posts.html">All posts</a>
+                </li>
+                <li class="side-menu-item">
+                    <a href="./posts.html">News</a></li>
+
+                <li class="side-menu-item">
+                    <a href="./posts.html">Guide</a></li>
+                <li class="side-menu-item">
+                    <a href="./galerry.html">Gallery</a>
+                </li>
+                <li class="side-menu-item">
+                    <a href="./about.html">About</a></li>
+                <li class="side-menu-item">
+                    <a href="./contact.html">Contact</a>
+                </li>
+
+            </ul>
+        </aside>
+        </div>
+    
+
+        <div class="top-menu-content">
+        <div id="burger-menu-btn" class="open-aside-btn"></div>
+        <ul id="guest-nav-list">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./posts.html">All posts</a></li>
+            <li><a href="./posts.html">News</a></li>
+            <li><a href="./posts.html">Guide</a></li> 
+            <li><a href="./galerry.html">Gallery</a></li> 
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+        
+        <!-- TODO: right  nav-list-wrapper --->
+        <div id="auth-nav-list-wrapper">
+            <div class="form-row">
+                <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/login.html">Login</a>
+                <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/register.html">Sign Up</a>
+            </div>
+            
+            <div id="header-search" class="form-row"> 
+                <input id="searchInput" type="text" placeholder="Search..." />
+                <button class="btn-info" id="searchBtn" type="button"> 
+                    Search
+                </button>
+            </div>
+
+            <div class="form-row">
+                <select id="language-select">
+                    <option value="RU">RU</option>
+                    <option value="UA">UA</option>
+                    <option value="EN">EN</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <select id="theme-select">
+                    <option value="RU">Default</option>
+                    <option value="UA">Light</option>
+                    <option value="EN">Dark</option>
+                </select>
+            </div>
+        
+            <div id="profile-btn-wrapper">
+                <div class="form-row">
+                    <button id="profileBtn">
+                    <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                    Profile
+                    <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                    </button>
+                </div>
+                <ul class="authNavList d-none" class="d-none">
+                    <li><a href="./auth/login.html">Login</a></li>
+                    <li><a href="./auth/signUp.html">Sign Up</a></li>
+                    <li><a href="./posts.html">My posts</a></li>
+                    <li><a href="./profile/setting.html">Settings</a></li>
+                    <li><a href="./profile/comments.html">Comments</a></li>
+                    <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                </ul>
+            </div>
+            
+        </div>
+    
+        </div>
+
+    </nav>
+   </header>
+
+   <div id="main-wrapper">
+      <main>
+         <nav id="breadcrumbs">
+            <ul>
+               <li>
+                  <a href="/">Home</a>
+                  <span>/</span>
+               </li>
+               <li>
+                  <a href="/">Products</a>
+                  <span>/</span>
+               </li>
+               <li>
+                  <a href="/">Categories</a>
+                  <span>/</span>
+               </li>
+            </ul>
+
+         </nav>
+        <section class="admin-post-top-panel ">
+            <button onclick="window.location.href = './profile/admin/create-edit-post.html'" class="btn-warning">Edit</button>
+            <button class="btn-danger">Delete</button>
+        </section>
+         <section class="content-section">
+
+             <div class="post-container">
+                 <!-- Cover -->
+                 <div class="post-cover">
+                     <img id="coverImg" alt="Cover image">
+                 </div>
+
+                 <!-- Content -->
+                 <div class="post-content">
+                     <h1 class="post-title" id="postTitle"></h1>
+
+                     <!-- Meta -->
+                     <div class="post-meta">
+                         <span class="post-date" id="postDate"></span>
+                         <span class="post-category" id="postCategory"></span>
+                         <span class="post-date-range" id="postDataRange"></span> 
+                     </div>
+                     
+                     <!-- Tags -->
+                     <div class="post-tags" id="postTags"></div>
+
+                     <!-- Quill Content -->
+                     <div class="post-body" id="postBody"></div>
+                 </div>
+             </div>
+
+             <div class="comment_container">
+                <div id="write-comment-container">
+                    <div class="form-row">
+                        <div class="user-card-small">
+                            <img width="45" height="45" src="../../images/1960s-minidress4.jpg" alt="">
+                            <div class="user-name">User1</div>
+                            <div class="created-at">20-01-2025 11:03:12</div>
+                        </div>
+                        <div class="comment-row">
+                            <textarea id="comment-content"></textarea>
+                            <button class="btn-primary" type="button" id="sendCommentBtn"
+                                onclick="onSendCommentClick()">Send</button>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <ul id="list-comment-container">
+                    <li>
+                        <div class="user-card-small">
+                            <img width="45" height="45" src="../../images/1960s-minidress4.jpg" alt="">
+                            <div class="user-name">Lorem, ipsum.</div>
+                            <div class="created-at">20-01-2025 11:03:12</div>
+                        </div>
+                        <div class="comment-row">
+                            Find the best dirndl jackets and blazers: the best options for Oktoberfest and everyday
+                            looks
+                            Soon, Munich will be in the Oktoberfest beer fever: dirndls, traditional outfits, and
+                            festive
+                            accessories are everywhere.
+                            <br>But the September weather in Bavaria can be unpredictable - sometimes warm like late
+                            summer,
+                            sometimes chilly autumn. Without the right jacket, it can get cold quickly. A short
+                            cardigan or an
+                            elegant jacket will not only keep you warm, but also perfectly complement your dirndl
+                            look. With the
+                            right approach, these pieces can be worn in everyday life, not only at Oktoberfest.
+                            In this post, I will show you the most beautiful and timeless dirndl jackets, cardigans,
+                            and blazers
+                            for women, as well as styling ideas and shopping tips. For more inspiration, read the
+                            article “How to
+                            Wear Dirndl and Tracht in Everyday Life – Outfit Ideas and Tips”.
+                        </div>
+                        <button class="btn-danger" type="button" id="deleteCommentBtn"
+                            onclick="onSendCommentClick()">Remove</button>
+                        <hr>
+                    </li>
+                    <li>
+                        <div class="user-card-small">
+                            <img width="45" height="45" src="../../images/1960s-minidress4.jpg" alt="">
+                            <div class="user-name">Lorem, ipsum.</div>
+                            <div class="created-at">20-01-2025 11:03:12</div>
+                        </div>
+                        <div class="comment-row">
+                            Lorem ipsum dolor sit amet consectetur adipi
+                            sicing elit. Recusandae delectus adipisci a corporis quas ev
+                            eniet fuga minus quibusdam expedita veritatis? <br>
+                            Quam, eum quos ipsam consequatur aspernatur aliquam modi
+                            quidem quod pariatur iste, corrupti sunt facilis porro quo illum repudiandae id? <br>
+                            Exercitationem provident, repellendus quo labore assumend
+                            a perferendis eligendi beatae deserunt, fugiat dolorum eiu
+                            s dolore aut, adipisci ea atque hic suscipit. <br>
+                        </div>
+                        <hr>
+                    </li>
+                </ul>
+             </div>
+
+         </section>
+      </main>
+   </div>
+
+   <footer>
+      <div id="footer-content">
+         <div class="footer-col">
+            <div>
+               <span class="footer-lable">Контакти</span>
+               <ul class="footer-data-wrapper">
+                  <li class="footer-data-row">0-800-33-00-16</li>
+                  <li class="footer-data-row">
+                     telegram_button
+                     viber_button
+                  </li>
+                  <li class="footer-data-row">Пн-Нд: 10:00-19:00</li>
+               </ul>
+            </div>
+         </div>
+         <nav class="footer-col">
+            <div>
+               <span class="footer-lable">Про компанію</span>
+               <ul class="footer-data-wrapper">
+                  <li class="footer-data-row">Про нас</li>
+                  <li class="footer-data-row">Нашi магазини</li>
+                  <li class="footer-data-row">Зворотний зв'язок</li>
+                  <li class="footer-data-row">Бонусна програма</li>
+                  <li class="footer-data-row">Мапа сайту</li>
+               </ul>
+            </div>
+         </nav>
+         <nav class="footer-col">
+            <div>
+               <span class="footer-lable">Покупцям</span>
+               <ul class="footer-data-wrapper">
+                  <li class="footer-data-row">Подарункові сертифікати</li>
+                  <li class="footer-data-row">Обмін/Повернення</li>
+                  <li class="footer-data-row">Угода користувача</li>
+                  <li class="footer-data-row">Питання та відповіді</li>
+                  <li class="footer-data-row">Оплата та доставка</li>
+               </ul>
+            </div>
+         </nav>
+         <div class="footer-col">
+            <div>
+               <div>
+                  <span class="footer-lable">Наші соцмережі</span>
+                  <ul class="footer-data-wrapper d-flex">
+                     <li class="footer-data-row">Facebook</li>
+                     <li class="footer-data-row">Instagram</li>
+                  </ul>
+                  <span class="footer-lable">Приймаємо до оплати</span>
+                  <ul class="footer-data-wrapper d-flex">
+                     <li class="footer-data-row">Visa</li>
+                     <li class="footer-data-row">Mastercard</li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+   </footer>
+
+
+
+   <script src="./js/index.js"></script>
+   <script src="./js/service/auth.js"></script>
+   <script src="./js/service/category.js"></script>
+   <script src="./js/service/tags.js"></script>
+   <script src="./js/service/comments.js"></script>
+    <script src="./js/service/posts.js"></script> 
+    <script src="../../js/service/comments.js"></script>
+    <script>
+        readPost("qN4l1rgX8tAEoShDhbGw"); 
+        getAllComments();
+
+    </script>
+</body>
+
+</html>

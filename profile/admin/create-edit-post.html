@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main page</title>
-    <link rel="stylesheet" href="./css/output.css" type="text/css">
+    <link rel="stylesheet" href="../../css/output.css" type="text/css">
 
     <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics-compat.js"></script>
@@ -25,68 +25,133 @@
 
 <body>
 
-    <header>
+   <header>
+      
+      <!-- <div id="side-menu-wrapper" class="d-block">
+     
+      </div> -->
+    <a class="default-link" href="/">
         <div id="header-img-block">
             <h2 id="headerLable">Old Fashion Blog</h2>
         </div>
-        <nav id="top-menu">
-            <div class="top-menu-content">
-                <div id="burger-menu-btn"></div>
-                <ul id="guest-nav-list">
-                    <li><a href="./index.html">Home</a></li>
-                    <li><a href="./posts.html">All posts</a></li>
-                    <li><a href="./posts.html">News</a></li>
-                    <li><a href="./posts.html">Guide</a></li>
-                    <li><a href="./galerry.html">Gallery</a></li>
-                    <li><a href="./about.html">About</a></li>
-                    <li><a href="./contact.html">Contact</a></li>
-                </ul>
+    </a> 
 
-                <div id="auth-nav-list-wrapper">
-
-                    <div class="form-row">
-                        <input id="searchInput" type="text" placeholder="Search..." />
-                        <button id="searchBtn" type="button">
-                            Search
-                        </button>
+      <nav id="top-menu">
+         <div id="side-menu-wrapper"> 
+            <aside id="side-menu">
+               <div id="top-aside-block">Menu</div>
+                 <div class="form-row d-flex-center" style="margin: 20px 0;">
+                       <a class="btn-info" style="display: block; width: 100px; padding: 5px; margin: 0 5px;" href="../auth/login.html">Login</a>
+                       <a class="btn-info" style="display: block; width: 100px; padding: 5px; margin: 0 5px;" href="../auth/register.html">Sign Up</a>
                     </div>
+               <div id="aside-profile-btn-wrapper">
+                  <div class="form-row">
+                     <button id="asideProfileBtn">
+                        <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                        Profile
+                        <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                     </button> 
+                  </div>
+                 
+                  <ul class="authNavList h-0" class="d-none">
+                     <li><a href="./posts.html">My posts</a></li>
+                     <li><a href="./profile/setting.html">Settings</a></li>
+                     <li><a href="./profile/comments.html">Comments</a></li>
+                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                  </ul>
+               </div>
+               <ul id="side-menu-list">
 
-                    <div class="form-row">
-                        <select id="language-select">
-                            <option value="RU">RU</option>
-                            <option value="UA">UA</option>
-                            <option value="EN">EN</option>
-                        </select>
-                    </div>
+                  <li class="side-menu-item">
+                     <a href="./index.html">Home</a></li>
 
-                    <div id="profile-btn-wrapper">
-                        <div class="form-row">
+                  <li class="side-menu-item">
+                     <a href="./posts.html">All posts</a>
+                  </li>
+                  <li class="side-menu-item">
+                     <a href="./posts.html">News</a></li>
 
-                            <button class="d-block" id="profileBtn">
-                                <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
-                                Profile
-                                <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
-                            </button>
+                  <li class="side-menu-item">
+                     <a href="./posts.html">Guide</a></li>
+                  <li class="side-menu-item">
+                     <a href="./galerry.html">Gallery</a>
+                  </li>
+                  <li class="side-menu-item">
+                     <a href="./about.html">About</a></li>
+                  <li class="side-menu-item">
+                     <a href="./contact.html">Contact</a>
+                  </li>
 
-                        </div>
+               </ul>
+            </aside>
+         </div>
+        
 
+         <div class="top-menu-content">
+            <div id="burger-menu-btn" class="open-aside-btn"></div>
+            <ul id="guest-nav-list">
+               <li><a href="./index.html">Home</a></li>
+               <li><a href="./posts.html">All posts</a></li>
+               <li><a href="./posts.html">News</a></li>
+               <li><a href="./posts.html">Guide</a></li> 
+               <li><a href="./galerry.html">Gallery</a></li> 
+               <li><a href="./about.html">About</a></li>
+               <li><a href="./contact.html">Contact</a></li>
+            </ul>
+          
+            <!-- TODO: right  nav-list-wrapper --->
+            <div id="auth-nav-list-wrapper">
+               <div class="form-row">
+                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/login.html">Login</a>
+                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/register.html">Sign Up</a>
+               </div>
+               
+               <div id="header-search" class="form-row"> 
+                  <input id="searchInput" type="text" placeholder="Search..." />
+                  <button class="btn-info" id="searchBtn" type="button"> 
+                     Search
+                  </button>
+               </div>
 
-                        <ul id="authNavList" class="d-none">
-                            <li><a href="./auth/login.html">Login</a></li>
-                            <li><a href="./auth/signUp.html">Sign Up</a></li>
-                            <li><a href="./posts.html">My posts</a></li>
-                            <li><a href="./profile/setting.html">Settings</a></li>
-                            <li><a href="./profile/comments.html">Comments</a></li>
-                            <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
-                        </ul>
-                    </div>
-
-                </div>
-
+                <div class="form-row">
+                  <select id="language-select">
+                     <option value="RU">RU</option>
+                     <option value="UA">UA</option>
+                     <option value="EN">EN</option>
+                  </select>
+               </div>
+                <div class="form-row">
+                  <select id="theme-select">
+                     <option value="RU">Default</option>
+                     <option value="UA">Light</option>
+                     <option value="EN">Dark</option>
+                  </select>
+               </div>
+          
+               <div id="profile-btn-wrapper">
+                  <div class="form-row">
+                     <button id="profileBtn">
+                        <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                        Profile
+                        <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                     </button>
+                  </div>
+                  <ul class="authNavList d-none" class="d-none">
+                     <li><a href="./auth/login.html">Login</a></li>
+                     <li><a href="./auth/signUp.html">Sign Up</a></li>
+                     <li><a href="./posts.html">My posts</a></li>
+                     <li><a href="./profile/setting.html">Settings</a></li>
+                     <li><a href="./profile/comments.html">Comments</a></li>
+                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                  </ul>
+               </div>
+              
             </div>
+     
+         </div>
 
-        </nav>
-    </header>
+      </nav>
+   </header>
 
 
     <div id="main-wrapper">
@@ -172,8 +237,20 @@
 
                     <!-- Cloudinary unsigned upload -->
                     <input type="file" id="quillImageInput" style="display:none">
-                    <input type="file" id="coverImg" accept="image/*" style="margin-top:10px;" />
-                    <p id="preview"></p>
+                    <div id="preview">
+
+                        <button id="deletePostCoverImgBtn" class="btn-danger">X</button>
+                    </div>
+                    <div id="postImgPlaceholder" class="image-placeholder" onclick="">
+                        <input type="file" id="coverImg" accept="image/*" class="hidden-input" />
+                        <div class="placeholder-content"> 
+                            <span>Click to add image</span>
+                        </div>
+                    </div>
+
+                    <!-- <input type="file" id="coverImg" accept="image/*" style="margin-top:10px;" />
+                      -->
+                    <!-- <p id="preview"></p> -->
 
                     <!-- Add built-in Quill toolbar options -->
                     <div id="toolbar">
@@ -227,7 +304,7 @@
                     <hr />
 
                     <!-- Save Post -->
-                    <button class="btn-primary" id="savePost">Save Post</button>
+                    <button class="btn-primary" id="savePost" onclick="savePost()">Save Post</button>
                     <button class="btn-secondary" id="reset" onclick="onResetPostClick()">Cancel</button>
                 </div>
             </section>
@@ -238,104 +315,12 @@
 
             </section>
 
-            <section class="content-section">
-                <div class="comment_container">
-                    <div id="write-comment-container">
-                        <div class="form-row">
-                            <div class="user-card-small">
-                                <img width="45" height="45" src="./images/1960s-minidress4.jpg" alt="">
-                                <div class="user-name">User1</div>
-                                <div class="created-at">20-01-2025 11:03:12</div>
-                            </div>
-                            <div class="comment-row">
-                                <textarea id="comment-content"></textarea>
-                                <button class="btn-primary" type="button" id="sendCommentBtn"
-                                    onclick="onSendCommentClick()">Send</button>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-
-                    <ul id="list-comment-container">
-                        <li>
-                            <div class="user-card-small">
-                                <img width="45" height="45" src="./images/1960s-minidress4.jpg" alt="">
-                                <div class="user-name">Lorem, ipsum.</div>
-                                <div class="created-at">20-01-2025 11:03:12</div>
-                            </div>
-                            <div class="comment-row">
-                                Find the best dirndl jackets and blazers: the best options for Oktoberfest and everyday
-                                looks
-                                Soon, Munich will be in the Oktoberfest beer fever: dirndls, traditional outfits, and
-                                festive
-                                accessories are everywhere.
-                                <br>But the September weather in Bavaria can be unpredictable - sometimes warm like late
-                                summer,
-                                sometimes chilly autumn. Without the right jacket, it can get cold quickly. A short
-                                cardigan or an
-                                elegant jacket will not only keep you warm, but also perfectly complement your dirndl
-                                look. With the
-                                right approach, these pieces can be worn in everyday life, not only at Oktoberfest.
-                                In this post, I will show you the most beautiful and timeless dirndl jackets, cardigans,
-                                and blazers
-                                for women, as well as styling ideas and shopping tips. For more inspiration, read the
-                                article “How to
-                                Wear Dirndl and Tracht in Everyday Life – Outfit Ideas and Tips”.
-                            </div>
-                            <button class="btn-danger" type="button" id="deleteCommentBtn"
-                                onclick="onSendCommentClick()">Remove</button>
-                            <hr>
-                        </li>
-                        <li>
-                            <div class="user-card-small">
-                                <img width="45" height="45" src="./images/1960s-minidress4.jpg" alt="">
-                                <div class="user-name">Lorem, ipsum.</div>
-                                <div class="created-at">20-01-2025 11:03:12</div>
-                            </div>
-                            <div class="comment-row">
-                                Lorem ipsum dolor sit amet consectetur adipi
-                                sicing elit. Recusandae delectus adipisci a corporis quas ev
-                                eniet fuga minus quibusdam expedita veritatis? <br>
-                                Quam, eum quos ipsam consequatur aspernatur aliquam modi
-                                quidem quod pariatur iste, corrupti sunt facilis porro quo illum repudiandae id? <br>
-                                Exercitationem provident, repellendus quo labore assumend
-                                a perferendis eligendi beatae deserunt, fugiat dolorum eiu
-                                s dolore aut, adipisci ea atque hic suscipit. <br>
-                            </div>
-                            <hr>
-                        </li>
-                    </ul>
-                </div>
-
-
-            </section>
-
-
-
-
-
 
         </main>
 
         <aside class="d-block">
 
         </aside>
-
-
-        <div>
-            <h2>Sign Up</h2>
-            <input id="regName" type="text" placeholder="Name">
-            <input id="regEmail" type="email" placeholder="Email">
-            <input id="regPassword" type="password" placeholder="Password">
-            <button onclick="register()">Sign Up</button>
-        </div>
-
-        <div>
-            <h2>Login</h2>
-            <input id="email" type="email" placeholder="Email">
-            <input id="password" type="password" placeholder="Password">
-            <button onclick="login()">Login</button>
-        </div>
     </div>
 
     <footer>
@@ -397,12 +382,23 @@
 
 
 
-    <script src="./js/service/index.js"></script>
-    <script src="./js/service/auth.js"></script>
-    <script src="./js/service/category.js"></script>
-    <script src="./js/service/tags.js"></script>
-    <script src="./js/service/posts.js"></script>
-    <script src="./js/service/comments.js"></script>
+    <script src="../../js/index.js"></script>
+    <script src="../../js/utilities/loader.js"></script>
+    <script src="../../js/service/auth.js"></script>
+    <script src="../../js/service/category.js"></script>
+    <script src="../../js/service/tags.js"></script>
+    <script src="../../js/utilities/post_edit/cover_img.js"></script>
+    <script src="../../js/utilities/post_edit/quill.js"></script>
+    <script src="../..//js/service/posts.js"></script>
+
+
+    <script>
+
+        readPostDocs();
+
+        loadCategoriesToSelect();
+
+    </script>
 
 </body>
 

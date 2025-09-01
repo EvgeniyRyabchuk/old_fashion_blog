@@ -1,6 +1,8 @@
 
 @use "sass:list";
 @use '../abstracts/placeholders';
+@use '../abstracts/flex-box-tems';
+@use '../utilities/helpers'; 
 
 // $loader-size: red, green, blue;
 
@@ -31,10 +33,10 @@ $wrapper-circle-size-percent: 0.4;
 
 
 .loader-wrapper {
+    @extend .full-screen-abs; 
+    @extend .d-flex-center;
     background-color: $wrapper-bg-color; 
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
+
 
     .loader {
         @include getDimensionForCircleWrapper();
@@ -65,7 +67,6 @@ $wrapper-circle-size-percent: 0.4;
         }
     }
 }
-
 
 
 @keyframes circleMovement {

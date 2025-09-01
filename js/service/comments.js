@@ -109,4 +109,4 @@ const onSendCommentClick = (e) => {
     addCommentToPost();
 }
 
-getAllComments();
+// getAllComments();

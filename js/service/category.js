@@ -47,6 +47,7 @@ const readAllCategoires = async () => {
     return [];
   }
 }
+
 const loadCategoriesToSelect = async () => {
   const categories = await readAllCategoires();
   const select = document.getElementById("category-select");
@@ -69,4 +70,4 @@ const loadCategoriesToSelect = async () => {
 };
 
 
-loadCategoriesToSelect();
+// loadCategoriesToSelect();

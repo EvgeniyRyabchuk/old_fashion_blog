@@ -1,81 +1,9 @@
-  //TODO: add categoryId 
-  //TODO: add loader 
-  //TODO: refactor 
-  
 
-const quill = new Quill('#editor', {
-  theme: 'snow',
-  modules: {
-    toolbar: '#toolbar',
-    imageResize: {} // enables resizing, drag & drop
-  }
-});
-
-// Create hidden file input for Quill image uploads
-const quillImgFile = document.getElementById("quillImageInput");
-const coverImg = document.getElementById("coverImg");
 
 
 let allPosts = []; 
 let postToUpdateId = null; 
 
-// Override default image handler
-quill.getModule("toolbar").addHandler("image", () => {
-  quillImgFile.click(); // open file picker
-});
-
-// loading image to Cloudinary Service
-const loadToCloudinary = async (file) => {
-  // Prepare FormData for Cloudinary
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "fashion_images"); // unsigned preset from Cloudinary
-  
-  const res = await fetch("https://api.cloudinary.com/v1_1/dpbmcoiru/image/upload", {
-    method: "POST",
-    body: formData
-  });
-
-  const data = await res.json();
-  console.log("Uploaded:", data); 
-  return data.secure_url;
-}
-
-// append Image in Quill 
-quillImgFile.addEventListener("change", async (event) => {
-  console.log('change');
-  const file = event.target.files[0];
-
-  if (!file) {
-    alert("Please select an image first.");
-    return;
-  }
-
-  try {
-    const uploadedImageUrl = await loadToCloudinary(file);
-    const range = quill.getSelection();
-    quill.insertEmbed(range.index, "image", uploadedImageUrl);
-    console.log("Image uploaded & saved:", uploadedImageUrl);
-  } catch (err) {
-    console.error("Upload failed:", err);
-    alert("Upload failed: " + err.message);
-  }
-});
-
-// Cover Preview 
-const createPostPreview = async (event) => {
-  const file = event.target.files[0];
-  const fileUrl = URL.createObjectURL(file);
-  // Show preview
-  document.getElementById("preview").innerHTML =
-    `<img src="${fileUrl}" width="150">`; 
-
-  console.log('change');
-}
-
-coverImg.addEventListener("change", createPostPreview);
-
-//////////////////////////////////////////////////////////////////////////////
 
 const clearUpTheForm = () => {
   document.getElementById("title").value = ""; 
@@ -156,12 +84,12 @@ const createOrUpdatePost = async (postId = null) => {
 }
 
 // Save post to Firestore
-document.getElementById("savePost").addEventListener("click", async () => {
+const savePost = async (e) => {
   await createOrUpdatePost(postToUpdateId);
   await clearUpTheForm(); 
   await readPostDocs();
   postToUpdateId = null; 
-});
+};
 
 async function readPostDocs() { 
   const loader = loaderCircleGenerate(document.querySelector('.table-wrapper')); 
@@ -189,7 +117,7 @@ async function readPostDocs() {
     const tdContent = document.createElement("td");
     const contentWrapper = document.createElement("div");
     const tdImage = document.createElement("td");
-    const tdImageCategoryID = document.createElement("td");
+    const tdCategory = document.createElement("td");
     const tdDateRange = document.createElement("td");
     const tdUserId = document.createElement("td");
     const tdUserCreatedAt = document.createElement("td");
@@ -228,7 +156,7 @@ async function readPostDocs() {
       tdImage.innerHTML = `<img src="${post.coverUrl}" width="100" height="100">`;
     }
 
-    tdImageCategoryID.innerHTML = post.category?.id || 'null';
+    tdCategory.innerHTML = post.category?.name || 'null';
     // tdImageCategoryID.id = "categorySelect";
     tdDateRange.innerHTML = post.date_range;
     tdUserId.innerHTML = post.userId;
@@ -253,7 +181,7 @@ async function readPostDocs() {
     tr.appendChild(tdTitle);
     tr.appendChild(tdContent);
     tr.appendChild(tdImage);
-    tr.appendChild(tdImageCategoryID);
+    tr.appendChild(tdCategory);
     tr.appendChild(tdDateRange);
     tr.appendChild(tdUserId);
     tr.appendChild(tdUserCreatedAt);
@@ -264,9 +192,39 @@ async function readPostDocs() {
     // добавляем строку в tbody
     tbody.appendChild(tr);
   };
-loader.remove();
+loader.remove(); 
 }
 
+async function readPost(postId) {
+  const postSnap = await db.collection('posts').doc(postId).get();
+  const post = {
+    id: postSnap.id,
+    ...postSnap.data()
+  }
+  await loadCategoriesToCollection([post]);
+  await loadTagsToCollection([post]);
+
+  // Fill DOM
+  document.getElementById("coverImg").src = post.coverUrl;
+  document.getElementById("postTitle").textContent = post.title;
+  document.getElementById("postDate").textContent = post.createdAt.toDate().toLocaleDateString();
+  document.getElementById("postDataRange").textContent = post.date_range;
+  document.getElementById("postCategory").textContent = post.category?.name ?? "";
+
+  // Tags
+  const tagsContainer = document.getElementById("postTags");
+  tagsContainer.innerHTML = "";
+  if (post.tags && post.tags.length > 0) {
+    post.tags.forEach(tag => {
+      const span = document.createElement("span");
+      span.className = "tag";
+      span.textContent = `#${tag.name}`;
+      tagsContainer.appendChild(span);
+    });
+  }
+  // Content (Quill HTML)
+  document.getElementById("postBody").innerHTML = post.content;
+}
 
 const onUpdatePostClick = async (e) => {
 
@@ -317,7 +275,7 @@ const onResetPostClick = (e) => {
 
     // Show preview
   document.getElementById("preview").innerHTML =``;
-
+  
   document.getElementById("startYear").value = '';
   document.getElementById("endYear").value = '';
   
@@ -329,9 +287,6 @@ const onResetPostClick = (e) => {
   selectCat.value = ''; 
   
 }
-
-readPostDocs();
-
 
 
 
