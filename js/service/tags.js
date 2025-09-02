@@ -18,8 +18,14 @@ const tagInputKeyDown = (e) => {
   }
 }
 
+//TODO: fix 
+try {
 // Add tag on Enter
 tagInput.addEventListener("keydown", tagInputKeyDown);
+} catch (e) {
+  console.log(e);
+}
+
 
 // Render tags
 function renderTags() {

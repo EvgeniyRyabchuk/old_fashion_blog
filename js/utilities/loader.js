@@ -4,7 +4,7 @@ const loaderCircleGenerate = (parentContainer = document.body) => {
     const loaderWrapper = document.createElement('div');
     loaderWrapper.classList.add('loader-wrapper'); 
     // loaderWrapper.classList.add('full-screen');
-        loaderWrapper.classList.add('full-parrent');
+    loaderWrapper.classList.add('full-parrent');
     // Create the loader container
     const loader = document.createElement('div');
     loader.className = 'loader';

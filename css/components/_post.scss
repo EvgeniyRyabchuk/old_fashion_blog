@@ -275,7 +275,7 @@
 
 // Variables for colors and dimensions
 $placeholder-border-color: #ccc;
-$placeholder-bg-color: #f9f9f9;
+$placeholder-bg-color: #8f2121;
 $placeholder-text-color: #666;
 $placeholder-size: 200px;
 $placeholder-border-radius: 8px;
@@ -293,8 +293,8 @@ $placeholder-border-radius: 8px;
 
 
 .image-placeholder {
-    width: $placeholder-size;
-    aspect-ratio: 1 / 1;
+    width: $placeholder-size; 
+    aspect-ratio: 1 / 1; 
     border: 2px dashed $placeholder-border-color;
     border-radius: $placeholder-border-radius;
     display: flex;
@@ -345,6 +345,5 @@ $placeholder-border-radius: 8px;
         height: 100%;
         object-fit: cover;
         display: none;
-        // The display is controlled by JavaScript
     }
 }

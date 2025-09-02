@@ -4,113 +4,11 @@
 let allPosts = []; 
 let postToUpdateId = null; 
 
+//TODO: fix - if grid then grid wrapper if table then table wrapper 
+const loader = document.querySelector("#postLoader"); 
 
-const clearUpTheForm = () => {
-  document.getElementById("title").value = ""; 
-  quill.setText("");
-  coverImg.value = "";
-  document.getElementById("preview").innerHTML = "";
-  tagInput.value = "";
-  tags = [];
-  renderTags();
-}
-
-const createOrUpdatePost = async (postId = null) => {
-  const title = document.getElementById("title").value;
-  const content = quill.root.innerHTML; 
-  let coverUrl = null;
-  // if post is new and cover img loaded then upload it to cloudinary
-  if(coverImg.files[0]) 
-    coverUrl = await loadToCloudinary(coverImg.files[0]); 
-  // if post is new and no cover img load default 
-  else if (!coverUrl && !postId)  
-     coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
-
-  const startDate = new Date(document.getElementById("startYear").value); 
-  const endDate = new Date(document.getElementById("endYear").value);
-  if (!startDate || !endDate) {
-    alert("Please select both dates.");
-    return;
-  }
-  console.log(startDate, endDate);
-  console.log(content);
-
-  // if (!coverUrl) {
-  //   if(!postId) { 
-  //     coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
-  //   } else { 
-  //       alert("Load old cover image");
-  //   } 
-  // }
-  
-
-  try {
-    let createdOrUpdatedPost = null; 
-    if(!postId) {
-       createdOrUpdatedPost= await db.collection("posts").add({
-        title: title,
-        content: content, 
-        coverUrl: coverUrl,
-        date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`, 
-        categoryId: selectedCategoryId,
-        userId: auth.currentUser.uid,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    } else {
-      const post = allPosts.find(p => p.id === postId); 
-      console.log('founded' + post.id);
-      
-      await db.collection("posts").doc(postId).update({ 
-        title: title,
-        content: content, 
-        coverUrl: coverUrl ?? post.coverUrl,  
-        date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`,
-        categoryId: selectedCategoryId,  
-        // updateAt: firebase.firestore.FieldValue.serverTimestamp()
-      }); 
-      const updatedSnap = await db.collection("posts").doc(postId).get();
-      createdOrUpdatedPost = { id: updatedSnap.id, ...updatedSnap.data() }; 
-    }
-    
-    await addTagsIfNotExist(createdOrUpdatedPost); 
-
-    console.log("Post created!");
-    ("Post created!");
-  } catch (err) {
-    console.error("Error adding document:", err);
-    alert("Error: " + err.message);
-  }
-
-}
-
-// Save post to Firestore
-const savePost = async (e) => {
-  await createOrUpdatePost(postToUpdateId);
-  await clearUpTheForm(); 
-  await readPostDocs();
-  postToUpdateId = null; 
-};
-
-async function readPostDocs() { 
-  const loader = loaderCircleGenerate(document.querySelector('.table-wrapper')); 
-  const postsSnap = await db.collection("posts").orderBy("createdAt", "desc").limit(5).get(); 
-  const posts = postsSnap.docs.map(doc => ({
-    id: doc.id, 
-    ...doc.data()
-  }));
-  
-  // Loading relationships 
-  await loadCategoriesToCollection(posts);
-  await loadTagsToCollection(posts); 
-  allPosts = posts; 
-  console.log(posts);
-  
-  const tbody = document.querySelector("#postsTable > tbody");
-  tbody.innerHTML = ''; // очищаем tbody перед добавлением новых строк
-
-  for (const post of posts) {
-
-    // создаём строку
+const renderPostsForTable = (post) => {
+ // создаём строку
     const tr = document.createElement("tr");
     const tdId = document.createElement("td");
     const tdTitle = document.createElement("td");
@@ -187,13 +85,191 @@ async function readPostDocs() {
     tr.appendChild(tdUserCreatedAt);
     tr.appendChild(tdTags);
     tr.appendChild(tdAction);
-
-
-    // добавляем строку в tbody
-    tbody.appendChild(tr);
-  };
-loader.remove(); 
+    
+    return tr;
 }
+const renderPostsForGrid = (post) => {
+  // { href, imgSrc, imgAlt, title, content } 
+  const imgAlt = "Post Image";
+    //TODO: fix - adding post id 
+  const href = "/post.html"
+   const article = document.createElement("article");
+  article.className = "post-card";
+
+  const link = document.createElement("a");
+
+  link.href = href;
+
+  // cover image
+  const coverDiv = document.createElement("div");
+  coverDiv.className = "post-cover";
+  const img = document.createElement("img");
+  img.src = post.coverUrl;
+  img.alt = imgAlt || "Post Image";
+  coverDiv.appendChild(img);
+
+  // title
+  const titleWrapper = document.createElement("div");
+  titleWrapper.className = "post-title-wrapper";
+  const spanTitle = document.createElement("span");
+  spanTitle.className = "post-title";
+  spanTitle.textContent = post.title;
+  titleWrapper.appendChild(spanTitle);
+
+  // short content
+  const shortContent = document.createElement("div");
+  shortContent.className = "post-short-content";
+  shortContent.textContent = post.content;
+
+  // assemble inside link
+  link.appendChild(coverDiv);
+  link.appendChild(titleWrapper);
+  link.appendChild(shortContent);
+
+  // more wrapper
+  const moreWrapper = document.createElement("div");
+  moreWrapper.className = "more-wrapper";
+  const readMore = document.createElement("a");
+  readMore.href = href;
+  readMore.className = "read-more";
+  readMore.textContent = "Read More >>";
+  moreWrapper.appendChild(readMore);
+
+  // build article
+  article.appendChild(link);
+  article.appendChild(moreWrapper);
+
+  return article;
+}
+
+
+const getCurrentRender = () => {
+  //TODO: normalize with variables 
+  const lastUrlPart = window.location.pathname.split("/").pop();
+  switch(lastUrlPart) {
+    case "posts.html": 
+      return renderPostsForGrid; 
+    case "": 
+      return renderPostsForGrid; 
+    case "index.html": 
+      return renderPostsForGrid; 
+    case "create-edit-post.html":
+      return renderPostsForTable; 
+    default: return null;
+  }
+}
+const currentRenderFunc = getCurrentRender(); 
+
+// callback after posts loaded for attach addition info to posts 
+const afterPostsLoaded = async (posts) => {
+  await loadCategoriesToCollection(posts);
+  await loadTagsToCollection(posts); 
+  allPosts = posts; 
+}
+
+const postsGridPaginator = createPaginator({
+  container: document.querySelector("#posts-wrapper"), 
+  perPageSelect: document.getElementById("perPageSelect"),
+  prevBtn: document.getElementById("prevPage"),
+  nextBtn: document.getElementById("nextPage"), 
+  pageInfo: document.getElementById("pageInfo"),
+  pageNumbersContainer: document.getElementById("pageNumbers"),
+  loadMoreBtn: document.getElementById("loadMoreBtn"), 
+  fetchData: async (page, perPage) => {
+    return await fetchDataFirestore("posts", page, perPage, {
+      orderField: "createdAt", // must exist in your docs 
+    }, afterPostsLoaded); 
+  },
+  renderItem: post => currentRenderFunc(post),
+  loader
+});
+
+const clearUpTheForm = () => {
+  document.getElementById("title").value = ""; 
+  quill.setText("");
+  coverImg.value = "";
+  document.getElementById("preview").innerHTML = "";
+  tagInput.value = "";
+  tags = [];
+  renderTags();
+}
+
+
+const createOrUpdatePost = async (postId = null) => {
+  const title = document.getElementById("title").value;
+  const content = quill.root.innerHTML; 
+  let coverUrl = null;
+  // if post is new and cover img loaded then upload it to cloudinary
+  if(coverImg.files[0]) 
+    coverUrl = await loadToCloudinary(coverImg.files[0]); 
+  // if post is new and no cover img load default 
+  else if (!coverUrl && !postId)  
+     coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
+
+  const startDate = new Date(document.getElementById("startYear").value); 
+  const endDate = new Date(document.getElementById("endYear").value);
+  if (!startDate || !endDate) {
+    alert("Please select both dates.");
+    return;
+  }
+  console.log(startDate, endDate);
+  console.log(content);
+
+  // if (!coverUrl) {
+  //   if(!postId) { 
+  //     coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
+  //   } else { 
+  //       alert("Load old cover image");
+  //   } 
+  // }
+  
+
+  try {
+    let createdOrUpdatedPost = null; 
+    if(!postId) {
+       createdOrUpdatedPost= await db.collection("posts").add({
+        title: title,
+        content: content, 
+        coverUrl: coverUrl,
+        date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`, 
+        categoryId: selectedCategoryId,
+        userId: auth.currentUser.uid,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } else {
+      const post = allPosts.find(p => p.id === postId); 
+      console.log('founded' + post.id);
+      
+      await db.collection("posts").doc(postId).update({ 
+        title: title,
+        content: content, 
+        coverUrl: coverUrl ?? post.coverUrl,  
+        date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`,
+        categoryId: selectedCategoryId,  
+        // updateAt: firebase.firestore.FieldValue.serverTimestamp()
+      }); 
+      const updatedSnap = await db.collection("posts").doc(postId).get();
+      createdOrUpdatedPost = { id: updatedSnap.id, ...updatedSnap.data() }; 
+    }
+    
+    await addTagsIfNotExist(createdOrUpdatedPost); 
+
+    console.log("Post created!");
+    ("Post created!");
+  } catch (err) {
+    console.error("Error adding document:", err);
+    alert("Error: " + err.message);
+  }
+
+}
+
+// Save post to Firestore
+const savePost = async (e) => { 
+  await createOrUpdatePost(postToUpdateId);
+  await clearUpTheForm();  
+  await postsTablePaginator.reload(); 
+  postToUpdateId = null; 
+};
 
 async function readPost(postId) {
   const postSnap = await db.collection('posts').doc(postId).get();
@@ -258,7 +334,7 @@ const onDeletePostClick = async (e) => {
   
   try {
     await db.collection("posts").doc(pId).delete(); 
-    await readPostDocs();
+    await postsTablePaginator.reload();
     console.log("Document successfully updated!");
   } catch (err) {
     console.error("Error deleting document: ", error);

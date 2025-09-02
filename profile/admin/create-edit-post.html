@@ -200,53 +200,63 @@
 
             </section>
             <section class="content-section">
-
+                <h2>Create Post</h2>
                 <div class="upload_container" style="margin: 30px; border: 1px solid black;">
-                    <h2>Create Post</h2>
-                    <input type="text" id="title" placeholder="Post title"><br><br>
+                    <div class="d-flex">
+                        <div>
+                            <!-- category -->
+                            <div>
+                                <label for="category-select">Category</label>
+                                <select name="category" id="category-select">
+                                    <option value="">-- Select category --</option>
+                                    <option value="1">50</option>
+                                    <option value="2">60</option>
+                                    <option value="3">70</option>
+                                </select>
+                            </div>
 
-                    <!-- category -->
-                    <div>
-                        <label for="category-select">Category</label>
-                        <select name="category" id="category-select">
-                            <option value="">-- Select category --</option>
-                            <option value="1">50</option>
-                            <option value="2">60</option>
-                            <option value="3">70</option>
-                        </select>
-                    </div>
+                            <!-- date_range  -->
+                            <div class="year-range">
+                                <label for="startYear">From:</label>
+                                <input type="number" id="startYear" name="startYear" min="2000" max="2099" step="1"
+                                    value="2020">
 
-                    <!-- date_range  -->
-                    <div class="year-range">
-                        <label for="startYear">From:</label>
-                        <input type="number" id="startYear" name="startYear" min="2000" max="2099" step="1"
-                            value="2020">
+                                <label for="endYear">To:</label>
+                                <input type="number" id="endYear" name="endYear" min="2000" max="2099" step="1"
+                                    value="2025">
 
-                        <label for="endYear">To:</label>
-                        <input type="number" id="endYear" name="endYear" min="2000" max="2099" step="1" value="2025">
+                                <button id="filterPosts">Filter Posts</button>
+                            </div>
 
-                        <button id="filterPosts">Filter Posts</button>
-                    </div>
+                            <!-- tags -->
+                            <div class="tag-manager">
+                                <label for="tagInput">Tags:</label>
+                                <input type="text" id="tagInput" placeholder="Type a tag and press Enter">
+                                <div id="tagsContainer" class="tags"></div>
+                            </div>
 
-                    <!-- tags -->
-                    <div class="tag-manager">
-                        <label for="tagInput">Tags:</label>
-                        <input type="text" id="tagInput" placeholder="Type a tag and press Enter">
-                        <div id="tagsContainer" class="tags"></div>
-                    </div>
+                        </div>
+                        <div>
+                            <input type="file" id="quillImageInput" style="display:none">
+                            <div id="preview">
 
-                    <!-- Cloudinary unsigned upload -->
-                    <input type="file" id="quillImageInput" style="display:none">
-                    <div id="preview">
-
-                        <button id="deletePostCoverImgBtn" class="btn-danger">X</button>
-                    </div>
-                    <div id="postImgPlaceholder" class="image-placeholder" onclick="">
-                        <input type="file" id="coverImg" accept="image/*" class="hidden-input" />
-                        <div class="placeholder-content"> 
-                            <span>Click to add image</span>
+                                <button id="deletePostCoverImgBtn" class="btn-danger">X</button>
+                            </div>
+                            <div id="postImgPlaceholder" class="image-placeholder" onclick="">
+                                <input type="file" id="coverImg" accept="image/*" class="hidden-input" />
+                                <div class="placeholder-content">
+                                    <span>Click to add image</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                
+                    
+                    <input type="text" id="title" placeholder="Post title"><br><br>
+
+                 
+                    <!-- Cloudinary unsigned upload -->
+                   
 
                     <!-- <input type="file" id="coverImg" accept="image/*" style="margin-top:10px;" />
                       -->
@@ -300,7 +310,7 @@
                         </span>
                     </div>
 
-                    <div id="editor" style="height: 300px;"></div>
+                    <div id="editor" style="height: 600px;"></div>
                     <hr />
 
                     <!-- Save Post -->
@@ -389,12 +399,13 @@
     <script src="../../js/service/tags.js"></script>
     <script src="../../js/utilities/post_edit/cover_img.js"></script>
     <script src="../../js/utilities/post_edit/quill.js"></script>
+    
     <script src="../..//js/service/posts.js"></script>
 
 
     <script>
 
-        readPostDocs();
+        
 
         loadCategoriesToSelect();
 

@@ -192,7 +192,7 @@
             </div>
          
          </section>
-
+         
          <!-- Filter Drawer (mobile) / Inline (desktop) -->
          <section class="filter-drawer" id="filterDrawer">
             <div style="margin: 10px 0;">
@@ -290,7 +290,31 @@
 
          <section class="content-section" >
             <h2 id="main-content-title">Posts</h2> 
+               <div id="postLoader" class="loader-wrapper full-parrent">
+                  <div class="loader">
+                     <div class="circle-wrapper-1">
+                        <div class="circle-1"></div>
+                     </div>
+                     <div class="circle-wrapper-2">
+                        <div class="circle-2"></div>
+                     </div>
+                     <div class="circle-wrapper-3">
+                        <div class="circle-3"></div>
+                     </div>
+                     <div class="circle-wrapper-4">
+                        <div class="circle-4"></div>
+                     </div>
+                     <div class="circle-wrapper-5">
+                        <div class="circle-5"></div>
+                     </div>
+                     <div class="circle-wrapper-6">
+                        <div class="circle-6"></div>
+                     </div>
+                  </div>
+               </div> 
             <div id="posts-wrapper" class="">
+            
+
                <article class="post-card">
                   <a href="/post.html">
                      <div class="post-cover">
@@ -533,13 +557,15 @@
 
    <script src="./js/index.js"></script>
    <script src="./js/service/auth.js"></script>
-      <!-- <script src="./js/service/category.js"></script> -->
-   <!-- <script src="./js/service/tags.js"></script> -->
-   <script src="./js/service/posts.js"></script>
+   <script src="./js/service/category.js"></script>
+   <script src="./js/service/tags.js"></script>
+   <script src="./js/utilities/loader.js"></script>
 
    <script src="./js/filter-sort.js"></script>
-   <script src="./js/pagination.js"></script>
 
+   <script src="./js/service/index.js"></script> 
+   <script src="./js/pagination.js"></script>
+   <script src="./js/service/posts.js"></script>
    <!-- <script src="./js/service/comments.js"></script> -->
 
 </body>

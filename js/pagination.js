@@ -1,70 +1,60 @@
-
-const postsContainer = document.getElementById("post-wrappers");
-const perPageSelect = document.getElementById("perPageSelect"); // renamed
-const prevBtn = document.getElementById("prevPage");
-const nextBtn = document.getElementById("nextPage");
-const pageInfo = document.getElementById("pageInfo");
-const pageNumbersContainer = document.getElementById("pageNumbers");
-const loadMoreBtn = document.getElementById("loadMoreBtn");
-
-  // demo posts
-  let posts = Array.from({length: 53}, (_, i) => `Post #${i + 1}`);
+const createPaginator = ({
+  container,
+  perPageSelect,
+  prevBtn,
+  nextBtn,
+  pageInfo,
+  pageNumbersContainer,
+  loadMoreBtn,
+  fetchData,   // async function (page, perPage) => { items, totalCount }
+  renderItem,  // function(item) => HTMLElement
+  loader
+}) => {
   let currentPage = 1;
   let perPage = parseInt(perPageSelect.value);
-  let totalPages = Math.max(1, Math.ceil(posts.length / perPage));
+  let totalPages = 1;
+  let totalCount = 0;
 
-  // render visible posts for current page
-  function renderPosts() {
-    postsContainer.innerHTML = "";
+  const renderPosts = async () => {
+    container.innerHTML = "";
+    
+    const { items, totalCount: newTotal } = await fetchData(currentPage, perPage);
+    totalCount = newTotal;
+    totalPages = Math.max(1, Math.ceil(totalCount / perPage));
 
-    const start = (currentPage - 1) * perPage;
-    const end = Math.min(start + perPage, posts.length);
-    const visiblePosts = posts.slice(start, end);
-
-    visiblePosts.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "post";
-      div.textContent = p;
-      postsContainer.appendChild(div);
+    items.forEach(item => {
+      container.appendChild(renderItem(item));
     });
 
-    totalPages = Math.max(1, Math.ceil(posts.length / perPage));
     pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
     prevBtn.disabled = currentPage === 1;
     nextBtn.disabled = currentPage === totalPages;
 
     renderPageNumbers();
-    // show Load More if there are more posts after current view
-    const shownCount = (currentPage - 1) * perPage + visiblePosts.length;
-    loadMoreBtn.style.display = shownCount < posts.length ? "inline-block" : "none";
-  }
 
-  // Load more: append following items after currently shown items
-  function loadMore() {
-    const alreadyShown = postsContainer.children.length + (currentPage - 1) * perPage;
-    // if current view is page N, we compute appendStart based on actual DOM: simpler: append next `perPage` after current global shown count.
-    // Better approach: compute global index of last shown item:
-    let lastGlobalIndex = (currentPage - 1) * perPage + postsContainer.children.length;
-    const start = lastGlobalIndex;
-    const end = Math.min(start + perPage, posts.length);
-    const morePosts = posts.slice(start, end);
+    // "Load more" means: request next page and append
+    loadMoreBtn.style.display = currentPage < totalPages ? "inline-block" : "none";
+    loader.remove(); 
+    
+  };
 
-    morePosts.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "post";
-      div.textContent = p;
-      postsContainer.appendChild(div);
+  const loadMore = async () => {
+    if (currentPage >= totalPages) return;
+
+    currentPage++;
+    const { items } = await fetchData(currentPage, perPage);
+
+    items.forEach(item => {
+      container.appendChild(renderItem(item));
     });
 
-    // if we've appended everything, hide load more
-    const globalShown = start + morePosts.length;
-    if (globalShown >= posts.length) loadMoreBtn.style.display = "none";
-  }
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    if (currentPage >= totalPages) loadMoreBtn.style.display = "none";
+  };
 
-  // Returns an array like [1, '...', 4,5,6, '...', 10] for display
-  function getPageList(total, current) {
-    const delta = 2; // neighbor range
-    if (total <= 7) return Array.from({length: total}, (_, i) => i + 1);
+  const getPageList = (total, current) => {
+    const delta = 2;
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
 
     const range = [];
     const left = Math.max(2, current - delta);
@@ -77,18 +67,17 @@ const loadMoreBtn = document.getElementById("loadMoreBtn");
     range.push(total);
 
     return range;
-  }
+  };
 
-  // render page number buttons
-  function renderPageNumbers() {
+  const renderPageNumbers = () => {
     pageNumbersContainer.innerHTML = "";
     const list = getPageList(totalPages, currentPage);
 
     list.forEach(item => {
       if (item === "...") {
         const el = document.createElement("span");
-        el.className = "page-ellipsis"; 
-        el.textContent = "..."; 
+        el.className = "page-ellipsis";
+        el.textContent = "...";
         pageNumbersContainer.appendChild(el);
         return;
       }
@@ -101,40 +90,49 @@ const loadMoreBtn = document.getElementById("loadMoreBtn");
         btn.classList.add("active");
         btn.setAttribute("aria-current", "page");
       }
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", async () => {
         currentPage = item;
-        renderPosts();
-        // scroll to top of posts container if desired:
-        postsContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+        await renderPosts();
+        container.scrollIntoView({ behavior: "smooth", block: "start" });
       });
       pageNumbersContainer.appendChild(btn);
     });
-  }
+  };
 
   // Events
-  perPageSelect.addEventListener("change", () => {
+  perPageSelect.addEventListener("change", async () => {
     perPage = parseInt(perPageSelect.value);
-    totalPages = Math.max(1, Math.ceil(posts.length / perPage));
     currentPage = 1;
-    renderPosts();
-    loadMoreBtn.style.display = "inline-block";
+    await renderPosts();
   });
 
-  prevBtn.addEventListener("click", () => {
+  prevBtn.addEventListener("click", async () => {
     if (currentPage > 1) {
       currentPage--;
-      renderPosts();
+      await renderPosts();
     }
   });
 
-  nextBtn.addEventListener("click", () => {
+  nextBtn.addEventListener("click", async () => {
     if (currentPage < totalPages) {
       currentPage++;
-      renderPosts();
+      await renderPosts();
     }
   });
 
   loadMoreBtn.addEventListener("click", loadMore);
 
-  // initial render
-  // renderPosts();
+  // Initial render
+  renderPosts();
+  
+  return {
+    reload: renderPosts,
+    setPage: async (p) => {
+      currentPage = p;
+      await renderPosts();
+    },
+    getCurrentPage: () => currentPage,
+    getTotalPages: () => totalPages
+  };
+};
+
