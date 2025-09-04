@@ -1,5 +1,4 @@
 
-
 .table-wrapper {
   width: 100%;
   overflow-x: auto; // keep table usable on small screens
@@ -12,7 +11,8 @@
     width: 100%;
     border-collapse: collapse;
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.95rem; 
+    table-layout: auto;
 
     thead {
       background: #f4f6fb;
@@ -24,6 +24,19 @@
         padding: 12px 15px;
         border-bottom: 2px solid #e3e6ef;
         white-space: nowrap;
+
+        // Sticky header row
+        position: sticky;
+        top: 0;
+        z-index: 3;
+      }
+
+      // Sticky header for Actions col
+      th:last-child {
+        position: sticky;
+        right: 0;
+        background: #f4f6fb;
+        z-index: 4;
       }
     }
 
@@ -31,6 +44,7 @@
       tr {
         transition: background 0.2s ease;
         cursor: pointer;
+
         &:nth-child(even) {
           background: #fafafa; // striped rows
         }
@@ -44,6 +58,7 @@
         padding: 10px 15px;
         border-bottom: 1px solid #eee;
         vertical-align: top;
+        white-space: nowrap;
 
         .td-content {
           max-width: 400px; 
@@ -57,6 +72,7 @@
             margin: 0 0 5px;
             color: #2a2a2a;
           }
+
           p {
             font-size: 0.85rem;
             color: #666;
@@ -102,9 +118,18 @@
           }
         }
       }
+
+      // Sticky Actions column cells
+      td:last-child {
+        position: sticky;
+        right: 0;
+        background: #fff;
+        z-index: 2;
+      }
     }
   }
 }
+
 
 
 // .table-wrapper {

@@ -80,7 +80,7 @@
                      <a href="./about.html">About</a></li>
                   <li class="side-menu-item">
                      <a href="./contact.html">Contact</a>
-                  </li>
+                  </li> 
 
                </ul>
             </aside>
@@ -174,9 +174,31 @@
 
             </nav>
 
-            <section class="content-section">
-
-                <div class="table-wrapper">
+            <section class="content-section" >
+               
+                <div class="table-wrapper" style="height: 700px; position: relative;">
+                     <div id="postLoader" class="loader-wrapper abs">
+                        <div class="loader">
+                            <div class="circle-wrapper-1">
+                                <div class="circle-1"></div>
+                            </div>
+                            <div class="circle-wrapper-2">
+                                <div class="circle-2"></div>
+                            </div>
+                            <div class="circle-wrapper-3">
+                                <div class="circle-3"></div>
+                            </div>
+                            <div class="circle-wrapper-4">
+                                <div class="circle-4"></div>
+                            </div>
+                            <div class="circle-wrapper-5">
+                                <div class="circle-5"></div>
+                            </div>
+                            <div class="circle-wrapper-6">
+                                <div class="circle-6"></div>
+                            </div>
+                        </div>
+                    </div>
                     <table id="postsTable">
                         <thead>
                             <tr>
@@ -192,18 +214,49 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="postTableBody">
 
                         </tbody>
                     </table>
                 </div>
+                <div class="pagination-wrapper">
+                    <!-- Pagination controls -->
+                    <div class="pagination-controls">
+                        <!-- per page -->
+                        <div class="pagination__per-page">
+                            <label for="perPageSelect">Posts per page:</label>
+                            <select id="perPageSelect">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
 
+                        <!-- page navigation -->
+                        <div class="pagination__nav">
+                            <button id="prevPage" class="prev-page" disabled>Prev</button>
+
+                            <div id="pageNumbers" class="pagination__numbers"></div>
+
+                            <button id="nextPage" class="next-page">Next</button>
+
+                            <span id="pageInfo" class="pagination__info">Page 1 of 10</span>
+                        </div>
+                    </div>
+                    <!-- load more -->
+                    <div class="pagination__load-more">
+                        <button id="loadMoreBtn">Load More</button>
+                    </div>
+                </div>
             </section>
             <section class="content-section">
                 <h2>Create Post</h2>
                 <div class="upload_container" style="margin: 30px; border: 1px solid black;">
                     <div class="d-flex">
                         <div>
+                            <input type="text" id="title" placeholder="Post title"><br><br>
+                            
                             <!-- category -->
                             <div>
                                 <label for="category-select">Category</label>
@@ -225,7 +278,7 @@
                                 <input type="number" id="endYear" name="endYear" min="2000" max="2099" step="1"
                                     value="2025">
 
-                                <button id="filterPosts">Filter Posts</button>
+                                <!-- <button id="filterPosts">Filter Posts</button> -->
                             </div>
 
                             <!-- tags -->
@@ -236,7 +289,7 @@
                             </div>
 
                         </div>
-                        <div>
+                        <div class="d-flex-h-right-v-center w-100" style="padding: 30px;">
                             <input type="file" id="quillImageInput" style="display:none">
                             <div id="preview">
 
@@ -248,12 +301,13 @@
                                     <span>Click to add image</span>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 
                     
-                    <input type="text" id="title" placeholder="Post title"><br><br>
-
+           
                  
                     <!-- Cloudinary unsigned upload -->
                    
@@ -399,7 +453,9 @@
     <script src="../../js/service/tags.js"></script>
     <script src="../../js/utilities/post_edit/cover_img.js"></script>
     <script src="../../js/utilities/post_edit/quill.js"></script>
-    
+
+     <script src="../../js/service/index.js"></script>
+    <script src="../../js/pagination.js"></script>
     <script src="../..//js/service/posts.js"></script>
 
 

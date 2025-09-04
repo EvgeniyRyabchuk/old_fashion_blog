@@ -1,12 +1,7 @@
 
-.default-btn {
-    // padding: 15px;   
-    border: 0;
-}
+.default-btn { border: 0; }
 
-.default-bg {
-  background-color: white !important;
-}
+.default-bg { background-color: white !important; }
 
 .right-side { margin-left: auto;}
 
@@ -18,6 +13,7 @@
 
 button { @extend .default-btn ; }
 
+.w-100 { width: 100%; }
 
 .full-screen {
   top: 0;
@@ -33,3 +29,4 @@ button { @extend .default-btn ; }
   @extend .full-screen;
   position: fixed;
 }
+

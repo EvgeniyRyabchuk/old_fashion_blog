@@ -154,4 +154,19 @@ const loadTagsToCollection = async (collection) => {
   return collection;
 };
 
+const readAllTags = async () => {
+  try {
+    const snapshot = await db.collection("tags").get();
+    const tags = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    
+    console.log("Categories:", tags);
+    return tags;
+  } catch (err) {
+    console.error("Error loading categories:", err);
+    return [];
+  }
+}
 

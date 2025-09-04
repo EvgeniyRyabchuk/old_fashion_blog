@@ -244,6 +244,7 @@ body {
   border-collapse: collapse;
   font-family: "Segoe UI", Tahoma, sans-serif;
   font-size: 0.95rem;
+  table-layout: auto;
 }
 .table-wrapper table thead {
   background: #f4f6fb;
@@ -255,6 +256,15 @@ body {
   padding: 12px 15px;
   border-bottom: 2px solid #e3e6ef;
   white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+.table-wrapper table thead th:last-child {
+  position: sticky;
+  right: 0;
+  background: #f4f6fb;
+  z-index: 4;
 }
 .table-wrapper table tbody tr {
   transition: background 0.2s ease;
@@ -270,6 +280,7 @@ body {
   padding: 10px 15px;
   border-bottom: 1px solid #eee;
   vertical-align: top;
+  white-space: nowrap;
 }
 .table-wrapper table tbody td .td-content {
   max-width: 400px;
@@ -319,6 +330,12 @@ body {
 .table-wrapper table tbody td button:last-child:hover {
   background: #d32f2f;
 }
+.table-wrapper table tbody td:last-child {
+  position: sticky;
+  right: 0;
+  background: #fff;
+  z-index: 2;
+}
 
 .default-btn, button {
   border: 0;
@@ -344,18 +361,22 @@ body {
   display: flex;
 }
 
-.full-screen, .full-screen-fixed, #side-menu-wrapper, .full-screen-abs, .loader-wrapper {
+.w-100 {
+  width: 100%;
+}
+
+.full-screen, .full-screen-fixed, #side-menu-wrapper, .loader-wrapper.fixed, .full-screen-abs, .loader-wrapper.abs {
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
 }
 
-.full-screen-abs, .loader-wrapper {
+.full-screen-abs, .loader-wrapper.abs {
   position: absolute;
 }
 
-.full-screen-fixed, #side-menu-wrapper {
+.full-screen-fixed, #side-menu-wrapper, .loader-wrapper.fixed {
   position: fixed;
 }
 
@@ -658,13 +679,13 @@ scss/
   border-radius: 6px;
   cursor: pointer;
 }
-.filter-drawer__group #categoryCheck {
+.filter-drawer__group #categoriesContainer {
   display: flex;
   flex-direction: column;
   overflow: auto;
   max-height: 200px;
 }
-.filter-drawer__group #categoryCheck label {
+.filter-drawer__group #categoriesContainer label {
   cursor: pointer;
 }
 .filter-drawer__tags {
@@ -1134,7 +1155,7 @@ scss/
 }
 
 #preview {
-  width: 200px;
+  width: 300px;
   aspect-ratio: 1/1;
   border: 2px dashed #ccc;
   display: none;
@@ -1144,9 +1165,9 @@ scss/
 }
 
 .image-placeholder {
-  width: 200px;
+  width: 300px;
   aspect-ratio: 1/1;
-  border: 2px dashed #ccc;
+  border: 5px dashed #ccc;
   border-radius: 8px;
   display: flex;
   justify-content: center;
@@ -1154,18 +1175,22 @@ scss/
   cursor: pointer;
   overflow: hidden;
   position: relative;
-  background-color: #8f2121;
+  background-color: #7a7a7a;
   transition: all 0.2s ease-in-out;
 }
 .image-placeholder:hover {
-  border-color: #888;
+  border-color: #b6b6b6;
+  background-color: #929292;
+}
+.image-placeholder:active {
+  border-color: #171717;
 }
 .image-placeholder .hidden-input {
   display: none;
 }
 .image-placeholder .placeholder-content {
   text-align: center;
-  color: #666;
+  color: #ffffff;
   font-family: sans-serif;
   transition: opacity 0.3s ease;
   display: flex;

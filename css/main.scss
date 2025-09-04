@@ -31,18 +31,6 @@ Large Desktop	1440px and up	Full HD monitors, ultrawide screens
 */
 
 
-// #side-menu-wrapper {
-//    z-index: 999;
-//    position: fixed;
-//    top: 0;
-//    left: 0;
-//    width: 100vw;
-//    height: 100vh;
-//    background-color: rgba(0, 0, 0, 0.3);
-// }
-
-
-
 /*
   $xxl-bp: 1400px; 
   $xl-bp: 1200px;
@@ -52,6 +40,7 @@ Large Desktop	1440px and up	Full HD monitors, ultrawide screens
   $xs-bp: 576px; 
  */
  
+
  .admin-post-top-panel {
   @extend .d-flex-h-right-v-center;
   padding: 10px 30px;

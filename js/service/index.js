@@ -1,16 +1,25 @@
 
-const fetchDataFirestore = async (colName, page, perPage, options = {}, afterItemsLoaded) => {
 
+const fetchDataFirestore = async (colName, page, perPage, options = {}, beforeItemsLoaded, afterItemsLoaded) => {
+  await beforeItemsLoaded();
   const orderField = options.orderField || "createdAt"; 
   const lastDocCache = options.lastDocCache || {};
 
-  let ref = db.collection(colName).orderBy(orderField, "desc").limit(perPage);
+  let filteredQuery = null;
+  let ref = null; 
+
+  if(options.filterHandler) {
+    ref = await options.filterHandler(); 
+  } else {
+    ref = db.collection(colName).orderBy(orderField, "desc"); 
+  }
+ 
+  ref = ref.limit(perPage);
 
   // if not the first page, continue after last doc of previous page
   if (page > 1 && lastDocCache[page - 1]) {
     ref = db.collection(colName)
-      .orderBy(orderField, "desc")
-      .startAfter(lastDocCache[page - 1])
+      .startAfter(lastDocCache[page - 1]) 
       .limit(perPage);
   }
 
@@ -29,9 +38,9 @@ const fetchDataFirestore = async (colName, page, perPage, options = {}, afterIte
 
   //TODO: why 
   // ⚠️ expensive: counts all docs (better maintain separately!)
-  const totalCountSnap = await db.collection(colName).get();
-  const totalCount = totalCountSnap.size; 
-
+  // const totalCountSnap = await db.collection(colName).get(); 
+  const totalCount = snap.size; 
+  
   return {
     items: posts,
     totalCount,

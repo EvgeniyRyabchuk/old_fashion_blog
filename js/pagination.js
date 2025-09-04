@@ -2,7 +2,7 @@ const createPaginator = ({
   container,
   perPageSelect,
   prevBtn,
-  nextBtn,
+  nextBtn, 
   pageInfo,
   pageNumbersContainer,
   loadMoreBtn,
@@ -10,6 +10,7 @@ const createPaginator = ({
   renderItem,  // function(item) => HTMLElement
   loader
 }) => {
+
   let currentPage = 1;
   let perPage = parseInt(perPageSelect.value);
   let totalPages = 1;
@@ -34,7 +35,9 @@ const createPaginator = ({
 
     // "Load more" means: request next page and append
     loadMoreBtn.style.display = currentPage < totalPages ? "inline-block" : "none";
-    loader.remove(); 
+    loader.style.display = "none"; 
+    document.body.style.overflow = "auto";  
+    // loader.remove(); 
     
   };
 
@@ -93,7 +96,7 @@ const createPaginator = ({
       btn.addEventListener("click", async () => {
         currentPage = item;
         await renderPosts();
-        container.scrollIntoView({ behavior: "smooth", block: "start" });
+        // container.scrollIntoView({ behavior: "smooth", block: "start" });
       });
       pageNumbersContainer.appendChild(btn);
     });

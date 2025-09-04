@@ -3,9 +3,8 @@
 
 let allPosts = []; 
 let postToUpdateId = null; 
-
-//TODO: fix - if grid then grid wrapper if table then table wrapper 
-const loader = document.querySelector("#postLoader"); 
+const postLoader = document.querySelector("#postLoader"); 
+const paginationEnv = null;
 
 const renderPostsForTable = (post) => {
  // создаём строку
@@ -142,23 +141,23 @@ const renderPostsForGrid = (post) => {
   return article;
 }
 
-
-const getCurrentRender = () => {
+const getCurrentEnvForPagination = () => {
   //TODO: normalize with variables 
   const lastUrlPart = window.location.pathname.split("/").pop();
   switch(lastUrlPart) {
     case "posts.html": 
-      return renderPostsForGrid; 
+      return { render: renderPostsForGrid, container: document.querySelector("#posts-wrapper")}; 
     case "": 
-      return renderPostsForGrid; 
+     return { render: renderPostsForGrid, container: document.querySelector("#posts-wrapper")}; 
     case "index.html": 
-      return renderPostsForGrid; 
+      return { render: renderPostsForGrid, container: document.querySelector("#posts-wrapper")}; 
     case "create-edit-post.html":
-      return renderPostsForTable; 
+        return { render: renderPostsForTable, container: document.querySelector("#postTableBody")};  
     default: return null;
   }
 }
-const currentRenderFunc = getCurrentRender(); 
+
+const currentPaginationEnv = getCurrentEnvForPagination(); 
 
 // callback after posts loaded for attach addition info to posts 
 const afterPostsLoaded = async (posts) => {
@@ -167,10 +166,16 @@ const afterPostsLoaded = async (posts) => {
   allPosts = posts; 
 }
 
-const postsGridPaginator = createPaginator({
-  container: document.querySelector("#posts-wrapper"), 
+const beforePostsLoaded = async () => { 
+  // document.body.style.overflow = "hidden";  
+  postLoader.style.display = "flex"; 
+  document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
+}; 
+
+const postsPaginator = createPaginator({
+  container: currentPaginationEnv.container,  
   perPageSelect: document.getElementById("perPageSelect"),
-  prevBtn: document.getElementById("prevPage"),
+  prevBtn: document.getElementById("prevPage"), 
   nextBtn: document.getElementById("nextPage"), 
   pageInfo: document.getElementById("pageInfo"),
   pageNumbersContainer: document.getElementById("pageNumbers"),
@@ -178,10 +183,11 @@ const postsGridPaginator = createPaginator({
   fetchData: async (page, perPage) => {
     return await fetchDataFirestore("posts", page, perPage, {
       orderField: "createdAt", // must exist in your docs 
-    }, afterPostsLoaded); 
-  },
-  renderItem: post => currentRenderFunc(post),
-  loader
+      filterHandler: postFilterQueryCreator 
+    }, beforePostsLoaded, afterPostsLoaded); 
+  }, 
+  renderItem: post => currentPaginationEnv.render(post),
+  loader: postLoader
 });
 
 const clearUpTheForm = () => {
@@ -193,7 +199,6 @@ const clearUpTheForm = () => {
   tags = [];
   renderTags();
 }
-
 
 const createOrUpdatePost = async (postId = null) => {
   const title = document.getElementById("title").value;
@@ -267,7 +272,7 @@ const createOrUpdatePost = async (postId = null) => {
 const savePost = async (e) => { 
   await createOrUpdatePost(postToUpdateId);
   await clearUpTheForm();  
-  await postsTablePaginator.reload(); 
+  await postsPaginator.reload(); 
   postToUpdateId = null; 
 };
 
@@ -334,7 +339,7 @@ const onDeletePostClick = async (e) => {
   
   try {
     await db.collection("posts").doc(pId).delete(); 
-    await postsTablePaginator.reload();
+    await postsPaginator.reload();
     console.log("Document successfully updated!");
   } catch (err) {
     console.error("Error deleting document: ", error);

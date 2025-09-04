@@ -275,9 +275,11 @@
 
 // Variables for colors and dimensions
 $placeholder-border-color: #ccc;
-$placeholder-bg-color: #8f2121;
-$placeholder-text-color: #666;
-$placeholder-size: 200px;
+$placeholder-bg-color: #7a7a7a;
+$placeholder-bg-hover-color: #929292;
+$placeholder-text-color: #ffffff;
+
+$placeholder-size: 300px;
 $placeholder-border-radius: 8px;
 
 
@@ -295,7 +297,7 @@ $placeholder-border-radius: 8px;
 .image-placeholder {
     width: $placeholder-size; 
     aspect-ratio: 1 / 1; 
-    border: 2px dashed $placeholder-border-color;
+    border: 5px dashed $placeholder-border-color;
     border-radius: $placeholder-border-radius;
     display: flex;
     justify-content: center;
@@ -305,11 +307,15 @@ $placeholder-border-radius: 8px;
     position: relative;
     background-color: $placeholder-bg-color;
     transition: all 0.2s ease-in-out;
-    
-    &:hover {
-        border-color: #888; // Darker border on hover
-    }
+   
 
+    &:hover {
+        border-color: #b6b6b6; // Darker border on hover
+        background-color: $placeholder-bg-hover-color;
+    }
+    &:active {
+        border-color: #171717; // Darker border on hover
+    }
     // Hide the actual file input
     .hidden-input {
         display: none;

@@ -1,7 +1,7 @@
 
 @use "sass:list";
 @use '../abstracts/placeholders';
-@use '../abstracts/flex-box-tems';
+@use '../abstracts/flex-box-tems'; 
 @use '../utilities/helpers'; 
 
 // $loader-size: red, green, blue;
@@ -33,8 +33,15 @@ $wrapper-circle-size-percent: 0.4;
 
 
 .loader-wrapper {
-    @extend .full-screen-abs; 
+ 
+    &.abs {
+        @extend .full-screen-abs; 
+    }
+    &.fixed {
+        @extend .full-screen-fixed;  
+    }
     @extend .d-flex-center;
+    
     background-color: $wrapper-bg-color; 
     z-index: 999;
     
