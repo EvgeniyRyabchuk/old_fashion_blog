@@ -5,12 +5,38 @@
 @use '../abstracts/mixins' as mixins;
 @use '../utilities/index.scss';
 
+
+$switchable_bg_color: rgb(195, 195, 195);
+$size-menu-width: 300px;
+
+%profileIconSize {
+  width: 22px;
+  height: 22px; 
+}
+
 #top-menu {
    position: relative;
 }
 
- header {
+#top-header-link {
+  display: block;
+  padding: 8px 16px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(180, 180, 180, 0.8), rgba(100, 100, 100, 0.8));
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.25s ease;
 
+  &:hover {
+    background: linear-gradient(135deg, rgba(200, 200, 200, 0.9), rgba(80, 80, 80, 0.9));
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
+  }
+}
+
+ header {
     padding: 0;
     width: variables.$xxl-bp;
     margin: 0 auto;
@@ -27,14 +53,11 @@
       display: flex; 
       align-items: center;
       height: 100px;
-      background-image: url('https://retrocat.de/wp-content/uploads/2021/07/RetroCat_Mode.jpg');
-      background-repeat: no-repeat;
-      background-size: auto;
-      /* keep natural size */
+      // background-image: url('https://retrocat.de/wp-content/uploads/2021/07/RetroCat_Mode.jpg');
+      // background-repeat: no-repeat; 
+      // background-size: auto;
       background-position: calc(100%) 20%; 
-      /* choose what part shows */
       overflow: hidden;
-      /* clip to header size */
   }
 
   nav {
@@ -52,7 +75,6 @@
 
         .form-row {
           display: flex;
-          // margin: 0 5px;
           align-items: center;
         }
 
@@ -63,39 +85,35 @@
         }
 
         #searchBtn {
-          // @extend deafult-btn
            height: 30px;
-           &:hover {
-
-           }
         }
-        
     }
 
     #profile-btn-wrapper {
-      .authNavList {
+      .auth-nav-list {
         display: none;
       }
     }
+
     ul {
-     @extend %menu-list;  
-      
+      @extend %menu-list;
       display: flex;
       padding-left: 0;
       margin: 15px 15px 15px 0;
+
       li {
         display: block;
         padding: 15px;
-      
+
         &:hover {
-          background-color: rgb(126, 126, 193); 
+          background-color: rgb(126, 126, 193);
           cursor: pointer;
 
           a {
             color: white;
           }
         }
-      } 
+      }
     }
     
     > ul, 
@@ -103,19 +121,16 @@
     //   @extend .default-btn;
       padding: 15px; 
     }
-
-
   }
 }
 
-.authNavList { 
+.auth-nav-list { 
     position: absolute;
     background-color: grey;
     top: 44px; 
     right: 0;
     z-index: 99;
     margin: 0;
-    // width: 145px;
     width: 100%;
     
     li {
@@ -123,18 +138,18 @@
     }
 
     button {
-        // @extend .default-btn; 
         @extend .btn-danger;
         margin: 0;
         padding: 15px 0;
         width: 100%;
     }
-
+    &.is-open {
+      display: block !important;
+    }
   
 }
 
 #top-menu {
-//   width:  $xxl-bp;;
   margin: 0 auto;
   background-color: white;
   
@@ -147,16 +162,14 @@
 
     $burger-size: 45px;
     #burger-menu-btn { 
-      z-index: 999;
       display: none;
       width: $burger-size;
       height: $burger-size;
       cursor: pointer;
-      
-      &:hover {
-        // outline: 1px solid black;
-        // background-color: variables.$primary-color-active;
-        
+      @include mixins.b-img-nr-contain('images/burger.png');
+      &:hover { background-color: $switchable_bg_color }
+      &.is-open {
+        @include mixins.b-img-nr-contain('images/close.png'); 
       }
     }
   }
@@ -166,42 +179,25 @@
   }
 }
 
-// .btn1 {
-//   background-color:rgb(71, 107, 139);
-//   color: white; 
-// }
-
-.btn1 {
-  // background-color:rgb(71, 107, 139);
-  color: black; 
-}
 
 #profile-btn-wrapper {
   position: relative;
   margin-left: 20px;
-    &:hover { 
-      #profileBtn {
-        background-color: rgba(31, 36, 40, 0.1);;
-      }
-      #profileBtn::after {
-          transform: rotate(180deg);
-      }
+
+  &:hover {
+    #profileBtn {
+      background-color: rgba(31, 36, 40, 0.1);
+    }
+
+    #profileBtn::after {
+      transform: rotate(180deg);
+    }
   }
 }
 
-%profileIconSize {
-  width: 22px;
-  height: 22px; 
-}
-
-
-#profileBtn {
-  margin: 0;
-}
 
 #profileBtn, #asideProfileBtn { 
   box-shadow: 0px 0px 30px -14px #000000; 
-  // @extend .btn1;
   cursor: pointer;
   font-size: 18px; 
   background-color: rgba(0,0,0,0);
@@ -224,8 +220,6 @@
   }
 }
 
-
-
 #main-content-title {
    margin: 0 30px;
 }
@@ -235,83 +229,75 @@
 }
 
 
-.open-aside-btn {
-   // url already in root folder 
-  @include mixins.b-img-nr-contain('images/free-icon-menu-4254068 (1).png');
-}
-.close-aside-btn {
-   @include mixins.b-img-nr-contain('images/close.png'); 
-}
-
-
-
-
-
-
-$size-menu-width: 300px;
-
-#aside-profile-btn-wrapper {
+#asideProfileBtnWrapper {
   min-width: $size-menu-width;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 0 15px;
+
   .form-row {
-   
     #asideProfileBtn {
-      @extend .d-flex-h-center; 
-      width: 100%; 
+      @extend .d-flex-h-center;
+      width: 100%;
       margin: 0;
       background-color: rgba(31, 36, 40, 0.2);
-      &::after { 
-        transform: rotate(0deg); 
+
+      &::after {
+        transform: rotate(0deg);
+      }
+
+      &.is-open {
+        &::after {
+          transform: rotate(180deg);
+        }
+
       }
     }
   }
 
-   .authNavList { 
-      &.h-0 {
-         height: 0; 
-      }
-      &.h-max-1000 {
-         height: calc-size(auto, size); /* Use auto with calc-size() */
-      }
+  .auth-nav-list {
+    height: 0;
 
-      transition: 0.3s height ease-in-out;
-      position: static;
-      background-color: grey;
-      display: block;
+    &.is-open {
+      height: calc-size(auto, size);
+      /* Use auto with calc-size() */
+    }
+
+    transition: 0.3s height ease-in-out;
+    position: static;
+    background-color: grey;
+    display: block;
+    margin: 0;
+    z-index: 0;
+    overflow-y: hidden;
+
+    li {
+      text-align: center;
+    }
+
+    button {
+      // @extend .default-btn; 
+      @extend .btn-danger;
       margin: 0;
-      z-index: 0;
-      overflow-y: hidden;
-      li {
-            text-align: center;
-      }
-
-      button {
-            // @extend .default-btn; 
-            @extend .btn-danger;
-            margin: 0;
-            padding: 15px 0;
-            width: 100%;
-      }
-   } 
+      padding: 15px 0;
+      width: 100%;
+    }
+  }
 }
 
-#side-menu-wrapper {
-   @extend .full-screen-fixed;
-   background-color: rgba(209, 209, 209, 0.3);
-   z-index: 999;
-   display: none;
-   
-   &.d-block {
-      // transform: translateX(0);
-      //TODO: opacity animantion with d-block in the end 
-      background-color: rgba(209, 209, 209, 0.3);
-   }
-   &.d-none {
-      // transform: translateX(+100%);
-      // transition: transform 0.3s ease-in-out;
+
+#sideMenuWrapper {
+  @extend .full-screen-fixed;
+  background-color: rgba(209, 209, 209, 0.3);
+  z-index: 999;
+  opacity: 0;
+
+  @include mixins.animated-appear-via-visibility; 
+
+   &.is-open {
+      @include mixins.animated-disappear-via-visibility; 
+      
    }
 
    #side-menu {
@@ -321,22 +307,32 @@ $size-menu-width: 300px;
       height: 100vh;
       background-color: white;
       position: absolute;
-      top: 80px;
-
-      &.w-0 {
-         width: 0;
-      }
-      &.w-auto {
+      top: 0px;
+    
+      &.is-open {
          width: $size-menu-width;
       }
 
-      #top-aside-block {
+      #topAsideBlock {
          min-width: $size-menu-width;
          height: 67px; 
          text-align: center; 
          padding: 25px 20px 20px 20px; 
          font-size: 20px; 
          margin-bottom: 20px;
+          position: relative;
+
+         #closeAside {
+          position: absolute;
+          width: 45px;
+          height: 45px; 
+          left: 10px;
+          top: 10px;
+          cursor: pointer;
+          &:hover { background-color: $switchable_bg_color; }
+          @include mixins.b-img-nr-contain('images/close.png');
+          
+         }
       }
 
       #side-menu-list {
@@ -350,7 +346,6 @@ $size-menu-width: 300px;
          .side-menu-item {
             @extend .d-flex-center;
             @extend %menu-list-item;
-
          }
       }
    }

@@ -8,6 +8,14 @@ body {
    padding: 0;
    background-color: #AFAFAF;
    // background-image: url(../../images/ChatGPT\ Image\ 1\ сент.\ 2025\ г.\,\ 16_49_09.png);
-   background-size: cover; 
+   background-size: cover;
+
+   &.no-scroll {
+      overflow: hidden !important; 
+   }
+
+   background-image: url(https://retrocat.de/wp-content/uploads/2021/07/RetroCat_Mode.jpg);
+    background-position: -600px -500px;
+   //  background-repeat: no-repeat;
 }
 

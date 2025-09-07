@@ -7,7 +7,7 @@
 
 1. Text/Image editor 
     1. Category crud 
-    2. Tags crud 
+    2. Tags crud ++++++++++
 
 
 2. Cloudinary 
@@ -16,17 +16,24 @@
     1. admins system 
     2. more ways to login 
 
-5. Paggination 
-6. Loadeer 
-7. Filter/Sort 
+5. Paggination +++++++++++++++
+6. Loadeer +++++++++++++++
+7. Filter/Sort +++++++++++++++++ 
 8. Adaptive design
 9. Validation 
 10. Tailwind/Bootstrap 
 11. Notification 
 12. Seeder 
 13. Facker 
+14. Localize 
+15. Theme 
 
-& in scss meaning
+
+
+
+
+
+
 
 `Db stucture` 
 

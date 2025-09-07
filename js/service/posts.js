@@ -55,7 +55,7 @@ const renderPostsForTable = (post) => {
 
     tdCategory.innerHTML = post.category?.name || 'null';
     // tdImageCategoryID.id = "categorySelect";
-    tdDateRange.innerHTML = post.date_range;
+    tdDateRange.innerHTML = `${post.date_range_start}-${post.date_range_end}`;
     tdUserId.innerHTML = post.userId;
     tdUserCreatedAt.innerHTML = post.createdAt.toDate().toLocaleString();
     tdUserCreatedAt.classList.add("td-date");
@@ -146,11 +146,11 @@ const getCurrentEnvForPagination = () => {
   const lastUrlPart = window.location.pathname.split("/").pop();
   switch(lastUrlPart) {
     case "posts.html": 
-      return { render: renderPostsForGrid, container: document.querySelector("#posts-wrapper")}; 
+      return { render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")}; 
     case "": 
-     return { render: renderPostsForGrid, container: document.querySelector("#posts-wrapper")}; 
+     return { render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")}; 
     case "index.html": 
-      return { render: renderPostsForGrid, container: document.querySelector("#posts-wrapper")}; 
+      return { render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")}; 
     case "create-edit-post.html":
         return { render: renderPostsForTable, container: document.querySelector("#postTableBody")};  
     default: return null;
@@ -183,7 +183,7 @@ const postsPaginator = createPaginator({
   fetchData: async (page, perPage) => {
     return await fetchDataFirestore("posts", page, perPage, {
       orderField: "createdAt", // must exist in your docs 
-      filterHandler: postFilterQueryCreator 
+      filterHandler: currentPaginationEnv.filterHandler 
     }, beforePostsLoaded, afterPostsLoaded); 
   }, 
   renderItem: post => currentPaginationEnv.render(post),
@@ -236,7 +236,8 @@ const createOrUpdatePost = async (postId = null) => {
         title: title,
         content: content, 
         coverUrl: coverUrl,
-        date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`, 
+        date_range_start: startDate.getFullYear(), 
+        date_range_end: endDate.getFullYear(), 
         categoryId: selectedCategoryId,
         userId: auth.currentUser.uid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -249,7 +250,8 @@ const createOrUpdatePost = async (postId = null) => {
         title: title,
         content: content, 
         coverUrl: coverUrl ?? post.coverUrl,  
-        date_range: `${startDate.getFullYear()}-${endDate.getFullYear()}`,
+        date_range_start: startDate.getFullYear(), 
+        date_range_end: endDate.getFullYear(), 
         categoryId: selectedCategoryId,  
         // updateAt: firebase.firestore.FieldValue.serverTimestamp()
       }); 
@@ -289,7 +291,7 @@ async function readPost(postId) {
   document.getElementById("coverImg").src = post.coverUrl;
   document.getElementById("postTitle").textContent = post.title;
   document.getElementById("postDate").textContent = post.createdAt.toDate().toLocaleDateString();
-  document.getElementById("postDataRange").textContent = post.date_range;
+  document.getElementById("postDataRange").textContent = `${post.date_range_start}-${post.date_range_end}`;
   document.getElementById("postCategory").textContent = post.category?.name ?? "";
 
   // Tags
@@ -321,8 +323,8 @@ const onUpdatePostClick = async (e) => {
     // Show preview
   document.getElementById("preview").innerHTML =`<img src="${post.coverUrl}" width="150">`;
 
-  document.getElementById("startYear").value = post.date_range.split('-')[0];   
-  document.getElementById("endYear").value = post.date_range.split('-')[1]; 
+  document.getElementById("startYear").value =  post.date_range_start;   
+  document.getElementById("endYear").value = post.date_range_end; 
   
   tags = post.tags.map(t => t.name); 
   console.log(tags);

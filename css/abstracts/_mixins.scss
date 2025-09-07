@@ -5,3 +5,18 @@
       background-repeat: no-repeat;
       background-size: contain;  
 }
+
+
+@mixin animated-appear-via-visibility($translateX: 0, $opacityTime: 0.3s, $visibilityTime: 0.3s) {
+  transform: translateX($translateX);
+  visibility: hidden; 
+  pointer-events: none;
+  transition: opacity $opacityTime ease, visibility $visibilityTime ease;
+}
+
+@mixin animated-disappear-via-visibility() {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+}

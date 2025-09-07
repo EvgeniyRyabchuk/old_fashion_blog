@@ -11,11 +11,11 @@ scss/
  ├─ utilities/     
  └─ main.scss    // точка входа
 */
-footer #footer-content .footer-col .footer-data-wrapper, header nav ul, #side-menu-wrapper #side-menu #side-menu-list, #list-comment-container, #breadcrumbs ul {
+footer #footer-content .footer-col .footer-data-wrapper, header nav ul, #sideMenuWrapper #side-menu #side-menu-list, #list-comment-container, #breadcrumbs ul {
   list-style: none;
 }
 
-footer a, header nav a, #side-menu-wrapper #side-menu #side-menu-list .side-menu-item, #breadcrumbs a {
+footer a, header nav a, #sideMenuWrapper #side-menu #side-menu-list .side-menu-item, #breadcrumbs a {
   text-decoration: none;
   color: black;
   font-size: 18px;
@@ -26,7 +26,7 @@ footer a, header nav a, #side-menu-wrapper #side-menu #side-menu-list .side-menu
   text-decoration-line: none;
 }
 
-.d-flex-h-center, #aside-profile-btn-wrapper .form-row #asideProfileBtn, .d-flex-h-center-v-end, .d-flex-h-center-v-start {
+.d-flex-h-center, #asideProfileBtnWrapper .form-row #asideProfileBtn, .d-flex-h-center-v-end, .d-flex-h-center-v-start {
   display: flex;
   justify-content: center;
 }
@@ -36,7 +36,7 @@ footer a, header nav a, #side-menu-wrapper #side-menu #side-menu-list .side-menu
   align-items: center;
 }
 
-.d-flex-center, #side-menu-wrapper #side-menu #side-menu-list .side-menu-item, .loader-wrapper {
+.d-flex-center, #sideMenuWrapper #side-menu #side-menu-list .side-menu-item, .loader-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,9 +70,14 @@ body {
   padding: 0;
   background-color: #AFAFAF;
   background-size: cover;
+  background-image: url(https://retrocat.de/wp-content/uploads/2021/07/RetroCat_Mode.jpg);
+  background-position: -600px -500px;
+}
+body.no-scroll {
+  overflow: hidden !important;
 }
 
-.btn, .btn-warning, .btn-danger, .authNavList button, #aside-profile-btn-wrapper .authNavList button, .btn-secondary, .btn-primary {
+.btn, .btn-warning, .btn-danger, .auth-nav-list button, #asideProfileBtnWrapper .auth-nav-list button, .btn-secondary, .btn-primary {
   padding: 10px;
   margin: 5px;
   font-size: 17px;
@@ -115,15 +120,15 @@ body {
   background-color: "";
 }
 
-.btn-danger, .authNavList button, #aside-profile-btn-wrapper .authNavList button {
+.btn-danger, .auth-nav-list button, #asideProfileBtnWrapper .auth-nav-list button {
   background-color: rgba(178, 17, 17, 0.667);
   color: white;
   cursor: pointer;
 }
-.btn-danger:hover, .authNavList button:hover, #aside-profile-btn-wrapper .authNavList button:hover {
+.btn-danger:hover, .auth-nav-list button:hover, #asideProfileBtnWrapper .auth-nav-list button:hover {
   background-color: rgba(255, 106, 106, 0.667);
 }
-.btn-danger:active, .authNavList button:active, #aside-profile-btn-wrapper .authNavList button:active {
+.btn-danger:active, .auth-nav-list button:active, #asideProfileBtnWrapper .auth-nav-list button:active {
   background-color: "";
 }
 
@@ -365,7 +370,7 @@ body {
   width: 100%;
 }
 
-.full-screen, .full-screen-fixed, #side-menu-wrapper, .loader-wrapper.fixed, .full-screen-abs, .loader-wrapper.abs {
+.full-screen, .full-screen-fixed, #sideMenuWrapper, .loader-wrapper.fixed, .full-screen-abs, .loader-wrapper.abs {
   top: 0;
   left: 0;
   right: 0;
@@ -376,7 +381,7 @@ body {
   position: absolute;
 }
 
-.full-screen-fixed, #side-menu-wrapper, .loader-wrapper.fixed {
+.full-screen-fixed, #sideMenuWrapper, .loader-wrapper.fixed {
   position: fixed;
 }
 
@@ -1214,8 +1219,30 @@ scss/
   display: none;
 }
 
+#profileBtn::before, #profileBtn::after, #asideProfileBtn::before, #asideProfileBtn::after {
+  width: 22px;
+  height: 22px;
+}
+
 #top-menu {
   position: relative;
+}
+
+#top-header-link {
+  display: block;
+  padding: 8px 16px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(180, 180, 180, 0.8), rgba(100, 100, 100, 0.8));
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+#top-header-link:hover {
+  background: linear-gradient(135deg, rgba(200, 200, 200, 0.9), rgba(80, 80, 80, 0.9));
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
 }
 
 header {
@@ -1236,14 +1263,8 @@ header #header-img-block {
   display: flex;
   align-items: center;
   height: 100px;
-  background-image: url("https://retrocat.de/wp-content/uploads/2021/07/RetroCat_Mode.jpg");
-  background-repeat: no-repeat;
-  background-size: auto;
-  /* keep natural size */
   background-position: 100% 20%;
-  /* choose what part shows */
   overflow: hidden;
-  /* clip to header size */
 }
 header nav a {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -1266,7 +1287,7 @@ header nav #auth-nav-list-wrapper #searchInput {
 header nav #auth-nav-list-wrapper #searchBtn {
   height: 30px;
 }
-header nav #profile-btn-wrapper .authNavList {
+header nav #profile-btn-wrapper .auth-nav-list {
   display: none;
 }
 header nav ul {
@@ -1290,7 +1311,7 @@ header nav > button {
   padding: 15px;
 }
 
-.authNavList {
+.auth-nav-list {
   position: absolute;
   background-color: grey;
   top: 44px;
@@ -1299,13 +1320,16 @@ header nav > button {
   margin: 0;
   width: 100%;
 }
-.authNavList li {
+.auth-nav-list li {
   text-align: center;
 }
-.authNavList button {
+.auth-nav-list button {
   margin: 0;
   padding: 15px 0;
   width: 100%;
+}
+.auth-nav-list.is-open {
+  display: block !important;
 }
 
 #top-menu {
@@ -1320,16 +1344,22 @@ header nav > button {
   align-items: center;
 }
 #top-menu > .top-menu-content #burger-menu-btn {
-  z-index: 999;
   display: none;
   width: 45px;
   height: 45px;
   cursor: pointer;
+  background-image: url("../../images/burger.png");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
-.btn1 {
-  color: black;
+#top-menu > .top-menu-content #burger-menu-btn:hover {
+  background-color: rgb(195, 195, 195);
 }
-
+#top-menu > .top-menu-content #burger-menu-btn.is-open {
+  background-image: url("../../images/close.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 #profile-btn-wrapper {
   position: relative;
   margin-left: 20px;
@@ -1339,15 +1369,6 @@ header nav > button {
 }
 #profile-btn-wrapper:hover #profileBtn::after {
   transform: rotate(180deg);
-}
-
-#profileBtn::before, #profileBtn::after, #asideProfileBtn::before, #asideProfileBtn::after {
-  width: 22px;
-  height: 22px;
-}
-
-#profileBtn {
-  margin: 0;
 }
 
 #profileBtn, #asideProfileBtn {
@@ -1385,34 +1406,26 @@ header nav > button {
   transition: transform 0.5s ease !important;
 }
 
-.open-aside-btn {
-  background-image: url("../../images/free-icon-menu-4254068 (1).png");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.close-aside-btn {
-  background-image: url("../../images/close.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-#aside-profile-btn-wrapper {
+#asideProfileBtnWrapper {
   min-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 0 15px;
 }
-#aside-profile-btn-wrapper .form-row #asideProfileBtn {
+#asideProfileBtnWrapper .form-row #asideProfileBtn {
   width: 100%;
   margin: 0;
   background-color: rgba(31, 36, 40, 0.2);
 }
-#aside-profile-btn-wrapper .form-row #asideProfileBtn::after {
+#asideProfileBtnWrapper .form-row #asideProfileBtn::after {
   transform: rotate(0deg);
 }
-#aside-profile-btn-wrapper .authNavList {
+#asideProfileBtnWrapper .form-row #asideProfileBtn.is-open::after {
+  transform: rotate(180deg);
+}
+#asideProfileBtnWrapper .auth-nav-list {
+  height: 0;
   transition: 0.3s height ease-in-out;
   position: static;
   background-color: grey;
@@ -1421,53 +1434,70 @@ header nav > button {
   z-index: 0;
   overflow-y: hidden;
 }
-#aside-profile-btn-wrapper .authNavList.h-0 {
-  height: 0;
+#asideProfileBtnWrapper .auth-nav-list.is-open {
+  height: calc-size(auto, size);
+  /* Use auto with calc-size() */
 }
-#aside-profile-btn-wrapper .authNavList.h-max-1000 {
-  height: calc-size(auto, size); /* Use auto with calc-size() */
-}
-#aside-profile-btn-wrapper .authNavList li {
+#asideProfileBtnWrapper .auth-nav-list li {
   text-align: center;
 }
-#aside-profile-btn-wrapper .authNavList button {
+#asideProfileBtnWrapper .auth-nav-list button {
   margin: 0;
   padding: 15px 0;
   width: 100%;
 }
 
-#side-menu-wrapper {
+#sideMenuWrapper {
   background-color: rgba(209, 209, 209, 0.3);
   z-index: 999;
-  display: none;
+  opacity: 0;
+  transform: translateX(0);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-#side-menu-wrapper.d-block {
-  background-color: rgba(209, 209, 209, 0.3);
+#sideMenuWrapper.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
 }
-#side-menu-wrapper #side-menu {
+#sideMenuWrapper #side-menu {
   transition: 0.5s width ease;
   overflow: hidden;
   width: 0px;
   height: 100vh;
   background-color: white;
   position: absolute;
-  top: 80px;
+  top: 0px;
 }
-#side-menu-wrapper #side-menu.w-0 {
-  width: 0;
-}
-#side-menu-wrapper #side-menu.w-auto {
+#sideMenuWrapper #side-menu.is-open {
   width: 300px;
 }
-#side-menu-wrapper #side-menu #top-aside-block {
+#sideMenuWrapper #side-menu #topAsideBlock {
   min-width: 300px;
   height: 67px;
   text-align: center;
   padding: 25px 20px 20px 20px;
   font-size: 20px;
   margin-bottom: 20px;
+  position: relative;
 }
-#side-menu-wrapper #side-menu #side-menu-list {
+#sideMenuWrapper #side-menu #topAsideBlock #closeAside {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  left: 10px;
+  top: 10px;
+  cursor: pointer;
+  background-image: url("../../images/close.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+#sideMenuWrapper #side-menu #topAsideBlock #closeAside:hover {
+  background-color: rgb(195, 195, 195);
+}
+#sideMenuWrapper #side-menu #side-menu-list {
   display: block !important;
   margin: 0 !important;
   padding: 15px;

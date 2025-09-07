@@ -9,8 +9,6 @@ const closeBtn = document.getElementById("filterCloseBtn");
 const inputs = document.querySelectorAll(".filter-drawer input");
 const selectedList = document.querySelector(".selected-filters__list");
 
-const defaultStartDate = "1800-09-04";
-const defaultEndDate = "2025-09-04";
 
 filterToggle.addEventListener("click", () => {
 // If the class is-open exists, toggle removes it → the drawer closes.
@@ -18,7 +16,7 @@ filterToggle.addEventListener("click", () => {
     filterDrawer.classList.toggle("is-open"); 
 });
 closeBtn.addEventListener("click", () => {
-    drawer.classList.remove("is-open");
+    drawer.classList.remove("is-open"); 
 });
 
 
@@ -70,6 +68,7 @@ function createChip(label, value, type) {
   selectedList.appendChild(chip);
 }
 
+
 const reset = async () => {
     const allCategoriesCheckboxes = document.querySelectorAll(
         '.filter-drawer input:checked[data-type="category"]'
@@ -89,8 +88,29 @@ const reset = async () => {
 
     await postsPaginator.reload();
 }
+const resetAllButDateRange = () => {
+      const allCategoriesCheckboxes = document.querySelectorAll(
+        '.filter-drawer input:checked[data-type="category"]'
+    );
+    const allTagsCheckboxes = document.querySelectorAll(
+        '.filter-drawer input:checked[data-type="tag"]'
+    );
+    allCategoriesCheckboxes.forEach(c => c.checked = false);
+    allTagsCheckboxes.forEach(t => t.checked = false);
+    const listForRemove = selectedList.querySelectorAll(`*:not([data-type="date-range-start"])`)
+    listForRemove.forEach(i => i.remove());
+}
+const resetDateRange = () => {
+    const dateStart = document.querySelector(`.filter-drawer input[data-type="date-range-start"]`);
+    const dateEnd = document.querySelector(`.filter-drawer input[data-type="date-range-end"]`);
+    dateStart.value = defaultStartDate; 
+    dateEnd.value = defaultEndDate;
 
+    const listForRemove = selectedList.querySelectorAll(`[data-type="date-range-start"]`)
+    listForRemove.forEach(i => i.remove());
+}
 
+const getDateRangeWitToORFrom = (input) => input.type == "date-range-start" ? `from ${input.value}` : `to ${input.value}`; 
 
 const addEventListenerToInput = (input) => {
     input.addEventListener("change", () => {
@@ -98,16 +118,33 @@ const addEventListenerToInput = (input) => {
         const value = input.value;
 
         if (input.type === "checkbox") {
+            resetDateRange(); 
+
             if (input.checked) createChip(input.parentNode.textContent.trim(), value, type);
             else selectedList.querySelector(`[data-value="${value}"][data-type="${type}"]`)?.remove();
         }
         
         if (input.type === "date") {
-            if (input.value) createChip(input.value, value || input.value, type);
-            else selectedList.querySelector(`[data-type="${type}"]`)?.remove();
+          resetAllButDateRange(); 
+
+          const alreadyExist = selectedList.querySelector(`[data-type="${type}"]`)
+
+          if(!alreadyExist) {
+             createChip(getDateRangeWitToORFrom(input), value || input.value, type);
+          } else {
+
+          if(type == "date-range-start" && new Date(value).getFullYear() == new Date(defaultStartDate).getFullYear()) 
+            alreadyExist.remove();
+          if(type == "date-range-end" && new Date(value).getFullYear() == new Date(defaultStartDate).getFullYear()) 
+            alreadyExist.remove();
+
+            alreadyExist.innerHTML = getDateRangeWitToORFrom(input);
+          }
         }
     });
 }
+
+
 const renderCheckboxes = (value, name, container, datasetType) => {
     const label = document.createElement("label");
     const input = document.createElement("input");
@@ -129,6 +166,7 @@ const renderCategoriesToFilter = async () => {
       renderCheckboxes(c.id, c.name, categoryContainer, "category"); 
     });
 }
+
 const renderTagsToFilter = async () => {
     const tags = await readAllTags(); 
     const tagsContainer = document.getElementById("tagsContainer");
@@ -137,7 +175,6 @@ const renderTagsToFilter = async () => {
       renderCheckboxes(t.id, t.name, tagsContainer, "tag"); 
     });
 }
-
 async function renderSelectableElements() {
     await renderCategoriesToFilter();
     await renderTagsToFilter(); 
@@ -145,11 +182,8 @@ async function renderSelectableElements() {
     addEventListenerToInput(document.querySelector(`[data-type="date-range-end"]`))
 }
 
-
 renderSelectableElements(); 
 
-// --- Initial load ---
-// document.addEventListener("DOMContentLoaded", reloadPosts);
 
 // --- Sort change ---
 document.getElementById("sort").addEventListener("change", () => {
