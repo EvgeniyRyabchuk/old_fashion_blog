@@ -4,14 +4,16 @@
       background-image: url("../../"+$url);
       background-repeat: no-repeat;
       background-size: contain;  
+
+      background-position: center;
 }
 
 
-@mixin animated-appear-via-visibility($translateX: 0, $opacityTime: 0.3s, $visibilityTime: 0.3s) {
+@mixin animated-appear-via-visibility($translateX: 0, $time: 0.3s) {
   transform: translateX($translateX);
   visibility: hidden; 
   pointer-events: none;
-  transition: opacity $opacityTime ease, visibility $visibilityTime ease;
+  transition: opacity $time ease, visibility $time ease;
 }
 
 @mixin animated-disappear-via-visibility() {
@@ -20,3 +22,44 @@
     pointer-events: auto;
     transform: translateX(0);
 }
+
+
+
+
+
+
+
+// _mixins.scss
+// @mixin animated-appear-via-height-v1($is-open: false) {
+//   @if $is-open {
+//   transform: scaleY(1);
+//   visibility: visible;
+//   } @else {
+//   transform: scaleY(0);
+//   transform-origin: top;
+//   transition: transform 0.5s ease-in-out;
+//   visibility: hidden;
+//   }
+// }
+
+
+// delay 
+
+@mixin animated-appear-via-max-height($is-open: false, $time: 0.3, $max: 500px) {
+  @if $is-open {
+    // Set a large max-height
+    //TODO: cacl automaticaly 
+    max-height: 500px;
+    overflow: hidden; 
+    // Use a very short transition for a near-instant effect
+    transition: max-height $time ease-in-out;
+  } @else {
+    max-height: 0;
+    overflow: hidden;
+    // Match the transition for a smooth collapse
+    transition: max-height $time ease-in-out;
+  }
+}
+
+
+

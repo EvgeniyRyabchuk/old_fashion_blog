@@ -8,12 +8,9 @@ main {
 
 .content-section {
   padding: 10px;
-
+  position: relative;
 }
 
 #main-wrapper {
-  width: abstracts.$xxl-bp; 
-  margin: 0 auto;
   background-color: white;
-
 }

@@ -5,20 +5,32 @@ const filterDrawer = document.getElementById("filterDrawer");
 
 const drawer = document.getElementById("filterDrawer");;
 const closeBtn = document.getElementById("filterCloseBtn");
+const filterDraweWrapper =  document.getElementById("filterDraweWrapper"); 
 
 const inputs = document.querySelectorAll(".filter-drawer input");
 const selectedList = document.querySelector(".selected-filters__list");
 
 
+const switchFilter = (isOpening = true) => {
+  filterDrawer.classList.toggle("is-open"); 
+  filterDraweWrapper.classList.toggle("is-open");  
+  document.body.classList.toggle("no-scroll");
+}
+
 filterToggle.addEventListener("click", () => {
 // If the class is-open exists, toggle removes it → the drawer closes.
 // If the class is-open does NOT exist, toggle adds it → the drawer opens.
-    filterDrawer.classList.toggle("is-open"); 
+  switchFilter();
 });
 closeBtn.addEventListener("click", () => {
-    drawer.classList.remove("is-open"); 
+   switchFilter(false) 
 });
 
+filterDraweWrapper.addEventListener("click", (e) => {
+  if(e.currentTarget == e.target) {
+     switchFilter(false); 
+  }
+})
 
 function createChip(label, value, type) {
   // avoid duplicates
@@ -190,6 +202,7 @@ document.getElementById("sort").addEventListener("change", () => {
     postsPaginator.reload(); 
 }); 
 document.getElementById("applyFilterBtn").addEventListener("click", () => {
+    switchFilter(false);
     postsPaginator.reload(); 
 }); 
 

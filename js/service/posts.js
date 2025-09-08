@@ -164,10 +164,11 @@ const afterPostsLoaded = async (posts) => {
   await loadCategoriesToCollection(posts);
   await loadTagsToCollection(posts); 
   allPosts = posts; 
+  postLoader.style.display = "none"; 
+  document.querySelector(".pagination-wrapper").classList.add("is-open"); 
 }
 
-const beforePostsLoaded = async () => { 
-  // document.body.style.overflow = "hidden";  
+const beforePostsLoaded = async () => {  
   postLoader.style.display = "flex"; 
   document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
 }; 

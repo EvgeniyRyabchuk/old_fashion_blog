@@ -1,4 +1,12 @@
 
+.pagination-wrapper {
+  visibility: hidden;
+
+  &.is-open {
+    visibility: visible;
+  }
+}
+
 .posts {
   &-wrapper {
     max-width: 900px;

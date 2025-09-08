@@ -1,19 +1,19 @@
 @use '../abstracts/variables' as variables;
 
 
+header, footer, #main-wrapper {
+  max-width: variables.$xxl-bp; /* Элементы не будут шире 1400px */
+  width: 100%; /* Но будут занимать всю доступную ширину на меньших экранах */
+  margin: 0 auto; /* Центрирует контейнеры */
+}
+
 @media screen and (max-width: variables.$xxl-bp) {
-    #main-wrapper {
-        width: 100% !important;
-        
-    }
-    header {
-        width: 100% !important;
-    }
-    footer {
-        width: 100% !important; 
-    }
     #side-menu {
         display: none;
+    }
+
+    #posts-wrapper .post-card .post-cover img {
+        padding: 5px 5px 10px 5px; 
     }
 }
 
@@ -28,16 +28,21 @@
         #guest-nav-list {
             display: none;
         } 
-        #header-search { 
-            display: none !important; 
-        }
+        // #header-search { 
+        //     display: none !important; 
+        // }
     }   
 
     #side-menu {
         display: block;
     }
+
     #profile-btn-wrapper {
         display: none;
+    }
+
+    #posts-wrapper {
+       padding: 0px 0px 30px 0px !important;
     }
     
 }
@@ -47,10 +52,11 @@
         width: 50% !important;
     }
     #header-img-block {
-        height: 80px !important;
+        height: 60px !important;
     } 
+
     // .top-menu-content {
-    //     // margin: 10px !important;
+    //     // margin: 10px 60mportant;
     //     padding: 10px 8px !important;
         
     //     #burger-menu-btn {
@@ -89,8 +95,55 @@
                 }
         }
     }
+    
+    #header-search {
+        #searchInput,
+        #searchBtn {
+            display: none;
+        }
+
+        .search-toggle {
+            display: block !important;
+        }
+
+        // expanded state when clicking toggle 
+        &.active {
+            position: absolute;
+            z-index: 1000;
+            top: 0px; // adjust depending on header
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+
+            #searchInput,
+            #searchBtn {
+                display: block;
+            }
+
+            .search-toggle {
+                display: none !important;
+            }
+        }
+    }
+
+    #auth-nav-list-wrapper {
+        margin: 5px 0 5px 0 !important;
+        width: 100%;
+        justify-content: right !important;
+        gap: 10px;
+    }
 
 
+    #top-header-link {
+        padding: 0;
+
+        #headerLable {
+            font-size: 1rem
+        }
+    }
 }
 
 
@@ -107,7 +160,7 @@
 }
 
 @media screen and (max-width: variables.$xs-bp) {
-    main {
-       
+    .top-menu-content {
+        flex-wrap: wrap;
     }
 }

@@ -1,3 +1,5 @@
+@use '../utilities/index.scss';
+@use '../abstracts/mixins' as mixins; 
 
 .filter-sort {
   display: flex;
@@ -42,13 +44,25 @@
   }
 }
 
+#filterDraweWrapper {
+  @extend .full-screen-fixed;
+  background-color: rgba(209, 209, 209, 0.3);
+  z-index: 1000;
+  @include mixins.animated-appear-via-visibility;
+   &.is-open {
+    
+       @include mixins.animated-disappear-via-visibility; 
+   }
+
+}
+
 .filter-drawer {
   // Mobile drawer behavior
   position: fixed;
   top: 0;
   right: -320px;
   width: 320px;
-  height: 100%;
+  height: 100%; 
   background: #fff;
   border-left: 1px solid #ddd;
   box-shadow: -2px 0 8px rgba(0,0,0,0.1);

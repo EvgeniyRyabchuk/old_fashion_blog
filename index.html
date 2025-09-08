@@ -104,17 +104,12 @@
           
             <!-- TODO: right  nav-list-wrapper --->
             <div id="auth-nav-list-wrapper">
-               <div class="form-row">
-                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/login.html">Login</a>
-                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/register.html">Sign Up</a>
-               </div>
+               <!-- <div class="form-row">
+                  <a class="login-btn" style="margin: 0 5px;" href="./auth/login.html">Login</a>
+                  <a class="sign-in-btn" style="margin: 0 5px;" href="./auth/register.html">Sign Up</a>
+               </div> -->
                
-               <div id="header-search" class="form-row"> 
-                  <input id="searchInput" type="text" placeholder="Search..." />
-                  <button class="btn-info" id="searchBtn" type="button"> 
-                     Search
-                  </button>
-               </div>
+      
 
                 <div class="form-row">
                   <select id="language-select">
@@ -130,7 +125,13 @@
                      <option value="EN">Dark</option>
                   </select>
                </div>
-          
+               <div id="header-search" class="form-row">
+                  <button class="search-close" id="searchClose" type="button">&times;</button>
+                  <input id="searchInput" type="text" placeholder="Search...">
+                  <button class="btn-info" id="searchBtn" type="button">Search</button>
+                  <!-- Icon-only button for mobile -->
+                  <button class="search-toggle" id="searchToggle" type="button"></button>
+               </div>
                <div id="profile-btn-wrapper">
                   <div class="form-row">
                      <button id="profileBtn">
@@ -197,127 +198,126 @@
          </section>
          
          <!-- Filter Drawer (mobile) / Inline (desktop) -->
-         <section class="filter-drawer" id="filterDrawer">
-            <div style="margin: 10px 0;">
-          <button type="button" class="filter-drawer__close" id="filterCloseBtn">&times;</button>
-            </div>
-  
 
-            <form class="filter-drawer__container">
-               <!-- Category -->
-               <div class="filter-drawer__group">
-               <label class="filter-drawer__label">Categories:</label>
-               <div id="categoriesContainer" class="filter-drawer__options">
-                  <label><input data-type="category" type="checkbox" value="tech" data-type="category"> Tech</label>
-                  <label><input data-type="category" type="checkbox" value="design" data-type="category"> Design</label>
-                  <label><input data-type="category" type="checkbox" value="lifestyle" data-type="category"> Lifestyle</label>
-                  <label><input data-type="category" type="checkbox" value="news" data-type="category"> News</label>
-                  <label><input data-type="category" type="checkbox" value="tech1" data-type="category"> Tech1</label>
-                  <label><input data-type="category" type="checkbox" value="design1" data-type="category"> Design1</label>
-                  <label><input data-type="category" type="checkbox" value="lifestyle1" data-type="category"> Lifestyle1</label>
-                  <label><input data-type="category" type="checkbox" value="news1" data-type="category"> News1</label>
-                  <label><input data-type="category" type="checkbox" value="tech2" data-type="category"> Tech2</label>
-                  <label><input data-type="category" type="checkbox" value="design2" data-type="category"> Design2</label>
-                  <label><input data-type="category" type="checkbox" value="lifestyle2" data-type="category"> Lifestyle2</label>
-                  <label><input data-type="category" type="checkbox" value="news2" data-type="category"> News2</label>
-                  <label><input data-type="category" type="checkbox" value="tech3" data-type="category"> Tech3</label>
-                  <label><input data-type="category" type="checkbox" value="design3" data-type="category"> Design3</label>
-                  <label><input data-type="category" type="checkbox" value="lifestyle3" data-type="category"> Lifestyle3</label>
-                  <label><input data-type="category" type="checkbox" value="new3s" data-type="category"> News3</label>
-                  <label><input data-type="category" type="checkbox" value="tech4" data-type="category"> Tech4</label>
-                  <label><input data-type="category" type="checkbox" value="design4" data-type="category"> Design4</label>
-                  <label><input data-type="category" type="checkbox" value="lifestyle4" data-type="category"> Lifestyle4</label>
-                  <label><input data-type="category" type="checkbox" value="news4" data-type="category"> News4</label>
+         <section id="filterDraweWrapper">
+            <div class="filter-drawer" id="filterDrawer">
+               <div style="margin: 10px 0;">
+                  <button type="button" class="filter-drawer__close" id="filterCloseBtn">&times;</button>
                </div>
-               </div>
-               <!-- Tags -->
-               <div class="filter-drawer__group">
-                  <label class="filter-drawer__label">Tags:</label>
-                  <div id="tagsContainer" class="filter-drawer__tags">
-                     <label><input data-type="tag" type="checkbox" value="js"><span class="tags-sign">#</span>JavaScript</label>
-                     <label><input data-type="tag" type="checkbox" value="css"><span class="tags-sign">#</span>CSS</label>
-                     <label><input data-type="tag" type="checkbox" value="html"><span class="tags-sign">#</span>HTML</label>
-                     <label><input data-type="tag" type="checkbox" value="react"><span class="tags-sign">#</span>React</label>
-                     <label><input data-type="tag" type="checkbox" value="python"><span class="tags-sign">#</span>Python</label>
-                     <label><input data-type="tag" type="checkbox" value="php"> <span class="tags-sign">#</span>PHP</label>
-                     <label><input data-type="tag" type="checkbox" value="java"> <span class="tags-sign">#</span>Java</label>
-                     <label><input data-type="tag" type="checkbox" value="ruby"><span class="tags-sign">#</span>Ruby</label>
-                     <label><input data-type="tag" type="checkbox" value="go"> <span class="tags-sign">#</span>Go</label>
-                     <label><input data-type="tag" type="checkbox" value="csharp"><span class="tags-sign">#</span>C#</label>
-                     <label><input data-type="tag" type="checkbox" value="js1"><span class="tags-sign">#</span>JavaScript1</label>
-                     <label><input data-type="tag" type="checkbox" value="css1"><span class="tags-sign">#</span>CSS1</label>
-                     <label><input data-type="tag" type="checkbox" value="html1"><span class="tags-sign">#</span>HTML1</label>
-                     <label><input data-type="tag" type="checkbox" value="react1"><span class="tags-sign">#</span>React1</label>
-                     <label><input data-type="tag" type="checkbox" value="python1"><span class="tags-sign">#</span>Python1</label>
-                     <label><input data-type="tag" type="checkbox" value="php1"> <span class="tags-sign">#</span>PHP1</label>
-                     <label><input data-type="tag" type="checkbox" value="java1"> <span class="tags-sign">#</span>Java1</label>
-                     <label><input data-type="tag" type="checkbox" value="ruby1"><span class="tags-sign">#</span>Ruby1</label>
-                     <label><input data-type="tag" type="checkbox" value="go1"> <span class="tags-sign">#</span>Go1</label>
-                     <label><input data-type="tag" type="checkbox" value="csharp1"><span class="tags-sign">#</span>C#1</label>
-                     <label><input data-type="tag" type="checkbox" value="js2"><span class="tags-sign">#</span>JavaScript2</label>
-                     <label><input data-type="tag" type="checkbox" value="css2"><span class="tags-sign">#</span>CSS2</label> 
-                     <label><input data-type="tag" type="checkbox" value="html2"><span class="tags-sign">#</span>HTML2</label>
-                     <label><input data-type="tag" type="checkbox" value="react2"><span class="tags-sign">#</span>React2</label>
-                     <label><input data-type="tag" type="checkbox" value="python2"><span class="tags-sign">#</span>Python2</label>
-                     <label><input data-type="tag" type="checkbox" value="php2"> <span class="tags-sign">#</span>PHP2</label>
-                     <label><input data-type="tag" type="checkbox" value="java2"> <span class="tags-sign">#</span>Java2</label>
-                     <label><input data-type="tag" type="checkbox" value="ruby2"><span class="tags-sign">#</span>Ruby2</label>
-                     <label><input data-type="tag" type="checkbox" value="go2"> <span class="tags-sign">#</span>Go2</label>
-                     <label><input data-type="tag" type="checkbox" value="csharp2"><span class="tags-sign">#</span>C#2</label>
-                     <!-- more… -->
+               <form class="filter-drawer__container">
+                  <!-- Category -->
+                  <div class="filter-drawer__group">
+                  <label class="filter-drawer__label">Categories:</label>
+                  <div id="categoriesContainer" class="filter-drawer__options">
+                     <label><input data-type="category" type="checkbox" value="tech" data-type="category"> Tech</label>
+                     <label><input data-type="category" type="checkbox" value="design" data-type="category"> Design</label>
+                     <label><input data-type="category" type="checkbox" value="lifestyle" data-type="category"> Lifestyle</label>
+                     <label><input data-type="category" type="checkbox" value="news" data-type="category"> News</label>
+                     <label><input data-type="category" type="checkbox" value="tech1" data-type="category"> Tech1</label>
+                     <label><input data-type="category" type="checkbox" value="design1" data-type="category"> Design1</label>
+                     <label><input data-type="category" type="checkbox" value="lifestyle1" data-type="category"> Lifestyle1</label>
+                     <label><input data-type="category" type="checkbox" value="news1" data-type="category"> News1</label>
+                     <label><input data-type="category" type="checkbox" value="tech2" data-type="category"> Tech2</label>
+                     <label><input data-type="category" type="checkbox" value="design2" data-type="category"> Design2</label>
+                     <label><input data-type="category" type="checkbox" value="lifestyle2" data-type="category"> Lifestyle2</label>
+                     <label><input data-type="category" type="checkbox" value="news2" data-type="category"> News2</label>
+                     <label><input data-type="category" type="checkbox" value="tech3" data-type="category"> Tech3</label>
+                     <label><input data-type="category" type="checkbox" value="design3" data-type="category"> Design3</label>
+                     <label><input data-type="category" type="checkbox" value="lifestyle3" data-type="category"> Lifestyle3</label>
+                     <label><input data-type="category" type="checkbox" value="new3s" data-type="category"> News3</label>
+                     <label><input data-type="category" type="checkbox" value="tech4" data-type="category"> Tech4</label>
+                     <label><input data-type="category" type="checkbox" value="design4" data-type="category"> Design4</label>
+                     <label><input data-type="category" type="checkbox" value="lifestyle4" data-type="category"> Lifestyle4</label>
+                     <label><input data-type="category" type="checkbox" value="news4" data-type="category"> News4</label>
                   </div>
-               </div>
-               <!-- Date Range -->
-               <div class="filter-drawer__group">
-                  <label>Date Range:</label>
-                  <div class="filter-drawer__date-range">
-                     <input data-type="date-range-start" type="date" name="start_date" value="1800-09-04">
-                     <span>—</span>
-                     <input data-type="date-range-end" type="date" name="end_date" value="2025-09-04">
                   </div>
+                  <!-- Tags -->
+                  <div class="filter-drawer__group">
+                     <label class="filter-drawer__label">Tags:</label>
+                     <div id="tagsContainer" class="filter-drawer__tags">
+                        <label><input data-type="tag" type="checkbox" value="js"><span class="tags-sign">#</span>JavaScript</label>
+                        <label><input data-type="tag" type="checkbox" value="css"><span class="tags-sign">#</span>CSS</label>
+                        <label><input data-type="tag" type="checkbox" value="html"><span class="tags-sign">#</span>HTML</label>
+                        <label><input data-type="tag" type="checkbox" value="react"><span class="tags-sign">#</span>React</label>
+                        <label><input data-type="tag" type="checkbox" value="python"><span class="tags-sign">#</span>Python</label>
+                        <label><input data-type="tag" type="checkbox" value="php"> <span class="tags-sign">#</span>PHP</label>
+                        <label><input data-type="tag" type="checkbox" value="java"> <span class="tags-sign">#</span>Java</label>
+                        <label><input data-type="tag" type="checkbox" value="ruby"><span class="tags-sign">#</span>Ruby</label>
+                        <label><input data-type="tag" type="checkbox" value="go"> <span class="tags-sign">#</span>Go</label>
+                        <label><input data-type="tag" type="checkbox" value="csharp"><span class="tags-sign">#</span>C#</label>
+                        <label><input data-type="tag" type="checkbox" value="js1"><span class="tags-sign">#</span>JavaScript1</label>
+                        <label><input data-type="tag" type="checkbox" value="css1"><span class="tags-sign">#</span>CSS1</label>
+                        <label><input data-type="tag" type="checkbox" value="html1"><span class="tags-sign">#</span>HTML1</label>
+                        <label><input data-type="tag" type="checkbox" value="react1"><span class="tags-sign">#</span>React1</label>
+                        <label><input data-type="tag" type="checkbox" value="python1"><span class="tags-sign">#</span>Python1</label>
+                        <label><input data-type="tag" type="checkbox" value="php1"> <span class="tags-sign">#</span>PHP1</label>
+                        <label><input data-type="tag" type="checkbox" value="java1"> <span class="tags-sign">#</span>Java1</label>
+                        <label><input data-type="tag" type="checkbox" value="ruby1"><span class="tags-sign">#</span>Ruby1</label>
+                        <label><input data-type="tag" type="checkbox" value="go1"> <span class="tags-sign">#</span>Go1</label>
+                        <label><input data-type="tag" type="checkbox" value="csharp1"><span class="tags-sign">#</span>C#1</label>
+                        <label><input data-type="tag" type="checkbox" value="js2"><span class="tags-sign">#</span>JavaScript2</label>
+                        <label><input data-type="tag" type="checkbox" value="css2"><span class="tags-sign">#</span>CSS2</label> 
+                        <label><input data-type="tag" type="checkbox" value="html2"><span class="tags-sign">#</span>HTML2</label>
+                        <label><input data-type="tag" type="checkbox" value="react2"><span class="tags-sign">#</span>React2</label>
+                        <label><input data-type="tag" type="checkbox" value="python2"><span class="tags-sign">#</span>Python2</label>
+                        <label><input data-type="tag" type="checkbox" value="php2"> <span class="tags-sign">#</span>PHP2</label>
+                        <label><input data-type="tag" type="checkbox" value="java2"> <span class="tags-sign">#</span>Java2</label>
+                        <label><input data-type="tag" type="checkbox" value="ruby2"><span class="tags-sign">#</span>Ruby2</label>
+                        <label><input data-type="tag" type="checkbox" value="go2"> <span class="tags-sign">#</span>Go2</label>
+                        <label><input data-type="tag" type="checkbox" value="csharp2"><span class="tags-sign">#</span>C#2</label>
+                        <!-- more… -->
+                     </div>
+                  </div>
+                  <!-- Date Range -->
+                  <div class="filter-drawer__group">
+                     <label>Date Range:</label>
+                     <div class="filter-drawer__date-range">
+                        <input data-type="date-range-start" type="date" name="start_date" value="1800-09-04">
+                        <span>—</span>
+                        <input data-type="date-range-end" type="date" name="end_date" value="2025-09-04">
+                     </div>
+                  </div>
+
+
+               </form>
+               <div class="selected-filters">
+               <span class="selected-filters__label">Selected Filters:</span>
+               <div class="selected-filters__list"></div>
                </div>
-
-
-            </form>
-            <div class="selected-filters">
-            <span class="selected-filters__label">Selected Filters:</span>
-            <div class="selected-filters__list"></div>
-            </div>
-            <!-- Actions -->
-            <div class="filter-drawer__actions">
-               <button id="applyFilterBtn"  type="button">Apply</button>
-               <button id="resetFilterBtn" type="reset">Reset</button> 
+               <!-- Actions -->
+               <div class="filter-drawer__actions">
+                  <button id="applyFilterBtn"  type="button">Apply</button>
+                  <button id="resetFilterBtn" type="reset">Reset</button> 
+               </div>
             </div>
          </section>
 
 
-         <section class="content-section" >
+         <section class="content-section"> 
             <h2 id="main-content-title">Posts</h2> 
-               <div id="postLoader" class="loader-wrapper abs">
-                  <div class="loader">
-                     <div class="circle-wrapper-1">
-                        <div class="circle-1"></div>
-                     </div>
-                     <div class="circle-wrapper-2">
-                        <div class="circle-2"></div>
-                     </div>
-                     <div class="circle-wrapper-3">
-                        <div class="circle-3"></div>
-                     </div>
-                     <div class="circle-wrapper-4">
-                        <div class="circle-4"></div>
-                     </div>
-                     <div class="circle-wrapper-5">
-                        <div class="circle-5"></div>
-                     </div>
-                     <div class="circle-wrapper-6">
-                        <div class="circle-6"></div>
-                     </div>
+            <div id="postLoader" class="loader-wrapper abs bg-transparent" style="height: 500px;">
+               <div class="loader">
+                  <div class="circle-wrapper-1">
+                     <div class="circle-1"></div>
                   </div>
-               </div> 
-            <div id="posts-wrapper" class="">
-            
-
+                  <div class="circle-wrapper-2">
+                     <div class="circle-2"></div>
+                  </div>
+                  <div class="circle-wrapper-3">
+                     <div class="circle-3"></div>
+                  </div>
+                  <div class="circle-wrapper-4">
+                     <div class="circle-4"></div>
+                  </div>
+                  <div class="circle-wrapper-5">
+                     <div class="circle-5"></div>
+                  </div>
+                  <div class="circle-wrapper-6">
+                     <div class="circle-6"></div>
+                  </div>
+               </div>
+            </div> 
+            <div id="posts-wrapper">
                <article class="post-card">
                   <a href="/post.html">
                      <div class="post-cover">

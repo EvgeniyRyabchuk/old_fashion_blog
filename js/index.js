@@ -20,7 +20,7 @@ document.getElementById("asideProfileBtnWrapper").addEventListener("click", (e) 
 
 const setAsideIsOpen = () => {
     document.querySelector("#side-menu").classList.toggle("is-open");
-    document.querySelector("#burger-menu-btn").classList.toggle("is-open");
+    // document.querySelector("#burger-menu-btn").classList.toggle("is-open");
     document.querySelector("#sideMenuWrapper").classList.toggle("is-open");
     document.body.classList.toggle("no-scroll");
 }
@@ -41,7 +41,29 @@ document.getElementById("sideMenuWrapper").addEventListener("click", (e) => {
 });
 
 
+const headerSearch = document.getElementById("header-search");
+  const searchToggle = document.getElementById("searchToggle");
+const searchClose = document.getElementById("searchClose");
 
+//   if (searchToggle) {
+    searchToggle.addEventListener("click", () => {
+      headerSearch.classList.toggle("active");
+    });
+    searchClose.addEventListener("click", () => {
+      headerSearch.classList.toggle("active");
+    });
+//   }
+  
+  // Optional: close search when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!headerSearch.contains(e.target)) {
+      headerSearch.classList.remove("active");
+    }
+  });
+
+
+
+  
 //TODL: disanle scroll if modal window called  
 //TODO: filter btn click to left call quit  
 //TODO:hide filter if user want to in desktop mode 

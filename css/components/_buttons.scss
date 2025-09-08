@@ -49,3 +49,22 @@
   @extend .btn; 
   @include createBtn($warning-color, $warning-color-hover, $warning-color-active); 
 }
+
+.btn-success { 
+  @extend .btn; 
+  @include createBtn($success-color, $success-color-hover, $success-color-active); 
+
+}
+
+.login-btn, .sign-in-btn { 
+
+    font-size: 18px; 
+    padding: 8px 15px 8px 15px; 
+}
+.login-btn {
+    @extend .btn-success; 
+}
+
+.sign-in-btn {
+   @extend .btn-secondary; 
+}

@@ -15,11 +15,11 @@ scss/
 @use 'abstracts/index'as abstracts;
 @use 'base/index'as *;
 @use 'components/index'as components;
-@use 'layout/index'as layout;
 @use 'pages/index'as pages;
 @use 'themes/index'as themes;
-@use 'vendors/index'as vendors;
+@use 'vendors/index'as vendors; 
 @use 'utilities/index'as utilities;
+@use 'layout/index'as layout;
 
 /*
 Mobile (portrait)	320px – 480px	iPhone SE, Galaxy S5

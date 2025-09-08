@@ -32,10 +32,13 @@ $wrapper-circle-size-percent: 0.4;
 }
 
 
+
 .loader-wrapper {
- 
+    &.bg-transparent { background-color: transparent; }
     &.abs {
-        @extend .full-screen-abs; 
+       left: 0; 
+       right: 0; 
+       position: absolute;
     }
     &.fixed {
         @extend .full-screen-fixed;  
