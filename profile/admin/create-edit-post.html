@@ -30,21 +30,24 @@
       <!-- <div id="side-menu-wrapper" class="d-block">
      
       </div> -->
-    <a class="default-link" href="/">
+    <a class="default-link" id="top-header-link" href="/" >
         <div id="header-img-block">
             <h2 id="headerLable">Old Fashion Blog</h2>
         </div>
     </a> 
 
       <nav id="top-menu">
-         <div id="side-menu-wrapper"> 
+         <div id="sideMenuWrapper"> 
             <aside id="side-menu">
-               <div id="top-aside-block">Menu</div>
-                 <div class="form-row d-flex-center" style="margin: 20px 0;">
-                       <a class="btn-info" style="display: block; width: 100px; padding: 5px; margin: 0 5px;" href="../auth/login.html">Login</a>
-                       <a class="btn-info" style="display: block; width: 100px; padding: 5px; margin: 0 5px;" href="../auth/register.html">Sign Up</a>
-                    </div>
-               <div id="aside-profile-btn-wrapper">
+               <div id="topAsideBlock">
+                  <div id="closeAside"></div>
+                  Menu
+               </div> 
+               <div class="form-row d-flex-center" style="margin: 20px 0;">
+                  <a class="login-btn" href="./auth/login.html">Login</a>
+                  <a class="sign-in-btn" href="./auth/register.html">Sign Up</a>
+               </div>
+               <div id="asideProfileBtnWrapper">
                   <div class="form-row">
                      <button id="asideProfileBtn">
                         <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
@@ -53,7 +56,7 @@
                      </button> 
                   </div>
                  
-                  <ul class="authNavList h-0" class="d-none">
+                  <ul id="asideAuthNavList" class="auth-nav-list" class="d-none">
                      <li><a href="./posts.html">My posts</a></li>
                      <li><a href="./profile/setting.html">Settings</a></li>
                      <li><a href="./profile/comments.html">Comments</a></li>
@@ -80,7 +83,7 @@
                      <a href="./about.html">About</a></li>
                   <li class="side-menu-item">
                      <a href="./contact.html">Contact</a>
-                  </li> 
+                  </li>
 
                </ul>
             </aside>
@@ -88,7 +91,7 @@
         
 
          <div class="top-menu-content">
-            <div id="burger-menu-btn" class="open-aside-btn"></div>
+            <div id="burger-menu-btn"></div>
             <ul id="guest-nav-list">
                <li><a href="./index.html">Home</a></li>
                <li><a href="./posts.html">All posts</a></li>
@@ -101,17 +104,12 @@
           
             <!-- TODO: right  nav-list-wrapper --->
             <div id="auth-nav-list-wrapper">
-               <div class="form-row">
-                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/login.html">Login</a>
-                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./auth/register.html">Sign Up</a>
-               </div>
+               <!-- <div class="form-row">
+                  <a class="login-btn" style="margin: 0 5px;" href="./auth/login.html">Login</a>
+                  <a class="sign-in-btn" style="margin: 0 5px;" href="./auth/register.html">Sign Up</a>
+               </div> -->
                
-               <div id="header-search" class="form-row"> 
-                  <input id="searchInput" type="text" placeholder="Search..." />
-                  <button class="btn-info" id="searchBtn" type="button"> 
-                     Search
-                  </button>
-               </div>
+      
 
                 <div class="form-row">
                   <select id="language-select">
@@ -127,7 +125,13 @@
                      <option value="EN">Dark</option>
                   </select>
                </div>
-          
+               <div id="header-search" class="form-row">
+                  <button class="search-close" id="searchClose" type="button">&times;</button>
+                  <input id="searchInput" type="text" placeholder="Search...">
+                  <button class="btn-info" id="searchBtn" type="button">Search</button>
+                  <!-- Icon-only button for mobile -->
+                  <button class="search-toggle" id="searchToggle" type="button"></button>
+               </div>
                <div id="profile-btn-wrapper">
                   <div class="form-row">
                      <button id="profileBtn">
@@ -136,9 +140,7 @@
                         <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
                      </button>
                   </div>
-                  <ul class="authNavList d-none" class="d-none">
-                     <li><a href="./auth/login.html">Login</a></li>
-                     <li><a href="./auth/signUp.html">Sign Up</a></li>
+                  <ul id="authNavList" class="auth-nav-list">
                      <li><a href="./posts.html">My posts</a></li>
                      <li><a href="./profile/setting.html">Settings</a></li>
                      <li><a href="./profile/comments.html">Comments</a></li>

@@ -69,12 +69,16 @@ body {
   margin: 0;
   padding: 0;
   background-color: #AFAFAF;
-  background-size: cover;
+  background-size: contain;
   background-image: url("/images/bg.jpg");
   background-position: -600px -500px;
 }
 body.no-scroll {
   overflow: hidden !important;
+}
+
+select, button {
+  cursor: pointer;
 }
 
 .btn, .btn-success, .login-btn, .btn-warning, .btn-danger, .auth-nav-list button, #asideProfileBtnWrapper .auth-nav-list button, .btn-secondary, .sign-in-btn, .btn-primary {
@@ -161,10 +165,19 @@ body.no-scroll {
   padding: 8px 15px 8px 15px;
 }
 
+.login-btn {
+  display: block;
+  margin: 0 5px;
+}
+
+.sign-in-btn {
+  display: block;
+  margin: 0 5px;
+}
+
 .comment_container {
   box-shadow: 0px 0px 24px 0px rgb(197, 197, 197);
   padding: 10px;
-  width: 1200px;
   margin: 0 auto;
   border: 1px solid black;
 }
@@ -387,7 +400,7 @@ body.no-scroll {
   width: 100%;
 }
 
-.full-screen, .full-screen-fixed, #sideMenuWrapper, #filterDraweWrapper, .loader-wrapper.fixed, .full-screen-abs {
+.full-screen, .full-screen-fixed, #sideMenuWrapper, #filterDraweWrapper, #filterDraweWrapper.is-open, .loader-wrapper.fixed, .full-screen-abs {
   top: 0;
   left: 0;
   right: 0;
@@ -398,7 +411,7 @@ body.no-scroll {
   position: absolute;
 }
 
-.full-screen-fixed, #sideMenuWrapper, #filterDraweWrapper, .loader-wrapper.fixed {
+.full-screen-fixed, #sideMenuWrapper, #filterDraweWrapper, #filterDraweWrapper.is-open, .loader-wrapper.fixed {
   position: fixed;
 }
 
@@ -650,28 +663,28 @@ scss/
 .filter-toggle:hover {
   background: #222;
 }
-@media (min-width: 768px) {
-  .filter-toggle {
+
+@media screen and (min-width: 992px) {
+  #filterDraweWrapper {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
     display: none;
   }
+  #filterDraweWrapper.is-open {
+    display: block !important;
+  }
 }
-
 #filterDraweWrapper {
-  background-color: rgba(209, 209, 209, 0.3);
-  z-index: 1000;
-  transform: translateX(0);
+  background-color: rgba(209, 209, 209, 0.6);
+  z-index: 999;
+  opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s, pointer-events 0s 0.3s;
 }
-#filterDraweWrapper.is-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateX(0);
-}
-
-.filter-drawer {
+#filterDraweWrapper .filter-drawer {
   position: fixed;
   top: 0;
   right: -320px;
@@ -682,13 +695,10 @@ scss/
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   overflow-y: auto;
+  z-index: 999;
   transition: right 0.3s ease;
-  z-index: 1000;
 }
-.filter-drawer.is-open {
-  right: 0;
-}
-.filter-drawer__close {
+#filterDraweWrapper .filter-drawer__close {
   background: none;
   border: none;
   font-size: 2rem;
@@ -696,15 +706,15 @@ scss/
   cursor: pointer;
   color: #333;
 }
-.filter-drawer__close:hover {
+#filterDraweWrapper .filter-drawer__close:hover {
   background-color: #444;
   color: white;
 }
-.filter-drawer__close:active {
+#filterDraweWrapper .filter-drawer__close:active {
   background-color: #914545;
   color: white;
 }
-.filter-drawer__container {
+#filterDraweWrapper .filter-drawer__container {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -712,34 +722,34 @@ scss/
   justify-content: space-between;
   width: 100%;
 }
-.filter-drawer__group {
+#filterDraweWrapper .filter-drawer__group {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   flex: 1 1 auto;
 }
-.filter-drawer__group label {
+#filterDraweWrapper .filter-drawer__group label {
   font-size: 0.85rem;
   font-weight: 600;
 }
-.filter-drawer__group select,
-.filter-drawer__group input[type=date] {
+#filterDraweWrapper .filter-drawer__group select,
+#filterDraweWrapper .filter-drawer__group input[type=date] {
   padding: 0.4rem 0.6rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   cursor: pointer;
 }
-.filter-drawer__group #categoriesContainer {
+#filterDraweWrapper .filter-drawer__group #categoriesContainer {
   display: flex;
   flex-direction: column;
   overflow: auto;
   max-height: 200px;
 }
-.filter-drawer__group #categoriesContainer label {
+#filterDraweWrapper .filter-drawer__group #categoriesContainer label {
   cursor: pointer;
 }
-.filter-drawer__tags {
+#filterDraweWrapper .filter-drawer__tags {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 0.5rem;
@@ -748,7 +758,7 @@ scss/
   overflow-y: auto;
   padding-right: 0.4rem;
 }
-.filter-drawer__tags label {
+#filterDraweWrapper .filter-drawer__tags label {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -760,49 +770,49 @@ scss/
   padding: 0.4rem 0.5rem;
   cursor: pointer;
 }
-.filter-drawer__tags label input {
+#filterDraweWrapper .filter-drawer__tags label input {
   margin: 0;
 }
-.filter-drawer__tags label:hover {
+#filterDraweWrapper .filter-drawer__tags label:hover {
   background: #eee;
 }
-.filter-drawer__tags label .tags-sign {
+#filterDraweWrapper .filter-drawer__tags label .tags-sign {
   font-weight: 600;
   font-size: 18px;
   font-style: oblique;
 }
-.filter-drawer__date-range {
+#filterDraweWrapper .filter-drawer__date-range {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-.filter-drawer__actions {
+#filterDraweWrapper .filter-drawer__actions {
   display: flex;
   gap: 0.75rem;
   margin-top: 1rem;
 }
-.filter-drawer__actions button {
+#filterDraweWrapper .filter-drawer__actions button {
   padding: 0.45rem 1rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
 }
-.filter-drawer__actions button:first-child {
+#filterDraweWrapper .filter-drawer__actions button:first-child {
   background: #444;
   color: #fff;
 }
-.filter-drawer__actions button:first-child:hover {
+#filterDraweWrapper .filter-drawer__actions button:first-child:hover {
   background: #222;
 }
-.filter-drawer__actions button:last-child {
+#filterDraweWrapper .filter-drawer__actions button:last-child {
   background: #e0e0e0;
   color: #333;
 }
-.filter-drawer__actions button:last-child:hover {
+#filterDraweWrapper .filter-drawer__actions button:last-child:hover {
   background: #ccc;
 }
-@media (min-width: 768px) {
-  .filter-drawer {
+@media (min-width: 992px) {
+  #filterDraweWrapper .filter-drawer {
     position: static;
     width: 100%;
     height: auto;
@@ -812,23 +822,32 @@ scss/
     overflow: visible;
     transition: none;
   }
-  .filter-drawer.is-open {
+  #filterDraweWrapper .filter-drawer.is-open {
     right: auto;
   }
-  .filter-drawer__group {
+  #filterDraweWrapper .filter-drawer__group {
     width: auto;
   }
-  .filter-drawer__container {
+  #filterDraweWrapper .filter-drawer__container {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1.5rem;
     align-items: flex-start;
     margin: 20px 0px;
   }
-  .filter-drawer__tags {
+  #filterDraweWrapper .filter-drawer__tags {
     max-height: 200px;
     max-width: 400px;
   }
+}
+#filterDraweWrapper.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#filterDraweWrapper.is-open .filter-drawer {
+  right: 0;
 }
 
 .selected-filters {
@@ -1398,6 +1417,7 @@ header nav #auth-nav-list-wrapper {
   display: flex;
   justify-content: center;
   margin: 15px 0 15px auto;
+  gap: 8px;
 }
 header nav #auth-nav-list-wrapper .form-row {
   display: flex;
@@ -1447,6 +1467,7 @@ header nav #auth-nav-list-wrapper #header-search #searchInput {
   border-radius: 20px;
   transition: all 0.25s ease;
   min-width: 100px;
+  width: 100%;
 }
 header nav #auth-nav-list-wrapper #header-search #searchInput:focus {
   border-color: #5678ff;
@@ -1638,7 +1659,7 @@ header nav > button {
 #asideProfileBtnWrapper .auth-nav-list {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3 ease-in-out;
+  transition: max-height 0.5s ease-in-out;
   position: static;
   background-color: grey;
   display: block;
@@ -1649,7 +1670,7 @@ header nav > button {
 #asideProfileBtnWrapper .auth-nav-list.is-open {
   max-height: 500px;
   overflow: hidden;
-  transition: max-height 500px ease-in-out;
+  transition: max-height 0.5s ease-in-out;
   /* Use auto with calc-size() */
 }
 #asideProfileBtnWrapper .auth-nav-list li {
@@ -1662,31 +1683,30 @@ header nav > button {
 }
 
 #sideMenuWrapper {
-  background-color: rgba(209, 209, 209, 0.3);
+  background-color: rgba(209, 209, 209, 0.5);
   z-index: 999;
   opacity: 0;
-  transform: translateX(0);
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s, pointer-events 0s 0.3s;
 }
 #sideMenuWrapper.is-open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateX(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 #sideMenuWrapper #side-menu {
-  transition: 0.5s width ease;
+  transition: 0.3s left ease;
   overflow: hidden;
-  width: 0px;
   height: 100vh;
   background-color: white;
   position: absolute;
   top: 0px;
+  left: -300px;
 }
 #sideMenuWrapper #side-menu.is-open {
-  width: 300px;
+  left: 0;
 }
 #sideMenuWrapper #side-menu #topAsideBlock {
   min-width: 300px;

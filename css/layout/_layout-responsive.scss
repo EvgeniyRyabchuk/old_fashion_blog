@@ -1,5 +1,6 @@
 @use '../abstracts/variables' as variables;
-
+@use '../abstracts/mixins' as mixins; 
+@use '../abstracts/placeholders';
 
 header, footer, #main-wrapper {
   max-width: variables.$xxl-bp; /* Элементы не будут шире 1400px */
@@ -70,7 +71,7 @@ header, footer, #main-wrapper {
     footer {
         padding: 10px;
     }
-
+    
     #footer-content {
         flex-wrap: wrap; 
         justify-content: space-between !important;
@@ -144,6 +145,12 @@ header, footer, #main-wrapper {
             font-size: 1rem
         }
     }
+
+
+#sideMenuWrapper {
+
+}
+
 }
 
 

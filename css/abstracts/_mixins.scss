@@ -9,22 +9,25 @@
 }
 
 
-@mixin animated-appear-via-visibility($translateX: 0, $time: 0.3s) {
-  transform: translateX($translateX);
-  visibility: hidden; 
+@mixin animated-appear-via-visibility($time: 0.5s, $translateX: null) {
+  @if $translateX != null {
+    transform: translateX($translateX);
+  }
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity $time ease, transform $time ease;
+}
+
+@mixin animated-disappear-via-visibility($time: 0.5s, $translateX: null) {
+  @if $translateX != null {
+    transform: translateX($translateX);
+  }
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity $time ease, visibility $time ease;
+ transition: opacity $time ease, transform $time ease, visibility 0s $time, pointer-events 0s $time;
 }
-
-@mixin animated-disappear-via-visibility() {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateX(0);
-}
-
-
-
 
 
 

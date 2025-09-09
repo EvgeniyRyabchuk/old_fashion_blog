@@ -12,9 +12,15 @@ const selectedList = document.querySelector(".selected-filters__list");
 
 
 const switchFilter = (isOpening = true) => {
-  filterDrawer.classList.toggle("is-open"); 
-  filterDraweWrapper.classList.toggle("is-open");  
-  document.body.classList.toggle("no-scroll");
+
+  filterDraweWrapper.classList.toggle("is-open"); 
+    filterDrawer.classList.toggle("is-open"); 
+  // Check if the screen is 992px or less
+  if (window.innerWidth <= 992) {
+    document.body.classList.toggle("no-scroll");
+  } 
+  
+  // document.body.classList.toggle("no-scroll");
 }
 
 filterToggle.addEventListener("click", () => {
@@ -202,8 +208,9 @@ document.getElementById("sort").addEventListener("change", () => {
     postsPaginator.reload(); 
 }); 
 document.getElementById("applyFilterBtn").addEventListener("click", () => {
-    switchFilter(false);
-    postsPaginator.reload(); 
+  if (window.innerWidth <= 992) 
+     switchFilter(false);
+    postsPaginator.reload();  
 }); 
 
 document.getElementById("resetFilterBtn").addEventListener("click", reset);

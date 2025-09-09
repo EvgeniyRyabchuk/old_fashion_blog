@@ -8,7 +8,7 @@ body {
    padding: 0;
    background-color: #AFAFAF;
    // background-image: url(../../images/ChatGPT\ Image\ 1\ сент.\ 2025\ г.\,\ 16_49_09.png);
-   background-size: cover;
+   background-size: contain;
    
    &.no-scroll {
       overflow: hidden !important; 
@@ -20,3 +20,7 @@ body {
    //  background-repeat: no-repeat;
 }
 
+
+select, button {
+   cursor: pointer;
+}

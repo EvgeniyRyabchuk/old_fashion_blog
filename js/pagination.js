@@ -35,7 +35,7 @@ const createPaginator = ({
 
     // "Load more" means: request next page and append
     loadMoreBtn.style.display = currentPage < totalPages ? "inline-block" : "none";
-  
+    
     // loader.remove(); 
     
   };

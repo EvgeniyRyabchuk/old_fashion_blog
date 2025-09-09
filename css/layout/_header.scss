@@ -72,8 +72,9 @@ header {
     #auth-nav-list-wrapper {
       position: relative;
       display: flex;
-      justify-content: center;
-      margin: 15px 0 15px auto;
+      justify-content: center; 
+      margin: 15px 0 15px auto; 
+      gap: 8px;
 
       .form-row {
         display: flex;
@@ -136,6 +137,7 @@ header {
           border-radius: 20px;
           transition: all 0.25s ease;
           min-width: 100px;
+          width: 100%;
           &:focus {
             border-color: #5678ff;
             box-shadow: 0 0 6px rgba(86, 120, 255, 0.3);
@@ -381,10 +383,10 @@ header {
     // height: 0;
     // max-height: 0;
     // overflow: hidden;
-    @include mixins.animated-appear-via-max-height(false); // Default (collapsed) state
+    @include mixins.animated-appear-via-max-height(false, 0.5s); // Default (collapsed) state
 
     &.is-open {
-      @include mixins.animated-appear-via-max-height(true, 500px); // Open state
+      @include mixins.animated-appear-via-max-height(true, 0.5s, 500px); // Open state
       // height: calc-size(auto, size);
       //  max-height: 500px; 
       /* Use auto with calc-size() */
@@ -415,31 +417,33 @@ header {
   }
 }
 
+$sideMenuWrapperAppearTime: 0.3s; 
+
 
 #sideMenuWrapper {
   @extend .full-screen-fixed;
-  background-color: rgba(209, 209, 209, 0.3);
-  z-index: 999;
-  opacity: 0;
+  background-color: rgba(209, 209, 209, 0.5);
+  z-index: 999; 
 
-  @include mixins.animated-appear-via-visibility;
+  @include mixins.animated-disappear-via-visibility($sideMenuWrapperAppearTime);
 
   &.is-open {
-    @include mixins.animated-disappear-via-visibility;
-
+    @include mixins.animated-appear-via-visibility($sideMenuWrapperAppearTime);
   }
-
+  
   #side-menu {
-    transition: 0.5s width ease;
+    transition: $sideMenuWrapperAppearTime left ease;
     overflow: hidden;
-    width: 0px;
+    // width: 0px;
     height: 100vh;
     background-color: white;
     position: absolute;
     top: 0px;
+    left: -$size-menu-width;
 
     &.is-open {
-      width: $size-menu-width;
+      // width: $size-menu-width;
+      left: 0;
     }
 
     #topAsideBlock {

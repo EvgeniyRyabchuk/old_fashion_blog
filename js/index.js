@@ -22,7 +22,9 @@ const setAsideIsOpen = () => {
     document.querySelector("#side-menu").classList.toggle("is-open");
     // document.querySelector("#burger-menu-btn").classList.toggle("is-open");
     document.querySelector("#sideMenuWrapper").classList.toggle("is-open");
-    document.body.classList.toggle("no-scroll");
+     document.body.classList.toggle("no-scroll");
+
+
 }
 
 // open aside menu 
@@ -64,10 +66,17 @@ const searchClose = document.getElementById("searchClose");
 
 
   
-//TODL: disanle scroll if modal window called  
-//TODO: filter btn click to left call quit  
-//TODO:hide filter if user want to in desktop mode 
+//TODO: fix table loader appearance 
+
+
+
+//TODO: search appearance 
+//TODO: query request in particular for post view page, filter, search
 //TODO: post cover Image only for grid, but for post view it's need wallpaper 
+
+
+
+//TODO: index page redirect to posts list page 
 
 
 

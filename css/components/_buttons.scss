@@ -63,8 +63,12 @@
 }
 .login-btn {
     @extend .btn-success; 
+    display: block;
+    margin: 0 5px;
 }
 
 .sign-in-btn {
    @extend .btn-secondary; 
+    display: block;
+    margin: 0 5px;
 }
