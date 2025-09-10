@@ -1,0 +1,145 @@
+
+@use '../abstracts/variables'as variables;
+@use '../abstracts/mixins'as mixins;
+
+
+$dropdown-menu-min-width: 160px;
+$appear-animation-time: 0.2s; 
+$header-link-hover-color: rgb(126, 126, 193); 
+
+.dropdown {
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    display: block;
+    z-index: 999;
+    
+    .dropdown-menu {
+        display: block;
+        position: absolute;
+        left: 0; 
+        min-width: $dropdown-menu-min-width;
+        background: #fff; // white background
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+        a {
+            white-space: nowrap; 
+            color: #000; 
+        }
+        .dropdown-menu {
+            top: -15px;
+            left: 100%;
+        }
+    }
+
+    // action if its hoverable dropdown 
+    &.on-hover {
+        &:hover {
+            >.dropdown-menu {
+                display: block;
+                top: 54px;
+            }
+        }
+        .dropdown-menu {
+            display: none;
+        }
+        &:hover {
+              &.root {
+                >a::after {
+                    content: " ▲"; // for top-level 
+                    font-size: 1em;
+                }
+            }
+        }
+    }
+
+    // action if its clickable dropdown 
+    &.on-click {
+        &.is-open {
+            >.dropdown-menu {
+                @include mixins.animated-appear-via-max-height(true, $appear-animation-time); 
+            }
+            &.root {
+                >a::after {
+                    content: " ▲"; // for top-level 
+                    font-size: 1em;
+                }
+            }
+        }
+        .dropdown-menu {
+            @include mixins.animated-appear-via-max-height(false, $appear-animation-time);
+            li:hover {
+                background-color: transparent !important;
+                a { color: $header-link-hover-color !important; }
+            }
+        }
+        // marker
+        &:hover {
+            &::after {
+                display: block;
+                content: "";
+                width: 3px;
+                background-color: black;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                max-height: 20px;
+                margin: 20px 0;
+            }
+        }
+
+    }
+
+    // arrow adding  
+    &>a::after {
+        content: " ▶"; // for nested
+        font-size: 1em;
+        margin: 5px 5px 5px 3px;
+    }
+
+    &.root {
+        >a::after {
+            content: " ▼"; // for top-level 
+            font-size: 1em;
+            margin: 5px 5px 5px 3px;
+        }
+    }
+
+}
+
+@media screen and (max-width: variables.$xl-bp) {
+    .dropdown {
+        &:hover {
+            background-color: transparent;
+        }
+        >a {
+            &:hover {
+                color: $header-link-hover-color !important;
+            }
+        }
+
+        .dropdown-menu {
+            position: static; 
+            box-shadow: none;
+            border: 0;
+        }
+
+        &.on-hover:hover {
+            >.dropdown-menu {
+                display: none;
+            }
+        }
+        
+        &.on-click {
+            &.is-open > .side-menu-item { 
+                padding-bottom: 10px; 
+            }
+            .side-menu-item { transition: padding $appear-animation-time ease-in-out };
+        } 
+
+        li { padding: 8px 15px !important; }
+
+    }
+
+}

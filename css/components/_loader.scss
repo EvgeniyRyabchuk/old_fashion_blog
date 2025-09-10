@@ -38,10 +38,12 @@ $wrapper-circle-size-percent: 0.4;
     &.abs {
        left: 0; 
        right: 0; 
+       top: 0;
+       bottom: 0;
        position: absolute;
     }
     &.fixed {
-        @extend .full-screen-fixed;  
+        @extend .full-screen-fixed; 
     }
     @extend .d-flex-center;
     

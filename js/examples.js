@@ -46,3 +46,56 @@ const asideProfileBtn = CreateBlockSwitcher([
     {changebleSel: "#aside-profile-btn-wrapper > .authNavList", 
     state1: "h-max-1000", state2: "h-0" } 
 ]);
+
+
+
+/*
+
+ <ul id="guest-nav-list">
+               <li><a href="./posts.html" class="dropdown-item">Home</a></li>
+               <li class="dropdown root"> 
+                  <a href="./index.html" class="dropdown-toggle">All posts</a> 
+                  <ul class="dropdown-menu">
+                     <li class="dropdown"> 
+                        <a href="#" class="dropdown-toggle">Item 1</a>
+                        <ul class="dropdown-menu">
+                           <li class="dropdown"> 
+                              <a href="#" class="dropdown-item">Item 1.1</a>
+                              <ul class="dropdown-menu">
+                                 <li>
+                                    <a href="#" class="dropdown-item">Item 1.1.1</a>
+                                 </li>
+                                 <li><a href="#" class="dropdown-item">Item 1.1.2</a></li>
+                                 <li><a href="#" class="dropdown-item">Item 1.1.3</a></li>
+                              </ul>
+                           </li>
+                           <li><a href="#" class="dropdown-item">Item 1.2</a></li> 
+                           <li><a href="#" class="dropdown-item">Item 1.3</a></li> 
+                        </ul> 
+                     </li>
+                     <li class="dropdown">
+                        <a href="#" class="dropdown-item">Item 2</a>
+                          <ul class="dropdown-menu">
+                           <li class="dropdown"> 
+                              <a href="#" class="dropdown-item">Item 2.1</a>
+                              <ul class="dropdown-menu">
+                                 <li>
+                                    <a href="#" class="dropdown-item">Item 2.1.1</a>
+                                 </li>
+                                 <li><a href="#" class="dropdown-item">Item 2.1.2</a></li>
+                                 <li><a href="#" class="dropdown-item">Item 2.1.3</a></li>
+                              </ul>
+                           </li>
+                           <li><a href="#" class="dropdown-item">Item 2.2</a></li>
+                           <li><a href="#" class="dropdown-item">Item 2.3</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="#" class="dropdown-item">Item 3</a></li>
+                  </ul>
+               </li>
+        
+               <li><a href="./news.html" class="dropdown-item">News</a></li>
+            </ul>
+
+
+*/

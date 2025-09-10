@@ -57,6 +57,7 @@
                   </div>
                  
                   <ul id="asideAuthNavList" class="auth-nav-list" class="d-none">
+                     
                      <li><a href="./posts.html">My posts</a></li>
                      <li><a href="./profile/setting.html">Settings</a></li>
                      <li><a href="./profile/comments.html">Comments</a></li>
@@ -64,43 +65,51 @@
                   </ul>
                </div>
                <ul id="side-menu-list">
-
-                  <li class="side-menu-item">
-                     <a href="./index.html">Home</a></li>
-
-                  <li class="side-menu-item">
-                     <a href="./posts.html">All posts</a>
-                  </li>
-                  <li class="side-menu-item">
-                     <a href="./posts.html">News</a></li>
-
-                  <li class="side-menu-item">
-                     <a href="./posts.html">Guide</a></li>
+                  
+                  <li><a class="side-menu-item" href="./posts.html" class="dropdown-item">Home</a></li>
+                  <li class="dropdown on-click root">
+                     <a class="side-menu-item prevent" href="./index.html" class="dropdown-toggle">All posts</a>
+                     <ul class="dropdown-menu">  
+                        <li class="">
+                           <a class="side-menu-item" href="#" class="dropdown-toggle">Guide</a>
+                        </li>
+                        <li class="">
+                           <a class="side-menu-item" href="#" class="dropdown-item">News</a>
+                        </li>
+                     </ul>
+                  </li> 
+                  <li><a class="side-menu-item" href="./news.html" class="dropdown-item">Contact</a></li>
+                  <li><a class="side-menu-item" href="./news.html" class="dropdown-item">About</a></li>
                   <li class="side-menu-item">
                      <a href="./galerry.html">Gallery</a>
                   </li>
-                  <li class="side-menu-item">
-                     <a href="./about.html">About</a></li>
-                  <li class="side-menu-item">
-                     <a href="./contact.html">Contact</a>
-                  </li>
-
                </ul>
             </aside>
          </div>
-        
-
-         <div class="top-menu-content">
-            <div id="burger-menu-btn"></div>
+        <div class="top-menu-content">
+           <div id="burger-menu-btn"></div>
             <ul id="guest-nav-list">
-               <li><a href="./index.html">Home</a></li>
-               <li><a href="./posts.html">All posts</a></li>
-               <li><a href="./posts.html">News</a></li>
-               <li><a href="./posts.html">Guide</a></li> 
-               <li><a href="./galerry.html">Gallery</a></li> 
-               <li><a href="./about.html">About</a></li>
-               <li><a href="./contact.html">Contact</a></li>
+               <li><a href="./posts.html" class="dropdown-item">Home</a></li>
+               <li class="dropdown on-hover root"> 
+                  <a href="./index.html" class="dropdown-toggle">All posts</a> 
+                  <ul class="dropdown-menu"> 
+                     <li class=""> 
+                        <a href="#" class="dropdown-toggle">Guide</a>
+                       
+                     </li>
+                     <li class="">
+                        <a href="#" class="dropdown-item">News</a>
+                          
+                     </li>
+               
+                  </ul>
+               </li>
+        
+               <li><a href="./news.html" class="dropdown-item">Contact</a></li>
+                  <li><a href="./news.html" class="dropdown-item">About</a></li>
             </ul>
+
+
           
             <!-- TODO: right  nav-list-wrapper --->
             <div id="auth-nav-list-wrapper">
@@ -108,9 +117,6 @@
                   <a class="login-btn" style="margin: 0 5px;" href="./auth/login.html">Login</a>
                   <a class="sign-in-btn" style="margin: 0 5px;" href="./auth/register.html">Sign Up</a>
                </div> -->
-               
-      
-
                 <div class="form-row">
                   <select id="language-select">
                      <option value="RU">RU</option>
@@ -126,11 +132,20 @@
                   </select>
                </div>
                <div id="header-search" class="form-row">
-                  <button class="search-close" id="searchClose" type="button">&times;</button>
-                  <input id="searchInput" type="text" placeholder="Search...">
-                  <button class="btn-info" id="searchBtn" type="button">Search</button>
-                  <!-- Icon-only button for mobile -->
-                  <button class="search-toggle" id="searchToggle" type="button"></button>
+                  <div id="searchControll" class="d-flex-center form-row search-controll">
+                     <button class="search-close" id="searchClose" type="button">&times;</button>
+                     <input id="searchInput" type="text" placeholder="Search...">
+                     <button class="btn-info" id="searchBtn" type="button">Search</button>
+                     <!-- Icon-only button for mobile -->
+                     <button class="search-toggle" id="searchToggle" type="button"></button>
+                  </div>
+                  <div class="search-content">
+                     <ul>
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                     </ul>
+                  </div>
                </div>
                <div id="profile-btn-wrapper">
                   <div class="form-row">
