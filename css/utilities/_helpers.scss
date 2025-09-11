@@ -7,7 +7,7 @@
 
 .d-block { display: block !important; }
 
-.d-none { display: none; }
+.d-none { display: none !important; }
 
 .d-flex { display: flex; }
 
@@ -29,4 +29,11 @@ button { @extend .default-btn ; }
   @extend .full-screen;
   position: fixed;
 }
+
+.img-contain {
+    background-repeat: no-repeat;
+    background-size: contain;  
+    background-position: center;
+}
+
 

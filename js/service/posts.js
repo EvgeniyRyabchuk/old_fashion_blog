@@ -293,7 +293,7 @@ async function readPost(postId) {
   document.getElementById("postTitle").textContent = post.title;
   document.getElementById("postDate").textContent = post.createdAt.toDate().toLocaleDateString();
   document.getElementById("postDataRange").textContent = `${post.date_range_start}-${post.date_range_end}`;
-  document.getElementById("postCategory").textContent = post.category?.name ?? "";
+  document.getElementById("postCategory").textContent = post.category?.name ?? ""; 
 
   // Tags
   const tagsContainer = document.getElementById("postTags");

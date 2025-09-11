@@ -139,11 +139,70 @@
                      <!-- Icon-only button for mobile -->
                      <button class="search-toggle" id="searchToggle" type="button"></button>
                   </div>
-                  <div class="search-content">
-                     <ul>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
+                  <div id="searchContent" class="search-content">
+                       <div id="searchPostLoader" class="loader-wrapper abs bg-transparent">
+                          <div class="loader">
+                             <div class="circle-wrapper-1">
+                                <div class="circle-1"></div>
+                             </div>
+                             <div class="circle-wrapper-2">
+                                <div class="circle-2"></div>
+                             </div>
+                             <div class="circle-wrapper-3">
+                                <div class="circle-3"></div>
+                             </div>
+                             <div class="circle-wrapper-4">
+                                <div class="circle-4"></div>
+                             </div>
+                             <div class="circle-wrapper-5">
+                                <div class="circle-5"></div>
+                             </div>
+                             <div class="circle-wrapper-6">
+                                <div class="circle-6"></div>
+                             </div>
+                          </div>
+                        </div> 
+                     <div class="d-none no-data-li">No results found</div>
+                     <ul id="searchPostList" class="search-post-list">
+                    
+                        <!-- <li>
+                           <a href="#">
+                              <div class="post-cover d-flex-v-center">
+                                 <img width="70" height="70" src="./images/1960s-minidress4.jpg" alt="Post Img">
+                              </div>
+                              <div class="post-title-wrapper">
+                                 <span class="post-title">
+                                    Lorem ipsum dolor sit amet consectetur 
+                                    adipisicing elit. Nihil repellat sit sed tempore libero, eaque
+                                     molestiae perspiciatis nostrum provident veritatis nam in, 
+                                    nulla ducimus laudantium deleniti delectus sint officia quae!
+                                                                        Lorem ipsum dolor sit amet consectetur 
+                                    adipisicing elit. Nihil repellat sit sed tempore libero, eaque
+                                     molestiae perspiciatis nostrum provident veritatis nam in, 
+                                    nulla ducimus laudantium deleniti delectus sint officia quae!
+                                 </span>
+                              </div>
+                           </a>
+                        </li>
+                      <li>
+                           <a href="#">
+                              <div class="post-cover d-flex-v-center">
+                                 <img width="70" height="70" src="./images/1960s-minidress4.jpg" alt="Post Img">
+                              </div>
+                              <div class="post-title-wrapper">
+                                 <span class="post-title">
+                                    Lorem ipsum dolor sit amet consectetur 
+                                    adipisicing elit. Nihil repellat sit sed tempore libero, eaque
+                                     molestiae perspiciatis nostrum provident veritatis nam in, 
+                                    nulla ducimus laudantium deleniti delectus sint officia quae!
+                                                                        Lorem ipsum dolor sit amet consectetur 
+                                    adipisicing elit. Nihil repellat sit sed tempore libero, eaque
+                                     molestiae perspiciatis nostrum provident veritatis nam in, 
+                                    nulla ducimus laudantium deleniti delectus sint officia quae!
+                                 </span>
+                              </div>
+                           </a>
+                        </li>          -->
                      </ul>
                   </div>
                </div>
@@ -528,6 +587,8 @@
 
 
    <script src="./js/index.js"></script>
+   <script src="./js/service/index.js"></script>
+   
    <script src="./js/service/auth.js"></script>
    <script src="./js/service/category.js"></script>
    <script src="./js/service/tags.js"></script>
@@ -535,7 +596,7 @@
 
 
 
-   <script src="./js/service/index.js"></script>
+
 
    <script src="./js/pagination.js"></script>
    <script src="./js/filter-sort/filter-query-creator.js"></script>  

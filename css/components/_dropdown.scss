@@ -3,7 +3,7 @@
 @use '../abstracts/mixins'as mixins;
 
 
-$dropdown-menu-min-width: 160px;
+$dropdown-menu-min-width: 100%;
 $appear-animation-time: 0.2s; 
 $header-link-hover-color: rgb(126, 126, 193); 
 
@@ -14,17 +14,21 @@ $header-link-hover-color: rgb(126, 126, 193);
     z-index: 999;
     
     .dropdown-menu {
+        top: 100%;
         display: block;
         position: absolute;
         left: 0; 
         min-width: $dropdown-menu-min-width;
         background: #fff; // white background
-        border: 1px solid #ccc;
+        // border: 2px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 
         a {
             white-space: nowrap; 
             color: #000; 
+        }
+        li:hover {
+            background-color: rgb(195, 210, 210);
         }
         .dropdown-menu {
             top: -15px;
@@ -37,7 +41,8 @@ $header-link-hover-color: rgb(126, 126, 193);
         &:hover {
             >.dropdown-menu {
                 display: block;
-                top: 54px;
+           
+                transition: top 1s ease-in-out;
             }
         }
         .dropdown-menu {

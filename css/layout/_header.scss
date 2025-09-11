@@ -119,7 +119,7 @@ header {
       #theme-select {
         min-width: 120px;
       }
-
+      #searchControll { gap: 3px; }
       #header-search { 
         display: flex;
         justify-content: center;
@@ -127,23 +127,29 @@ header {
         gap: 8px; 
         .search-controll { 
           width: 100%; 
-          .search-close { display: none; }
+          .search-close { display: none; background-color: white; }
         }
         .search-content {
-          display: none;
+          // display: none;
+          width: 100%; 
+          z-index: 999;
         }
-
+        
         &.active {
           .search-close { 
-            background-color: rgba(0, 0, 0, 0.2); 
-            border: 3px solid white; 
+            border: 2px solid rgb(145, 145, 145); 
+            border-radius: 20px; 
             &:hover { 
-              background-color: white;
+              border: 2px solid variables.$danger-color; 
+              background-color: rgb(255, 255, 255);
+              color: variables.$danger-color;
             }
           }
+          
           #searchInput,
           #searchBtn,
-          .search-close {
+          .search-close
+           {
             display: block;
           }
           .search-toggle {

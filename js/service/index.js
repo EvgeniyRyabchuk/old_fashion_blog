@@ -1,3 +1,27 @@
+  // const email = "jeka.rubchuk@gmail.com";
+  // const password = "123456789";
+
+// AIzaSyBb6ith8jViE5Lgm8O72EkL_iDz6S7nc64
+
+//  6L2VZqbuQLWfBlm55tUa Document id 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBb6ith8jViE5Lgm8O72EkL_iDz6S7nc64",
+  authDomain: "fashion-blog-54f36.firebaseapp.com",
+  projectId: "fashion-blog-54f36",
+  storageBucket: "fashion-blog-54f36.firebasestorage.app",
+  messagingSenderId: "783090657826",
+  appId: "1:783090657826:web:c3d249e95efa908788f87b",
+  measurementId: "G-YS39H1B7B1"
+};
+
+ // Initialize Firebase (namespaced style)
+const app = firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+const auth = firebase.auth();
+const db = firebase.firestore(); 
+const storage = firebase.storage();
 
 
 const fetchDataFirestore = async (colName, page, perPage, options = {}, beforeItemsLoaded, afterItemsLoaded) => {

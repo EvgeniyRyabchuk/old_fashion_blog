@@ -16,7 +16,7 @@ const switchFilter = (isOpening = true) => {
   filterDraweWrapper.classList.toggle("is-open"); 
     filterDrawer.classList.toggle("is-open"); 
   // Check if the screen is 992px or less
-  if (window.innerWidth <= 992) {
+  if (window.innerWidth <= breakpoints.lg) {
     document.body.classList.toggle("no-scroll");
   } 
   
