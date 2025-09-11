@@ -236,6 +236,7 @@ const searchQuery = async (text) => {
   searchPostLoader.style.display = "none"; 
 }
 
+
 searchInput.addEventListener("input", (e) => {
   const text = e.target.value;
   searchPostList.innerHTML = ""; 
