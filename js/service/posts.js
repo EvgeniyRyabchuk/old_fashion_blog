@@ -159,19 +159,23 @@ const getCurrentEnvForPagination = () => {
 
 const currentPaginationEnv = getCurrentEnvForPagination(); 
 
+
+const beforePostsLoaded = async () => {  
+  postLoader.style.display = "flex"; 
+  document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
+
+}; 
+  // loadFromPostQueryStr(); 
 // callback after posts loaded for attach addition info to posts 
 const afterPostsLoaded = async (posts) => {
   await loadCategoriesToCollection(posts);
-  await loadTagsToCollection(posts); 
+  await loadTagsToCollection(posts);  
   allPosts = posts; 
   postLoader.style.display = "none"; 
   document.querySelector(".pagination-wrapper").classList.add("is-open"); 
 }
 
-const beforePostsLoaded = async () => {  
-  postLoader.style.display = "flex"; 
-  document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
-}; 
+
 
 const postsPaginator = createPaginator({
   container: currentPaginationEnv.container,  

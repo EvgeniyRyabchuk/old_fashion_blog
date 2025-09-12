@@ -1,21 +1,25 @@
-const defaultStartDate = "1800-09-04";
-const defaultEndDate = "2025-09-04";
 
-const postFilterQueryCreator = async () => {
+
+const postFilterQueryCreator = async (isFirstLoad) => {
   const categories = [...document.querySelectorAll('input[data-type="category"]:checked')].map(el => el.value);
   const tags = [...document.querySelectorAll('input[data-type="tag"]:checked')].map(el => el.value);
   const startDate = document.querySelector('input[data-type="date-range-start"]').value;
   const endDate = document.querySelector('input[data-type="date-range-end"]').value;
   const sort = document.getElementById("sort").value;
-    
+  
+  if(!isFirstLoad) {
+    queryStrHandler.changePostsFilter({cIds: categories, tIds: tags, startDate, endDate})
+    queryStrHandler.changePostsSort(sort);
+  }
+  
   let query = db.collection("posts");
-
+  
     // because of inequalities trouble 
-  if (startDate && startDate != defaultStartDate) { 
+  if (startDate && startDate != queryStrHandler.defaultStartDate) { 
     query = query.where("date_range_start", ">=", new Date(startDate).getFullYear()); 
     return query; 
   }
-  if (endDate && endDate != defaultEndDate) {
+  if (endDate && endDate != queryStrHandler.defaultEndDate) {
     query = query.where("date_range_end", "<=",  new Date(endDate).getFullYear());
     return query; 
   }

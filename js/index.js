@@ -57,7 +57,8 @@ searchToggle.addEventListener("click", () => {
 });
 searchClose.addEventListener("click", () => {
   headerSearch.classList.toggle("active"); 
-  document.body.classList.toggle("no-scroll");
+  if(window.innerWidth <= breakpoints.lg)
+    document.body.classList.toggle("no-scroll"); 
   searchInput.value = ""
 
 });
@@ -98,12 +99,12 @@ document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
 
 const createDebounce = (delay) => {
   let debounceTimeOutID = null;
-  const set = (text, callback) => {
+  const set = (content, callback) => {
     if(debounceTimeOutID) 
         clearTimeout(debounceTimeOutID);
     debounceTimeOutID = setTimeout(() => {
-      console.log(`${text} - approved`);
-      callback(text);
+      console.log(`${content} - approved`);
+      callback(content);
     }, delay); 
   }
   return { 
@@ -112,13 +113,83 @@ const createDebounce = (delay) => {
   }; 
 }
 
+/*
+
+// safer join
+{name: strQName.categories, value: Array.isArray(cIds) ? cIds.join(",") : ""},
+
+// helper for default date
+const isDefaultDate = (name, value) => 
+  (name === strQName.startDate && value === defaultStartDate) || 
+  (name === strQName.endDate && value === defaultEndDate);
 
 
+*/
 
-const searchQueryName = "search"; 
+
+const QueryStringHandler = () => {
+  const strQName = Object.freeze({
+    search: "search",
+    sort: "sort", 
+    categories: "categories",
+    tags: "tags",
+    startDate: "startDate",
+    endDate: "endDate"
+  });
+  
+  const defaultStartDate = "1800-09-04";
+  const defaultEndDate = "2025-09-04";
+
+  const addOrDeleteParams = (array) => {
+    const params = new URLSearchParams(window.location.search);
+    for (let param of array) {
+      if (param.name === strQName.startDate && param.value === defaultStartDate
+         || param.name === strQName.endDate && param.value === defaultEndDate) {
+         params.delete(param.name); // remove when empty
+      } else { 
+        if (param.value) {
+          params.set(param.name, param.value); // set query
+        } else {
+          params.delete(param.name); // remove when empty
+        }
+      }
+    }
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, "", newUrl);
+  }
+
+  const changePostsSearch = async (text) => {
+    console.log(`sended - ${text}`); 
+    addOrDeleteParams([{name: strQName.search, value: text}]); 
+  }
+
+  const changePostsFilter = ({ cIds, tIds, startDate, endDate }) => {
+      addOrDeleteParams([
+        {name: strQName.categories, value: cIds.join(",")},
+        {name: strQName.tags, value: tIds.join(",")},
+        {name: strQName.startDate, value: startDate}, 
+        {name: strQName.endDate, value: endDate}
+      ]); 
+  }
+  
+  
+  const changePostsSort = (sortValue) => { 
+    addOrDeleteParams([{name: strQName.sort, value: sortValue}]); 
+  }
+  
+  return {
+    strQName, 
+    defaultStartDate,
+    defaultEndDate, 
+    changePostsSearch,
+    changePostsFilter,
+    changePostsSort
+  }
+}
+
 const debound = createDebounce(500);
 const searchPostLoader = document.getElementById("searchPostLoader");
-
+const queryStrHandler = QueryStringHandler();
 
 function renderPostsForSearch(posts) { 
   const container = document.getElementById("searchPostList");
@@ -206,51 +277,42 @@ async function fetchPostsBySearch(term) {
   return res;
 }
 
-
-const searchQuery = async (text) => {
-  const searchPostList = document.getElementById("searchPostList");
-  
- console.log(`sended - ${text}`);
-  // ✅ Update query string
-  const params = new URLSearchParams(window.location.search);
-  if (text) {
-    params.set(searchQueryName, text); // set query
-  } else {
-    params.delete(searchQueryName); // remove when empty
-  }
-  const newUrl = `${window.location.pathname}?${params.toString()}`;
-  window.history.replaceState({}, "", newUrl);
-
-  searchPostLoader.style.display = "flex";
-  searchContent.style.height = "300px"; 
-  // searchContent.style.display = "block"; 
-  searchContent.classList.add("is-open"); 
-  const items = await fetchPostsBySearch(text); 
-
-  if(items.length > 0) {
-      searchContent.querySelector(".no-data-li").classList.add("d-none"); 
-    } else { 
-      searchContent.querySelector(".no-data-li").classList.remove("d-none"); 
-    }
-  searchContent.style.height = "auto"; 
-  searchPostLoader.style.display = "none"; 
-}
-
-
+// search input event handler 
 searchInput.addEventListener("input", (e) => {
   const text = e.target.value;
   searchPostList.innerHTML = ""; 
   searchContent.querySelector(".no-data-li").classList.add("d-none"); 
   searchContent.classList.remove("is-open"); 
+  
   if(!text) {
-      
       return;
   }
 
+  debound.set(text, async (text) => {
+      queryStrHandler.changePostsSearch(text); 
+      
+      searchPostLoader.style.display = "flex"; 
+      searchContent.style.height = "300px"; 
+      searchContent.classList.add("is-open"); 
+      
+      const items = await fetchPostsBySearch(text); 
 
-  debound.set(text, searchQuery);
-  debounceTimeOutID = createDebounce(text, searchQuery);
-})
+      if (items.length > 0) {
+        searchContent.querySelector(".no-data-li").classList.add("d-none");
+      } else {
+        searchContent.querySelector(".no-data-li").classList.remove("d-none");
+      }
+      searchContent.style.height = "auto"; 
+      searchPostLoader.style.display = "none"; 
+  });
+
+
+});
+
+
+
+
+
 
 
 //TODO: search appearance 

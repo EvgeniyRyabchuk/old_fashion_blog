@@ -19,10 +19,10 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-const auth = firebase.auth();
+const auth = firebase.auth(); 
 const db = firebase.firestore(); 
 const storage = firebase.storage();
-
+let isFirstLoad = true; 
 
 const fetchDataFirestore = async (colName, page, perPage, options = {}, beforeItemsLoaded, afterItemsLoaded) => {
   await beforeItemsLoaded();
@@ -33,7 +33,8 @@ const fetchDataFirestore = async (colName, page, perPage, options = {}, beforeIt
   let ref = null; 
 
   if(options.filterHandler) {
-    ref = await options.filterHandler(); 
+    ref = await options.filterHandler(isFirstLoad);
+    if(isFirstLoad) isFirstLoad = !isFirstLoad;  
   } else {
     ref = db.collection(colName).orderBy(orderField, "desc"); 
   }
