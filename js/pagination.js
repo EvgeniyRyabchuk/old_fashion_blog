@@ -11,18 +11,60 @@ const createPaginator = ({
   loader
 }) => {
 
-  let currentPage = 1;
-  let perPage = parseInt(perPageSelect.value);
-  let totalPages = 1;
+  const params = Object.fromEntries(new URLSearchParams(window.location.search));
+  // TODO: strQName 
+  let currentPage = parseInt(params.page ?? 1); 
+  let perPage = null; 
+  if(params.perPage) {
+    perPage = parseInt(params.perPage); 
+    perPageSelect.value = perPage; 
+  } else {
+    perPage = parseInt(perPageSelect.value);
+  }
+
+
+  let totalPages = 1; 
   let totalCount = 0;
+  let lastDocCache = {};
+  let isFirstLoad = false;
+  
 
+  // made cursor save system to firebase pagination work via cursor base aproach 
+  const restoreLastDocCache = async (colName) => {
+    const raw = localStorage.getItem("lastDocCache");
+    if (!raw) {
+      currentPage = 1;
+      return {}
+    };
+
+    const cache = JSON.parse(raw);
+    const rebuilt = {};
+
+    for (const [page, docId] of Object.entries(cache)) {
+      const snap = await db.collection(colName).doc(docId).get();
+      if (snap.exists) {
+        rebuilt[page] = snap; // snapshot, not just id/ref
+      }
+    }
+    return rebuilt;
+  };
+
+  
   const renderPosts = async () => {
-    container.innerHTML = "";
+    if (!isFirstLoad) {
+      lastDocCache = await restoreLastDocCache("posts");
+      isFirstLoad = true;
+    }
+    container.innerHTML = ""; 
+    queryStrHandler.changePostsCurrentPage(currentPage, perPage);  
+    const { items, totalCount: newTotal, lastDocCache: updatedLastDocCache } = await fetchData(currentPage, perPage, lastDocCache);
     
-    const { items, totalCount: newTotal } = await fetchData(currentPage, perPage);
-    totalCount = newTotal;
-    totalPages = Math.max(1, Math.ceil(totalCount / perPage));
+    // saveLastDocCache(updatedLastDocCache);
 
+    totalCount = newTotal; 
+    totalPages = Math.max(1, Math.ceil(totalCount / perPage));
+    
+  
     items.forEach(item => {
       container.appendChild(renderItem(item));
     });
@@ -37,7 +79,7 @@ const createPaginator = ({
     loadMoreBtn.style.display = currentPage < totalPages ? "inline-block" : "none";
     
     // loader.remove(); 
-    
+   
   };
 
   const loadMore = async () => {

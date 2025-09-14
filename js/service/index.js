@@ -22,14 +22,22 @@ firebase.analytics();
 const auth = firebase.auth(); 
 const db = firebase.firestore(); 
 const storage = firebase.storage();
+// TODO: replace 
 let isFirstLoad = true; 
 
-const fetchDataFirestore = async (colName, page, perPage, options = {}, beforeItemsLoaded, afterItemsLoaded) => {
-  await beforeItemsLoaded();
-  const orderField = options.orderField || "createdAt"; 
-  const lastDocCache = options.lastDocCache || {};
 
-  let filteredQuery = null;
+const fetchDataFirestore = async (
+  colName, 
+  page, 
+  perPage, 
+  lastDocCache = {}, 
+  options = {}, 
+  beforeItemsLoaded, 
+  afterItemsLoaded) => { 
+  await beforeItemsLoaded();
+  const orderField = options.orderField || "createdAt";  
+  
+  // ref for filtered query 
   let ref = null; 
 
   if(options.filterHandler) {
@@ -38,33 +46,40 @@ const fetchDataFirestore = async (colName, page, perPage, options = {}, beforeIt
   } else {
     ref = db.collection(colName).orderBy(orderField, "desc"); 
   }
- 
-  ref = ref.limit(perPage);
 
+  // ref for get total page for pagination 
+  let paginatedRef = ref.limit(perPage);
+  
   // if not the first page, continue after last doc of previous page
   if (page > 1 && lastDocCache[page - 1]) {
-    ref = db.collection(colName)
+    paginatedRef = paginatedRef
       .startAfter(lastDocCache[page - 1]) 
-      .limit(perPage);
   }
 
-  const snap = await ref.get();
+  const snap = await paginatedRef.get(); 
   const posts = snap.docs.map(d => ({
     id: d.id,
     ...d.data()
   }));
   
-  await afterItemsLoaded(posts); 
-
   // save cursor
   if (snap.docs.length > 0) {
-    lastDocCache[page] = snap.docs[snap.docs.length - 1];
+    const lastDoc = snap.docs[snap.docs.length - 1];
+    lastDocCache[page] = lastDoc; // keep in memory 
+    // persist only the ID
+    const cacheToSave = JSON.parse(localStorage.getItem("lastDocCache") || "{}");
+    cacheToSave[page] = lastDoc.id;
+    localStorage.setItem("lastDocCache", JSON.stringify(cacheToSave));
   }
 
+  await afterItemsLoaded(posts); 
+  
   //TODO: why 
   // ⚠️ expensive: counts all docs (better maintain separately!)
-  // const totalCountSnap = await db.collection(colName).get(); 
-  const totalCount = snap.size; 
+  const totalCountSnap = await ref.get();
+  const totalCount = totalCountSnap.size;
+  // const totalCountSnap = await db.collection(colName).get();  
+  // const totalCount = snap.size; 
   
   return {
     items: posts,

@@ -168,8 +168,8 @@ const beforePostsLoaded = async () => {
   // loadFromPostQueryStr(); 
 // callback after posts loaded for attach addition info to posts 
 const afterPostsLoaded = async (posts) => {
-  await loadCategoriesToCollection(posts);
-  await loadTagsToCollection(posts);  
+  await loadCategoriesToCollection(posts); 
+  await loadTagsToCollection(posts);
   allPosts = posts; 
   postLoader.style.display = "none"; 
   document.querySelector(".pagination-wrapper").classList.add("is-open"); 
@@ -185,10 +185,10 @@ const postsPaginator = createPaginator({
   pageInfo: document.getElementById("pageInfo"),
   pageNumbersContainer: document.getElementById("pageNumbers"),
   loadMoreBtn: document.getElementById("loadMoreBtn"), 
-  fetchData: async (page, perPage) => {
-    return await fetchDataFirestore("posts", page, perPage, {
+  fetchData: async (page, perPage, lastDocCache) => {
+    return await fetchDataFirestore("posts", page, perPage, lastDocCache, { 
       orderField: "createdAt", // must exist in your docs 
-      filterHandler: currentPaginationEnv.filterHandler 
+      filterHandler: currentPaginationEnv.filterHandler,
     }, beforePostsLoaded, afterPostsLoaded); 
   }, 
   renderItem: post => currentPaginationEnv.render(post),
@@ -289,6 +289,7 @@ async function readPost(postId) {
     id: postSnap.id,
     ...postSnap.data()
   }
+
   await loadCategoriesToCollection([post]);
   await loadTagsToCollection([post]);
 

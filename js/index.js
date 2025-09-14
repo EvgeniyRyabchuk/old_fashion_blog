@@ -134,7 +134,9 @@ const QueryStringHandler = () => {
     categories: "categories",
     tags: "tags",
     startDate: "startDate",
-    endDate: "endDate"
+    endDate: "endDate",
+    page: "page",
+    perPage: "perPage"
   });
   
   const defaultStartDate = "1800-09-04";
@@ -177,13 +179,21 @@ const QueryStringHandler = () => {
     addOrDeleteParams([{name: strQName.sort, value: sortValue}]); 
   }
   
+  const changePostsCurrentPage = (currentPage, perPage) => { 
+    addOrDeleteParams([
+      {name: strQName.page, value: currentPage},
+      {name: strQName.perPage, value: perPage} 
+    ]); 
+  }
+
   return {
     strQName, 
     defaultStartDate,
     defaultEndDate, 
     changePostsSearch,
     changePostsFilter,
-    changePostsSort
+    changePostsSort,
+    changePostsCurrentPage
   }
 }
 
