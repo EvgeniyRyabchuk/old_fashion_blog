@@ -27,6 +27,7 @@ const postFilterQueryCreator = async (isFirstLoad) => {
   if (categories.length > 0) { 
     query = query.where("categoryId", "in", categories);
   }
+
   console.log(123); 
   if (tags.length > 0) {  
       const snap = await db.collection("post_tag")
@@ -43,7 +44,6 @@ const postFilterQueryCreator = async (isFirstLoad) => {
   }
 
 
-  
   if (sort === "newest") {
     query = query.orderBy("createdAt", "desc");
   } else if (sort === "oldest") {
@@ -51,5 +51,7 @@ const postFilterQueryCreator = async (isFirstLoad) => {
   } else if (sort === "popular") {
     query = query.orderBy("views", "desc"); 
   }
+
+  
   return query; 
 }

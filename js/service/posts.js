@@ -91,8 +91,9 @@ const renderPostsForGrid = (post) => {
   // { href, imgSrc, imgAlt, title, content } 
   const imgAlt = "Post Image";
     //TODO: fix - adding post id 
-  const href = "/post.html"
-   const article = document.createElement("article");
+  const queryStr = `?id=${post.id}`;
+  const href = `/post.html${queryStr}`; 
+  const article = document.createElement("article");
   article.className = "post-card";
 
   const link = document.createElement("a");
@@ -118,7 +119,7 @@ const renderPostsForGrid = (post) => {
   // short content
   const shortContent = document.createElement("div");
   shortContent.className = "post-short-content";
-  shortContent.textContent = post.content;
+  shortContent.innerHTML = post.content;
 
   // assemble inside link
   link.appendChild(coverDiv);
@@ -159,11 +160,9 @@ const getCurrentEnvForPagination = () => {
 
 const currentPaginationEnv = getCurrentEnvForPagination(); 
 
-
 const beforePostsLoaded = async () => {  
   postLoader.style.display = "flex"; 
   document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
-
 }; 
   // loadFromPostQueryStr(); 
 // callback after posts loaded for attach addition info to posts 
@@ -175,25 +174,29 @@ const afterPostsLoaded = async (posts) => {
   document.querySelector(".pagination-wrapper").classList.add("is-open"); 
 }
 
+let postsPaginator = null;
 
+if (currentPaginationEnv) {
+  postsPaginator = createPaginator({
+    colName: "posts",
+    container: currentPaginationEnv.container,
+    perPageSelect: document.getElementById("perPageSelect"),
+    prevBtn: document.getElementById("prevPage"),
+    nextBtn: document.getElementById("nextPage"),
+    pageInfo: document.getElementById("pageInfo"),
+    pageNumbersContainer: document.getElementById("pageNumbers"),
+    loadMoreBtn: document.getElementById("loadMoreBtn"),
+    fetchData: async (page, perPage, lastDocCache) => {
+      return await fetchDataFirestore("posts", page, perPage, lastDocCache, {
+        orderField: "createdAt", // must exist in your docs 
+        filterHandler: currentPaginationEnv.filterHandler,
+      }, beforePostsLoaded, afterPostsLoaded);
+    },
+    renderItem: post => currentPaginationEnv.render(post),
+    loader: postLoader
+  });
+}
 
-const postsPaginator = createPaginator({
-  container: currentPaginationEnv.container,  
-  perPageSelect: document.getElementById("perPageSelect"),
-  prevBtn: document.getElementById("prevPage"), 
-  nextBtn: document.getElementById("nextPage"), 
-  pageInfo: document.getElementById("pageInfo"),
-  pageNumbersContainer: document.getElementById("pageNumbers"),
-  loadMoreBtn: document.getElementById("loadMoreBtn"), 
-  fetchData: async (page, perPage, lastDocCache) => {
-    return await fetchDataFirestore("posts", page, perPage, lastDocCache, { 
-      orderField: "createdAt", // must exist in your docs 
-      filterHandler: currentPaginationEnv.filterHandler,
-    }, beforePostsLoaded, afterPostsLoaded); 
-  }, 
-  renderItem: post => currentPaginationEnv.render(post),
-  loader: postLoader
-});
 
 const clearUpTheForm = () => {
   document.getElementById("title").value = ""; 
@@ -203,6 +206,11 @@ const clearUpTheForm = () => {
   tagInput.value = "";
   tags = [];
   renderTags();
+}
+
+function buildSearchIndex(title, tags) {
+  const text = title + " " + tags.join(" ");
+  return text.toLowerCase(); // normalize for easier matching
 }
 
 const createOrUpdatePost = async (postId = null) => {
@@ -243,6 +251,7 @@ const createOrUpdatePost = async (postId = null) => {
         coverUrl: coverUrl,
         date_range_start: startDate.getFullYear(), 
         date_range_end: endDate.getFullYear(), 
+        searchIndex: buildSearchIndex(title, tags),  
         categoryId: selectedCategoryId,
         userId: auth.currentUser.uid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -255,6 +264,7 @@ const createOrUpdatePost = async (postId = null) => {
         title: title,
         content: content, 
         coverUrl: coverUrl ?? post.coverUrl,  
+        searchIndex: buildSearchIndex(title, tags), 
         date_range_start: startDate.getFullYear(), 
         date_range_end: endDate.getFullYear(), 
         categoryId: selectedCategoryId,  

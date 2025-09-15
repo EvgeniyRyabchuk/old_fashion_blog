@@ -39,14 +39,31 @@ const fetchDataFirestore = async (
   
   // ref for filtered query 
   let ref = null; 
-
+    
   if(options.filterHandler) {
     ref = await options.filterHandler(isFirstLoad);
+    
     if(isFirstLoad) isFirstLoad = !isFirstLoad;  
   } else {
     ref = db.collection(colName).orderBy(orderField, "desc"); 
   }
 
+  const params = Object.fromEntries(new URLSearchParams(window.location.search));
+  const search = params.search;
+
+  if (search) {
+    const filterSortSection = document.getElementById("filterSortSection");
+    filterSortSection.style.display = "none"; 
+    document.getElementById("main-content-title").innerText = `Search Posts by "${search}"`; 
+    
+    // search only works if you order by the field you want to search on
+     ref = db.collection(colName)
+      .orderBy("searchIndex") 
+      .orderBy("createdAt", "desc")
+      .startAt(search.toLowerCase()) 
+      .endAt(search.toLowerCase() + "\uf8ff")
+  } 
+  
   // ref for get total page for pagination 
   let paginatedRef = ref.limit(perPage);
   
@@ -55,13 +72,14 @@ const fetchDataFirestore = async (
     paginatedRef = paginatedRef
       .startAfter(lastDocCache[page - 1]) 
   }
-
+  
   const snap = await paginatedRef.get(); 
-  const posts = snap.docs.map(d => ({
+  let posts = snap.docs.map(d => ({
     id: d.id,
     ...d.data()
   }));
-  
+
+
   // save cursor
   if (snap.docs.length > 0) {
     const lastDoc = snap.docs[snap.docs.length - 1];
@@ -71,7 +89,7 @@ const fetchDataFirestore = async (
     cacheToSave[page] = lastDoc.id;
     localStorage.setItem("lastDocCache", JSON.stringify(cacheToSave));
   }
-
+  
   await afterItemsLoaded(posts); 
   
   //TODO: why 
@@ -80,6 +98,7 @@ const fetchDataFirestore = async (
   const totalCount = totalCountSnap.size;
   // const totalCountSnap = await db.collection(colName).get();  
   // const totalCount = snap.size; 
+  console.log(`total ${totalCount}`); 
   
   return {
     items: posts,

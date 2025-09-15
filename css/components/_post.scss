@@ -1,4 +1,30 @@
 
+#postContentSection {
+  position: relative;
+  
+  .post-container {
+    height: 600px; 
+  }
+  
+  .comment_container {
+    display: none;
+  }
+  
+  &.is-open {
+    .post-container {
+      height: auto;
+    }
+
+    .comment_container {
+      display: block;
+    }
+
+    #loadPostLoader {
+      display: none; 
+    }
+  }
+}
+
 .post-container {
   // max-width: 900px;
   margin: 0 auto;

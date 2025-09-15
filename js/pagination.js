@@ -1,4 +1,5 @@
 const createPaginator = ({
+  colName,
   container,
   perPageSelect,
   prevBtn,
@@ -52,9 +53,10 @@ const createPaginator = ({
   
   const renderPosts = async () => {
     if (!isFirstLoad) {
-      lastDocCache = await restoreLastDocCache("posts");
+      lastDocCache = await restoreLastDocCache(colName); 
       isFirstLoad = true;
     }
+    
     container.innerHTML = ""; 
     queryStrHandler.changePostsCurrentPage(currentPage, perPage);  
     const { items, totalCount: newTotal, lastDocCache: updatedLastDocCache } = await fetchData(currentPage, perPage, lastDocCache);

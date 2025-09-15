@@ -1,25 +1,11 @@
 let commentsForPost = [];
+const listCommentContainer = document.querySelector("#list-comment-container");
+const postContentSection = document.getElementById("postContentSection");
 
-const addCommentToPost = async () => {
-    const text = document.querySelector('#comment-content').value;
-    const additionUserInfo = await getUserAddition();
-    
-    const createdCommentRef = await db.collection("comments").add({
-        content: text,
-        userId: additionUserInfo.userId,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    const createdCommenSnap = await createdCommentRef.get();
 
-    await addCommentToHtml(
-        document.querySelector("#list-comment-container"), 
-        createdCommenSnap.data(), 
-        additionUserInfo
-    );
-}
-
-const addCommentToHtml = (container, comment, additionUserInfo) => { 
+const addCommentToHtml = (comment, additionUserInfo) => { 
     const li = document.createElement("li");
+    li.dataset.commentId = comment.id; 
     // Create user card
     const userCard = document.createElement("div");
     const removeBtn = document.createElement("button");
@@ -57,7 +43,7 @@ const addCommentToHtml = (container, comment, additionUserInfo) => {
     const commentRow = document.createElement("div");
     commentRow.className = "comment-row";
     commentRow.textContent = comment.content || "";
-
+    
     // Create separator
     const hr = document.createElement("hr");
 
@@ -67,7 +53,25 @@ const addCommentToHtml = (container, comment, additionUserInfo) => {
     li.appendChild(commentRow); 
     li.appendChild(removeBtn); 
     li.appendChild(hr);
-    container.appendChild(li);
+    listCommentContainer.appendChild(li);
+}
+
+const addCommentToPost = async (postId) => {
+    const text = document.querySelector('#comment-content').value;
+    const additionUserInfo = await getUserAddition();
+    
+    const createdCommentRef = await db.collection("comments").add({
+        content: text,
+        userId: additionUserInfo.userId,
+        postId: postId, 
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    const createdCommenSnap = await createdCommentRef.get();
+    
+    addCommentToHtml(
+        {id: createdCommenSnap.id, ...createdCommenSnap.data()}, 
+        additionUserInfo
+    );
 }
 
 const getAllComments = async () => {
@@ -79,13 +83,38 @@ const getAllComments = async () => {
 
     const user = auth.currentUser.uid;
     const additionUserInfo = await getUserAddition();
+    
 
-    const container = document.querySelector("#list-comment-container");
     // container.innerHTML = ""; // Clear previous comments 
     for (let comment of comments) {
-        addCommentToHtml(container, comment, additionUserInfo);
+        addCommentToHtml(comment, additionUserInfo); 
     }
 }
+
+const getCommentsByPostId = async (postId) => {
+    const commentsSnap = await db
+        .collection("comments")
+        .where("postId", "==", postId)
+        .orderBy("createdAt", "desc")
+        .get();
+
+    const comments = commentsSnap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+    
+    const user = auth.currentUser?.uid; 
+    const additionUserInfo = await getUserAddition();
+
+   
+    listCommentContainer.innerHTML = ""; // clear old comments
+    
+    for (let comment of comments) {
+        addCommentToHtml(comment, additionUserInfo);
+    }
+    postContentSection.classList.toggle("is-open")
+};
+
 
 const deleteComment = async (commentId) => {
     // check if comment is user owning  
@@ -106,7 +135,9 @@ const deleteComment = async (commentId) => {
 }
 
 const onSendCommentClick = (e) => {
-    addCommentToPost();
+    addCommentToPost(postId); 
 }
+
+
 
 // getAllComments();

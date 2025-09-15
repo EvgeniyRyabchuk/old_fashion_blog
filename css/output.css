@@ -307,6 +307,7 @@ select, button {
   position: sticky;
   top: 0;
   z-index: 3;
+  background-color: white;
 }
 .table-wrapper table thead th:last-child {
   position: sticky;
@@ -1083,6 +1084,25 @@ scss/
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+}
+
+#postContentSection {
+  position: relative;
+}
+#postContentSection .post-container {
+  height: 600px;
+}
+#postContentSection .comment_container {
+  display: none;
+}
+#postContentSection.is-open .post-container {
+  height: auto;
+}
+#postContentSection.is-open .comment_container {
+  display: block;
+}
+#postContentSection.is-open #loadPostLoader {
+  display: none;
 }
 
 .post-container {

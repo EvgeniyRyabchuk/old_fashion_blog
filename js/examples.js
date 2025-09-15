@@ -99,3 +99,96 @@ const asideProfileBtn = CreateBlockSwitcher([
 
 
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+async function concatTagsToPosts(term, posts) {
+  const postsRef = db.collection("posts");
+  const tagsRef = db.collection("tags");
+  const postTagRef = db.collection("post_tag");
+  const tagsSnap = await tagsRef
+    .orderBy("name")
+    .startAt(term)
+    .endAt(term + "\uf8ff")
+    .get();
+
+  const tagIds = tagsSnap.docs.map(doc => doc.id);
+
+  if (tagIds.length > 0) {
+    // 3. Find posts related to those tags
+    const postTagSnap = await postTagRef
+      .where("tagId", "in", tagIds.slice(0, 10)) // Firestore allows max 10 values in "in"
+      .get();
+
+    const postIds = [...new Set(postTagSnap.docs.map(doc => doc.data().postId))];
+
+    if (postIds.length > 0) {
+      // 4. Fetch posts by IDs
+      const postSnaps = await Promise.all(
+        postIds.map(id => postsRef.doc(id).get())
+      );
+
+      const postsByTags = postSnaps
+        // .filter(snap => snap.exists)
+        .map(snap => ({
+          id: snap.id,
+          ...snap.data()
+        }));
+      // 5. Merge results (title + tag matches)
+      posts = [...posts, ...postsByTags];
+
+      console.log(`postsByTags = ${postsByTags.map(pbt => pbt.title).join(", ")}`);
+    }
+  }
+*/
+
+
+/*
+  
+  // Remove duplicates
+  const unique = {};
+  posts.forEach(p => (unique[p.id] = p));
+  const res = Object.values(unique).slice(0, 10); // enforce limit
+  console.log(res)
+  return res;
+}
+
+
+
+/*
+async function fetchPostsBySearch(term) {
+  
+  if(term === "" || !term) {
+    console.log("No term → return all posts or skip");
+    return []; 
+  }
+  const postsRef = db.collection("posts");
+  // 1. Search posts by title
+  const postsByTitleSnap = await postsRef
+    .orderBy("title")
+    .startAt(term) 
+    .endAt(term + "\uf8ff")
+    .limit(10)
+    .get();
+
+  let posts = postsByTitleSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+  console.log(`posts by title = ${posts.map(p => p.title).join(", ")}`);
+
+  // 2. Search tags by name
+  const res = await concatTagsToPosts(term, posts); 
+  renderPostsForSearch(res);
+  return res;
+}
+  */

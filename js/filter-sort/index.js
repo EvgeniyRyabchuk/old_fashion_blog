@@ -167,7 +167,7 @@ const loadFromPostQueryStr = () => {
   //   return Object.fromEntries(new URLSearchParams(window.location.search));
   // };
   const params = Object.fromEntries(new URLSearchParams(window.location.search));
-
+  
   // 1. Search input
   const searchInput = document.querySelector('searchInput'); 
   if (params.search && searchInput) searchInput.value = params.search;

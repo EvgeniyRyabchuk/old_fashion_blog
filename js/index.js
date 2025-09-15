@@ -67,9 +67,9 @@ searchInput.addEventListener("click", () => {
 })
 
 // Optional: close search when clicking outside
-document.addEventListener("mousedown", (e) => {
+document.addEventListener("click", (e) => {
   if (!searchControll.contains(e.target) && headerSearch.classList.contains("active")) {
-    headerSearch.classList.remove("active");
+    headerSearch.classList.remove("active"); 
     // searchContent.style.display = "none"; 
     if(window.innerWidth <= breakpoints.lg)
         document.body.classList.toggle("no-scroll");
@@ -80,7 +80,7 @@ document.addEventListener("mousedown", (e) => {
 
 
 
-
+///////////////////// dropdown
 document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
   dropdown.addEventListener("click", e => {
     // only preventDefault if the first child <a> is clicked
@@ -95,8 +95,7 @@ document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
 
 
 
-
-
+////////////////////////  createDebounce
 const createDebounce = (delay) => {
   let debounceTimeOutID = null;
   const set = (content, callback) => {
@@ -112,21 +111,7 @@ const createDebounce = (delay) => {
     set
   }; 
 }
-
-/*
-
-// safer join
-{name: strQName.categories, value: Array.isArray(cIds) ? cIds.join(",") : ""},
-
-// helper for default date
-const isDefaultDate = (name, value) => 
-  (name === strQName.startDate && value === defaultStartDate) || 
-  (name === strQName.endDate && value === defaultEndDate);
-
-
-*/
-
-
+////////////////////////  QueryStringHandler
 const QueryStringHandler = () => {
   const strQName = Object.freeze({
     search: "search",
@@ -160,6 +145,10 @@ const QueryStringHandler = () => {
     window.history.replaceState({}, "", newUrl);
   }
 
+
+  //TODO: check and get if exist 
+
+
   const changePostsSearch = async (text) => {
     console.log(`sended - ${text}`); 
     addOrDeleteParams([{name: strQName.search, value: text}]); 
@@ -173,7 +162,6 @@ const QueryStringHandler = () => {
         {name: strQName.endDate, value: endDate}
       ]); 
   }
-  
   
   const changePostsSort = (sortValue) => { 
     addOrDeleteParams([{name: strQName.sort, value: sortValue}]); 
@@ -201,6 +189,7 @@ const debound = createDebounce(500);
 const searchPostLoader = document.getElementById("searchPostLoader");
 const queryStrHandler = QueryStringHandler();
 
+/////////////////////////// renderPostsForSearch 
 function renderPostsForSearch(posts) { 
   const container = document.getElementById("searchPostList");
   container.innerHTML = ""; // clear previous results
@@ -225,79 +214,51 @@ function renderPostsForSearch(posts) {
     container.appendChild(li);
   });
 }
+/////////////////////////// fetchPostsBySearch
 
 async function fetchPostsBySearch(term) {
-  
   if(term === "" || !term) {
     console.log("No term → return all posts or skip");
     return []; 
   }
-
   const postsRef = db.collection("posts");
-  const tagsRef = db.collection("tags");
-  const postTagRef = db.collection("post_tag");
-  
   // 1. Search posts by title
   const postsByTitleSnap = await postsRef
-    .orderBy("title")
-    .startAt(term)
-    .endAt(term + "\uf8ff")
+    .orderBy("searchIndex") 
+    .orderBy("createdAt", "desc")
+    .startAt(term.toLowerCase()) 
+    .endAt(term.toLowerCase() + "\uf8ff")
     .limit(10)
     .get();
 
-  let posts = postsByTitleSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-  // 2. Search tags by name
-  const tagsSnap = await tagsRef
-    .orderBy("name")
-    .startAt(term)
-    .endAt(term + "\uf8ff")
-    .get();
-
-  const tagIds = tagsSnap.docs.map(doc => doc.id);
-
-  if (tagIds.length > 0) {
-    // 3. Find posts related to those tags
-    const postTagSnap = await postTagRef
-      .where("tagId", "in", tagIds.slice(0, 10)) // Firestore allows max 10 values in "in"
-      .get();
-
-    const postIds = [...new Set(postTagSnap.docs.map(doc => doc.data().postId))];
-
-    if (postIds.length > 0) {
-      // 4. Fetch posts by IDs
-      const postSnaps = await Promise.all(
-        postIds.map(id => postsRef.doc(id).get())
-      );
-
-      const postsByTags = postSnaps
-        // .filter(snap => snap.exists)
-        .map(snap => ({ id: snap.id, ...snap.data() }));
-      // 5. Merge results (title + tag matches)
-      posts = [...posts, ...postsByTags];
-    }
-  }
-
-  // Remove duplicates
-  const unique = {};
-  posts.forEach(p => (unique[p.id] = p));
-  const res = Object.values(unique).slice(0, 10); // enforce limit
-  console.log(res);
-  renderPostsForSearch(res);
-  return res;
+  const posts = postsByTitleSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  renderPostsForSearch(posts);
+  return posts;
 }
 
+const searchSeeMoreLink = searchContent.querySelector("#searchSeeMore"); 
+const showSeeMore = (text, length) => {
+  const seeMoreTriggerCount = 3;
+  const searchUrl = `/?${queryStrHandler.strQName.search}=${text}`;
+  if (length > seeMoreTriggerCount) {
+    searchSeeMoreLink.href = searchUrl;
+    searchSeeMoreLink.classList.remove("d-none");
+  }
+}
+
+let text = null;
 // search input event handler 
-searchInput.addEventListener("input", (e) => {
-  const text = e.target.value;
+searchInput.addEventListener("input", (e) => { 
+  text = e.target.value; 
   searchPostList.innerHTML = ""; 
   searchContent.querySelector(".no-data-li").classList.add("d-none"); 
   searchContent.classList.remove("is-open"); 
+  searchSeeMoreLink.classList.add("d-none"); 
   
   if(!text) {
       return;
   }
-
+  
   debound.set(text, async (text) => {
       queryStrHandler.changePostsSearch(text); 
       
@@ -309,6 +270,7 @@ searchInput.addEventListener("input", (e) => {
 
       if (items.length > 0) {
         searchContent.querySelector(".no-data-li").classList.add("d-none");
+        showSeeMore(text, items.length);
       } else {
         searchContent.querySelector(".no-data-li").classList.remove("d-none");
       }
@@ -320,15 +282,16 @@ searchInput.addEventListener("input", (e) => {
 });
 
 
+document.getElementById("searchBtn").addEventListener("click", (e) => {
+   const searchUrl = `/?${queryStrHandler.strQName.search}=${text}`; 
+   window.location.href = searchUrl; 
+})
 
 
 
-
-
-//TODO: search appearance 
-//TODO: query request in particular for post view page, filter, search
 //TODO: post cover Image only for grid, but for post view it's need wallpaper 
+
 //TODO: index page redirect to posts list page 
 //TODO: loader index prioriry 
-
-
+//TODO: rederect to login page if not auth and redirect to index.html if logged in and show login btn's if not auth 
+//TODO: prifle: add avatar/change name in settin 
