@@ -104,7 +104,8 @@ const reset = async () => {
     dateEnd.value = queryStrHandler.defaultEndDate;
     selectedList.innerHTML = "";
 
-    await postsPaginator.reload();
+    // await postsPaginator.reload();
+    await postsPaginator.setPage(1); 
 }
 const resetAllButDateRange = () => {
       const allCategoriesCheckboxes = document.querySelectorAll(
@@ -132,7 +133,7 @@ const getDateRangeWitToORFrom = (input) => input.type == "date-range-start" ? `f
 
 const addEventListenerToInput = (input) => {
     input.addEventListener("change", () => {
-        const type = input.dataset.type;
+        const type = input.dataset.type; 
         const value = input.value;
 
         if (input.type === "checkbox") {

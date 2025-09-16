@@ -4,15 +4,25 @@
   
   .post-container {
     height: 600px; 
+
+    > * {
+      visibility: hidden;
+    }
   }
   
   .comment_container {
     display: none;
   }
-  
+  .post-cover {
+    display: none;
+  }
+
   &.is-open {
     .post-container {
       height: auto;
+      > * {
+        visibility: visible;
+      }
     }
 
     .comment_container {
@@ -21,6 +31,9 @@
 
     #loadPostLoader {
       display: none; 
+    }
+    .post-cover {
+      display: block;
     }
   }
 }
@@ -207,7 +220,6 @@
     max-width: 400px;
     margin-top: 6px;
     margin-bottom: 15px;
-
     &:focus {
       border-color: #4a6cf7;
       outline: none;
@@ -217,11 +229,15 @@
 
   /* Category select styled like post view pill */
   #category-select {
+
+      padding: 0.5rem 0.8rem;  /* more breathing room inside */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  line-height: 1.4;        /* increases vertical spacing */
+
     background: #e6f0ff;
     color: #1a4fff;
     font-weight: 600;
-    border-radius: 20px;
-    padding: 6px 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     cursor: pointer;
@@ -309,14 +325,36 @@ $placeholder-size: 300px;
 $placeholder-border-radius: 8px;
 
 
-#preview {
+.preview {
   width: $placeholder-size;
-  aspect-ratio: 1 / 1;
   border: 2px dashed $placeholder-border-color;
   display: none;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+#coverPreview {
+  aspect-ratio: 1 / 1;
+}
+
+#postWideImgPlaceholder, #widePreview {
+  width: 500px !important;
+  aspect-ratio: 1340 / 300;
+}
+
+#postCoverImgWrapper, #postWideImgWrapper {
+  padding: 30px;
+}
+
+#postImgPlaceholder.drag-over,
+#postWideImgPlaceholder.drag-over {
+  border: 2px dashed #007bff;
+  background-color: rgba(0, 123, 255, 0.05);
+  span {
+  color: #007bff;
+  }
+
 }
 
 

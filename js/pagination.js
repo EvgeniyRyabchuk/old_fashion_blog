@@ -12,7 +12,7 @@ const createPaginator = ({
   loader
 }) => {
 
-  const params = Object.fromEntries(new URLSearchParams(window.location.search));
+  let params = Object.fromEntries(new URLSearchParams(window.location.search));
   // TODO: strQName 
   let currentPage = parseInt(params.page ?? 1); 
   let perPage = null; 
@@ -23,7 +23,7 @@ const createPaginator = ({
     perPage = parseInt(perPageSelect.value);
   }
 
-
+  
   let totalPages = 1; 
   let totalCount = 0;
   let lastDocCache = {};
@@ -50,6 +50,13 @@ const createPaginator = ({
     return rebuilt;
   };
 
+  const stripIgnored = (obj, ignoreKeys = ["page", "perPage"]) => {
+    const copy = { ...obj };
+    ignoreKeys.forEach(k => delete copy[k]);
+    return copy;
+  };
+
+  
   
   const renderPosts = async () => {
     if (!isFirstLoad) {
@@ -57,6 +64,18 @@ const createPaginator = ({
       isFirstLoad = true;
     }
     
+    const currentFiltersFromParams = Object.fromEntries(new URLSearchParams(window.location.search));
+    const prevFilters = stripIgnored(params); 
+    const nowFilters = stripIgnored(currentFiltersFromParams);
+    
+    const isFiltersChanged = JSON.stringify(prevFilters) !== JSON.stringify(nowFilters);
+
+    if (isFiltersChanged) {
+      perPage = parseInt(perPageSelect.value); 
+      currentPage = 1; 
+      params = currentFiltersFromParams; // update snapshot
+    }
+
     container.innerHTML = ""; 
     queryStrHandler.changePostsCurrentPage(currentPage, perPage);  
     const { items, totalCount: newTotal, lastDocCache: updatedLastDocCache } = await fetchData(currentPage, perPage, lastDocCache);
@@ -148,7 +167,7 @@ const createPaginator = ({
   // Events
   perPageSelect.addEventListener("change", async () => {
     perPage = parseInt(perPageSelect.value);
-    currentPage = 1;
+    currentPage = 1; 
     await renderPosts();
   });
 

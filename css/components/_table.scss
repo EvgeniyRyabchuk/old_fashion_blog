@@ -59,8 +59,8 @@
         padding: 10px 15px;
         border-bottom: 1px solid #eee;
         vertical-align: top;
-        white-space: nowrap;
-
+        // white-space: nowrap;
+        // text-wrap: auto;
         .td-content {
           max-width: 400px; 
           max-height: 200px;

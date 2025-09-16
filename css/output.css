@@ -329,7 +329,6 @@ select, button {
   padding: 10px 15px;
   border-bottom: 1px solid #eee;
   vertical-align: top;
-  white-space: nowrap;
 }
 .table-wrapper table tbody td .td-content {
   max-width: 400px;
@@ -1092,17 +1091,29 @@ scss/
 #postContentSection .post-container {
   height: 600px;
 }
+#postContentSection .post-container > * {
+  visibility: hidden;
+}
 #postContentSection .comment_container {
+  display: none;
+}
+#postContentSection .post-cover {
   display: none;
 }
 #postContentSection.is-open .post-container {
   height: auto;
+}
+#postContentSection.is-open .post-container > * {
+  visibility: visible;
 }
 #postContentSection.is-open .comment_container {
   display: block;
 }
 #postContentSection.is-open #loadPostLoader {
   display: none;
+}
+#postContentSection.is-open .post-cover {
+  display: block;
 }
 
 .post-container {
@@ -1270,11 +1281,13 @@ scss/
   box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
 }
 .upload_container #category-select {
+  padding: 0.5rem 0.8rem; /* more breathing room inside */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  line-height: 1.4; /* increases vertical spacing */
   background: #e6f0ff;
   color: #1a4fff;
   font-weight: 600;
-  border-radius: 20px;
-  padding: 6px 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
@@ -1338,14 +1351,36 @@ scss/
   color: #e60000;
 }
 
-#preview {
+.preview {
   width: 300px;
-  aspect-ratio: 1/1;
   border: 2px dashed #ccc;
   display: none;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+#coverPreview {
+  aspect-ratio: 1/1;
+}
+
+#postWideImgPlaceholder, #widePreview {
+  width: 500px !important;
+  aspect-ratio: 1340/300;
+}
+
+#postCoverImgWrapper, #postWideImgWrapper {
+  padding: 30px;
+}
+
+#postImgPlaceholder.drag-over,
+#postWideImgPlaceholder.drag-over {
+  border: 2px dashed #007bff;
+  background-color: rgba(0, 123, 255, 0.05);
+}
+#postImgPlaceholder.drag-over span,
+#postWideImgPlaceholder.drag-over span {
+  color: #007bff;
 }
 
 .image-placeholder {

@@ -34,7 +34,7 @@ const fetchDataFirestore = async (
   options = {}, 
   beforeItemsLoaded, 
   afterItemsLoaded) => { 
-  await beforeItemsLoaded();
+  await beforeItemsLoaded(); 
   const orderField = options.orderField || "createdAt";  
   
   // ref for filtered query 
@@ -50,7 +50,7 @@ const fetchDataFirestore = async (
 
   const params = Object.fromEntries(new URLSearchParams(window.location.search));
   const search = params.search;
-
+  
   if (search) {
     const filterSortSection = document.getElementById("filterSortSection");
     filterSortSection.style.display = "none"; 

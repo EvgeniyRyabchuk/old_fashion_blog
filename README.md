@@ -19,7 +19,7 @@
 5. Paggination +++++++++++++++
 6. Loadeer +++++++++++++++
 7. Filter/Sort +++++++++++++++++ 
-8. Adaptive design
+8. Adaptive design +++++++++++++++++++
 9. Validation 
 10. Tailwind/Bootstrap 
 11. Notification 
@@ -47,10 +47,12 @@ posts:
     categoryId
     content
     coverUrl
+    wideImgUrl
     createdAt
     date_range
     title
     userId
+    searchIndex 
 post_tag: 
     postId
     tagId

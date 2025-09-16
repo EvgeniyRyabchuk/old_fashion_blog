@@ -145,10 +145,8 @@ const QueryStringHandler = () => {
     window.history.replaceState({}, "", newUrl);
   }
 
-
   //TODO: check and get if exist 
-
-
+  
   const changePostsSearch = async (text) => {
     console.log(`sended - ${text}`); 
     addOrDeleteParams([{name: strQName.search, value: text}]); 
@@ -289,9 +287,7 @@ document.getElementById("searchBtn").addEventListener("click", (e) => {
 
 
 
-//TODO: post cover Image only for grid, but for post view it's need wallpaper 
-
 //TODO: index page redirect to posts list page 
 //TODO: loader index prioriry 
 //TODO: rederect to login page if not auth and redirect to index.html if logged in and show login btn's if not auth 
-//TODO: prifle: add avatar/change name in settin 
+//TODO: prifle: add avatar/change name in setting 

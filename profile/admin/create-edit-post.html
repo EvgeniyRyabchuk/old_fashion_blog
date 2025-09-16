@@ -365,21 +365,35 @@
                             </div>
 
                         </div>
-                        <div class="d-flex-h-right-v-center w-100" style="padding: 30px;">
-                            <input type="file" id="quillImageInput" style="display:none">
-                            <div id="preview">
-
+                           <input type="file" id="quillImageInput" style="display:none">
+                           <!-- Cover Img -->
+                        <div id="postCoverImgWrapper" class="d-flex-h-right-v-center w-100">
+                            <div class="preview" id="coverPreview"> 
                                 <button id="deletePostCoverImgBtn" class="btn-danger">X</button>
-                            </div>
+                            </div> 
                             <div id="postImgPlaceholder" class="image-placeholder" onclick="">
                                 <input type="file" id="coverImg" accept="image/*" class="hidden-input" />
-                                <div class="placeholder-content">
-                                    <span>Click to add image</span>
+                                <div class="placeholder-content"> 
+                                    <span>Click to add Cover image</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- wide --> 
+                        <div id="postWideImgWrapper" class="d-flex-h-right-v-center w-100">
+                            <div class="preview" id="widePreview"> 
+                                <button id="deletePostWidePreviewBtn" class="btn-danger">X</button>
+                            </div>
+                            <div id="postWideImgPlaceholder" class="image-placeholder" onclick="">
+                                <input type="file" id="wideImg" accept="image/*" class="hidden-input" />
+                                <div class="placeholder-content"> 
+                                    <span>Click to add image Wide Image</span>
                                 </div>
                             </div>
 
 
                         </div>
+
                     </div>
                 
                     

@@ -5,6 +5,8 @@ let allPosts = [];
 let postToUpdateId = null; 
 const postLoader = document.querySelector("#postLoader"); 
 const paginationEnv = null;
+const postContentSection = document.getElementById("postContentSection");
+
 
 const renderPostsForTable = (post) => {
  // создаём строку
@@ -169,7 +171,7 @@ const beforePostsLoaded = async () => {
 const afterPostsLoaded = async (posts) => {
   await loadCategoriesToCollection(posts); 
   await loadTagsToCollection(posts);
-  allPosts = posts; 
+  allPosts = posts;  
   postLoader.style.display = "none"; 
   document.querySelector(".pagination-wrapper").classList.add("is-open"); 
 }
@@ -201,8 +203,11 @@ if (currentPaginationEnv) {
 const clearUpTheForm = () => {
   document.getElementById("title").value = ""; 
   quill.setText("");
-  coverImg.value = "";
-  document.getElementById("preview").innerHTML = "";
+  // coverImg.input.value = ""; 
+  coverImg.hidePreview(); 
+  wideImg.hidePreview(); 
+
+  // document.getElementById("preview").innerHTML = "";
   tagInput.value = "";
   tags = [];
   renderTags();
@@ -213,16 +218,28 @@ function buildSearchIndex(title, tags) {
   return text.toLowerCase(); // normalize for easier matching
 }
 
+const defaultCoverUrl = "/images/no-image.png"; 
+const defaultWideImgUrl = "/images/default-wide-img.png"; 
+// coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
+
 const createOrUpdatePost = async (postId = null) => {
   const title = document.getElementById("title").value;
   const content = quill.root.innerHTML; 
-  let coverUrl = null;
+  const categorySelect = document.getElementById("category-select"); 
+  
+  let coverUrl, wideImgUrl = null;
   // if post is new and cover img loaded then upload it to cloudinary
-  if(coverImg.files[0]) 
-    coverUrl = await loadToCloudinary(coverImg.files[0]); 
+  if(coverImg.input.files[0]) 
+    coverUrl = await loadToCloudinary(coverImg.input.files[0]); 
   // if post is new and no cover img load default 
   else if (!coverUrl && !postId)  
-     coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
+     coverUrl = defaultCoverUrl;
+
+  if(wideImg.input.files[0]) 
+    wideImgUrl = await loadToCloudinary(wideImg.input.files[0]); 
+  else if (!wideImgUrl && !postId)  
+     wideImgUrl = defaultWideImgUrl;
+
 
   const startDate = new Date(document.getElementById("startYear").value); 
   const endDate = new Date(document.getElementById("endYear").value);
@@ -249,10 +266,11 @@ const createOrUpdatePost = async (postId = null) => {
         title: title,
         content: content, 
         coverUrl: coverUrl,
+        wideImgUrl: wideImgUrl, 
         date_range_start: startDate.getFullYear(), 
         date_range_end: endDate.getFullYear(), 
         searchIndex: buildSearchIndex(title, tags),  
-        categoryId: selectedCategoryId,
+        categoryId: categorySelect.value,
         userId: auth.currentUser.uid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
@@ -263,11 +281,12 @@ const createOrUpdatePost = async (postId = null) => {
       await db.collection("posts").doc(postId).update({ 
         title: title,
         content: content, 
-        coverUrl: coverUrl ?? post.coverUrl,  
+        coverUrl: coverUrl ?? post.coverUrl, 
+        wideImgUrl: wideImgUrl ?? post.wideImgUrl, 
         searchIndex: buildSearchIndex(title, tags), 
         date_range_start: startDate.getFullYear(), 
         date_range_end: endDate.getFullYear(), 
-        categoryId: selectedCategoryId,  
+        categoryId: categorySelect.value,  
         // updateAt: firebase.firestore.FieldValue.serverTimestamp()
       }); 
       const updatedSnap = await db.collection("posts").doc(postId).get();
@@ -304,29 +323,29 @@ async function readPost(postId) {
   await loadTagsToCollection([post]);
 
   // Fill DOM
-  document.getElementById("coverImg").src = post.coverUrl;
+  document.getElementById("coverImg").src = post.wideImgUrl; 
   document.getElementById("postTitle").textContent = post.title;
   document.getElementById("postDate").textContent = post.createdAt.toDate().toLocaleDateString();
   document.getElementById("postDataRange").textContent = `${post.date_range_start}-${post.date_range_end}`;
   document.getElementById("postCategory").textContent = post.category?.name ?? ""; 
-
+  
   // Tags
   const tagsContainer = document.getElementById("postTags");
   tagsContainer.innerHTML = "";
   if (post.tags && post.tags.length > 0) {
     post.tags.forEach(tag => {
       const span = document.createElement("span");
-      span.className = "tag";
+      span.className = "tag"; 
       span.textContent = `#${tag.name}`;
       tagsContainer.appendChild(span);
     });
   }
   // Content (Quill HTML)
   document.getElementById("postBody").innerHTML = post.content;
+  postContentSection.classList.toggle("is-open"); 
 }
 
 const onUpdatePostClick = async (e) => {
-
   const pId = e.target.closest("tr").dataset.postId; 
   const post = allPosts.find(p => p.id === pId); 
   postToUpdateId = pId;
@@ -334,11 +353,13 @@ const onUpdatePostClick = async (e) => {
   document.getElementById("title").value = post.title;
   quill.root.innerHTML = post.content;
 
-  coverImg.value = ""; 
+  // coverImg.input.value = ""; 
+  coverImg.hidePreview(); 
+  coverImg.showPreview(post.coverUrl); 
+  wideImg.hidePreview();  
+  wideImg.showPreview(post.wideImgUrl); 
 
-    // Show preview
-  document.getElementById("preview").innerHTML =`<img src="${post.coverUrl}" width="150">`;
-
+  
   document.getElementById("startYear").value =  post.date_range_start;   
   document.getElementById("endYear").value = post.date_range_end; 
   
@@ -370,7 +391,7 @@ const onResetPostClick = (e) => {
   
   document.getElementById("title").value = '';
   quill.root.innerHTML = '';
-  coverImg.value = ""; 
+  coverImg.input.value = ""; 
 
     // Show preview
   document.getElementById("preview").innerHTML =``;
@@ -385,6 +406,7 @@ const onResetPostClick = (e) => {
   const selectCat = document.getElementById("category-select");
   selectCat.value = ''; 
   
+  // postsPaginator.setPage(1);
 }
 
 

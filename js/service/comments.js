@@ -1,6 +1,5 @@
 let commentsForPost = [];
 const listCommentContainer = document.querySelector("#list-comment-container");
-const postContentSection = document.getElementById("postContentSection");
 
 
 const addCommentToHtml = (comment, additionUserInfo) => { 
@@ -112,7 +111,7 @@ const getCommentsByPostId = async (postId) => {
     for (let comment of comments) {
         addCommentToHtml(comment, additionUserInfo);
     }
-    postContentSection.classList.toggle("is-open")
+    // postContentSection.classList.toggle("is-open")
 };
 
 
