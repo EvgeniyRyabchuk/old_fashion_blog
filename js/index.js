@@ -8,6 +8,16 @@ const breakpoints = {
   xs: 340,
 }
 
+const searchPostLoader = document.getElementById("searchPostLoader");
+
+const headerSearch = document.getElementById("header-search");
+const searchToggle = document.getElementById("searchToggle");
+const searchClose = document.getElementById("searchClose");
+const searchInput = document.getElementById("searchInput");
+const searchControll = document.getElementById("searchControll")
+const searchContent = document.getElementById("searchContent");
+
+
 document.getElementById("profile-btn-wrapper").addEventListener("mouseenter", (e) => {
     document.getElementById("authNavList").classList.toggle("is-open");
  
@@ -44,13 +54,6 @@ document.getElementById("sideMenuWrapper").addEventListener("click", (e) => {
 });
 
 
-const headerSearch = document.getElementById("header-search");
-const searchToggle = document.getElementById("searchToggle");
-const searchClose = document.getElementById("searchClose");
-const searchInput = document.getElementById("searchInput");
-const searchControll = document.getElementById("searchControll")
-const searchContent = document.getElementById("searchContent");
-
 searchToggle.addEventListener("click", () => {
   headerSearch.classList.toggle("active");
   document.body.classList.toggle("no-scroll");
@@ -79,7 +82,6 @@ document.addEventListener("click", (e) => {
 
 
 
-
 ///////////////////// dropdown
 document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
   dropdown.addEventListener("click", e => {
@@ -92,128 +94,11 @@ document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
 });
 
 
-
-
-
-////////////////////////  createDebounce
-const createDebounce = (delay) => {
-  let debounceTimeOutID = null;
-  const set = (content, callback) => {
-    if(debounceTimeOutID) 
-        clearTimeout(debounceTimeOutID);
-    debounceTimeOutID = setTimeout(() => {
-      console.log(`${content} - approved`);
-      callback(content);
-    }, delay); 
-  }
-  return { 
-    debounceTimeOutID,
-    set
-  }; 
-}
-////////////////////////  QueryStringHandler
-const QueryStringHandler = () => {
-  const strQName = Object.freeze({
-    search: "search",
-    sort: "sort", 
-    categories: "categories",
-    tags: "tags",
-    startDate: "startDate",
-    endDate: "endDate",
-    page: "page",
-    perPage: "perPage"
-  });
-  
-  const defaultStartDate = "1800-09-04";
-  const defaultEndDate = "2025-09-04";
-
-  const addOrDeleteParams = (array) => {
-    const params = new URLSearchParams(window.location.search);
-    for (let param of array) {
-      if (param.name === strQName.startDate && param.value === defaultStartDate
-         || param.name === strQName.endDate && param.value === defaultEndDate) {
-         params.delete(param.name); // remove when empty
-      } else { 
-        if (param.value) {
-          params.set(param.name, param.value); // set query
-        } else {
-          params.delete(param.name); // remove when empty
-        }
-      }
-    }
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.replaceState({}, "", newUrl);
-  }
-
-  //TODO: check and get if exist 
-  
-  const changePostsSearch = async (text) => {
-    console.log(`sended - ${text}`); 
-    addOrDeleteParams([{name: strQName.search, value: text}]); 
-  }
-
-  const changePostsFilter = ({ cIds, tIds, startDate, endDate }) => {
-      addOrDeleteParams([
-        {name: strQName.categories, value: cIds.join(",")},
-        {name: strQName.tags, value: tIds.join(",")},
-        {name: strQName.startDate, value: startDate}, 
-        {name: strQName.endDate, value: endDate}
-      ]); 
-  }
-  
-  const changePostsSort = (sortValue) => { 
-    addOrDeleteParams([{name: strQName.sort, value: sortValue}]); 
-  }
-  
-  const changePostsCurrentPage = (currentPage, perPage) => { 
-    addOrDeleteParams([
-      {name: strQName.page, value: currentPage},
-      {name: strQName.perPage, value: perPage} 
-    ]); 
-  }
-
-  return {
-    strQName, 
-    defaultStartDate,
-    defaultEndDate, 
-    changePostsSearch,
-    changePostsFilter,
-    changePostsSort,
-    changePostsCurrentPage
-  }
-}
-
 const debound = createDebounce(500);
-const searchPostLoader = document.getElementById("searchPostLoader");
 const queryStrHandler = QueryStringHandler();
 
-/////////////////////////// renderPostsForSearch 
-function renderPostsForSearch(posts) { 
-  const container = document.getElementById("searchPostList");
-  container.innerHTML = ""; // clear previous results
-  if (!posts.length) {
-    // container.innerHTML = "<li>No results found</li>";
-    return;
-  }
-  posts.forEach(post => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <a href="/post.html?id=${post.id}">
-        <div class="post-cover d-flex-v-center">
-          <img src="${post.coverUrl || './images/default.jpg'}" alt="Post Img">
-        </div>
-        <div class="post-title-wrapper">
-          <span class="post-title">
-            ${post.title || "Untitled post"}
-          </span>
-        </div>
-      </a>
-    `;
-    container.appendChild(li);
-  });
-}
-/////////////////////////// fetchPostsBySearch
 
+/////////////////////////// fetchPostsBySearch
 async function fetchPostsBySearch(term) {
   if(term === "" || !term) {
     console.log("No term → return all posts or skip");
@@ -286,8 +171,12 @@ document.getElementById("searchBtn").addEventListener("click", (e) => {
 })
 
 
+//TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event
+//TODO: all fetch to fetch-folder 
 
 //TODO: index page redirect to posts list page 
 //TODO: loader index prioriry 
 //TODO: rederect to login page if not auth and redirect to index.html if logged in and show login btn's if not auth 
 //TODO: prifle: add avatar/change name in setting 
+
+

@@ -27,16 +27,6 @@ tagInput.addEventListener("keydown", tagInputKeyDown);
 }
 
 
-// Render tags
-function renderTags() {
-  tagsContainer.innerHTML = "";
-  tags.forEach((tag, index) => {
-    const tagEl = document.createElement("div");
-    tagEl.classList.add("tag");
-    tagEl.innerHTML = `${tag} <span onclick="removeTag(${index})">×</span>`;
-    tagsContainer.appendChild(tagEl); 
-  });
-}
 
 // Remove tag
 function removeTag(index) {

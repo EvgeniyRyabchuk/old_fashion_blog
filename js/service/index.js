@@ -23,27 +23,25 @@ const auth = firebase.auth();
 const db = firebase.firestore(); 
 const storage = firebase.storage();
 // TODO: replace 
-let isFirstLoad = true; 
+// let isFirstLoad = true; 
 
 
 const fetchDataFirestore = async (
   colName, 
   page, 
   perPage, 
-  lastDocCache = {}, 
+  cursorHandler, 
   options = {}, 
   beforeItemsLoaded, 
   afterItemsLoaded) => { 
-  await beforeItemsLoaded(); 
+  await beforeItemsLoaded(options.isLoadMore); 
   const orderField = options.orderField || "createdAt";  
   
   // ref for filtered query 
   let ref = null; 
     
   if(options.filterHandler) {
-    ref = await options.filterHandler(isFirstLoad);
-    
-    if(isFirstLoad) isFirstLoad = !isFirstLoad;  
+    ref = await options.filterHandler();
   } else {
     ref = db.collection(colName).orderBy(orderField, "desc"); 
   }
@@ -67,6 +65,8 @@ const fetchDataFirestore = async (
   // ref for get total page for pagination 
   let paginatedRef = ref.limit(perPage);
   
+
+  const lastDocCache = cursorHandler.lastDocCache; 
   // if not the first page, continue after last doc of previous page
   if (page > 1 && lastDocCache[page - 1]) {
     paginatedRef = paginatedRef
@@ -83,11 +83,7 @@ const fetchDataFirestore = async (
   // save cursor
   if (snap.docs.length > 0) {
     const lastDoc = snap.docs[snap.docs.length - 1];
-    lastDocCache[page] = lastDoc; // keep in memory 
-    // persist only the ID
-    const cacheToSave = JSON.parse(localStorage.getItem("lastDocCache") || "{}");
-    cacheToSave[page] = lastDoc.id;
-    localStorage.setItem("lastDocCache", JSON.stringify(cacheToSave));
+    cursorHandler.saveCursor(lastDoc, page); 
   }
   
   await afterItemsLoaded(posts); 
@@ -103,6 +99,5 @@ const fetchDataFirestore = async (
   return {
     items: posts,
     totalCount,
-    lastDocCache
   };
 };

@@ -15,6 +15,17 @@
 // }
 
 
+      // const {
+      //   isChanged: isFiltersChanged,
+      //   currentParams: currentFiltersFromParams
+      // } = queryStrHandler.checkIfParamsIsChanged(params)
+      // // if query params is changed then reset page to 1 
+      // if (isFiltersChanged) {
+      //   params = queryStrHandler.getCurrentParams();
+      // }
+
+    // saveLastDocCache(updatedLastDocCache);
+
 
 
 const CreateBlockSwitcher = (arr, defaultState = false) => {

@@ -2,58 +2,7 @@ let commentsForPost = [];
 const listCommentContainer = document.querySelector("#list-comment-container");
 
 
-const addCommentToHtml = (comment, additionUserInfo) => { 
-    const li = document.createElement("li");
-    li.dataset.commentId = comment.id; 
-    // Create user card
-    const userCard = document.createElement("div");
-    const removeBtn = document.createElement("button");
-    removeBtn.type = "button";
-    removeBtn.innerText = "Remove";
-    removeBtn.classList.add("btn-danger");  
-    removeBtn.style = `display: block; margin-left: auto`
-    removeBtn.onclick = async (e) => {
-        const commentId = e.target.closest("li").dataset.commentId;
-        await deleteComment(commentId); 
-        e.target.closest("li").remove(); 
-    }
-    
-    userCard.className = "user-card-small";
 
-    const avatar = document.createElement("img");
-    avatar.src = additionUserInfo.avatar;
-    avatar.width = 45; 
-    avatar.height = 45;
-    avatar.alt = "User Avatar";
-
-    const userName = document.createElement("div");
-    userName.className = "user-name";
-    userName.textContent = additionUserInfo ? additionUserInfo.name : "Unknown User";
-    
-    const createdAt = document.createElement("div");
-    createdAt.className = "created-at";
-    createdAt.textContent = comment.createdAt.toDate().toLocaleString() ;
-
-    userCard.appendChild(avatar);
-    userCard.appendChild(userName);
-    userCard.appendChild(createdAt);
-    
-    // Create comment content
-    const commentRow = document.createElement("div");
-    commentRow.className = "comment-row";
-    commentRow.textContent = comment.content || "";
-    
-    // Create separator
-    const hr = document.createElement("hr");
-
-    // Assemble list item
-    li.dataset.commentId = comment.id; 
-    li.appendChild(userCard);
-    li.appendChild(commentRow); 
-    li.appendChild(removeBtn); 
-    li.appendChild(hr);
-    listCommentContainer.appendChild(li);
-}
 
 const addCommentToPost = async (postId) => {
     const text = document.querySelector('#comment-content').value;
@@ -67,7 +16,7 @@ const addCommentToPost = async (postId) => {
     });
     const createdCommenSnap = await createdCommentRef.get();
     
-    addCommentToHtml(
+    renderComments(
         {id: createdCommenSnap.id, ...createdCommenSnap.data()}, 
         additionUserInfo
     );
@@ -86,7 +35,7 @@ const getAllComments = async () => {
 
     // container.innerHTML = ""; // Clear previous comments 
     for (let comment of comments) {
-        addCommentToHtml(comment, additionUserInfo); 
+        renderComments(comment, additionUserInfo); 
     }
 }
 
@@ -109,7 +58,7 @@ const getCommentsByPostId = async (postId) => {
     listCommentContainer.innerHTML = ""; // clear old comments
     
     for (let comment of comments) {
-        addCommentToHtml(comment, additionUserInfo);
+        renderComments(comment, additionUserInfo);
     }
     // postContentSection.classList.toggle("is-open")
 };

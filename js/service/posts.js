@@ -8,141 +8,7 @@ const paginationEnv = null;
 const postContentSection = document.getElementById("postContentSection");
 
 
-const renderPostsForTable = (post) => {
- // создаём строку
-    const tr = document.createElement("tr");
-    const tdId = document.createElement("td");
-    const tdTitle = document.createElement("td");
-    const tdContent = document.createElement("td");
-    const contentWrapper = document.createElement("div");
-    const tdImage = document.createElement("td");
-    const tdCategory = document.createElement("td");
-    const tdDateRange = document.createElement("td");
-    const tdUserId = document.createElement("td");
-    const tdUserCreatedAt = document.createElement("td");
-    const tdTags = document.createElement("td");
-    
-    const actionWrapper = document.createElement("div");
-    const tdAction = document.createElement("td");
-    const editButton = document.createElement('button');
-    const deleteButton = document.createElement('button');
 
-    // добавляем колонки
-
-    tr.dataset.postId = post.id; 
-    tdId.innerHTML = post.id || "Untitled";
-    tdTitle.innerHTML = post.title || "Untitled";
-    
-    tdTags.innerHTML = post.tags.map(tag => tag.name).join(', '); 
-    tdTags.style.whiteSpace = "nowrap"; 
-    tdTags.style.maxWidth = "160px"; 
-    tdTags.style.maxHeight = "100px"; 
-
-    const documentHtml = document.createElement('div');
-    documentHtml.innerHTML = post.content;
-
-    documentHtml.querySelectorAll('img').forEach(img => {
-      img.width = 100;
-      img.height = 100;
-    });
-
-    // create new page with this content 
-    contentWrapper.innerHTML = documentHtml.innerHTML || "";
-    contentWrapper.classList.add("td-content");
-    tdContent.appendChild(contentWrapper);  
-
-    if (post.coverUrl) {
-      tdImage.innerHTML = `<img src="${post.coverUrl}" width="100" height="100">`;
-    }
-
-    tdCategory.innerHTML = post.category?.name || 'null';
-    // tdImageCategoryID.id = "categorySelect";
-    tdDateRange.innerHTML = `${post.date_range_start}-${post.date_range_end}`;
-    tdUserId.innerHTML = post.userId;
-    tdUserCreatedAt.innerHTML = post.createdAt.toDate().toLocaleString();
-    tdUserCreatedAt.classList.add("td-date");
-
-    editButton.innerText = 'Edit';
-    editButton.type = 'button';
-    editButton.onclick = onUpdatePostClick; 
-
-    deleteButton.innerHTML = 'Remove';
-    deleteButton.type = "button"; 
-    deleteButton.onclick = onDeletePostClick; 
-   
-    actionWrapper.style.display = 'flex';    
-    actionWrapper.appendChild(editButton);
-    actionWrapper.appendChild(deleteButton);
-    tdAction.appendChild(actionWrapper);
-
-    // добавляем колонки в строку
-    tr.appendChild(tdId);
-    tr.appendChild(tdTitle);
-    tr.appendChild(tdContent);
-    tr.appendChild(tdImage);
-    tr.appendChild(tdCategory);
-    tr.appendChild(tdDateRange);
-    tr.appendChild(tdUserId);
-    tr.appendChild(tdUserCreatedAt);
-    tr.appendChild(tdTags);
-    tr.appendChild(tdAction);
-    
-    return tr;
-}
-const renderPostsForGrid = (post) => {
-  // { href, imgSrc, imgAlt, title, content } 
-  const imgAlt = "Post Image";
-    //TODO: fix - adding post id 
-  const queryStr = `?id=${post.id}`;
-  const href = `/post.html${queryStr}`; 
-  const article = document.createElement("article");
-  article.className = "post-card";
-
-  const link = document.createElement("a");
-
-  link.href = href;
-
-  // cover image
-  const coverDiv = document.createElement("div");
-  coverDiv.className = "post-cover";
-  const img = document.createElement("img");
-  img.src = post.coverUrl;
-  img.alt = imgAlt || "Post Image";
-  coverDiv.appendChild(img);
-
-  // title
-  const titleWrapper = document.createElement("div");
-  titleWrapper.className = "post-title-wrapper";
-  const spanTitle = document.createElement("span");
-  spanTitle.className = "post-title";
-  spanTitle.textContent = post.title;
-  titleWrapper.appendChild(spanTitle);
-
-  // short content
-  const shortContent = document.createElement("div");
-  shortContent.className = "post-short-content";
-  shortContent.innerHTML = post.content;
-
-  // assemble inside link
-  link.appendChild(coverDiv);
-  link.appendChild(titleWrapper);
-  link.appendChild(shortContent);
-
-  // more wrapper
-  const moreWrapper = document.createElement("div");
-  moreWrapper.className = "more-wrapper";
-  const readMore = document.createElement("a");
-  readMore.href = href;
-  readMore.className = "read-more";
-  readMore.textContent = "Read More >>";
-  moreWrapper.appendChild(readMore);
-
-  // build article
-  article.appendChild(link);
-  article.appendChild(moreWrapper);
-
-  return article;
-}
 
 const getCurrentEnvForPagination = () => {
   //TODO: normalize with variables 
@@ -162,9 +28,10 @@ const getCurrentEnvForPagination = () => {
 
 const currentPaginationEnv = getCurrentEnvForPagination(); 
 
-const beforePostsLoaded = async () => {  
+const beforePostsLoaded = async (isLoadMore = false) => {  
   postLoader.style.display = "flex"; 
-  document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
+  if(!isLoadMore) 
+    document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
 }; 
   // loadFromPostQueryStr(); 
 // callback after posts loaded for attach addition info to posts 
@@ -188,10 +55,11 @@ if (currentPaginationEnv) {
     pageInfo: document.getElementById("pageInfo"),
     pageNumbersContainer: document.getElementById("pageNumbers"),
     loadMoreBtn: document.getElementById("loadMoreBtn"),
-    fetchData: async (page, perPage, lastDocCache) => {
-      return await fetchDataFirestore("posts", page, perPage, lastDocCache, {
+    fetchData: async ({page, perPage, cursorHandler, options}) => {
+      return await fetchDataFirestore("posts", page, perPage, cursorHandler, {
         orderField: "createdAt", // must exist in your docs 
         filterHandler: currentPaginationEnv.filterHandler,
+        ...options
       }, beforePostsLoaded, afterPostsLoaded);
     },
     renderItem: post => currentPaginationEnv.render(post),

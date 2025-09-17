@@ -69,6 +69,3 @@ const loadCategoriesToSelect = async () => {
   });
 };
 
-
-
-// loadCategoriesToSelect();
