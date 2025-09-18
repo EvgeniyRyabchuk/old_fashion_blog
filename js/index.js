@@ -10,12 +10,14 @@ const breakpoints = {
 
 const searchPostLoader = document.getElementById("searchPostLoader");
 
+
 const headerSearch = document.getElementById("header-search");
 const searchToggle = document.getElementById("searchToggle");
 const searchClose = document.getElementById("searchClose");
 const searchInput = document.getElementById("searchInput");
 const searchControll = document.getElementById("searchControll")
 const searchContent = document.getElementById("searchContent");
+const searchSeeMoreLink = searchContent.querySelector("#searchSeeMore"); 
 
 
 document.getElementById("profile-btn-wrapper").addEventListener("mouseenter", (e) => {
@@ -54,6 +56,24 @@ document.getElementById("sideMenuWrapper").addEventListener("click", (e) => {
 });
 
 
+
+///////////////////// dropdown
+document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
+  dropdown.addEventListener("click", e => {
+    // only preventDefault if the first child <a> is clicked
+    if (e.target.tagName === "A" && e.target.classList.contains("prevent")) {
+      e.preventDefault();
+      dropdown.classList.toggle("is-open");
+    }
+  });
+});
+
+
+
+
+
+//  ============================ search by posts title and tags vie searchIndex 
+
 searchToggle.addEventListener("click", () => {
   headerSearch.classList.toggle("active");
   document.body.classList.toggle("no-scroll");
@@ -73,6 +93,7 @@ searchInput.addEventListener("click", () => {
 document.addEventListener("click", (e) => {
   if (!searchControll.contains(e.target) && headerSearch.classList.contains("active")) {
     headerSearch.classList.remove("active"); 
+    searchContent.classList.add("is-open"); 
     // searchContent.style.display = "none"; 
     if(window.innerWidth <= breakpoints.lg)
         document.body.classList.toggle("no-scroll");
@@ -80,23 +101,8 @@ document.addEventListener("click", (e) => {
   }
 });
 
-
-
-///////////////////// dropdown
-document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
-  dropdown.addEventListener("click", e => {
-    // only preventDefault if the first child <a> is clicked
-    if (e.target.tagName === "A" && e.target.classList.contains("prevent")) {
-      e.preventDefault();
-      dropdown.classList.toggle("is-open");
-    }
-  });
-});
-
-
 const debound = createDebounce(500);
 const queryStrHandler = QueryStringHandler();
-
 
 /////////////////////////// fetchPostsBySearch
 async function fetchPostsBySearch(term) {
@@ -119,11 +125,10 @@ async function fetchPostsBySearch(term) {
   return posts;
 }
 
-const searchSeeMoreLink = searchContent.querySelector("#searchSeeMore"); 
 const showSeeMore = (text, length) => {
   const seeMoreTriggerCount = 3;
-  const searchUrl = `/?${queryStrHandler.strQName.search}=${text}`;
-  if (length > seeMoreTriggerCount) {
+  const searchUrl = `/posts.html?${queryStrHandler.strQName.search}=${text}`;
+  if (length >= seeMoreTriggerCount) {
     searchSeeMoreLink.href = searchUrl;
     searchSeeMoreLink.classList.remove("d-none");
   }
@@ -164,9 +169,9 @@ searchInput.addEventListener("input", (e) => {
 
 });
 
-
-document.getElementById("searchBtn").addEventListener("click", (e) => {
-   const searchUrl = `/?${queryStrHandler.strQName.search}=${text}`; 
+const searchBtn = document.getElementById("searchBtn");
+searchBtn.addEventListener("click", (e) => { 
+   const searchUrl = `/posts.html?${queryStrHandler.strQName.search}=${text}`; 
    window.location.href = searchUrl; 
 })
 
@@ -174,9 +179,11 @@ document.getElementById("searchBtn").addEventListener("click", (e) => {
 //TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event
 //TODO: all fetch to fetch-folder 
 
-//TODO: index page redirect to posts list page 
-//TODO: loader index prioriry 
+
+//TODO: main page links 
+
 //TODO: rederect to login page if not auth and redirect to index.html if logged in and show login btn's if not auth 
 //TODO: prifle: add avatar/change name in setting 
+//TODO: rework id's to classes in css 
 
 

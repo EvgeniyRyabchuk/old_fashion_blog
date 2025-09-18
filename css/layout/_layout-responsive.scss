@@ -52,6 +52,7 @@ header, footer, #main-wrapper {
 }
 
 @media screen and (max-width: variables.$lg-bp) {
+    .auth-controll { display: none !important; }
 
       #header-search {
         &.active {
@@ -70,11 +71,11 @@ header, footer, #main-wrapper {
             border-radius: 10px;
         }
 
-        .search-content {
-            &.is-open {
-                display: block;
-            }
-        }
+        // .search-content {
+        //     &.is-open {
+        //         display: block;
+        //     }
+        // }
     }
 
     .post-card  {
@@ -163,9 +164,32 @@ header, footer, #main-wrapper {
 
 
 @media screen and (max-width: variables.$md-bp) {
-  .post-card  {
+    .post-card {
         width: 100% !important;
     }
+
+    .upload_container .wrapper {
+        flex-direction: column;
+
+        .post-create-form-wrapper {
+            width: 100%;
+        }
+
+        #postWideImgPlaceholder,
+        #postWideImgWrapper {
+            min-width: auto;
+            width: 100%;
+            height: 130px;
+        }
+        #postCoverImgWrapper {  
+            width: 100%;
+            max-width: none; 
+            min-width: auto;
+            padding: 0;
+        }
+    }
+
+
 }
 
 @media screen and (max-width: variables.$sm-bp) {

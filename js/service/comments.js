@@ -45,22 +45,21 @@ const getCommentsByPostId = async (postId) => {
         .where("postId", "==", postId)
         .orderBy("createdAt", "desc")
         .get();
-
+    
     const comments = commentsSnap.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
     }));
     
-    const user = auth.currentUser?.uid; 
-    const additionUserInfo = await getUserAddition();
+     
+    // const additionUserInfo = await getUserAddition();
 
-   
     listCommentContainer.innerHTML = ""; // clear old comments
     
     for (let comment of comments) {
-        renderComments(comment, additionUserInfo);
+        const additionUserInfo = await getUserAddition(comment.userId);
+        renderComments(comment, additionUserInfo); 
     }
-    // postContentSection.classList.toggle("is-open")
 };
 
 

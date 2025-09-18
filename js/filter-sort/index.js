@@ -13,12 +13,11 @@ const selectedList = document.querySelector(".selected-filters__list");
 
 const switchFilter = (isOpening = true) => {
   filterDraweWrapper.classList.toggle("is-open"); 
-    filterDrawer.classList.toggle("is-open"); 
+  filterDrawer.classList.toggle("is-open"); 
   // Check if the screen is 992px or less
   if (window.innerWidth <= breakpoints.lg) {
     document.body.classList.toggle("no-scroll");
   } 
-  // document.body.classList.toggle("no-scroll");
 }
 
 filterToggle.addEventListener("click", () => {
@@ -116,15 +115,11 @@ const addEventListenerToInput = (input) => {
 }
 
 const loadFromPostQueryStr = () => {
-  // const getQueryParams = () => {
-  //   return Object.fromEntries(new URLSearchParams(window.location.search));
-  // };
   const params = Object.fromEntries(new URLSearchParams(window.location.search));
   
   // 1. Search input
   const searchInput = document.querySelector('searchInput'); 
   if (params.search && searchInput) searchInput.value = params.search;
-  
   // 2. Category checkboxes
   if (params.categories) {
     const catIds = params.categories.split(",");
@@ -136,7 +131,6 @@ const loadFromPostQueryStr = () => {
       }
     });
   }
-
   // 3. Tag checkboxes
   if (params.tags) {
     const tagIds = params.tags.split(",");
@@ -150,7 +144,6 @@ const loadFromPostQueryStr = () => {
       }
     });
   }
-
   // 4. Date range
   const startInput = document.querySelector('input[data-type="date-range-start"]');
   const endInput = document.querySelector('input[data-type="date-range-end"]');
@@ -183,6 +176,7 @@ const renderTagsToFilter = async () => {
       renderCheckboxes(t.id, t.name, tagsContainer, "tag"); 
     });
 }
+
 async function renderSelectableElements() {
     await renderCategoriesToFilter();
     await renderTagsToFilter(); 
@@ -190,6 +184,7 @@ async function renderSelectableElements() {
     addEventListenerToInput(document.querySelector(`[data-type="date-range-end"]`))
     loadFromPostQueryStr(); 
 }
+
 renderSelectableElements(); 
 
 // --- Sort change ---
@@ -197,7 +192,7 @@ document.getElementById("sort").addEventListener("change", () => {
     postsPaginator.setPage(1);
 }); 
 document.getElementById("applyFilterBtn").addEventListener("click", () => {
-  if (window.innerWidth <= 992) 
+  if (window.innerWidth <= breakpoints.lg) 
      switchFilter(false);
 
     postsPaginator.setPage(1); 

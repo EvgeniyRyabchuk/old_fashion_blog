@@ -10,23 +10,8 @@ const postContentSection = document.getElementById("postContentSection");
 
 
 
-const getCurrentEnvForPagination = () => {
-  //TODO: normalize with variables 
-  const lastUrlPart = window.location.pathname.split("/").pop();
-  switch(lastUrlPart) {
-    case "posts.html": 
-      return { render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")}; 
-    case "": 
-     return { render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")}; 
-    case "index.html": 
-      return { render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")}; 
-    case "create-edit-post.html":
-        return { render: renderPostsForTable, container: document.querySelector("#postTableBody")};  
-    default: return null;
-  }
-}
 
-const currentPaginationEnv = getCurrentEnvForPagination(); 
+
 
 const beforePostsLoaded = async (isLoadMore = false) => {  
   postLoader.style.display = "flex"; 
@@ -44,6 +29,33 @@ const afterPostsLoaded = async (posts) => {
 }
 
 let postsPaginator = null;
+try {
+  
+const getCurrentEnvForPagination = () => {
+  //TODO: normalize with variables 
+  const lastUrlPart = window.location.pathname.split("/").pop();
+  switch (lastUrlPart) {
+    case "posts.html":
+      return {
+        render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")
+      };
+    case "":
+      return {
+        render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")
+      };
+    case "index.html":
+      return {
+        render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")
+      };
+    case "create-edit-post.html":
+      return {
+        render: renderPostsForTable, container: document.querySelector("#postTableBody")
+      };
+    default:
+      return null;
+  }
+}
+const currentPaginationEnv = getCurrentEnvForPagination();
 
 if (currentPaginationEnv) {
   postsPaginator = createPaginator({
@@ -65,6 +77,10 @@ if (currentPaginationEnv) {
     renderItem: post => currentPaginationEnv.render(post),
     loader: postLoader
   });
+}
+
+} catch(e) {
+  console.log(e);
 }
 
 

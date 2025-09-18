@@ -8,7 +8,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSyBb6ith8jViE5Lgm8O72EkL_iDz6S7nc64",
   authDomain: "fashion-blog-54f36.firebaseapp.com",
-  projectId: "fashion-blog-54f36",
+  projectId: "fashion-blog-54f36", 
   storageBucket: "fashion-blog-54f36.firebasestorage.app",
   messagingSenderId: "783090657826",
   appId: "1:783090657826:web:c3d249e95efa908788f87b",
@@ -22,9 +22,6 @@ firebase.analytics();
 const auth = firebase.auth(); 
 const db = firebase.firestore(); 
 const storage = firebase.storage();
-// TODO: replace 
-// let isFirstLoad = true; 
-
 
 const fetchDataFirestore = async (
   colName, 
@@ -45,7 +42,7 @@ const fetchDataFirestore = async (
   } else {
     ref = db.collection(colName).orderBy(orderField, "desc"); 
   }
-
+  
   const params = Object.fromEntries(new URLSearchParams(window.location.search));
   const search = params.search;
   
@@ -64,7 +61,6 @@ const fetchDataFirestore = async (
   
   // ref for get total page for pagination 
   let paginatedRef = ref.limit(perPage);
-  
 
   const lastDocCache = cursorHandler.lastDocCache; 
   // if not the first page, continue after last doc of previous page
@@ -92,8 +88,6 @@ const fetchDataFirestore = async (
   // ⚠️ expensive: counts all docs (better maintain separately!)
   const totalCountSnap = await ref.get();
   const totalCount = totalCountSnap.size;
-  // const totalCountSnap = await db.collection(colName).get();  
-  // const totalCount = snap.size; 
   console.log(`total ${totalCount}`); 
   
   return {

@@ -329,8 +329,8 @@
             <section class="content-section">
                 <h2>Create Post</h2>
                 <div class="upload_container" style="margin: 30px; border: 1px solid black;">
-                    <div class="d-flex">
-                        <div>
+                    <div class="wrapper d-flex-center d-flex-wrap">
+                        <div class="post-create-form-wrapper">
                             <input type="text" id="title" placeholder="Post title"><br><br>
                             
                             <!-- category -->
@@ -365,9 +365,21 @@
                             </div>
 
                         </div>
-                           <input type="file" id="quillImageInput" style="display:none">
-                           <!-- Cover Img -->
-                        <div id="postCoverImgWrapper" class="d-flex-h-right-v-center w-100">
+                        <input type="file" id="quillImageInput" style="display:none">
+                        <!-- wide --> 
+                        <div style="flex: 2 2 auto;" id="postWideImgWrapper">
+                            <div class="preview" id="widePreview"> 
+                                <button id="deletePostWidePreviewBtn" class="btn-danger">X</button>
+                            </div> 
+                            <div id="postWideImgPlaceholder" class="image-placeholder" onclick="">
+                                <input type="file" id="wideImg" accept="image/*" class="hidden-input" />
+                                <div class="placeholder-content"> 
+                                    <span>Click to add image Wide Image</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Cover Img -->
+                        <div style="flex: 1 1 auto;" id="postCoverImgWrapper">
                             <div class="preview" id="coverPreview"> 
                                 <button id="deletePostCoverImgBtn" class="btn-danger">X</button>
                             </div> 
@@ -378,22 +390,6 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- wide --> 
-                        <div id="postWideImgWrapper" class="d-flex-h-right-v-center w-100">
-                            <div class="preview" id="widePreview"> 
-                                <button id="deletePostWidePreviewBtn" class="btn-danger">X</button>
-                            </div>
-                            <div id="postWideImgPlaceholder" class="image-placeholder" onclick="">
-                                <input type="file" id="wideImg" accept="image/*" class="hidden-input" />
-                                <div class="placeholder-content"> 
-                                    <span>Click to add image Wide Image</span>
-                                </div>
-                            </div>
-
-
-                        </div>
-
                     </div>
                 
                     

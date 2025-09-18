@@ -6,10 +6,19 @@ const adminsIds = ["AzkfJd3AjmaD3r3hY1idYRS7HqA3"]; // array of admin user ids
 let isAdmin = false; // default value
 let userAddition = null; 
 
-async function getUserAddition() {
-  const user = firebase.auth().currentUser; 
-  if (!user) return null;
+//TODO: if admin return isAdmin 
+async function getUserAddition(userId = null) {
+  let user = null; 
   
+  if (userId) {
+    const userDoc = await db.collection("users").doc(userId).get();
+    if (userDoc.exists) {
+      return { id: userDoc.id, ...userDoc.data() }; 
+    } 
+  } 
+
+  user = firebase.auth().currentUser;
+  if (!user) return null;
   let snap = await db.collection("users").where("userId", "==", user.uid).limit(1).get(); 
   if(!snap.docs[0])
     snap = await db.collection("admins").where("userId", "==", user.uid).limit(1).get(); 
@@ -74,6 +83,7 @@ async function register() {
   await db.collection("users").doc(user.uid).set({
     name: name,
     email: user.email,
+    avatar: '/images/profile.png',
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
 

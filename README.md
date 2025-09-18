@@ -49,7 +49,8 @@ posts:
     coverUrl
     wideImgUrl
     createdAt
-    date_range
+    date_range_end
+    date_range_start
     title
     userId
     searchIndex 

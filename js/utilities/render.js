@@ -200,14 +200,17 @@ const renderComments = (comment, additionUserInfo) => {
     userCard.className = "user-card-small";
 
     const avatar = document.createElement("img");
-    avatar.src = additionUserInfo.avatar;
+   
+    avatar.src = additionUserInfo ? additionUserInfo.avatar : '/images/no-image.png';
+    
+    
     avatar.width = 45; 
     avatar.height = 45;
     avatar.alt = "User Avatar";
 
     const userName = document.createElement("div");
     userName.className = "user-name";
-    userName.textContent = additionUserInfo ? additionUserInfo.name : "Unknown User";
+    userName.textContent = additionUserInfo ? additionUserInfo.name : "Not Found"; 
     
     const createdAt = document.createElement("div");
     createdAt.className = "created-at";

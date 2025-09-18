@@ -1,3 +1,5 @@
+@use '../abstracts/mixins' as mixins;
+
 
 #postContentSection {
   position: relative;
@@ -312,8 +314,6 @@
       }
     }
   }
-}
-
 
 // Variables for colors and dimensions
 $placeholder-border-color: #ccc;
@@ -324,32 +324,45 @@ $placeholder-text-color: #ffffff;
 $placeholder-size: 300px;
 $placeholder-border-radius: 8px;
 
+// wrapper d-flex-center  d-flex-wrap
+.wrapper {
+  // gap: 10px;
+  @include mixins.flexbox(row, center, center, wrap, 10px)
+}
 
 .preview {
-  width: $placeholder-size;
+  // width: $placeholder-size;
   border: 2px dashed $placeholder-border-color;
   display: none;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-
 #coverPreview {
   aspect-ratio: 1 / 1;
 }
 
-#postWideImgPlaceholder, #widePreview {
-  width: 500px !important;
+#postWideImgPlaceholder {
+  // width: 100% !important;
+  min-width: 500px;  
+  align-self: flex-start;
   aspect-ratio: 1340 / 300;
 }
 
-#postCoverImgWrapper, #postWideImgWrapper {
-  padding: 30px;
+
+#postCoverImgWrapper{
+   max-width: 400px;
+  min-width: 300px;
+  // max-width: 500px;
+}
+  
+.post-create-form-wrapper {
+  flex: 2 2 auto;
 }
 
 #postImgPlaceholder.drag-over,
 #postWideImgPlaceholder.drag-over {
-  border: 2px dashed #007bff;
+  border: 2px dashed #007bff; 
   background-color: rgba(0, 123, 255, 0.05);
   span {
   color: #007bff;
@@ -359,7 +372,7 @@ $placeholder-border-radius: 8px;
 
 
 .image-placeholder {
-    width: $placeholder-size; 
+    // width: $placeholder-size; 
     aspect-ratio: 1 / 1; 
     border: 5px dashed $placeholder-border-color;
     border-radius: $placeholder-border-radius;
@@ -417,3 +430,9 @@ $placeholder-border-radius: 8px;
         display: none;
     }
 }
+
+
+
+
+}
+

@@ -1,4 +1,10 @@
+@use './mixins' as mixins;
 
+.d-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .d-flex-h-center {
     display: flex;
@@ -10,11 +16,6 @@
     align-items: center;
 }
 
-.d-flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .d-flex-h-right-v-center {
     @extend .d-flex-v-center; 
@@ -37,3 +38,76 @@
     display: flex;
     align-items: end;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // Example: custom utilities
+// .d-flex-center {
+//   @include flexbox(row, center, center);
+// }
+
+.d-flex-h-between {
+  @include mixins.flexbox(row, space-between, center);
+}
+
+// .d-flex-v-around {
+//   @include flexbox(column, space-around, center);
+// }
+
+// .d-flex-col-start {
+//   @include flexbox(column, null, flex-start);
+// }
+
+.d-flex-wrap {
+  @include mixins.flexbox(row, null, null, wrap);
+}
+
+// .d-flex-gap-16 {
+//   @include flexbox(row, null, null, null, 16px);
+// }
+
+
+
+
+// $justifies: flex-start, flex-end, center, space-between, space-around, space-evenly;
+// $aligns: flex-start, flex-end, center, stretch, baseline;
+// $directions: row, column;
+// $wraps: wrap, nowrap, wrap-reverse;
+
+// @each $dir in $directions {
+//   @each $j in $justifies {
+//     @each $a in $aligns {
+//       .d-flex-#{$dir}-#{$j}-#{$a} {
+//         @include flexbox($dir, $j, $a);
+//       }
+//     }
+//   }
+// }
+
+// @each $wrap in $wraps {
+//   .d-flex-#{$wrap} {
+//     @include flexbox(row, null, null, $wrap);
+//   }
+// }
+
+
+// .d-flex-row-center-center
+// .d-flex-row-space-between-flex-start
+// .d-flex-column-space-around-center
+// .d-flex-wrap
+// .d-flex-nowrap
