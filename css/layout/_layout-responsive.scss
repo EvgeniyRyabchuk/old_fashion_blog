@@ -46,7 +46,9 @@ header, footer, #main-wrapper {
        padding: 0px 0px 30px 0px !important;
     }
 
-
+    .content-section {
+        padding: 10px;
+    }
 
     
 }
@@ -54,7 +56,12 @@ header, footer, #main-wrapper {
 @media screen and (max-width: variables.$lg-bp) {
     .auth-controll { display: none !important; }
 
-      #header-search {
+    .upload_container {
+        margin: 0px;
+        padding: 10px;
+    }
+
+    #header-search {
         &.active {
             align-items: start;
             justify-content: start !important;
@@ -168,6 +175,10 @@ header, footer, #main-wrapper {
         width: 100% !important;
     }
 
+        .content-section {
+            padding: 0;
+        }
+
     .upload_container .wrapper {
         flex-direction: column;
 
@@ -193,8 +204,8 @@ header, footer, #main-wrapper {
 }
 
 @media screen and (max-width: variables.$sm-bp) {
-    main {
-       
+    .post-cover {
+        height: 100% !important;
     }
 }
 

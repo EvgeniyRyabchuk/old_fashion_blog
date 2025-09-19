@@ -11,22 +11,8 @@ const postContentSection = document.getElementById("postContentSection");
 
 
 
+//TODO: after and before attached to context so that if it's table 
 
-
-const beforePostsLoaded = async (isLoadMore = false) => {  
-  postLoader.style.display = "flex"; 
-  if(!isLoadMore) 
-    document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
-}; 
-  // loadFromPostQueryStr(); 
-// callback after posts loaded for attach addition info to posts 
-const afterPostsLoaded = async (posts) => {
-  await loadCategoriesToCollection(posts); 
-  await loadTagsToCollection(posts);
-  allPosts = posts;  
-  postLoader.style.display = "none"; 
-  document.querySelector(".pagination-wrapper").classList.add("is-open"); 
-}
 
 let postsPaginator = null;
 try {
@@ -56,6 +42,20 @@ const getCurrentEnvForPagination = () => {
   }
 }
 const currentPaginationEnv = getCurrentEnvForPagination();
+const beforePostsLoaded = async (isLoadMore = false) => {  
+  postLoader.style.display = "flex"; 
+  if(!isLoadMore && currentPaginationEnv.render === renderPostsForGrid) 
+    document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
+}; 
+  // loadFromPostQueryStr(); 
+// callback after posts loaded for attach addition info to posts 
+const afterPostsLoaded = async (posts) => {
+  await loadCategoriesToCollection(posts); 
+  await loadTagsToCollection(posts);
+  allPosts = posts;  
+  postLoader.style.display = "none"; 
+  document.querySelector(".pagination-wrapper").classList.add("is-open"); 
+}
 
 if (currentPaginationEnv) {
   postsPaginator = createPaginator({
@@ -205,7 +205,8 @@ async function readPost(postId) {
 
   await loadCategoriesToCollection([post]);
   await loadTagsToCollection([post]);
-
+  console.log(post.createdAt);
+  
   // Fill DOM
   document.getElementById("coverImg").src = post.wideImgUrl; 
   document.getElementById("postTitle").textContent = post.title;
@@ -229,11 +230,9 @@ async function readPost(postId) {
   postContentSection.classList.toggle("is-open"); 
 }
 
-const onUpdatePostClick = async (e) => {
-  const pId = e.target.closest("tr").dataset.postId; 
-  const post = allPosts.find(p => p.id === pId); 
-  postToUpdateId = pId;
-  
+
+const setPostToUpdate = (post) => {
+  postToUpdateId = post.id;
   document.getElementById("title").value = post.title;
   quill.root.innerHTML = post.content;
 
@@ -253,7 +252,13 @@ const onUpdatePostClick = async (e) => {
   
   const selectCat = document.getElementById("category-select");
   selectCat.value = post.categoryId; 
-
+}
+const onUpdatePostClick = async (e) => {
+  const pId = e.target.closest("tr").dataset.postId; 
+  const post = allPosts.find(p => p.id === pId); 
+  setPostToUpdate(post); 
+  queryStrHandler.changeCurrentPost(pId); 
+  document.querySelector(".upload_container").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 const onDeletePostClick = async (e) => {
@@ -275,13 +280,13 @@ const onResetPostClick = (e) => {
   
   document.getElementById("title").value = '';
   quill.root.innerHTML = '';
-  coverImg.input.value = ""; 
+  // coverImg.input.value = ""; 
 
     // Show preview
-  document.getElementById("preview").innerHTML =``;
+  // document.querySelector(".preview").innerHTML = ``;
   
-  document.getElementById("startYear").value = '';
-  document.getElementById("endYear").value = '';
+  document.getElementById("startYear").value = parseInt(queryStrHandler.defaultStartDate);
+  document.getElementById("endYear").value = parseInt(queryStrHandler.defaultEndDate);
   
   tags = [];
   renderTags();
@@ -289,7 +294,12 @@ const onResetPostClick = (e) => {
   selectedCategoryId = null; 
   const selectCat = document.getElementById("category-select");
   selectCat.value = ''; 
+
+  coverImg.hidePreview(); 
+  wideImg.hidePreview(); 
   
+  queryStrHandler.changeCurrentPost(null); 
+  document.querySelector("#postsTable").scrollIntoView({ behavior: "smooth", block: "start" });
   // postsPaginator.setPage(1);
 }
 

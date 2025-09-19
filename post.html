@@ -20,7 +20,10 @@
    <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
    <!-- Quill Image Resize Module -->
    <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js"></script>
-
+   <script>
+      const params = Object.fromEntries(new URLSearchParams(window.location.search));
+      const postId = params.id; 
+   </script>
 </head>
 
 <body>
@@ -245,7 +248,9 @@
 
          </nav>
         <section class="admin-post-top-panel ">
-            <button onclick="window.location.href = './profile/admin/create-edit-post.html'" class="btn-warning">Edit</button>
+            <button onclick=" 
+               window.location.href = `/profile/admin/create-edit-post.html?postId=${postId}` 
+            " class="btn-warning">Edit</button>
             <button class="btn-danger">Delete</button>
         </section>
          <section id="postContentSection" class="content-section">
@@ -441,8 +446,7 @@
     <script src="./js/service/posts.js"></script> 
 
     <script>
-        const params = Object.fromEntries(new URLSearchParams(window.location.search));
-        const postId = params.id; 
+       
            if (postId) {
             readPost(postId); 
             getCommentsByPostId(postId); 

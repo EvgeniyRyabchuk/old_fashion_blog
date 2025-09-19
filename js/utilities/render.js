@@ -81,13 +81,13 @@ const renderPostsForTable = (post) => {
     // tdImageCategoryID.id = "categorySelect";
     tdDateRange.innerHTML = `${post.date_range_start}-${post.date_range_end}`;
     tdUserId.innerHTML = post.userId;
-    tdUserCreatedAt.innerHTML = post.createdAt.toDate().toLocaleString();
+    tdUserCreatedAt.innerHTML = new Date(post.createdAt).toLocaleDateString();
     tdUserCreatedAt.classList.add("td-date");
-
+    
     editButton.innerText = 'Edit';
     editButton.type = 'button';
     editButton.onclick = onUpdatePostClick; 
-
+    
     deleteButton.innerHTML = 'Remove';
     deleteButton.type = "button"; 
     deleteButton.onclick = onDeletePostClick; 
@@ -214,7 +214,7 @@ const renderComments = (comment, additionUserInfo) => {
     
     const createdAt = document.createElement("div");
     createdAt.className = "created-at";
-    createdAt.textContent = comment.createdAt.toDate().toLocaleString() ;
+    createdAt.textContent = new Date(comment.createdAt).toLocaleDateString(); 
 
     userCard.appendChild(avatar);
     userCard.appendChild(userName);

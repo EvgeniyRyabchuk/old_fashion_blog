@@ -205,7 +205,8 @@
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-
+  margin: 30px;
+  border: 1px solid black;
   h2 {
     margin-bottom: 20px;
     color: #2a2a2a;
@@ -219,7 +220,7 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     width: 100%;
-    max-width: 400px;
+    // max-width: 400px;
     margin-top: 6px;
     margin-bottom: 15px;
     &:focus {
@@ -249,6 +250,8 @@
   .year-range {
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 10px;
     margin: 15px 0;
 
@@ -327,7 +330,7 @@ $placeholder-border-radius: 8px;
 // wrapper d-flex-center  d-flex-wrap
 .wrapper {
   // gap: 10px;
-  @include mixins.flexbox(row, center, center, wrap, 10px)
+  @include mixins.flexbox(row, center, center, wrap, 20px)
 }
 
 .preview {
@@ -337,6 +340,8 @@ $placeholder-border-radius: 8px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  height: 100%;
+  min-width: 300px;
 }
 #coverPreview {
   aspect-ratio: 1 / 1;
@@ -357,7 +362,7 @@ $placeholder-border-radius: 8px;
 }
   
 .post-create-form-wrapper {
-  flex: 2 2 auto;
+  flex: 2 2 400px;
 }
 
 #postImgPlaceholder.drag-over,

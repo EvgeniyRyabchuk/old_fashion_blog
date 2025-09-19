@@ -23,8 +23,8 @@
 9. Validation 
 10. Tailwind/Bootstrap 
 11. Notification 
-12. Seeder 
-13. Facker 
+12. Seeder +++++
+13. Facker ++++++
 14. Localize 
 15. Theme 
 
@@ -41,6 +41,7 @@ users:
     createdAt
     email
     name
+    avatar
 tags:
     name
 posts: 
@@ -64,7 +65,9 @@ comments:
     postId
 admins: 
     userId
-
+    avatar
+    email
+    name
 
 
 https://www.google.com/search?q=old+fashion+blog&sca_esv=49b6c55cfef21711&sxsrf=AE3TifMijdBWhaSEJUsmxGEdcDzPBT1H3g:1756119206609&ei=pkCsaJT8JJf8wPAPuLebgA4&start=10&sa=N&sstk=Ac65TH5bkKGFJtRVRIJK0V8NKw-5gUAyH6H3TtIxkwmDuWce_XYS-ZkuXVtYrHvksoHMmY4tgTp3vQXmIVsuZIA7Lk1j1_kYra9HFg&ved=2ahUKEwiU5_jr5aWPAxUXPhAIHbjbBuAQ8tMDegQIBxAE&biw=2195&bih=1100&dpr=1.75

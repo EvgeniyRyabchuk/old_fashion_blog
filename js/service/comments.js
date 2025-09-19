@@ -14,7 +14,7 @@ const addCommentToPost = async (postId) => {
         postId: postId, 
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    const createdCommenSnap = await createdCommentRef.get();
+    const createdCommenSnap = await createdCommentRef.get(); 
     
     renderComments(
         {id: createdCommenSnap.id, ...createdCommenSnap.data()}, 

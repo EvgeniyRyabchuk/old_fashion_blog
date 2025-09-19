@@ -1,1 +1,15 @@
-/seeder/
+# Node modules anywhere
+node_modules/
+**/node_modules/
+
+# Logs
+*.log
+
+# Env files
+.env
+
+# Firebase credentials
+serviceAccount.json
+
+# Seeder JSON
+seeder/json/

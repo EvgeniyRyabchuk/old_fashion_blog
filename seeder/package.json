@@ -1,0 +1,19 @@
+{
+  "name": "firebase-seeder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "seeder.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "refresh-data-random": "node remove/delete-collections.js && node create/seed-random.js",
+    "refresh-data-json": "node remove/delete-collections.js && node create/seed-from-json.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^10.0.0",
+    "dotenv": "^17.2.2",
+    "firebase-admin": "^13.5.0"
+  }
+}

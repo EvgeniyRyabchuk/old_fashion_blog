@@ -176,14 +176,18 @@ searchBtn.addEventListener("click", (e) => {
 })
 
 
-//TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event
-//TODO: all fetch to fetch-folder 
-
-
+//TODO: fixdat trubles 
+//TODO: display posts without innerHtml just text 
+//TODO: comment write seaction display real auth user if exist 
+//TODO: fix comments 
 //TODO: main page links 
+//TODO: deleting post elso delete related docs in other collections 
+
 
 //TODO: rederect to login page if not auth and redirect to index.html if logged in and show login btn's if not auth 
 //TODO: prifle: add avatar/change name in setting 
 //TODO: rework id's to classes in css 
 
-
+//TODO: all fetch to fetch-folder 
+//TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event 
+//TODO: localize categories names 

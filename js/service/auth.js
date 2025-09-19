@@ -25,7 +25,6 @@ async function getUserAddition(userId = null) {
   if(!snap.docs[0])
     return null;
   console.log(snap.docs[0]);
-  
   return snap.docs[0].data(); 
 }
 

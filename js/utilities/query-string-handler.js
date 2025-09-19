@@ -7,13 +7,14 @@ const QueryStringHandler = () => {
     startDate: "startDate",
     endDate: "endDate",
     page: "page",
-    perPage: "perPage"
+    perPage: "perPage",
+    postId: "postId"
   });
   
   const defaultStartDate = "1800-09-04";
   const defaultEndDate = "2025-09-04";
 
-  const addOrDeleteParams = (array) => {
+  const addOrDeleteParams = (array) => { 
     const params = new URLSearchParams(window.location.search);
     for (let param of array) {
       if (param.name === strQName.startDate && param.value === defaultStartDate 
@@ -81,6 +82,10 @@ const QueryStringHandler = () => {
     ]); 
   }
 
+  const changeCurrentPost = (postId) => { 
+    addOrDeleteParams([{name: strQName.postId, value: postId}]); 
+  }
+  
   return {
     strQName, 
     defaultStartDate,
@@ -90,6 +95,7 @@ const QueryStringHandler = () => {
     changeSort,
     changeCurrentPage,
     checkIfParamsIsChanged,
-    stripIgnored
+    stripIgnored,
+    changeCurrentPost
   }
 }

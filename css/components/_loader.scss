@@ -48,7 +48,7 @@ $wrapper-circle-size-percent: 0.4;
     @extend .d-flex-center;
     
     background-color: $wrapper-bg-color; 
-    z-index: 999;
+    z-index: 1;
     
     .loader {
         @include getDimensionForCircleWrapper();

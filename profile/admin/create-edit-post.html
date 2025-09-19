@@ -25,11 +25,7 @@
 
 <body>
 
-   <header>
-      
-      <!-- <div id="side-menu-wrapper" class="d-block">
-     
-      </div> -->
+   <header>  
     <a class="default-link" id="top-header-link" href="/" >
         <div id="header-img-block">
             <h2 id="headerLable">Old Fashion Blog</h2>
@@ -44,8 +40,8 @@
                   Menu
                </div> 
                <div class="form-row d-flex-center" style="margin: 20px 0;">
-                  <a class="login-btn" href="./auth/login.html">Login</a>
-                  <a class="sign-in-btn" href="./auth/register.html">Sign Up</a>
+                  <a class="login-btn" href="/auth/login.html">Login</a>
+                  <a class="sign-in-btn" href="/auth/register.html">Sign Up</a>
                </div>
                <div id="asideProfileBtnWrapper">
                   <div class="form-row">
@@ -58,30 +54,30 @@
                  
                   <ul id="asideAuthNavList" class="auth-nav-list" class="d-none">
                      
-                     <li><a href="./posts.html">My posts</a></li>
-                     <li><a href="./profile/setting.html">Settings</a></li>
-                     <li><a href="./profile/comments.html">Comments</a></li>
+                     <li><a href="/posts.html">My posts</a></li>
+                     <li><a href="/profile/setting.html">Settings</a></li>
+                     <li><a href="/profile/comments.html">Comments</a></li>
                      <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
                   </ul>
                </div>
                <ul id="side-menu-list">
                   
-                  <li><a class="side-menu-item" href="./posts.html" class="dropdown-item">Home</a></li>
+                  <li><a class="side-menu-item" href="/" class="dropdown-item">Home</a></li>
                   <li class="dropdown on-click root">
-                     <a class="side-menu-item prevent" href="./index.html" class="dropdown-toggle">All posts</a>
+                     <a class="side-menu-item prevent" href="/posts.html" class="dropdown-toggle">All posts</a>
                      <ul class="dropdown-menu">  
                         <li class="">
-                           <a class="side-menu-item" href="#" class="dropdown-toggle">Guide</a>
+                           <a class="side-menu-item" href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa" class="dropdown-toggle">Male</a>
                         </li>
                         <li class="">
-                           <a class="side-menu-item" href="#" class="dropdown-item">News</a>
-                        </li>
+                           <a class="side-menu-item" href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ" class="dropdown-item">Female</a>
+                        </li> 
                      </ul>
                   </li> 
-                  <li><a class="side-menu-item" href="./news.html" class="dropdown-item">Contact</a></li>
-                  <li><a class="side-menu-item" href="./news.html" class="dropdown-item">About</a></li>
+                  <li><a class="side-menu-item" href="/news.html" class="dropdown-item">Contact</a></li>
+                  <li><a class="side-menu-item" href="/news.html" class="dropdown-item">About</a></li>
                   <li class="side-menu-item">
-                     <a href="./galerry.html">Gallery</a>
+                     <a href="/galerry.html">Gallery</a>
                   </li>
                </ul>
             </aside>
@@ -89,24 +85,21 @@
         <div class="top-menu-content">
            <div id="burger-menu-btn"></div>
             <ul id="guest-nav-list">
-               <li><a href="./posts.html" class="dropdown-item">Home</a></li>
+               <li><a href="/" class="dropdown-item">Home</a></li>
                <li class="dropdown on-hover root"> 
-                  <a href="./index.html" class="dropdown-toggle">All posts</a> 
+                  <a href="/posts.html" class="dropdown-toggle">All posts</a>  
                   <ul class="dropdown-menu"> 
                      <li class=""> 
-                        <a href="#" class="dropdown-toggle">Guide</a>
-                       
+                        <a href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa" class="dropdown-toggle">Male</a>
                      </li>
                      <li class="">
-                        <a href="#" class="dropdown-item">News</a>
-                          
+                        <a href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ" class="dropdown-item">Female</a>
                      </li>
-               
                   </ul>
                </li>
         
-               <li><a href="./news.html" class="dropdown-item">Contact</a></li>
-                  <li><a href="./news.html" class="dropdown-item">About</a></li>
+               <li><a href="/news.html" class="dropdown-item">Contact</a></li>
+                  <li><a href="/news.html" class="dropdown-item">About</a></li>
             </ul>
 
 
@@ -204,7 +197,8 @@
                            </a>
                         </li>          -->
                      </ul>
-                  </div>
+                     <a id="searchSeeMore" href="" class="d-none see-more">See More...</a>
+                  </div> 
                </div>
                <div id="profile-btn-wrapper">
                   <div class="form-row">
@@ -215,9 +209,9 @@
                      </button>
                   </div>
                   <ul id="authNavList" class="auth-nav-list">
-                     <li><a href="./posts.html">My posts</a></li>
-                     <li><a href="./profile/setting.html">Settings</a></li>
-                     <li><a href="./profile/comments.html">Comments</a></li>
+                     <li><a href="/posts.html">My posts</a></li>
+                     <li><a href="/profile/setting.html">Settings</a></li>
+                     <li><a href="/profile/comments.html">Comments</a></li>
                      <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
                   </ul>
                </div>
@@ -249,86 +243,9 @@
                 </ul>
 
             </nav>
-
-            <section class="content-section" >
-               
-                <div class="table-wrapper" style="height: 700px; position: relative;">
-                     <div id="postLoader" class="loader-wrapper abs">
-                        <div class="loader">
-                            <div class="circle-wrapper-1">
-                                <div class="circle-1"></div>
-                            </div>
-                            <div class="circle-wrapper-2">
-                                <div class="circle-2"></div>
-                            </div>
-                            <div class="circle-wrapper-3">
-                                <div class="circle-3"></div>
-                            </div>
-                            <div class="circle-wrapper-4">
-                                <div class="circle-4"></div>
-                            </div>
-                            <div class="circle-wrapper-5">
-                                <div class="circle-5"></div>
-                            </div>
-                            <div class="circle-wrapper-6">
-                                <div class="circle-6"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <table id="postsTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Content</th>
-                                <th>coverUrl</th>
-                                <th>Category Id</th>
-                                <th>date_range</th>
-                                <th>userId</th>
-                                <th>createdAt</th>
-                                <th>Tags</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="postTableBody">
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="pagination-wrapper">
-                    <!-- Pagination controls -->
-                    <div class="pagination-controls">
-                        <!-- per page -->
-                        <div class="pagination__per-page">
-                            <label for="perPageSelect">Posts per page:</label>
-                            <select id="perPageSelect">
-                                <option value="2">2</option>
-                                <option value="5">5</option>
-                                <option value="10" selected>10</option>
-                                <option value="20">20</option>
-                            </select>
-                        </div>
-
-                        <!-- page navigation -->
-                        <div class="pagination__nav">
-                            <button id="prevPage" class="prev-page" disabled>Prev</button>
-
-                            <div id="pageNumbers" class="pagination__numbers"></div>
-
-                            <button id="nextPage" class="next-page">Next</button>
-
-                            <span id="pageInfo" class="pagination__info">Page 1 of 10</span>
-                        </div>
-                    </div>
-                    <!-- load more -->
-                    <div class="pagination__load-more">
-                        <button id="loadMoreBtn">Load More</button>
-                    </div>
-                </div>
-            </section>
-            <section class="content-section">
+       <section class="content-section">
                 <h2>Create Post</h2>
-                <div class="upload_container" style="margin: 30px; border: 1px solid black;">
+                <div class="upload_container">
                     <div class="wrapper d-flex-center d-flex-wrap">
                         <div class="post-create-form-wrapper">
                             <input type="text" id="title" placeholder="Post title"><br><br>
@@ -338,7 +255,7 @@
                                 <label for="category-select">Category</label>
                                 <select name="category" id="category-select">
                                     <option value="">-- Select category --</option>
-                                    <option value="1">50</option>
+                                    <option value="1">50</option> 
                                     <option value="2">60</option>
                                     <option value="3">70</option>
                                 </select>
@@ -346,13 +263,15 @@
 
                             <!-- date_range  -->
                             <div class="year-range">
-                                <label for="startYear">From:</label>
-                                <input type="number" id="startYear" name="startYear" min="2000" max="2099" step="1"
-                                    value="2020">
+                                <label for="startYear">From:
+                                <input type="number" id="startYear" name="startYear" min="1800" max="2025" step="1" value="1800">
+                                </label>
 
-                                <label for="endYear">To:</label>
-                                <input type="number" id="endYear" name="endYear" min="2000" max="2099" step="1"
-                                    value="2025">
+
+                                <label for="endYear">To:
+
+                                    <input type="number" id="endYear" name="endYear" min="1800" max="2025" step="1" value="2025">
+                                </label>
 
                                 <!-- <button id="filterPosts">Filter Posts</button> -->
                             </div>
@@ -458,14 +377,81 @@
                     <button class="btn-secondary" id="reset" onclick="onResetPostClick()">Cancel</button>
                 </div>
             </section>
+            <section class="content-section" >
+                <div class="table-wrapper" style="height: 700px; position: relative;">
+                        <div id="postLoader" class="loader-wrapper abs">
+                        <div class="loader">
+                            <div class="circle-wrapper-1">
+                                <div class="circle-1"></div>
+                            </div>
+                            <div class="circle-wrapper-2">
+                                <div class="circle-2"></div>
+                            </div>
+                            <div class="circle-wrapper-3">
+                                <div class="circle-3"></div>
+                            </div>
+                            <div class="circle-wrapper-4">
+                                <div class="circle-4"></div>
+                            </div>
+                            <div class="circle-wrapper-5">
+                                <div class="circle-5"></div>
+                            </div>
+                            <div class="circle-wrapper-6">
+                                <div class="circle-6"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="postsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>coverUrl</th>
+                                <th>Category Id</th>
+                                <th>date_range</th>
+                                <th>userId</th>
+                                <th>createdAt</th>
+                                <th>Tags</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postTableBody">
 
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-wrapper">
+                    <!-- Pagination controls -->
+                    <div class="pagination-controls">
+                        <!-- per page -->
+                        <div class="pagination__per-page">
+                            <label for="perPageSelect">Posts per page:</label>
+                            <select id="perPageSelect">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
 
-            <section class="content-section">
-                <ul id="postsList"></ul>
+                        <!-- page navigation -->
+                        <div class="pagination__nav">
+                            <button id="prevPage" class="prev-page" disabled>Prev</button>
 
+                            <div id="pageNumbers" class="pagination__numbers"></div>
+
+                            <button id="nextPage" class="next-page">Next</button>
+
+                            <span id="pageInfo" class="pagination__info">Page 1 of 10</span>
+                        </div>
+                    </div>
+                    <!-- load more -->
+                    <div class="pagination__load-more">
+                        <button id="loadMoreBtn">Load More</button>
+                    </div>
+                </div>
             </section>
-
-
         </main>
 
         <aside class="d-block">
@@ -550,13 +536,24 @@
     <script src="../../js/pagination.js"></script>
     <script src="../..//js/service/posts.js"></script>
 
-
     <script>
-
         
+        //TODO: add loader 
+        const fetchPostFromQSIfExist = async () => {
+            const params = Object.fromEntries(new URLSearchParams(window.location.search));
+            const postId = params.postId;
+            if(postId) {
+                const snap = await db.collection("posts").doc(postId).get();
+                const post = { id: snap.id, ...snap.data() }
+                await loadCategoriesToCollection([post]);
+                await loadTagsToCollection([post]);
+                setPostToUpdate(post); 
+            }
+        }
 
         loadCategoriesToSelect();
-
+        
+        fetchPostFromQSIfExist(); 
     </script>
 
 </body>
