@@ -227,7 +227,7 @@
    <div id="main-wrapper">
       <main>
          
-         <nav id="breadcrumbs">
+         <nav id="breadcrumbs" class="d-none">
             <ul>
                <li>
                   <a href="/">Home</a>
@@ -245,7 +245,28 @@
 
          </nav>
 
-               <h2 id="main-content-title">Main Page</h2>
+               <!-- <h2 id="main-content-title">Main Page</h2> -->
+                     <section class="content-section billboard">
+                        <div id="mainCarousel" class="carousel">
+                           <button id="carouselLeftBtn" class="left-btn">◀</button>
+                           <button id="carouselRightBtn" class="right-btn">▶</button>
+                           
+                           <div class="bottom-decorate"></div>
+                           <div id="bottomPanel" class="bottom-panel"> 
+                              <!-- <div class="dot"></div>
+                              <div class="dot"></div>
+                              <div class="dot"></div> -->
+                           </div>
+                        </div>
+                        <div class="vertical-stand">
+                           <div class="category">
+                              <a href="/posts.html?categories=1" class="title">Male</a>
+                           </div>
+                           <div class="category">
+                              <a href="/posts.html?categories=2"class="title">Female</a>
+                           </div>
+                        </div>
+                     </section>
          <section class="content-section">
       
             <p>
@@ -358,7 +379,7 @@
    <!-- <script src="./js/filter-sort/filter-query-creator.js"></script>   -->
    <!-- <script src="./js/filter-sort/index.js"></script>   -->
    <script src="./js/service/posts.js"></script> 
-
+   <script src="./js/utilities/carousel.js"></script>
 
 </body>
 

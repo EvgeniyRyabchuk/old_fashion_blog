@@ -14,7 +14,7 @@ $header-link-hover-color: rgb(126, 126, 193);
     z-index: 999;
     
     .dropdown-menu {
-        top: 100%;
+        top: 100%; 
         display: block;
         position: absolute;
         left: 0; 
@@ -35,7 +35,7 @@ $header-link-hover-color: rgb(126, 126, 193);
             left: 100%;
         }
     }
-
+    
     // action if its hoverable dropdown 
     &.on-hover {
         &:hover {
@@ -43,19 +43,18 @@ $header-link-hover-color: rgb(126, 126, 193);
                 display: block;
            
                 transition: top 1s ease-in-out;
-            }
-        }
-        .dropdown-menu {
-            display: none;
-        }
-        &:hover {
-              &.root {
+            } 
+            &.root {
                 >a::after {
                     content: " ▲"; // for top-level 
                     font-size: 1em;
                 }
             }
         }
+        .dropdown-menu {
+            display: none;
+        }
+    
     }
 
     // action if its clickable dropdown 
