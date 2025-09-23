@@ -15,7 +15,6 @@ const images = [
 ]
 
 const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, bottomPanel, interval) => {
-
     let index = 0; 
     let intervalId = null;
 
@@ -117,8 +116,78 @@ const mainCarousel = createCarousel(
     carouselLeftBtn, 
     carouselRightBtn, 
     carouselBottomPanel,
-    1000
+    10000
 );
 
-// mainCarousel.startLoop();
+
+const SliderDirection = {
+    vertical: "vertical",
+    horizontal: "horizontal",
+}
+const createSlider = (slider, items) => {
+    let intervalId = null;
+    let index = 0;
+    const itemHeight = items[0].offsetHeight; 
+    const itemWidth = items[0].offsetWidth; 
+    
+    // Clone all items and append for seamless loop
+    items.forEach(cat => {
+        const clone = cat.cloneNode(true);
+        slider.appendChild(clone);
+    });
+    
+    const start = (direction, interval, animationTime) => {
+        if(!animationTime)
+            animationTime = (interval/1000)/2;
+        
+        console.log(animationTime);
+        
+        intervalId = setInterval(() => {
+            index++;
+            slider.style.transition = `transform ${animationTime}s ease-in-out`;
+            if(direction === SliderDirection.vertical) 
+                slider.style.transform = `translateY(-${itemHeight * index}px)`;
+            else if(direction === SliderDirection.horizontal) {
+                slider.style.transform = `translateX(-${itemWidth * index}px)`;
+            }
+            console.log(index);
+            
+            // When we've scrolled through all original items,
+            if (index === items.length) {
+                setTimeout(() => {
+                    slider.style.transition = "none";
+                    if (direction ===SliderDirection.vertical)
+                        slider.style.transform = "translateY(0)";
+                    else if (direction === SliderDirection.horizontal) {
+                        slider.style.transform = "translateX(0)";
+                    }
+                    index = 0;
+                }, animationTime * 1000);
+            }
+        }, interval);
+    }
+
+    return {
+        start,
+        stop: () => {
+            clearInterval(intervalId); 
+        }
+    }
+
+}
+
+
+const slider = document.querySelector(".slider");
+const categories = slider.querySelectorAll(".category");
+const categoriesVSlider = createSlider(slider, categories);
+
+
+
+
+
+
+
+mainCarousel.startLoop();
+categoriesVSlider.start(SliderDirection.vertical, 6000, 2);   
+
 

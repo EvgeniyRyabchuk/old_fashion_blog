@@ -3,13 +3,16 @@
 
 // @mixin flexbox($direction: row, $justify: null, $align: null, $wrap: null, $gap: null) {
 
+$billboard-height: 550px;
 
 .billboard {
-    @include mixins.flexbox(row);
-
+    @include mixins.flexbox(row, null, null, null, 5px);
+    height: $billboard-height; 
+    padding: 0 !important; 
+    margin: 20px;
+    overflow: hidden;
     .carousel {
         width: 70%;
-        height: 500px; 
         position: relative;
         background-image: url('../../images/background_cover_1.png');
         background-repeat: no-repeat;
@@ -88,26 +91,35 @@
 
     .vertical-stand {
         width: 30%;
-        @include mixins.flexbox(column);
-        
-        .category {
-            @include mixins.flexbox(row, center, center);
-            background-color: aqua; 
-            width: 100%;
-            height: 50%;
+        z-index: 1;
+        overflow: hidden; // hide overflow outside view
 
-            &:hover {
-                transition: 0.3s transform ease-in-out;
-                transform: scale(1.03);
-                cursor: pointer;
-            }
-
-            .title {
+        .slider, .mobile-wrapper {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.5s ease-in-out;
+            
+            .category {
+                @include mixins.flexbox(row, center, center);
+                border: 1px solid black;
+                background-color: darkgray;
+                width: 100%;
+                height: $billboard-height / 2;
+                padding: 10px; 
+          
                 @extend .default-link;
-                display: block;
+                
                 color: white;
                 font-size: 4rem;
+                
+                &:hover {
+                    opacity: 0.5;
+                }
             }
+        }
+
+        .mobile-wrapper {
+            display: none;
         }
     }
 

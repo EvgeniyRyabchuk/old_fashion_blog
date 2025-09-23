@@ -34,7 +34,7 @@ footer a, header nav a, #sideMenuWrapper #side-menu #side-menu-list .side-menu-i
   font-size: 18px;
 }
 
-#posts-wrapper .post-card > a, #posts-wrapper .post-card .more-wrapper .read-more, .search-post-list li a, .default-link, .billboard .vertical-stand .category .title {
+#posts-wrapper .post-card > a, #posts-wrapper .post-card .more-wrapper .read-more, .search-post-list li a, .default-link, .billboard .vertical-stand .slider .category, .billboard .vertical-stand .mobile-wrapper .category {
   color: black;
   text-decoration-line: none;
 }
@@ -1637,10 +1637,14 @@ scss/
 .billboard {
   display: flex;
   flex-direction: row;
+  gap: 5px;
+  height: 550px;
+  padding: 0 !important;
+  margin: 20px;
+  overflow: hidden;
 }
 .billboard .carousel {
   width: 70%;
-  height: 500px;
   position: relative;
   background-image: url("../../images/background_cover_1.png");
   background-repeat: no-repeat;
@@ -1715,27 +1719,32 @@ scss/
 }
 .billboard .vertical-stand {
   width: 30%;
+  z-index: 1;
+  overflow: hidden;
+}
+.billboard .vertical-stand .slider, .billboard .vertical-stand .mobile-wrapper {
   display: flex;
   flex-direction: column;
+  transition: transform 0.5s ease-in-out;
 }
-.billboard .vertical-stand .category {
+.billboard .vertical-stand .slider .category, .billboard .vertical-stand .mobile-wrapper .category {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: aqua;
+  border: 1px solid black;
+  background-color: darkgray;
   width: 100%;
-  height: 50%;
-}
-.billboard .vertical-stand .category:hover {
-  transition: 0.3s transform ease-in-out;
-  transform: scale(1.03);
-  cursor: pointer;
-}
-.billboard .vertical-stand .category .title {
-  display: block;
+  height: 275px;
+  padding: 10px;
   color: white;
   font-size: 4rem;
+}
+.billboard .vertical-stand .slider .category:hover, .billboard .vertical-stand .mobile-wrapper .category:hover {
+  opacity: 0.5;
+}
+.billboard .vertical-stand .mobile-wrapper {
+  display: none;
 }
 
 #profileBtn::before, #profileBtn::after,
@@ -2216,6 +2225,40 @@ header, footer, #main-wrapper {
   }
 }
 @media screen and (max-width: 1200px) {
+  .billboard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: auto;
+  }
+  .billboard .carousel {
+    width: 100%;
+    margin: 10px 0;
+    height: 40vh;
+    aspect-ratio: 16/9;
+  }
+  .billboard .vertical-stand {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .billboard .vertical-stand .mobile-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .billboard .vertical-stand .mobile-wrapper .category {
+    flex: 1 1 33%;
+    padding: 5px;
+    max-width: 33%;
+  }
+  .billboard .vertical-stand .slider {
+    display: none;
+  }
   .top-menu-content {
     padding: 10px 8px !important;
   }
@@ -2315,6 +2358,26 @@ header, footer, #main-wrapper {
   }
 }
 @media screen and (max-width: 768px) {
+  .billboard .vertical-stand .mobile-wrapper .category {
+    flex: 1 1 50%;
+    padding: 5px;
+    max-width: none;
+  }
+  .billboard {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+  }
+  .billboard .vertical-stand {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+  .billboard .vertical-stand .category {
+    min-width: 250px;
+  }
   .post-card {
     width: 100% !important;
   }
