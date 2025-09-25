@@ -444,8 +444,9 @@
 
    
    <script src="./js/pagination.js"></script>
-   <script src="./js/filter-sort/filter-query-creator.js"></script>  
    <script src="./js/filter-sort/index.js"></script>  
+   <script src="./js/filter-sort/filter-query-creator.js"></script>  
+
 
 
    <script src="./js/service/posts.js"></script> 
@@ -453,7 +454,11 @@
    <!-- <script src="./js/service/comments.js"></script> -->
 
    <script>
-
+      const loadPostsAndSelectableElements = async () => {
+         await renderSelectableElements();
+         await postsPaginator.reload(); 
+      }
+      loadPostsAndSelectableElements(); 
    </script>
 
 </body>

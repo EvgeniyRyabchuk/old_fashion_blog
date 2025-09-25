@@ -1,16 +1,15 @@
 
 
 const postFilterQueryCreator = async () => {
-  const categories = [...document.querySelectorAll('input[data-type="category"]:checked')].map(el => el.value);
-  const tags = [...document.querySelectorAll('input[data-type="tag"]:checked')].map(el => el.value);
+  let categories = [...document.querySelectorAll('input[data-type="category"]:checked')].map(el => el.value);
+  let tags = [...document.querySelectorAll('input[data-type="tag"]:checked')].map(el => el.value);
   const startDate = document.querySelector('input[data-type="date-range-start"]').value;
   const endDate = document.querySelector('input[data-type="date-range-end"]').value;
   const sort = document.getElementById("sort").value;
   
-  // if(!isFirstLoad) {
-    queryStrHandler.changePostsFilter({cIds: categories, tIds: tags, startDate, endDate})
-    queryStrHandler.changeSort(sort);
-  // }
+  queryStrHandler.changePostsFilter({cIds: categories, tIds: tags, startDate, endDate})
+  queryStrHandler.changeSort(sort);
+  
   
   let query = db.collection("posts");
   

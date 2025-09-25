@@ -176,11 +176,54 @@ searchBtn.addEventListener("click", (e) => {
 })
 
 
-//TODO: fixdat trubles 
+
+const historyLimit = 10; 
+const addPostToHIstory = (postId) => {
+  const historyStr = localStorage.getItem("postHistory");
+  let history = historyStr ? historyStr.split(",") : []; 
+  
+  history.unshift(postId); 
+  history = Array.from(new Set(history)); 
+  
+  if(history.length >= historyLimit) {
+    history.pop();
+  }
+  localStorage.setItem("postHistory", history.join(","));
+}
+
+
+const createScrollRow = (scrollAmount, sectionId, leftBtnId, rightBtnId) => {
+  const section = document.getElementById(sectionId);
+  const leftBtn = document.getElementById(leftBtnId);
+  const rightBtn = document.getElementById(rightBtnId);
+
+  leftBtn.addEventListener("click", () => {
+    section.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  });
+
+  rightBtn.addEventListener("click", () => {
+    section.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  });
+}
+
+const lastPostsRow = createScrollRow(
+  300,
+  "lastPostsSection", 
+  "lastPostsLeftBtn", 
+  "lastPostsRightBtn",
+); 
+const postHistoryRow = createScrollRow(
+  300,
+  "postHistory", 
+  "postHistoryLeftBtn", 
+  "postHistoryRightBtn"
+); 
+
+
+//TODO: fix date trouble   
 //TODO: display posts without innerHtml just text 
 //TODO: comment write seaction display real auth user if exist 
 //TODO: fix comments 
-//TODO: main page links 
 //TODO: deleting post elso delete related docs in other collections 
 
 

@@ -23,25 +23,34 @@ const getCurrentEnvForPagination = () => {
   switch (lastUrlPart) {
     case "posts.html":
       return {
-        render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")
+        render: renderPostsForGrid, 
+        filterHandler: postFilterQueryCreator, 
+        container: document.querySelector("#posts-wrapper")
       };
     case "":
       return {
-        render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")
+        render: renderPostsForGrid, 
+        filterHandler: postFilterQueryCreator, 
+        container: document.querySelector("#posts-wrapper")
       };
     case "index.html":
       return {
-        render: renderPostsForGrid, filterHandler: postFilterQueryCreator, container: document.querySelector("#posts-wrapper")
+        render: renderPostsForGrid, 
+        filterHandler: postFilterQueryCreator, 
+        container: document.querySelector("#posts-wrapper")
       };
     case "create-edit-post.html":
       return {
-        render: renderPostsForTable, container: document.querySelector("#postTableBody")
+        render: renderPostsForTable, 
+        container: document.querySelector("#postTableBody")
       };
     default:
       return null;
   }
 }
+
 const currentPaginationEnv = getCurrentEnvForPagination();
+
 const beforePostsLoaded = async (isLoadMore = false) => {  
   postLoader.style.display = "flex"; 
   if(!isLoadMore && currentPaginationEnv.render === renderPostsForGrid) 
@@ -63,14 +72,14 @@ if (currentPaginationEnv) {
     container: currentPaginationEnv.container,
     perPageSelect: document.getElementById("perPageSelect"),
     prevBtn: document.getElementById("prevPage"),
-    nextBtn: document.getElementById("nextPage"),
+    nextBtn: document.getElementById("nextPage"), 
     pageInfo: document.getElementById("pageInfo"),
     pageNumbersContainer: document.getElementById("pageNumbers"),
     loadMoreBtn: document.getElementById("loadMoreBtn"),
     fetchData: async ({page, perPage, cursorHandler, options}) => {
       return await fetchDataFirestore("posts", page, perPage, cursorHandler, {
         orderField: "createdAt", // must exist in your docs 
-        filterHandler: currentPaginationEnv.filterHandler,
+        filterHandler: currentPaginationEnv.filterHandler, 
         ...options
       }, beforePostsLoaded, afterPostsLoaded);
     },
@@ -205,6 +214,9 @@ async function readPost(postId) {
 
   await loadCategoriesToCollection([post]);
   await loadTagsToCollection([post]);
+  addPostToHIstory(post.id); 
+  console.log("read post");
+  
   console.log(post.createdAt);
   
   // Fill DOM
@@ -304,4 +316,49 @@ const onResetPostClick = (e) => {
 }
 
 
+const getLastPosts = async (count) => {
+  const snap = await db.collection("posts").limit(count).get();
+  const posts = snap.docs.map(p => ({ id: p.id, ...p.data() }) )
+  console.log(posts);
+  const lastPostsSection = document.getElementById("lastPostsSection");
 
+  posts.forEach(p => {
+    const article = renderPostsForGrid(p); 
+    lastPostsSection.appendChild(article);
+  })
+
+  if(posts.length >= 10) {
+    const link = document.createElement("a");
+    link.href = "/posts.html";
+    link.className = "see-more";
+    link.innerHTML = "See <br/> More... <br/>";
+    
+    lastPostsSection.appendChild(link);
+  }
+}
+
+
+const renderPostHistory = async () => {
+  const historyStr = localStorage.getItem("postHistory");
+  if (!historyStr) return;
+  
+  const history = historyStr.split(",");
+
+  // Fetch posts by ID
+  const postsSnap = await db.collection("posts")
+    .where(firebase.firestore.FieldPath.documentId(), "in", history)
+    .get();
+
+  const posts = postsSnap.docs.map(p => ({
+    id: p.id,
+    ...p.data()
+  }));
+
+  const postHistorySection = document.getElementById("postHistory");
+  history.forEach(h => {
+    const post = posts.find(p => p.id === h);
+    const article = renderPostsForGrid(post); 
+    postHistorySection.appendChild(article);
+  })
+
+}

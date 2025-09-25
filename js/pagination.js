@@ -89,6 +89,7 @@ const createPaginator = ({
          currentPage = 1;
       isFirstLoad = false;
     }
+    console.log("renderPosts");
     
     container.innerHTML = ""; 
     queryStrHandler.changeCurrentPage(currentPage, perPage);  
@@ -216,7 +217,7 @@ const createPaginator = ({
   loadMoreBtn.addEventListener("click", loadMore);
 
   // Initial render
-  renderPosts();
+  // renderPosts();
   
   return {
     reload: renderPosts,

@@ -316,16 +316,24 @@
          </section> -->
 
          <section class="content-section">
-            <p>
-               Latest Posts
-            </p>
-            <a href="/posts.html" class="see-more">See More...</a>
+            <h3>Last Posts</h3>
+            <div class="post-row" id="lastPostsSection">
+               <button id="lastPostsLeftBtn" class="left-btn">◀</button>
+               <button id="lastPostsRightBtn" class="right-btn">▶</button>
+            </div>
+         </section>
+
+         <section class="content-section tags-section">
+            <h3>Most Popular Tags</h3>
+            <div id="tagsRow" class="tags-row">
+            </div>
          </section>
          <section class="content-section">
-            <p>
-               Most popular Tags
-            </p>
-
+               <h3>View History</h3>
+             <div class="post-row" id="postHistory"> 
+                 <button id="postHistoryLeftBtn" class="left-btn">◀</button>
+                 <button id="postHistoryRightBtn" class="right-btn">▶</button>
+             </div> 
          </section>
       </main>
    </div>
@@ -404,6 +412,12 @@
    <!-- <script src="./js/filter-sort/index.js"></script>   -->
    <script src="./js/service/posts.js"></script> 
    <script src="./js/utilities/carousel.js"></script>
+
+   <script>
+         getLastPosts(10); 
+         getMostPopularTags(10); 
+         renderPostHistory(); 
+   </script>
 
 </body>
 

@@ -17,7 +17,7 @@ const db = admin.firestore();
  */
 async function deleteCollection(collectionPath, batchSize = 100) {
   const collectionRef = db.collection(collectionPath);
-  const query = collectionRef.orderBy("__name__").limit(batchSize);
+  const query = collectionRef.orderBy("__name__").limit(batchSize); 
 
   return new Promise((resolve, reject) => {
     deleteQueryBatch(query, resolve).catch(reject); 

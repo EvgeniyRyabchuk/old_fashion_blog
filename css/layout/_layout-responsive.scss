@@ -203,7 +203,17 @@ header, footer, #main-wrapper {
 
 
 @media screen and (max-width: variables.$md-bp) {
-  
+
+    
+.post-row {
+    .left-btn {
+        left: 5px;
+    } 
+    .right-btn {
+        right: 5px;
+    }
+
+}
     .billboard {
         @include mixins.flexbox(column, null, null, null, 2px);
         margin: 0;
@@ -220,7 +230,7 @@ header, footer, #main-wrapper {
     }
 
     .content-section {
-        padding: 0;
+        // padding: 0;
     }
 
     .upload_container .wrapper {
@@ -249,7 +259,7 @@ header, footer, #main-wrapper {
 
 @media screen and (max-width: variables.$sm-bp) {
     .post-cover {
-        height: 100% !important;
+        // height: 100% !important;
     }
 }
 

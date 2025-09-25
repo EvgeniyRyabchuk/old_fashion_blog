@@ -38,7 +38,7 @@ const fetchDataFirestore = async (
   let ref = null; 
     
   if(options.filterHandler) {
-    ref = await options.filterHandler();
+    ref = await options.filterHandler(); 
   } else {
     ref = db.collection(colName).orderBy(orderField, "desc"); 
   }
@@ -46,7 +46,7 @@ const fetchDataFirestore = async (
   const params = Object.fromEntries(new URLSearchParams(window.location.search));
   const search = params.search;
   
-  if (search) {
+  if (search) { 
     const filterSortSection = document.getElementById("filterSortSection");
     filterSortSection.style.display = "none"; 
     document.getElementById("main-content-title").innerText = `Search Posts by "${search}"`; 
@@ -74,7 +74,6 @@ const fetchDataFirestore = async (
     id: d.id,
     ...d.data()
   }));
-
 
   // save cursor
   if (snap.docs.length > 0) {

@@ -178,6 +178,17 @@ function renderTags() {
   });
 }
 
+function renderMostPopularTags(tagsContainer, tags) {
+  tags.forEach((tag, index) => {
+    const a = document.createElement("a");
+    a.href = `/posts.html?tags=${tag.id}`;
+    a.className = "tag";
+    a.textContent = `${tag.name} (${tag.count})`;
+    tagsContainer.appendChild(a);
+  })
+
+}
+
 
 // =========================================== comments
 

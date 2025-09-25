@@ -185,7 +185,6 @@ async function renderSelectableElements() {
     loadFromPostQueryStr(); 
 }
 
-renderSelectableElements(); 
 
 // --- Sort change ---
 document.getElementById("sort").addEventListener("change", () => {

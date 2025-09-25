@@ -160,3 +160,44 @@ const readAllTags = async () => {
   }
 }
 
+const getMostPopularTags = async (count) => {
+    const tagsRow = document.getElementById("tagsRow");
+
+    const tagCounts = {}; // { tagName: count }
+
+    // Fetch all post-tag documents
+    const snapshot = await db.collection("post_tag").get();
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      // assuming each doc has a 'tag' field
+      
+      if (data.tagId) {
+        tagCounts[data.tagId] = (tagCounts[data.tagId] || 0) + 1;
+      }
+    });
+      
+    // Convert to array and sort by count descending
+    const slicedTags = Object.entries(tagCounts)
+      .slice(0, count)   // top N tags
+      .map(entry => ({ tagId: entry[0], count: entry[1] }));
+
+
+      
+    const tagsSnap = await db.collection("tags")  
+    .where(firebase.firestore.FieldPath.documentId(), "in", slicedTags.map(st => st.tagId))
+    .get();
+
+    const sortedTagsByCount = tagsSnap.docs.map(ts => ({ 
+      id: ts.id, 
+      count: slicedTags.find(st => st.tagId === ts.id).count,
+      ...ts.data()
+    }))
+    .sort((a, b) => b.count - a.count) 
+    console.log(sortedTagsByCount);
+    
+    renderMostPopularTags(tagsRow, sortedTagsByCount); 
+
+
+}
+

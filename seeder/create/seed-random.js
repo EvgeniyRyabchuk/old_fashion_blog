@@ -79,7 +79,7 @@ async function seedPostsWithTagsAndComments(count = 5) {
   
    // Fetch existing categories
   const catSnapshot = await db.collection("categories").get();
-  if (catSnapshot.empty) {
+  if (catSnapshot.empty) { 
     console.log("No categories found! Please create categories first.");
     return;
   }
