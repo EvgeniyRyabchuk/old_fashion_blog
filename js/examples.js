@@ -45,16 +45,16 @@ const CreateBlockSwitcher = (arr, defaultState = false) => {
     }
 }
 
-const profileBtnSwitcher = CreateBlockSwitcher([{changebleSel: "#profile-btn-wrapper > .authNavList",
+const profileBtnSwitcher = CreateBlockSwitcher([{changebleSel: "#profileBtnWrapper > .authNavList",
      state1: "d-block", state2: "d-none" }]);
 const asideSwitcher = CreateBlockSwitcher([
-     {changebleSel: "#side-menu", state1: "w-auto", state2: "w-0" }, 
-     {changebleSel: "#burger-menu-btn", state1: "close-aside-btn", state2: "open-aside-btn"},
+     {changebleSel: "#sideMenu", state1: "w-auto", state2: "w-0" },
+     {changebleSel: "#burgerMenuBtn", state1: "close-aside-btn", state2: "open-aside-btn"},
      {changebleSel: "#side-menu-wrapper", state1: "d-block", state2: "d-none"}
 ]); 
 
 const asideProfileBtn = CreateBlockSwitcher([
-    {changebleSel: "#aside-profile-btn-wrapper > .authNavList", 
+    {changebleSel: "#profileBtnWrapper > .authNavList",
     state1: "h-max-1000", state2: "h-0" } 
 ]);
 

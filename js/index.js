@@ -11,7 +11,7 @@ const breakpoints = {
 const searchPostLoader = document.getElementById("searchPostLoader");
 
 
-const headerSearch = document.getElementById("header-search");
+const headerSearch = document.getElementById("headerSearch");
 const searchToggle = document.getElementById("searchToggle");
 const searchClose = document.getElementById("searchClose");
 const searchInput = document.getElementById("searchInput");
@@ -20,11 +20,11 @@ const searchContent = document.getElementById("searchContent");
 const searchSeeMoreLink = searchContent.querySelector("#searchSeeMore"); 
 
 
-document.getElementById("profile-btn-wrapper").addEventListener("mouseenter", (e) => {
+document.getElementById("profileBtnWrapper").addEventListener("mouseenter", (e) => {
     document.getElementById("authNavList").classList.toggle("is-open");
  
 })
-document.getElementById("profile-btn-wrapper").addEventListener("mouseleave", (e) => {
+document.getElementById("profileBtnWrapper").addEventListener("mouseleave", (e) => {
     document.getElementById("authNavList").classList.toggle("is-open");
 })
 
@@ -36,14 +36,14 @@ document.getElementById("asideProfileBtnWrapper").addEventListener("click", (e) 
 
 
 const setAsideIsOpen = () => {
-    document.querySelector("#side-menu").classList.toggle("is-open");
-    // document.querySelector("#burger-menu-btn").classList.toggle("is-open");
+    document.querySelector("#sideMenu").classList.toggle("is-open");
+    // document.querySelector("#burgerMenuBtn").classList.toggle("is-open");
     document.querySelector("#sideMenuWrapper").classList.toggle("is-open");
     document.body.classList.toggle("no-scroll"); 
 }
 
 // open aside menu 
-document.getElementById("burger-menu-btn").addEventListener("click", (e) => {
+document.getElementById("burgerMenuBtn").addEventListener("click", (e) => {
     setAsideIsOpen();
 })
 document.querySelector("#closeAside").addEventListener("click", (e) => {
@@ -192,45 +192,21 @@ const addPostToHIstory = (postId) => {
 }
 
 
-const createScrollRow = (scrollAmount, sectionId, leftBtnId, rightBtnId) => {
-  const section = document.getElementById(sectionId);
-  const leftBtn = document.getElementById(leftBtnId);
-  const rightBtn = document.getElementById(rightBtnId);
-
-  leftBtn.addEventListener("click", () => {
-    section.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-  });
-
-  rightBtn.addEventListener("click", () => {
-    section.scrollBy({ left: scrollAmount, behavior: "smooth" });
-  });
-}
-
-const lastPostsRow = createScrollRow(
-  300,
-  "lastPostsSection", 
-  "lastPostsLeftBtn", 
-  "lastPostsRightBtn",
-); 
-const postHistoryRow = createScrollRow(
-  300,
-  "postHistory", 
-  "postHistoryLeftBtn", 
-  "postHistoryRightBtn"
-); 
+//TODO: rework id's to classes in css 
 
 
 //TODO: fix date trouble   
-//TODO: display posts without innerHtml just text 
+//TODO: fix comments  
 //TODO: comment write seaction display real auth user if exist 
-//TODO: fix comments 
+
+//TODO: display posts without innerHtml just text  
 //TODO: deleting post elso delete related docs in other collections 
 
 
 //TODO: rederect to login page if not auth and redirect to index.html if logged in and show login btn's if not auth 
 //TODO: prifle: add avatar/change name in setting 
-//TODO: rework id's to classes in css 
+//TODO: fix search input disable when clicks to search btn many times
+//TODO: profile btn priority 
 
-//TODO: all fetch to fetch-folder 
 //TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event 
 //TODO: localize categories names 

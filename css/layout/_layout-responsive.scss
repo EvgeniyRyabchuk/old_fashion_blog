@@ -9,7 +9,7 @@ header, footer, #main-wrapper {
 }
 
 @media screen and (max-width: variables.$xxl-bp) {
-    #side-menu {
+    .side-menu {
         display: none;
     }
 
@@ -55,22 +55,23 @@ header, footer, #main-wrapper {
         // margin: 10px !important;
         padding: 10px 8px !important;
         
-        #burger-menu-btn {
+        .burger-menu-btn {
             display: block !important; 
         }
-        #guest-nav-list {
+
+        .guest-nav-list {
             display: none;
         } 
-        // #header-search { 
+        // .header-search {
         //     display: none !important; 
         // }
     }   
 
-    #side-menu {
+    .side-menu {
         display: block;
     }
 
-    #profile-btn-wrapper {
+    .profile-btn-wrapper {
         display: none;
     }
 
@@ -93,7 +94,7 @@ header, footer, #main-wrapper {
         padding: 10px;
     }
 
-    #header-search {
+    .header-search {
         &.active {
             align-items: start;
             justify-content: start !important;
@@ -120,7 +121,7 @@ header, footer, #main-wrapper {
     .post-card  {
         width: 50% !important;
     }
-    #header-img-block {
+    .header-img-block {
         height: 60px !important;
     } 
 
@@ -128,10 +129,10 @@ header, footer, #main-wrapper {
     //     // margin: 10px 60mportant;
     //     padding: 10px 8px !important;
         
-    //     #burger-menu-btn {
+    //     .burger-menu-btn {
     //         display: block !important; 
     //     }
-    //     #guest-nav-list, #auth-nav-list-wrapper {
+    //     .guest-nav-list, .auth-nav-list-wrapper {
     //         display: none;
     //     } 
     // }   
@@ -165,9 +166,9 @@ header, footer, #main-wrapper {
         }
     }
     
-    #header-search {
-        #searchInput,
-        #searchBtn {
+    .header-search {
+        .search-input,
+        .search-btn {
             display: none;
         }
 
@@ -179,7 +180,7 @@ header, footer, #main-wrapper {
     
     }
 
-    #auth-nav-list-wrapper {
+    .auth-nav-list-wrapper {
         margin: 5px 0 5px 0 !important;
         width: 100%;
         justify-content: right !important;
@@ -187,16 +188,11 @@ header, footer, #main-wrapper {
     }
 
 
-    #top-header-link {
+    .top-header-link {
         padding: 0;
-
-        #headerLable {
+        .header-label {
             font-size: 1rem
         }
-    }
-
-    #sideMenuWrapper {
-        
     }
 
 }

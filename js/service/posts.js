@@ -335,6 +335,7 @@ const getLastPosts = async (count) => {
     
     lastPostsSection.appendChild(link);
   }
+  lastPostsRow.toggleScrollButtons(); 
 }
 
 
@@ -342,8 +343,8 @@ const renderPostHistory = async () => {
   const historyStr = localStorage.getItem("postHistory");
   if (!historyStr) return;
   
-  const history = historyStr.split(",");
-
+  let history = historyStr.split(",");
+  
   // Fetch posts by ID
   const postsSnap = await db.collection("posts")
     .where(firebase.firestore.FieldPath.documentId(), "in", history)
@@ -353,12 +354,16 @@ const renderPostHistory = async () => {
     id: p.id,
     ...p.data()
   }));
+  
+  // if post is deleted then delete it from histtory as well 
+  history = posts.map(p => p.id);
+  localStorage.setItem("postHistory", history.join(","));
 
   const postHistorySection = document.getElementById("postHistory");
-  history.forEach(h => {
+  history.forEach(h => { 
     const post = posts.find(p => p.id === h);
     const article = renderPostsForGrid(post); 
     postHistorySection.appendChild(article);
   })
-
+  postHistoryRow.toggleScrollButtons(); 
 }

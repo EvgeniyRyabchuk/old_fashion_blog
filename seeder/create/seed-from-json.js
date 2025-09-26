@@ -1,6 +1,8 @@
 const admin = require("firebase-admin");
 const fs = require("fs");
 const { Timestamp } = admin.firestore;
+
+
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(require("../json/serviceAccount.json")),

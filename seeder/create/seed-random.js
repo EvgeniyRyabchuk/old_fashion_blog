@@ -2,6 +2,8 @@
 // loads .env file into process.env
 require('dotenv').config(); 
 
+const fs = require("fs");
+
 const postCount = process.env.POST_COUNT ? parseInt(process.env.POST_COUNT) : 1;
 
 const tagMinCountToCreateNew = process.env.POST_COUNT ? parseInt(process.env.TAG_MIN_COUNT_TO_CREATE_NEW) : 1;
@@ -74,28 +76,118 @@ async function createComments(batch, postRef, commentMinCount, commentMaxCount) 
 
 }
 
+async function getCategoriesOrCreateIfNotExist() {
+  let catSnapshot = await db.collection("categories").get();
+  
+  if (catSnapshot.empty) {
+    const staticCategories = JSON.parse(
+      fs.readFileSync("./json/categories.json", "utf8")
+    );
+
+    const batch = db.batch();
+    const catCol = db.collection("categories");
+
+    staticCategories.forEach((sc) => {
+      const docRef = catCol.doc();
+      batch.set(docRef, { name: sc.name });
+    });
+
+    await batch.commit();
+    console.log("Categories seeded!");
+    catSnapshot = await catCol.get();
+  }
+
+  return catSnapshot;
+}
+
+async function getUsersAndAdminsOrCreateIfNotExist() {
+  let usersSnapshot = await db.collection("users").get();
+  const batch = db.batch();
+
+  if (usersSnapshot.empty) {
+    const staticData = JSON.parse(
+      fs.readFileSync("./json/users.json", "utf8")
+    );
+
+    // USERS
+    const usersCol = db.collection("users");
+    
+    Object.values(staticData.users).forEach((user) => {
+      const docRef = usersCol.doc(); // auto-ID
+      batch.set(docRef, user);
+    });
+
+    // ADMINS
+    const adminsCol = db.collection("admins");
+
+    Object.values(staticData.admins).forEach((admin) => {
+      const docRef = adminsCol.doc(); // auto-ID
+      batch.set(docRef, admin);
+    });
+
+
+    await batch.commit();
+    console.log("Users & Admins seeded!");
+    usersSnapshot = await usersCol.get(); 
+  }
+
+  return usersSnapshot;
+}
+
+function generateFakePostContent() {
+  const title = faker.lorem.sentence();
+  const subtitle = faker.lorem.sentence();
+  const paragraphs = Array.from({ length: 4 }, () => `<p>${faker.lorem.paragraph()}</p>`).join("\n");
+
+  // Add some random images
+  const images = Array.from({ length: 2 }, () => 
+    `<img src="https://picsum.photos/800/400?random=${faker.number.int(1000)}" alt="${faker.lorem.word()}">`
+  ).join("\n");
+
+  const content = `
+    <p>
+      <p>
+        <h1>${title}</h1>
+        <h2>${subtitle}</h2>
+        <p class="meta">By ${faker.person.fullName()} • ${faker.date.past().toDateString()}</p>
+      </p>
+      
+      <p>
+        ${paragraphs}
+        ${images}
+        <h3>${faker.lorem.sentence()}</h3>
+        <p>${faker.lorem.paragraphs(2, "<br><br>")}</p>
+        <blockquote>${faker.lorem.sentence()}</blockquote>
+        <p>${faker.lorem.paragraph()}</p>
+      </p>
+    </p>
+  `;
+
+  return content;
+}
+
+
+
 async function seedPostsWithTagsAndComments(count = 5) {
   const tags = await getOrCreateTags(tagMinCountToCreateNew); 
   
-   // Fetch existing categories
-  const catSnapshot = await db.collection("categories").get();
-  if (catSnapshot.empty) { 
-    console.log("No categories found! Please create categories first.");
-    return;
-  }
+  await getUsersAndAdminsOrCreateIfNotExist(); 
   
+  const catSnapshot = await getCategoriesOrCreateIfNotExist();
   const categories = catSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
   const batch = db.batch();
 
+  // creating posts 
   for (let i = 0; i < count; i++) {
     const postRef = db.collection("posts").doc();
     const category = categories[Math.floor(Math.random() * categories.length)];
-
+    
     const startYear = faker.number.int({ min: 2015, max: 2025 });
     const endYear = faker.number.int({ min: startYear, max: 2030 });
 
     const title = faker.lorem.sentence();
-    const content = `<p>${faker.lorem.paragraph()}</p>`;
+    const content = generateFakePostContent(); 
 
     const seed = faker.number.int({
       min: 10000,
@@ -119,7 +211,6 @@ async function seedPostsWithTagsAndComments(count = 5) {
 
     await attachTagsToPost(batch, postRef, tags, tagMinCount, tagMaxCount); 
     await createComments(batch, postRef, commentMinCount, commentMaxCount);  
-    
   }
 
   await batch.commit();

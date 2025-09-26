@@ -1,16 +1,19 @@
 
-const images = [
+const imagesForCarousel = [
     {
         title: "Male",
-        imgUrl: '../../images/background_cover_1.png'
+        imgUrl: '../../images/background_cover_1.png',
+        postId: 1
     },
     {
         title: "Female",
-        imgUrl: '../../images/background_cover_2.png'
+        imgUrl: '../../images/background_cover_2.png',
+        postId: 2
     },
     {
         title: "Male",
-        imgUrl: '../../images/1960s-minidress4.jpg'
+        imgUrl: '../../images/1960s-minidress4.jpg',
+        postId: 3
     },
 ]
 const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, bottomPanel, interval) => {
@@ -85,13 +88,20 @@ const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, 
         moveOverBgUrl("right")
     });
 
+    displayElem.addEventListener("click", (e) => {
+        if(e.target === e.currentTarget)
+            window.location.href = `/post.html?postId=${images[index].postId}`;
+    })
+
     const startLoop = () => {
         intervalId = setInterval(() => {
             moveOverBgUrl("right");
         }, interval)
     }
 
+
     return {
+        get index() { return index; },
         startLoop
     }
 }
@@ -160,16 +170,17 @@ const createSlider = (slider, items) => {
 const carouselLeftBtn = document.getElementById("carouselLeftBtn");
 const carouselRightBtn = document.getElementById("carouselRightBtn");
 const carouselBottomPanel = document.getElementById("bottomPanel"); 
-const displayElem = document.getElementById("mainCarousel")
+const displayCarouselElem = document.getElementById("mainCarousel")
 
 const mainCarousel = createCarousel(
-    images, 
-    displayElem, 
+    imagesForCarousel, 
+    displayCarouselElem, 
     carouselLeftBtn, 
     carouselRightBtn, 
     carouselBottomPanel,
     10000
 );
+
 
 
 
