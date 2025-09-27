@@ -8,15 +8,12 @@ footer {
     padding: 20px; 
     background-color: white; 
 
-    #footer-content {
+    .footer-content {
       display: flex;
       justify-content: space-around;
       
-
- 
-      
       .footer-col {
-        .footer-lable {
+        .footer-label {
             font-weight: 700;
             
         }

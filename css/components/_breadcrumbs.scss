@@ -1,6 +1,6 @@
 @use '../abstracts/index';
 
-#breadcrumbs {
+.breadcrumbs {
     padding: 10px 30px;
     a {
         @extend %menu-list-item;  

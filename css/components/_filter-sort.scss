@@ -46,7 +46,7 @@
 }
 
 @media screen and (min-width: variables.$lg-bp) {
-  #filterDraweWrapper {
+  .filter-drawer-wrapper {
     position: static !important;
     opacity: 1 !important;
     visibility: visible !important;
@@ -63,14 +63,13 @@
 
 $filterAppearTime: 0.3s;
 
-#filterDraweWrapper {
+.filter-drawer-wrapper {
   @extend .full-screen-fixed;
   background-color: rgba(209, 209, 209, 0.6);
   z-index: 999;
   
   @include mixins.animated-disappear-via-visibility($filterAppearTime);
 
-  
   .filter-drawer {
     // Mobile drawer behavior
     position: fixed;
@@ -142,7 +141,7 @@ $filterAppearTime: 0.3s;
       //    border-radius: 6px;
       //  }
 
-      #categoriesContainer {
+      .categoriesContainer {
         display: flex;
         flex-direction: column;
         overflow: auto;
