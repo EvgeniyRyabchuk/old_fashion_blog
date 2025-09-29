@@ -50,7 +50,7 @@ const readAllCategoires = async () => {
 
 const loadCategoriesToSelect = async () => {
   const categories = await readAllCategoires();
-  const select = document.getElementById("category-select");
+  const select = document.getElementById("categorySelect");
   select.innerHTML = ""; // очистить
   select.onchange = async (e) => {
     const categoryId = e.target.value; 

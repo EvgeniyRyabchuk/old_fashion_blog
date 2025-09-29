@@ -201,6 +201,62 @@ select, button {
   margin: 0 5px;
 }
 
+.default-btn, button {
+  border: 0;
+}
+
+.default-bg {
+  background-color: white !important;
+}
+
+.right-side {
+  margin-left: auto;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.full-screen, .full-screen-fixed, .side-menu-wrapper, .filter-drawer-wrapper, .filter-drawer-wrapper.is-open, .loader-wrapper.fixed, .full-screen-abs {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.full-screen-abs {
+  position: absolute;
+}
+
+.full-screen-fixed, .side-menu-wrapper, .filter-drawer-wrapper, .filter-drawer-wrapper.is-open, .loader-wrapper.fixed {
+  position: fixed;
+}
+
+.img-contain {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.switchable, .write-comment-container, .auth-protection {
+  display: none;
+}
+.switchable.is-open, .is-open.write-comment-container, .is-open.auth-protection {
+  display: block;
+}
+
 .comment-container {
   box-shadow: 0px 0px 24px 0px rgb(197, 197, 197);
   padding: 10px;
@@ -398,55 +454,6 @@ select, button {
   right: 0;
   background: #fff;
   z-index: 2;
-}
-
-.default-btn, button {
-  border: 0;
-}
-
-.default-bg {
-  background-color: white !important;
-}
-
-.right-side {
-  margin-left: auto;
-}
-
-.d-block {
-  display: block !important;
-}
-
-.d-none {
-  display: none !important;
-}
-
-.d-flex {
-  display: flex;
-}
-
-.w-100 {
-  width: 100%;
-}
-
-.full-screen, .full-screen-fixed, .side-menu-wrapper, .filter-drawer-wrapper, .filter-drawer-wrapper.is-open, .loader-wrapper.fixed, .full-screen-abs {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.full-screen-abs {
-  position: absolute;
-}
-
-.full-screen-fixed, .side-menu-wrapper, .filter-drawer-wrapper, .filter-drawer-wrapper.is-open, .loader-wrapper.fixed {
-  position: fixed;
-}
-
-.img-contain {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
 }
 
 .loader-wrapper {

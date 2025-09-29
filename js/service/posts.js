@@ -7,16 +7,15 @@ const postLoader = document.querySelector("#postLoader");
 const paginationEnv = null;
 const postContentSection = document.getElementById("postContentSection");
 
-
-
-
+const postsWrapper = document.getElementById("postsWrapper");
+const postTableBody = document.getElementById("postTableBody"); 
 
 //TODO: after and before attached to context so that if it's table 
 
 
 let postsPaginator = null;
 try {
-  
+
 const getCurrentEnvForPagination = () => {
   //TODO: normalize with variables 
   const lastUrlPart = window.location.pathname.split("/").pop();
@@ -25,24 +24,24 @@ const getCurrentEnvForPagination = () => {
       return {
         render: renderPostsForGrid, 
         filterHandler: postFilterQueryCreator, 
-        container: document.querySelector("#posts-wrapper")
+        container: postsWrapper
       };
     case "":
       return {
         render: renderPostsForGrid, 
         filterHandler: postFilterQueryCreator, 
-        container: document.querySelector("#posts-wrapper")
+        container: postsWrapper
       };
     case "index.html":
       return {
         render: renderPostsForGrid, 
         filterHandler: postFilterQueryCreator, 
-        container: document.querySelector("#posts-wrapper")
+        container: postsWrapper
       };
     case "create-edit-post.html":
       return {
         render: renderPostsForTable, 
-        container: document.querySelector("#postTableBody")
+        container: postTableBody
       };
     default:
       return null;
@@ -118,7 +117,7 @@ const defaultWideImgUrl = "/images/default-wide-img.png";
 const createOrUpdatePost = async (postId = null) => {
   const title = document.getElementById("title").value;
   const content = quill.root.innerHTML; 
-  const categorySelect = document.getElementById("category-select"); 
+  const categorySelect = document.getElementById("categorySelect");
   
   let coverUrl, wideImgUrl = null;
   // if post is new and cover img loaded then upload it to cloudinary
@@ -262,7 +261,7 @@ const setPostToUpdate = (post) => {
   console.log(tags);
   renderTags();
   
-  const selectCat = document.getElementById("category-select");
+  const selectCat = document.getElementById("categorySelect");
   selectCat.value = post.categoryId; 
 }
 const onUpdatePostClick = async (e) => {
@@ -304,7 +303,7 @@ const onResetPostClick = (e) => {
   renderTags();
   
   selectedCategoryId = null; 
-  const selectCat = document.getElementById("category-select");
+  const selectCat = document.getElementById("categorySelect");
   selectCat.value = ''; 
 
   coverImg.hidePreview(); 
@@ -367,3 +366,36 @@ const renderPostHistory = async () => {
   })
   postHistoryRow.toggleScrollButtons(); 
 }
+
+function getPostContentPreview(html, maxLength = 150) {
+  // Remove all HTML tags
+  const text = html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+
+  // Cut to desired length
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + "...";
+  }
+  return text;
+}
+
+       const loadPostData = async () => {
+            readPost(postId); 
+            await getCommentsByPostId(postId); 
+
+            firebase.auth().onAuthStateChanged(async function(user) {
+               
+                    const {data: additionUserInfo, isAdmin} = await getUserAddition(auth.currentUser?.uid);
+                    await showCurrentUserInWriteCommentSection( additionUserInfo);
+                    
+                    // if remove btn shold be displayed 
+                    if(!auth.currentUser) return;
+                    const allCommentElements = document.querySelectorAll("#listCommentContainer > li");
+                    allCommentElements.forEach((item) => {
+                    const uId = item.dataset.userId;
+                    const removeBtn = item.querySelector(".btn-danger"); 
+                    if(isAdmin || auth.currentUser.uid === uId) {
+                        removeBtn.classList.add("is-open");
+                    }
+                })
+            });
+       }

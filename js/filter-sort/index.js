@@ -5,14 +5,14 @@ const filterDrawer = document.getElementById("filterDrawer");
 
 const drawer = document.getElementById("filterDrawer");;
 const closeBtn = document.getElementById("filterCloseBtn");
-const filterDraweWrapper =  document.getElementById("filterDraweWrapper"); 
+const filterDrawerWrapper =  document.getElementById("filterDrawerWrapper");
 
 const inputs = document.querySelectorAll(".filter-drawer input");
 const selectedList = document.querySelector(".selected-filters__list");
 
 
 const switchFilter = (isOpening = true) => {
-  filterDraweWrapper.classList.toggle("is-open"); 
+  filterDrawerWrapper.classList.toggle("is-open");
   filterDrawer.classList.toggle("is-open"); 
   // Check if the screen is 992px or less
   if (window.innerWidth <= breakpoints.lg) {
@@ -21,15 +21,13 @@ const switchFilter = (isOpening = true) => {
 }
 
 filterToggle.addEventListener("click", () => {
-// If the class is-open exists, toggle removes it → the drawer closes.
-// If the class is-open does NOT exist, toggle adds it → the drawer opens.
   switchFilter();
 });
 closeBtn.addEventListener("click", () => {
    switchFilter(false) 
 });
 
-filterDraweWrapper.addEventListener("click", (e) => {
+filterDrawerWrapper.addEventListener("click", (e) => {
   if(e.currentTarget == e.target) {
      switchFilter(false); 
   }
@@ -101,9 +99,9 @@ const addEventListenerToInput = (input) => {
              createChip(getDateRangeWitToORFrom(input), value || input.value, type);
           } else {
 
-          if(type == "date-range-start" && new Date(value).getFullYear() == new Date(queryStrHandler.defaultStartDate).getFullYear()) 
+          if(type === "date-range-start" && new Date(value).getFullYear() === new Date(queryStrHandler.defaultStartDate).getFullYear())
             alreadyExist.remove();
-          if(type == "date-range-end" && new Date(value).getFullYear() == new Date(queryStrHandler.defaultStartDate).getFullYear()) 
+          if(type === "date-range-end" && new Date(value).getFullYear() === new Date(queryStrHandler.defaultStartDate).getFullYear())
             alreadyExist.remove();
 
             alreadyExist.innerHTML = getDateRangeWitToORFrom(input);

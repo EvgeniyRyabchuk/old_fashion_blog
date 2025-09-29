@@ -19,135 +19,220 @@
 <body>
 
    <header>
-      
-      <!-- <div id="side-menu-wrapper" class="d-block">
-     
-      </div> -->
-    <a class="default-link" href="/">
-        <div id="header-img-block">
-            <h2 id="headerLable">Old Fashion Blog</h2>
-        </div>
-    </a> 
 
-      <nav id="top-menu">
-         <div id="side-menu-wrapper">
-            <aside id="side-menu">
-               <div id="top-aside-block">Menu</div>
-               <div id="aside-profile-btn-wrapper">
+      <a class="default-link top-header-link" href="/">
+         <div class="header-img-block">
+            <h2 class="header-label">Old Fashion Blog</h2>
+         </div>
+      </a>
+
+      <nav class="top-menu">
+         <div id="sideMenuWrapper" class="side-menu-wrapper">
+            <aside id="sideMenu" class="side-menu">
+               <div class="top-aside-block">
+                  <div class="close-aside" id="closeAside"></div>
+                  Menu
+               </div>
+               <div class="form-row d-flex-center" style="margin: 20px 0;">
+                  <a class="login-btn" href="/auth/login.html">Login</a>
+                  <a class="sign-in-btn" href="/auth/register.html">Sign Up</a>
+               </div>
+               <div class="aside-profile-btn-wrapper" id="asideProfileBtnWrapper">
                   <div class="form-row">
-                     <button id="asideProfileBtn">
-                        <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                     <button class="aside-profile-btn" id="asideProfileBtn">
+                        <!-- <img class="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
                         Profile
-                        <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
-                     </button> 
+                        <!-- <img class="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                     </button>
                   </div>
-                   <div class="form-row">
-                       <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./login.html">Login</a>
-                       <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./register.html">Sign Up</a>
-                    </div>
-                  <ul class="authNavList h-0" class="d-none">
-                     <li><a href="./posts.html">My posts</a></li>
-                     <li><a href="./profile/setting.html">Settings</a></li>
-                     <li><a href="./profile/comments.html">Comments</a></li>
-                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+
+                  <ul id="asideAuthNavList" class="auth-nav-list d-none">
+                     <li><a href="/posts.html">My posts</a></li>
+                     <li><a href="/profile/setting.html">Settings</a></li>
+                     <li><a href="/profile/comments.html">Comments</a></li>
+                     <li style="padding: 0;">
+                        <button type="button" onclick="logout()">Logout</button>
+                     </li>
                   </ul>
                </div>
-               <ul id="side-menu-list">
 
-                  <li class="side-menu-item">
-                     <a href="./index.html">Home</a></li>
+               <ul class="side-menu-list">
 
-                  <li class="side-menu-item">
-                     <a href="./posts.html">All posts</a>
+                  <li><a class="side-menu-item" href="/" class="dropdown-item">Home</a></li>
+                  <li class="dropdown on-click root">
+                     <a class="side-menu-item prevent" href="/posts.html" class="dropdown-toggle">All posts</a>
+                     <ul class="dropdown-menu">
+                        <li class="">
+                           <a class="side-menu-item" href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa"
+                              class="dropdown-toggle">Male</a>
+                        </li>
+                        <li class="">
+                           <a class="side-menu-item" href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ"
+                              class="dropdown-item">Female</a>
+                        </li>
+                     </ul>
                   </li>
+                  <li><a class="side-menu-item" href="/news.html" class="dropdown-item">Contact</a></li>
+                  <li><a class="side-menu-item" href="/news.html" class="dropdown-item">About</a></li>
                   <li class="side-menu-item">
-                     <a href="./posts.html">News</a></li>
-
-                  <li class="side-menu-item">
-                     <a href="./posts.html">Guide</a></li>
-                  <li class="side-menu-item">
-                     <a href="./galerry.html">Gallery</a>
+                     <a href="/galerry.html">Gallery</a>
                   </li>
-                  <li class="side-menu-item">
-                     <a href="./about.html">About</a></li>
-                  <li class="side-menu-item">
-                     <a href="./contact.html">Contact</a>
-                  </li>
-
                </ul>
             </aside>
          </div>
-        
+
 
          <div class="top-menu-content">
-            <div id="burger-menu-btn" class="open-aside-btn"></div>
-            <ul id="guest-nav-list">
-               <li><a href="./index.html">Home</a></li>
-               <li><a href="./posts.html">All posts</a></li>
-               <li><a href="./posts.html">News</a></li>
-               <li><a href="./posts.html">Guide</a></li> 
-               <li><a href="./galerry.html">Gallery</a></li> 
-               <li><a href="./about.html">About</a></li>
-               <li><a href="./contact.html">Contact</a></li>
-            </ul>
-          
-            <!-- TODO: right  nav-list-wrapper --->
-            <div id="auth-nav-list-wrapper">
-               <div class="form-row"> 
-                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./login.html">Login</a>
-                  <a class="btn-info" style="padding: 5px; margin: 0 5px;" href="./register.html">Sign Up</a>
-               </div>
-               
-               <div id="header-search" class="form-row"> 
-                  <input id="searchInput" type="text" placeholder="Search..." />
-                  <button class="btn-info" id="searchBtn" type="button"> 
-                     Search
-                  </button>
-               </div>
+            <div class="burger-menu-btn" id="burgerMenuBtn"></div>
+            <ul class="guest-nav-list">
+               <li><a href="/" class="dropdown-item">Home</a></li>
+               <li class="dropdown on-hover root">
+                  <a href="/posts.html" class="dropdown-toggle">All posts</a>
+                  <ul class="dropdown-menu">
+                     <li class="">
+                        <a href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa" class="dropdown-toggle">Male</a>
+                     </li>
+                     <li class="">
+                        <a href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ" class="dropdown-item">Female</a>
+                     </li>
+                  </ul>
+               </li>
 
-                <div class="form-row">
-                  <select id="language-select">
+               <li><a href="/news.html" class="dropdown-item">Contact</a></li>
+               <li><a href="/news.html" class="dropdown-item">About</a></li>
+            </ul>
+
+
+            <!-- TODO: right  nav-list-wrapper --->
+            <div class="auth-nav-list-wrapper">
+               <!-- <div class="form-row">
+                  <a class="login-btn" style="margin: 0 5px;" href="./auth/login.html">Login</a>
+                  <a class="sign-in-btn" style="margin: 0 5px;" href="./auth/register.html">Sign Up</a>
+               </div> -->
+               <div class="form-row">
+                  <select class="language-select" id="languageSelect">
                      <option value="RU">RU</option>
                      <option value="UA">UA</option>
                      <option value="EN">EN</option>
                   </select>
                </div>
-                <div class="form-row">
-                  <select id="theme-select">
+               <div class="form-row">
+                  <select class="theme-select" id="themeSelect">
                      <option value="RU">Default</option>
                      <option value="UA">Light</option>
                      <option value="EN">Dark</option>
                   </select>
                </div>
-          
-               <div id="profile-btn-wrapper">
+
+
+               <div class="form-row header-search" id="headerSearch">
+                  <div class="d-flex-center form-row search-controll" id="searchControll">
+                     <button class="search-close" id="searchClose" type="button">&times;</button>
+                     <input class="search-input" id="searchInput" type="text" placeholder="Search...">
+                     <button class="btn-info search-btn" id="searchBtn" type="button">Search</button>
+                     <!-- Icon-only button for mobile -->
+                     <button class="search-toggle" id="searchToggle" type="button"></button>
+                  </div>
+
+
+                  <div id="searchContent" class="search-content">
+                     <div id="searchPostLoader" class="loader-wrapper abs bg-transparent">
+                        <div class="loader">
+                           <div class="circle-wrapper-1">
+                              <div class="circle-1"></div>
+                           </div>
+                           <div class="circle-wrapper-2">
+                              <div class="circle-2"></div>
+                           </div>
+                           <div class="circle-wrapper-3">
+                              <div class="circle-3"></div>
+                           </div>
+                           <div class="circle-wrapper-4">
+                              <div class="circle-4"></div>
+                           </div>
+                           <div class="circle-wrapper-5">
+                              <div class="circle-5"></div>
+                           </div>
+                           <div class="circle-wrapper-6">
+                              <div class="circle-6"></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="d-none no-data-li">No results found</div>
+                     <ul id="searchPostList" class="search-post-list">
+
+                        <!-- <li>
+                           <a href="#">
+                              <div class="post-cover d-flex-v-center">
+                                 <img width="70" height="70" src="./images/1960s-minidress4.jpg" alt="Post Img">
+                              </div>
+                              <div class="post-title-wrapper">
+                                 <span class="post-title">
+                                    Lorem ipsum dolor sit amet consectetur
+                                    adipisicing elit. Nihil repellat sit sed tempore libero, eaque
+                                     molestiae perspiciatis nostrum provident veritatis nam in,
+                                    nulla ducimus laudantium deleniti delectus sint officia quae!
+                                                                        Lorem ipsum dolor sit amet consectetur
+                                    adipisicing elit. Nihil repellat sit sed tempore libero, eaque
+                                     molestiae perspiciatis nostrum provident veritatis nam in,
+                                    nulla ducimus laudantium deleniti delectus sint officia quae!
+                                 </span>
+                              </div>
+                           </a>
+                        </li>
+                      <li>
+                           <a href="#">
+                              <div class="post-cover d-flex-v-center">
+                                 <img width="70" height="70" src="./images/1960s-minidress4.jpg" alt="Post Img">
+                              </div>
+                              <div class="post-title-wrapper">
+                                 <span class="post-title">
+                                    Lorem ipsum dolor sit amet consectetur
+                                    adipisicing elit. Nihil repellat sit sed tempore libero, eaque
+                                     molestiae perspiciatis nostrum provident veritatis nam in,
+                                    nulla ducimus laudantium deleniti delectus sint officia quae!
+                                                                        Lorem ipsum dolor sit amet consectetur
+                                    adipisicing elit. Nihil repellat sit sed tempore libero, eaque
+                                     molestiae perspiciatis nostrum provident veritatis nam in,
+                                    nulla ducimus laudantium deleniti delectus sint officia quae!
+                                 </span>
+                              </div>
+                           </a>
+                        </li>          -->
+                     </ul>
+                     <a id="searchSeeMore" href="" class="d-none see-more">See More...</a>
+                  </div>
+               </div>
+
+               <div class="profile-btn-wrapper" id="profileBtnWrapper">
                   <div class="form-row">
-                     <button id="profileBtn">
-                        <!-- <img id="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
+                     <button class="profile-btn" id="profileBtn">
+                        <!-- <img class="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
                         Profile
-                        <!-- <img id="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
+                        <!-- <img class="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
                      </button>
                   </div>
-                  <ul class="authNavList d-none" class="d-none">
-                     <li><a href="./auth/login.html">Login</a></li>
-                     <li><a href="./auth/signUp.html">Sign Up</a></li>
-                     <li><a href="./posts.html">My posts</a></li>
-                     <li><a href="./profile/setting.html">Settings</a></li>
-                     <li><a href="./profile/comments.html">Comments</a></li>
-                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+
+                  <ul id="authNavList" class="auth-nav-list">
+                     <li><a href="/posts.html">My posts</a></li>
+                     <li><a href="/profile/setting.html">Settings</a></li>
+                     <li><a href="/profile/comments.html">Comments</a></li>
+                     <li style="padding: 0;">
+                        <button type="button" onclick="logout()">Logout</button>
+                     </li>
                   </ul>
                </div>
-              
+
             </div>
-     
+
          </div>
 
       </nav>
    </header>
 
-   <div id="main-wrapper">
+   <div class="main-wrapper">
       <main>
-         <nav id="breadcrumbs">
+         <nav id="breadcrumbs" class="d-none breadcrumbs">
             <ul>
                <li>
                   <a href="/">Home</a>
@@ -166,6 +251,7 @@
          </nav>
 
          <section class="content-section" >  
+            <h2 class="main-content-title" id="mainContentTitle">Sign up</h2> 
             <div class="login-wrapper">
                 <h2>Register</h2>
                 <div class="input-group">
@@ -189,10 +275,10 @@
    </div>
 
    <footer>
-      <div id="footer-content">
+      <div class="footer-content">
          <div class="footer-col">
             <div>
-               <span class="footer-lable">Контакти</span>
+               <span class="footer-label">Контакти</span>
                <ul class="footer-data-wrapper">
                   <li class="footer-data-row">0-800-33-00-16</li>
                   <li class="footer-data-row">
@@ -205,7 +291,7 @@
          </div>
          <nav class="footer-col">
             <div>
-               <span class="footer-lable">Про компанію</span>
+               <span class="footer-label">Про компанію</span>
                <ul class="footer-data-wrapper">
                   <li class="footer-data-row">Про нас</li>
                   <li class="footer-data-row">Нашi магазини</li>
@@ -217,7 +303,7 @@
          </nav>
          <nav class="footer-col">
             <div>
-               <span class="footer-lable">Покупцям</span>
+               <span class="footer-label">Покупцям</span>
                <ul class="footer-data-wrapper">
                   <li class="footer-data-row">Подарункові сертифікати</li>
                   <li class="footer-data-row">Обмін/Повернення</li>
@@ -230,12 +316,12 @@
          <div class="footer-col">
             <div>
                <div>
-                  <span class="footer-lable">Наші соцмережі</span>
+                  <span class="footer-label">Наші соцмережі</span>
                   <ul class="footer-data-wrapper d-flex">
                      <li class="footer-data-row">Facebook</li>
                      <li class="footer-data-row">Instagram</li>
                   </ul>
-                  <span class="footer-lable">Приймаємо до оплати</span>
+                  <span class="footer-label">Приймаємо до оплати</span>
                   <ul class="footer-data-wrapper d-flex">
                      <li class="footer-data-row">Visa</li>
                      <li class="footer-data-row">Mastercard</li>
@@ -243,11 +329,13 @@
                </div>
             </div>
          </div>
+      </div>
    </footer>
 
 
 
    <script src="../js/index.js"></script>
+   <script src="../js/service/index.js"></script>
    <script src="../js/service/auth.js"></script>
 
 </body>

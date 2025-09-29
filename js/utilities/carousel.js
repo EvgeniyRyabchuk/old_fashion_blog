@@ -128,7 +128,7 @@ const createSlider = (slider, items) => {
         if(!animationTime)
             animationTime = (interval/1000)/2;
         
-        console.log(animationTime);
+        // console.log(animationTime);
         
         intervalId = setInterval(() => {
             index++;
@@ -138,7 +138,6 @@ const createSlider = (slider, items) => {
             else if(direction === SliderDirection.horizontal) {
                 slider.style.transform = `translateX(-${itemWidth * index}px)`;
             }
-            console.log(index);
             
             // When we've scrolled through all original items,
             if (index === items.length) {

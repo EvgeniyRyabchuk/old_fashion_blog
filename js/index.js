@@ -192,14 +192,8 @@ const addPostToHIstory = (postId) => {
 }
 
 
-//TODO: rework id's to classes in css 
 
 
-//TODO: fix date trouble   
-//TODO: fix comments  
-//TODO: comment write seaction display real auth user if exist 
-
-//TODO: display posts without innerHtml just text  
 //TODO: deleting post elso delete related docs in other collections 
 
 

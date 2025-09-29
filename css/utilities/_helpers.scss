@@ -37,3 +37,9 @@ button { @extend .default-btn ; }
 }
 
 
+.switchable {
+    display: none;
+  &.is-open {
+    display: block;
+  }
+}

@@ -1,4 +1,14 @@
 @use '../abstracts/placeholders'; 
+@use '../utilities/helpers';
+
+
+.write-comment-container { 
+  @extend .switchable;
+}
+
+.auth-protection {
+  @extend .switchable; 
+}
 
 .comment-container {
     box-shadow: 0px 0px 24px 0px rgba(197, 197, 197, 1);

@@ -1,5 +1,8 @@
 
-
+const getDateTimeFormat = (str) => {
+  const date = str.toDate();
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+}
 
 // =========================================== search posts 
 function renderPostsForSearch(posts) { 
@@ -61,7 +64,7 @@ const renderPostsForTable = (post) => {
     tdTags.style.maxHeight = "100px"; 
 
     const documentHtml = document.createElement('div');
-    documentHtml.innerHTML = post.content;
+    documentHtml.innerHTML = getPostContentPreview(post.content, 400);
 
     documentHtml.querySelectorAll('img').forEach(img => {
       img.width = 100;
@@ -143,7 +146,7 @@ const renderPostsForGrid = (post) => {
   // short content
   const shortContent = document.createElement("div");
   shortContent.className = "post-short-content";
-  shortContent.innerHTML = post.content;
+  shortContent.innerHTML = getPostContentPreview(post.content, 400);
 
   // assemble inside link
   link.appendChild(coverDiv);
@@ -192,16 +195,26 @@ function renderMostPopularTags(tagsContainer, tags) {
 
 // =========================================== comments
 
-const renderComments = (comment, additionUserInfo) => { 
+
+
+const renderComments = (comment, additionUserInfo, isCreatedNew = false) => { 
     const li = document.createElement("li");
     li.dataset.commentId = comment.id; 
+    li.dataset.userId = comment.userId; 
     // Create user card
     const userCard = document.createElement("div");
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
     removeBtn.innerText = "Remove";
     removeBtn.classList.add("btn-danger");  
-    removeBtn.style = `display: block; margin-left: auto`
+    if(isCreatedNew) {
+      removeBtn.style = `display: block; margin-left: auto`;  
+    } else {
+      removeBtn.classList.add("switchable");   
+      removeBtn.style = `margin-left: auto`; 
+    }
+    
+  
     removeBtn.onclick = async (e) => {
         const commentId = e.target.closest("li").dataset.commentId;
         await deleteComment(commentId); 
@@ -224,8 +237,8 @@ const renderComments = (comment, additionUserInfo) => {
     userName.textContent = additionUserInfo ? additionUserInfo.name : "Not Found"; 
     
     const createdAt = document.createElement("div");
-    createdAt.className = "created-at";
-    createdAt.textContent = new Date(comment.createdAt).toLocaleDateString(); 
+    createdAt.className = "created-at"; 
+    createdAt.textContent = getDateTimeFormat(comment.createdAt);
 
     userCard.appendChild(avatar);
     userCard.appendChild(userName);
@@ -245,7 +258,18 @@ const renderComments = (comment, additionUserInfo) => {
     li.appendChild(commentRow); 
     li.appendChild(removeBtn); 
     li.appendChild(hr);
-    listCommentContainer.appendChild(li);
+    
+    if(isCreatedNew) {
+      if (listCommentContainer.firstChild) {
+        listCommentContainer.insertBefore(li, listCommentContainer.firstChild);
+      } else {
+        listCommentContainer.appendChild(li); // if empty
+      }
+    } else {
+      listCommentContainer.appendChild(li);
+    }
+
+
 }
 
 

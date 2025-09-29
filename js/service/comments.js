@@ -1,15 +1,14 @@
+
 let commentsForPost = [];
-const listCommentContainer = document.querySelector("#list-comment-container");
-
-
-
+const listCommentContainer = document.querySelector("#listCommentContainer");
+const curUserWriteSection = document.querySelector("#curUserWriteSection"); 
 
 const addCommentToPost = async (postId) => {
-    const text = document.querySelector('#comment-content').value;
-    const additionUserInfo = await getUserAddition();
+    const text = document.querySelector('#commentContent')
+    const {data: additionUserInfo} = await getUserAddition();
     
     const createdCommentRef = await db.collection("comments").add({
-        content: text,
+        content: text.value,
         userId: additionUserInfo.userId,
         postId: postId, 
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -18,8 +17,10 @@ const addCommentToPost = async (postId) => {
     
     renderComments(
         {id: createdCommenSnap.id, ...createdCommenSnap.data()}, 
-        additionUserInfo
+        additionUserInfo,
+        true
     );
+    text.value = ""; 
 }
 
 const getAllComments = async () => {
@@ -30,9 +31,8 @@ const getAllComments = async () => {
     }));
 
     const user = auth.currentUser.uid;
-    const additionUserInfo = await getUserAddition();
+    const {data: additionUserInfo} = await getUserAddition();
     
-
     // container.innerHTML = ""; // Clear previous comments 
     for (let comment of comments) {
         renderComments(comment, additionUserInfo); 
@@ -50,17 +50,36 @@ const getCommentsByPostId = async (postId) => {
         id: doc.id,
         ...doc.data()
     }));
+    console.log(comments);
     
-     
     // const additionUserInfo = await getUserAddition();
 
     listCommentContainer.innerHTML = ""; // clear old comments
     
     for (let comment of comments) {
-        const additionUserInfo = await getUserAddition(comment.userId);
+        const {data: additionUserInfo} = await getUserAddition(comment.userId);
         renderComments(comment, additionUserInfo); 
     }
 };
+
+
+const showCurrentUserInWriteCommentSection = async (additionUserInfo) => {
+    const authCommentProtection = document.getElementById("authCommentProtection"); 
+    
+    if(auth.currentUser) {
+        authCommentProtection.classList.remove("is-open"); 
+        curUserWriteSection.classList.add("is-open"); 
+        const avatar = curUserWriteSection.querySelector("img"); 
+        const name = curUserWriteSection.querySelector(".user-name"); 
+        avatar.src = additionUserInfo.avatar;
+        name.innerText = additionUserInfo.name;
+    } else {
+        authCommentProtection.classList.add("is-open"); 
+        curUserWriteSection.classList.remove("is-open"); 
+    }
+}
+
+
 
 
 const deleteComment = async (commentId) => {
