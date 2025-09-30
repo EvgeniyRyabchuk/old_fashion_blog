@@ -101,19 +101,6 @@ const createImageDragDrop = (
   }
 }
 
-const coverImg = createImageDragDrop(
-  "coverImg", 
-  "coverPreview", 
-  "postImgPlaceholder", 
-  "deletePostCoverImgBtn"
-);
-
-const wideImg = createImageDragDrop(
-  "wideImg", 
-  "widePreview", 
-  "postWideImgPlaceholder", 
-  "deletePostWidePreviewBtn" 
-);
 
 
 

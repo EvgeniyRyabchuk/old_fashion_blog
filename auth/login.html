@@ -19,7 +19,6 @@
 <body>
 
    <header>
-
       <a class="default-link top-header-link" href="/">
          <div class="header-img-block">
             <h2 class="header-label">Old Fashion Blog</h2>
@@ -35,9 +34,9 @@
                </div>
                <div class="form-row d-flex-center" style="margin: 20px 0;">
                   <a class="login-btn" href="/auth/login.html">Login</a>
-                  <a class="sign-in-btn" href="/auth/register.html">Sign Up</a>
+                  <a class="sign-up-btn" href="/auth/register.html">Sign Up</a>
                </div>
-               <div class="aside-profile-btn-wrapper" id="asideProfileBtnWrapper">
+               <div class="aside-profile-btn-wrapper switchable" id="asideProfileBtnWrapper">
                   <div class="form-row">
                      <button class="aside-profile-btn" id="asideProfileBtn">
                         <!-- <img class="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
@@ -105,10 +104,10 @@
 
             <!-- TODO: right  nav-list-wrapper --->
             <div class="auth-nav-list-wrapper">
-               <!-- <div class="form-row">
-                  <a class="login-btn" style="margin: 0 5px;" href="./auth/login.html">Login</a>
-                  <a class="sign-in-btn" style="margin: 0 5px;" href="./auth/register.html">Sign Up</a>
-               </div> -->
+               <div id="headerNavLoginBtnForm" class="form-row">
+                  <a class="login-btn" style="margin: 0 5px;" href="/auth/login.html">Login</a>
+                  <a class="sign-up-btn" style="margin: 0 5px;" href="/auth/register.html">Sign Up</a>
+               </div>
                <div class="form-row">
                   <select class="language-select" id="languageSelect">
                      <option value="RU">RU</option>
@@ -204,7 +203,7 @@
                   </div>
                </div>
 
-               <div class="profile-btn-wrapper" id="profileBtnWrapper">
+               <div class="profile-btn-wrapper switchable" id="profileBtnWrapper">
                   <div class="form-row">
                      <button class="profile-btn" id="profileBtn">
                         <!-- <img class="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->

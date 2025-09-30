@@ -8,11 +8,26 @@ const paginationEnv = null;
 const postContentSection = document.getElementById("postContentSection");
 
 const postsWrapper = document.getElementById("postsWrapper");
-const postTableBody = document.getElementById("postTableBody"); 
+const postTableBody = document.getElementById("postTableBody");
+
+const coverImg = createImageDragDrop(
+    "coverImg",
+    "coverPreview",
+    "postImgPlaceholder",
+    "deletePostCoverImgBtn"
+);
+
+const wideImg = createImageDragDrop(
+    "wideImg",
+    "widePreview",
+    "postWideImgPlaceholder",
+    "deletePostWidePreviewBtn"
+);
+
 
 //TODO: after and before attached to context so that if it's table 
 
-
+let currentPaginationEnv = null;
 let postsPaginator = null;
 try {
 
@@ -24,31 +39,35 @@ const getCurrentEnvForPagination = () => {
       return {
         render: renderPostsForGrid, 
         filterHandler: postFilterQueryCreator, 
-        container: postsWrapper
+        container: postsWrapper,
+        lastUrlPart
       };
     case "":
       return {
         render: renderPostsForGrid, 
         filterHandler: postFilterQueryCreator, 
-        container: postsWrapper
+        container: postsWrapper,
+        lastUrlPart
       };
     case "index.html":
       return {
         render: renderPostsForGrid, 
         filterHandler: postFilterQueryCreator, 
-        container: postsWrapper
+        container: postsWrapper,
+        lastUrlPart
       };
-    case "create-edit-post.html":
+    case "create-edit-post.html": 
       return {
         render: renderPostsForTable, 
-        container: postTableBody
+        container: postTableBody,
+        lastUrlPart
       };
     default:
       return null;
   }
 }
 
-const currentPaginationEnv = getCurrentEnvForPagination();
+currentPaginationEnv = getCurrentEnvForPagination();
 
 const beforePostsLoaded = async (isLoadMore = false) => {  
   postLoader.style.display = "flex"; 
@@ -63,6 +82,12 @@ const afterPostsLoaded = async (posts) => {
   allPosts = posts;  
   postLoader.style.display = "none"; 
   document.querySelector(".pagination-wrapper").classList.add("is-open"); 
+
+  const noPostsData = document.getElementById("noPostsData"); 
+  if(noPostsData) {
+    if(posts.length === 0) noPostsData.classList.add("is-open"); 
+    else noPostsData.classList.remove("is-open"); 
+  }
 }
 
 if (currentPaginationEnv) {
@@ -95,14 +120,19 @@ if (currentPaginationEnv) {
 const clearUpTheForm = () => {
   document.getElementById("title").value = ""; 
   quill.setText("");
-  // coverImg.input.value = ""; 
   coverImg.hidePreview(); 
   wideImg.hidePreview(); 
-
-  // document.getElementById("preview").innerHTML = "";
   tagInput.value = "";
   tags = [];
   renderTags();
+    // reset extra fields only for reset button
+  document.getElementById("startYear").value = parseInt(queryStrHandler.defaultStartDate);
+  document.getElementById("endYear").value = parseInt(queryStrHandler.defaultEndDate);
+
+  selectedCategoryId = null; 
+  const selectCat = document.getElementById("categorySelect");
+  selectCat.value = ''; 
+  queryStrHandler.changeCurrentPost(null);  
 }
 
 function buildSearchIndex(title, tags) {
@@ -141,16 +171,7 @@ const createOrUpdatePost = async (postId = null) => {
   }
   console.log(startDate, endDate);
   console.log(content);
-
-  // if (!coverUrl) {
-  //   if(!postId) { 
-  //     coverUrl = 'https://res.cloudinary.com/dpbmcoiru/image/upload/v1756029078/no-image_b3qvs2.png';
-  //   } else { 
-  //       alert("Load old cover image");
-  //   } 
-  // }
   
-
   try {
     let createdOrUpdatedPost = null; 
     if(!postId) {
@@ -249,11 +270,11 @@ const setPostToUpdate = (post) => {
 
   // coverImg.input.value = ""; 
   coverImg.hidePreview(); 
-  coverImg.showPreview(post.coverUrl); 
   wideImg.hidePreview();  
+
+  coverImg.showPreview(post.coverUrl); 
   wideImg.showPreview(post.wideImgUrl); 
 
-  
   document.getElementById("startYear").value =  post.date_range_start;   
   document.getElementById("endYear").value = post.date_range_end; 
   
@@ -264,6 +285,7 @@ const setPostToUpdate = (post) => {
   const selectCat = document.getElementById("categorySelect");
   selectCat.value = post.categoryId; 
 }
+
 const onUpdatePostClick = async (e) => {
   const pId = e.target.closest("tr").dataset.postId; 
   const post = allPosts.find(p => p.id === pId); 
@@ -272,44 +294,42 @@ const onUpdatePostClick = async (e) => {
   document.querySelector(".upload_container").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-const onDeletePostClick = async (e) => {
-  const pId = e.target.closest("tr").dataset.postId;
-  console.log(pId); 
-  
+const onDeletePostClick = async (pId) => {
   try {
-    await db.collection("posts").doc(pId).delete(); 
-    await postsPaginator.reload();
-    console.log("Document successfully updated!");
+    // delete post itself
+    await db.collection("posts").doc(pId).delete();
+
+    // batch delete comments + post_tag
+    const batch = db.batch();
+
+    const commentsSnap = await db.collection("comments").where("postId", "==", pId).get();
+    commentsSnap.forEach(doc => batch.delete(doc.ref));
+
+    const tagsSnap = await db.collection("post_tag").where("postId", "==", pId).get();
+    tagsSnap.forEach(doc => batch.delete(doc.ref));
+
+    await batch.commit();
+
+    if(postsPaginator) {
+      await postsPaginator.reload(); 
+      if(currentPaginationEnv.lastUrlPart === "create-edit-post.html") {
+        clearUpTheForm();
+      }
+    }
+    else { 
+      window.history.back();
+    }
+    console.log("Document and related data successfully deleted!");
   } catch (err) {
-    console.error("Error deleting document: ", error);
+    console.error("Error deleting document: ", err);
   }
-  
 }
+
 
 const onResetPostClick = (e) => {
   postToUpdateId = null;
-  
-  document.getElementById("title").value = '';
-  quill.root.innerHTML = '';
-  // coverImg.input.value = ""; 
+  clearUpTheForm();  
 
-    // Show preview
-  // document.querySelector(".preview").innerHTML = ``;
-  
-  document.getElementById("startYear").value = parseInt(queryStrHandler.defaultStartDate);
-  document.getElementById("endYear").value = parseInt(queryStrHandler.defaultEndDate);
-  
-  tags = [];
-  renderTags();
-  
-  selectedCategoryId = null; 
-  const selectCat = document.getElementById("categorySelect");
-  selectCat.value = ''; 
-
-  coverImg.hidePreview(); 
-  wideImg.hidePreview(); 
-  
-  queryStrHandler.changeCurrentPost(null); 
   document.querySelector("#postsTable").scrollIntoView({ behavior: "smooth", block: "start" });
   // postsPaginator.setPage(1);
 }
@@ -378,24 +398,24 @@ function getPostContentPreview(html, maxLength = 150) {
   return text;
 }
 
-       const loadPostData = async () => {
-            readPost(postId); 
-            await getCommentsByPostId(postId); 
+const loadPostData = async () => {
+    readPost(postId); 
+    await getCommentsByPostId(postId); 
 
-            firebase.auth().onAuthStateChanged(async function(user) {
-               
-                    const {data: additionUserInfo, isAdmin} = await getUserAddition(auth.currentUser?.uid);
-                    await showCurrentUserInWriteCommentSection( additionUserInfo);
-                    
-                    // if remove btn shold be displayed 
-                    if(!auth.currentUser) return;
-                    const allCommentElements = document.querySelectorAll("#listCommentContainer > li");
-                    allCommentElements.forEach((item) => {
-                    const uId = item.dataset.userId;
-                    const removeBtn = item.querySelector(".btn-danger"); 
-                    if(isAdmin || auth.currentUser.uid === uId) {
-                        removeBtn.classList.add("is-open");
-                    }
-                })
-            });
-       }
+    firebase.auth().onAuthStateChanged(async function(user) {
+        
+            const {data: additionUserInfo, isAdmin} = await getUserAddition(auth.currentUser?.uid);
+            await showCurrentUserInWriteCommentSection( additionUserInfo);
+            
+            // if remove btn shold be displayed 
+            if(!auth.currentUser) return;
+            const allCommentElements = document.querySelectorAll("#listCommentContainer > li");
+            allCommentElements.forEach((item) => {
+            const uId = item.dataset.userId;
+            const removeBtn = item.querySelector(".btn-danger"); 
+            if(isAdmin || auth.currentUser.uid === uId) {
+                removeBtn.classList.add("is-open");
+            }
+        })
+    });
+}

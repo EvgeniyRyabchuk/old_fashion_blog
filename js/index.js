@@ -19,18 +19,24 @@ const searchControll = document.getElementById("searchControll")
 const searchContent = document.getElementById("searchContent");
 const searchSeeMoreLink = searchContent.querySelector("#searchSeeMore"); 
 
+const authNavList =  document.getElementById("authNavList");
+const asideAuthNavList = document.querySelector("#asideAuthNavList"); 
 
+
+const profileBtnWrapper = document.getElementById("profileBtnWrapper")
+const asideProfileBtnWrapper = document.getElementById("asideProfileBtnWrapper"); 
+
+//TODO: change 
 document.getElementById("profileBtnWrapper").addEventListener("mouseenter", (e) => {
-    document.getElementById("authNavList").classList.toggle("is-open");
- 
+    authNavList.classList.toggle("is-open");
 })
 document.getElementById("profileBtnWrapper").addEventListener("mouseleave", (e) => {
-    document.getElementById("authNavList").classList.toggle("is-open");
+    authNavList.classList.toggle("is-open");
 })
 
 // open profile in aside menu 
 document.getElementById("asideProfileBtnWrapper").addEventListener("click", (e) => {
-    document.querySelector("#asideAuthNavList").classList.toggle("is-open");
+    asideAuthNavList.classList.toggle("is-open");
     document.querySelector("#asideProfileBtn").classList.toggle("is-open"); 
 })
 
@@ -192,15 +198,63 @@ const addPostToHIstory = (postId) => {
 }
 
 
+const getHeaderNavContent = async (additionUserInfo, isAdmin ) => { 
+  const adminHeaderNav = `
+    <li><a href="/posts.html">My posts</a></li>
+    <li><a href="/profile/admin/create-edit-post.html">Post Editor / Table </a></li>
+  `;
+
+  const userHeaderNav= `
+    <li><a href="/profile/admin/create-edit-post.html">Favorites</a></li>
+  `;
+
+  const commonHeaderNav = ` 
+    <li><a href="/profile/setting.html">Settings</a></li> 
+    <li><a href="/profile/comments.html">Comments</a></li>
+    <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+    `;
+
+    if(auth.currentUser) {
+      if(isAdmin) {
+        authNavList.innerHTML = `${adminHeaderNav}${commonHeaderNav}`
+        asideAuthNavList.innerHTML = `${adminHeaderNav}${commonHeaderNav}`; 
+      } else {
+        authNavList.innerHTML = `${userHeaderNav}${commonHeaderNav}`
+        asideAuthNavList.innerHTML = `${userHeaderNav}${commonHeaderNav}`; 
+      }
+    } else {
+        authNavList.innerHTML = ``
+        asideAuthNavList.innerHTML = ``; 
+    }
+  }
+
+const displayUserRoleBaseHtml = (additionUserInfo, isAdmin ) => {
+    getHeaderNavContent(additionUserInfo, isAdmin ); 
+    const headerNavLoginBtnForm = document.getElementById("headerNavLoginBtnForm");
+    
+    if(auth.currentUser) { 
+      headerNavLoginBtnForm.style.display = "none"; 
+      profileBtnWrapper.classList.add("is-open"); 
+      asideProfileBtnWrapper.classList.add("is-open"); 
+    } else {
+      headerNavLoginBtnForm.style.display = "flex"; 
+      profileBtnWrapper.classList.remove("is-open"); 
+      asideProfileBtnWrapper.classList.remove("is-open"); 
+    }
+}
+
+firebase.auth().onAuthStateChanged(async function(user) {
+  const {data: additionUserInfo, isAdmin } = await getUserAddition(auth.currentUser?.uid);
+  displayUserRoleBaseHtml(additionUserInfo, isAdmin); 
+})
 
 
-//TODO: deleting post elso delete related docs in other collections 
 
-
-//TODO: rederect to login page if not auth and redirect to index.html if logged in and show login btn's if not auth 
-//TODO: prifle: add avatar/change name in setting 
+//TODO: profle: add avatar/change name in setting 
 //TODO: fix search input disable when clicks to search btn many times
 //TODO: profile btn priority 
+//TODO: posts / post css files to page folder 
 
 //TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event 
 //TODO: localize categories names 
+

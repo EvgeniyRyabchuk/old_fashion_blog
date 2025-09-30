@@ -14,6 +14,12 @@ const QueryStringHandler = () => {
   const defaultStartDate = "1800-09-04";
   const defaultEndDate = "2025-09-04";
 
+  function deleteQueryParam(param) {
+  const url = new URL(window.location);
+  url.searchParams.delete(param);
+  window.history.replaceState({}, "", url); 
+}
+
   const addOrDeleteParams = (array) => { 
     const params = new URLSearchParams(window.location.search);
     for (let param of array) {
@@ -90,6 +96,9 @@ const QueryStringHandler = () => {
     strQName, 
     defaultStartDate,
     defaultEndDate, 
+
+    deleteQueryParam,
+
     changePostsSearch,
     changePostsFilter,
     changeSort,
@@ -97,5 +106,6 @@ const QueryStringHandler = () => {
     checkIfParamsIsChanged,
     stripIgnored,
     changeCurrentPost
+
   }
 }

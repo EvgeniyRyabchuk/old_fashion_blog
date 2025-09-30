@@ -84,8 +84,8 @@ const renderPostsForTable = (post) => {
     // tdImageCategoryID.id = "categorySelect";
     tdDateRange.innerHTML = `${post.date_range_start}-${post.date_range_end}`;
     tdUserId.innerHTML = post.userId;
-    tdUserCreatedAt.innerHTML = new Date(post.createdAt).toLocaleDateString();
-    tdUserCreatedAt.classList.add("td-date");
+    tdUserCreatedAt.innerHTML = post.createdAt.toDate().toLocaleDateString(); 
+    tdUserCreatedAt.classList.add("td-date"); 
     
     editButton.innerText = 'Edit';
     editButton.type = 'button';
@@ -93,7 +93,8 @@ const renderPostsForTable = (post) => {
     
     deleteButton.innerHTML = 'Remove';
     deleteButton.type = "button"; 
-    deleteButton.onclick = onDeletePostClick; 
+
+    deleteButton.onclick = () => onDeletePostClick(post.id); 
    
     actionWrapper.style.display = 'flex';    
     actionWrapper.appendChild(editButton);
@@ -227,7 +228,6 @@ const renderComments = (comment, additionUserInfo, isCreatedNew = false) => {
    
     avatar.src = additionUserInfo ? additionUserInfo.avatar : '/images/no-image.png';
     
-    
     avatar.width = 45; 
     avatar.height = 45;
     avatar.alt = "User Avatar";
@@ -261,15 +261,13 @@ const renderComments = (comment, additionUserInfo, isCreatedNew = false) => {
     
     if(isCreatedNew) {
       if (listCommentContainer.firstChild) {
-        listCommentContainer.insertBefore(li, listCommentContainer.firstChild);
+        listCommentContainer.insertBefore(li, listCommentContainer.firstChild); 
       } else {
         listCommentContainer.appendChild(li); // if empty
       }
     } else {
       listCommentContainer.appendChild(li);
     }
-
-
 }
 
 

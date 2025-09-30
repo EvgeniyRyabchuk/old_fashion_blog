@@ -36,7 +36,10 @@ const postFilterQueryCreator = async () => {
     const postIds = snap.docs.map(d => d.data().postId);
     if (postIds.length === 0) {
       // No matches → return empty query
-      return db.collection("posts").where(firebase.firestore.FieldPath.documentId(), "==", "__none__");
+      // return db.collection("posts").where(firebase.firestore.FieldPath.documentId(), "==", "__none__");
+
+      // impossible expression to returning empty array 
+      return db.collection("posts").where("userId", "==", "__impossible__");
     }
 
     query = query.where(firebase.firestore.FieldPath.documentId(), "in", postIds.slice(0, 10));

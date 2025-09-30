@@ -66,7 +66,7 @@ async function login() {
     // logoutBtn.disabled = false;
     const doc = await db.collection("users").doc(user.uid).get();
     userAddition = doc.data();
-    
+    window.location.href = "/"; 
     return user;
   } catch (error) {
     console.error("Login failed:", error.message);
@@ -78,7 +78,7 @@ async function register() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  // try { 
+  try { 
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
     const user = userCredential.user; 
 
@@ -93,16 +93,11 @@ async function register() {
 
     const doc = await db.collection("users").doc(user.uid).get();
     userAddition = doc.data();
-   
-  // const n = await getUserName(); 
-  // console.log(n);
-  
-  
-  
-  //   document.getElementById("status").innerText = `Registered as: ${user.email}`; 
-  // } catch (err) {
-  //   document.getElementById("status").innerText = err.message;
-  // }
+
+    window.location.href = "/"; 
+  } catch(error) {
+     console.error("Rewegiser failed:", error.message);
+  }
 }
 
 const logout = () => {

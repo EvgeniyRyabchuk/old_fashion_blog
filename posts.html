@@ -26,8 +26,7 @@
 <body>
 
    <header>
-
-      <a class="default-link top-header-link" href="/" >
+      <a class="default-link top-header-link" href="/">
          <div class="header-img-block">
             <h2 class="header-label">Old Fashion Blog</h2>
          </div>
@@ -42,9 +41,9 @@
                </div>
                <div class="form-row d-flex-center" style="margin: 20px 0;">
                   <a class="login-btn" href="/auth/login.html">Login</a>
-                  <a class="sign-in-btn" href="/auth/register.html">Sign Up</a>
+                  <a class="sign-up-btn" href="/auth/register.html">Sign Up</a>
                </div>
-               <div class="aside-profile-btn-wrapper" id="asideProfileBtnWrapper">
+               <div class="aside-profile-btn-wrapper switchable" id="asideProfileBtnWrapper">
                   <div class="form-row">
                      <button class="aside-profile-btn" id="asideProfileBtn">
                         <!-- <img class="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
@@ -57,7 +56,9 @@
                      <li><a href="/posts.html">My posts</a></li>
                      <li><a href="/profile/setting.html">Settings</a></li>
                      <li><a href="/profile/comments.html">Comments</a></li>
-                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                     <li style="padding: 0;">
+                        <button type="button" onclick="logout()">Logout</button>
+                     </li>
                   </ul>
                </div>
 
@@ -68,10 +69,12 @@
                      <a class="side-menu-item prevent" href="/posts.html" class="dropdown-toggle">All posts</a>
                      <ul class="dropdown-menu">
                         <li class="">
-                           <a class="side-menu-item" href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa" class="dropdown-toggle">Male</a>
+                           <a class="side-menu-item" href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa"
+                              class="dropdown-toggle">Male</a>
                         </li>
                         <li class="">
-                           <a class="side-menu-item" href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ" class="dropdown-item">Female</a>
+                           <a class="side-menu-item" href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ"
+                              class="dropdown-item">Female</a>
                         </li>
                      </ul>
                   </li>
@@ -87,7 +90,7 @@
 
          <div class="top-menu-content">
             <div class="burger-menu-btn" id="burgerMenuBtn"></div>
-            <ul class="guest-nav-list" >
+            <ul class="guest-nav-list">
                <li><a href="/" class="dropdown-item">Home</a></li>
                <li class="dropdown on-hover root">
                   <a href="/posts.html" class="dropdown-toggle">All posts</a>
@@ -106,13 +109,12 @@
             </ul>
 
 
-
             <!-- TODO: right  nav-list-wrapper --->
             <div class="auth-nav-list-wrapper">
-               <!-- <div class="form-row">
-                  <a class="login-btn" style="margin: 0 5px;" href="./auth/login.html">Login</a>
-                  <a class="sign-in-btn" style="margin: 0 5px;" href="./auth/register.html">Sign Up</a>
-               </div> -->
+               <div id="headerNavLoginBtnForm" class="form-row">
+                  <a class="login-btn" style="margin: 0 5px;" href="/auth/login.html">Login</a>
+                  <a class="sign-up-btn" style="margin: 0 5px;" href="/auth/register.html">Sign Up</a>
+               </div>
                <div class="form-row">
                   <select class="language-select" id="languageSelect">
                      <option value="RU">RU</option>
@@ -129,7 +131,6 @@
                </div>
 
 
-
                <div class="form-row header-search" id="headerSearch">
                   <div class="d-flex-center form-row search-controll" id="searchControll">
                      <button class="search-close" id="searchClose" type="button">&times;</button>
@@ -138,7 +139,6 @@
                      <!-- Icon-only button for mobile -->
                      <button class="search-toggle" id="searchToggle" type="button"></button>
                   </div>
-
 
 
                   <div id="searchContent" class="search-content">
@@ -210,7 +210,7 @@
                   </div>
                </div>
 
-               <div class="profile-btn-wrapper" id="profileBtnWrapper">
+               <div class="profile-btn-wrapper switchable" id="profileBtnWrapper">
                   <div class="form-row">
                      <button class="profile-btn" id="profileBtn">
                         <!-- <img class="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
@@ -223,7 +223,9 @@
                      <li><a href="/posts.html">My posts</a></li>
                      <li><a href="/profile/setting.html">Settings</a></li>
                      <li><a href="/profile/comments.html">Comments</a></li>
-                     <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+                     <li style="padding: 0;">
+                        <button type="button" onclick="logout()">Logout</button>
+                     </li>
                   </ul>
                </div>
 
@@ -328,6 +330,7 @@
             <!-- Content -->
             <section class="content-section">
                <h2 class="main-content-title" id="mainContentTitle">Posts</h2>
+               <h3 id="noPostsData" class="no-data switchable">No data yet</h3>
                <div id="postLoader" class="loader-wrapper abs bg-transparent" style="height: 500px;">
                   <div class="loader">
                      <div class="circle-wrapper-1">
@@ -448,11 +451,13 @@
    <script src="./js/utilities/query-string-handler.js"></script> 
    <script src="./js/utilities/render.js"></script> 
    <script src="./js/utilities/loader.js"></script>
+
+   <script src="./js/service/index.js"></script>
+   <script src="./js/service/auth.js"></script>
+
    <script src="./js/index.js"></script>
    
    
-   <script src="./js/service/index.js"></script>
-   <script src="./js/service/auth.js"></script>
    <script src="./js/service/category.js"></script> 
    <script src="./js/service/tags.js"></script>
 

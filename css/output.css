@@ -107,7 +107,7 @@ select, button {
   cursor: pointer;
 }
 
-.btn, .btn-success, .login-btn, .btn-warning, .btn-danger, .auth-nav-list button, .aside-profile-btn-wrapper .auth-nav-list button, .btn-secondary, .sign-in-btn, .btn-primary {
+.btn, .btn-success, .login-btn, .btn-warning, .btn-danger, .auth-nav-list button, .aside-profile-btn-wrapper .auth-nav-list button, .btn-secondary, .sign-up-btn, .btn-primary {
   padding: 10px;
   margin: 5px;
   font-size: 17px;
@@ -138,15 +138,15 @@ select, button {
   background-color: rgb(116, 142, 244);
 }
 
-.btn-secondary, .sign-in-btn {
+.btn-secondary, .sign-up-btn {
   background-color: rgb(157, 157, 184);
   color: white;
   cursor: pointer;
 }
-.btn-secondary:hover, .sign-in-btn:hover {
+.btn-secondary:hover, .sign-up-btn:hover {
   background-color: rgba(50, 50, 58, 0.667);
 }
-.btn-secondary:active, .sign-in-btn:active {
+.btn-secondary:active, .sign-up-btn:active {
   background-color: "";
 }
 
@@ -186,7 +186,7 @@ select, button {
   background-color: #336734;
 }
 
-.login-btn, .sign-in-btn {
+.login-btn, .sign-up-btn {
   font-size: 18px;
   padding: 8px 15px 8px 15px;
 }
@@ -196,7 +196,7 @@ select, button {
   margin: 0 5px;
 }
 
-.sign-in-btn {
+.sign-up-btn {
   display: block;
   margin: 0 5px;
 }
@@ -1858,6 +1858,60 @@ scss/
   color: #000;
 }
 
+.profile-settings {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+.profile-settings h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.profile-settings .avatar-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.profile-settings .avatar-section img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+  margin-bottom: 10px;
+}
+.profile-settings .form-section {
+  margin-bottom: 15px;
+}
+.profile-settings .form-section label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.profile-settings .form-section input[type=text] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.profile-settings #saveProfileBtn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #4CAF50;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.profile-settings #saveProfileBtn:hover {
+  background: #45a049;
+}
+
 .profile-btn::before, .profile-btn::after,
 .aside-profile-btn::before,
 .aside-profile-btn::after {
@@ -2321,12 +2375,6 @@ scss/
 
 .main-wrapper {
   background-color: white;
-}
-
-.main-content-title {
-  visibility: hidden;
-  margin: 0;
-  height: 0;
 }
 
 header, footer, .main-wrapper {
