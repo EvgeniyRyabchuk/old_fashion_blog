@@ -198,6 +198,9 @@ header, footer, .main-wrapper {
 }
 
 @media screen and (max-width: variables.$md-bp) {
+    #profileBtnWrapper {
+        display: none;
+    }
     .post-row {
         .left-btn {
             left: 5px;

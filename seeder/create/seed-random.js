@@ -101,37 +101,28 @@ async function getCategoriesOrCreateIfNotExist() {
 }
 
 async function getUsersAndAdminsOrCreateIfNotExist() {
-  let usersSnapshot = await db.collection("users").get();
+   const staticData = JSON.parse(
+    fs.readFileSync("./json/users.json", "utf8")
+  );
+
   const batch = db.batch();
 
-  if (usersSnapshot.empty) {
-    const staticData = JSON.parse(
-      fs.readFileSync("./json/users.json", "utf8")
-    );
-
-    // USERS
-    const usersCol = db.collection("users");
-    
-    Object.values(staticData.users).forEach((user) => {
-      const docRef = usersCol.doc(); // auto-ID
-      batch.set(docRef, user);
-    });
-
-    // ADMINS
-    const adminsCol = db.collection("admins");
-
-    Object.values(staticData.admins).forEach((admin) => {
-      const docRef = adminsCol.doc(); // auto-ID
-      batch.set(docRef, admin);
-    });
-
-
-    await batch.commit();
-    console.log("Users & Admins seeded!");
-    usersSnapshot = await usersCol.get(); 
+  // USERS
+  const usersCol = db.collection("users");
+  for (const [uid, user] of Object.entries(staticData.users)) {
+    const docRef = usersCol.doc(uid); // use UID as document ID
+    batch.set(docRef, user, { merge: true });
   }
 
-  return usersSnapshot;
+  // ADMINS
+  const adminsCol = db.collection("admins");
+  for (const [uid, adminData] of Object.entries(staticData.admins)) {
+    const docRef = adminsCol.doc(uid); // use UID as document ID
+    batch.set(docRef, adminData, { merge: true });
+  }
+
+  await batch.commit();
+  console.log("✅ Users & Admins seeded");
 }
 
 function generateFakePostContent() {

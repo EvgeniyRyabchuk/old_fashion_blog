@@ -522,7 +522,8 @@
     </footer>
 
 
-
+  
+    
    <script src="../../js/utilities/debounce.js"></script>
    <script src="../../js/utilities/query-string-handler.js"></script> 
    <script src="../../js/utilities/render.js"></script> 
@@ -539,12 +540,28 @@
     <script src="../../js/service/category.js"></script>
     <script src="../../js/service/tags.js"></script> 
     <script src="../../js/utilities/post_edit/cover_img.js"></script>
+      <script>
+        const coverImg = createImageDragDrop(
+            "coverImg",
+            "coverPreview",
+            "postImgPlaceholder",
+            "deletePostCoverImgBtn"
+        );
+
+        const wideImg = createImageDragDrop(
+            "wideImg",
+            "widePreview",
+            "postWideImgPlaceholder", 
+            "deletePostWidePreviewBtn"
+        );
+    </script>
+
     <script src="../../js/utilities/post_edit/quill.js"></script>
 
     
     <script src="../../js/pagination.js"></script>
     <script src="../..//js/service/posts.js"></script>
-
+    
     <script>
         
         //TODO: add loader 

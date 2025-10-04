@@ -1,7 +1,9 @@
+
 const avatarInput = document.getElementById("avatarInput");
 const avatarPreview = document.getElementById("avatarPreview");
 const displayNameInput = document.getElementById("displayName");
 const saveBtn = document.getElementById("saveProfileBtn");
+const defaultImg = "../../images/no-image.png"
 
 // Preview avatar on file select
 avatarInput.addEventListener("change", (e) => {
@@ -36,7 +38,7 @@ saveBtn.addEventListener("click", async () => {
 
   try {
     if (file) {
-      const {data: additionUserInfo, isAdmin} = await getUserAddition(user.uid);
+      const {data: additionUserInfo, isAdmin} = await getUserAddition(user.uid); 
       avatarUrl = await loadToCloudinary(file); 
       await updateProfile(user.uid, newName, avatarUrl, isAdmin);       
     }
@@ -48,9 +50,10 @@ saveBtn.addEventListener("click", async () => {
 });
 
 // Load current user data
-firebase.auth().onAuthStateChanged((user) => {
+firebase.auth().onAuthStateChanged( async (user) => {
   if (user) {
-    displayNameInput.value = user.displayName || "";
-    avatarPreview.src = user.photoURL || "../../images/no-image.png";
+    const {data: additionUserInfo, isAdmin} = await getUserAddition(user.uid);
+    displayNameInput.value = additionUserInfo.name || ""; 
+    avatarPreview.src = additionUserInfo.avatar || defaultImg;
   }
 });

@@ -17,19 +17,18 @@ async function getUserAddition(userId = null) {
       return { data: {id: userDoc.id, ...userDoc.data()}, isAdmin }; 
     } 
   } 
-
-  user = firebase.auth().currentUser;
-  if (!user) return {data: null, isAdmin};
-  let snap = await db.collection("users").where("userId", "==", user.uid).limit(1).get(); 
-  if(!snap.docs[0])
-    snap = await db.collection("admins").where("userId", "==", user.uid).limit(1).get(); 
-  if(!snap.docs[0])
+  
+  // user = firebase.auth().currentUser;
+  // if (!user) return {data: null, isAdmin};
+  let snap = await db.collection("users").doc(userId).get(); 
+  if(!snap.exists)
+    snap = await db.collection("admins").doc(userId).get(); 
+  if(!snap.exists)
     return {data: null, isAdmin};
   else 
     isAdmin = true; 
 
-  console.log(snap.docs[0]);
-  return { data: snap.docs[0].data(), isAdmin }; 
+  return { data: snap.data(), isAdmin }; 
 }
 
 auth.onAuthStateChanged(user => {

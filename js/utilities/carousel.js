@@ -128,8 +128,6 @@ const createSlider = (slider, items) => {
         if(!animationTime)
             animationTime = (interval/1000)/2;
         
-        // console.log(animationTime);
-        
         intervalId = setInterval(() => {
             index++;
             slider.style.transition = `transform ${animationTime}s ease-in-out`;

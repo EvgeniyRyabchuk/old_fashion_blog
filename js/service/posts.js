@@ -10,19 +10,7 @@ const postContentSection = document.getElementById("postContentSection");
 const postsWrapper = document.getElementById("postsWrapper");
 const postTableBody = document.getElementById("postTableBody");
 
-const coverImg = createImageDragDrop(
-    "coverImg",
-    "coverPreview",
-    "postImgPlaceholder",
-    "deletePostCoverImgBtn"
-);
 
-const wideImg = createImageDragDrop(
-    "wideImg",
-    "widePreview",
-    "postWideImgPlaceholder",
-    "deletePostWidePreviewBtn"
-);
 
 
 //TODO: after and before attached to context so that if it's table 
@@ -234,7 +222,7 @@ async function readPost(postId) {
 
   await loadCategoriesToCollection([post]);
   await loadTagsToCollection([post]);
-  addPostToHIstory(post.id); 
+  addPostToHistory(post.id);
   console.log("read post");
   
   console.log(post.createdAt);
@@ -375,7 +363,7 @@ const renderPostHistory = async () => {
   }));
   
   // if post is deleted then delete it from histtory as well 
-  history = posts.map(p => p.id);
+  history = history.filter(h => h === posts.find(p => p.id === h).id); 
   localStorage.setItem("postHistory", history.join(","));
 
   const postHistorySection = document.getElementById("postHistory");

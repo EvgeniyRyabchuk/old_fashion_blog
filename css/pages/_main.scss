@@ -134,7 +134,7 @@ $post-card-width: 250px;
 $post-card-height: 300px;
 
 .post-row {
-    padding: 0px 25px 5px 25px !important;
+    padding: 0px 25px 10px 25px !important;
     .left-btn, .right-btn {
         background-color: rgb(139, 139, 139) !important;
         color: white;
@@ -158,8 +158,8 @@ $post-card-height: 300px;
         right: 15px;
     }
     
-    @include mixins.flexbox(row, null, null, nowrap, 5px);
-    min-height: auto;
+    @include mixins.flexbox(row, null, null, nowrap !important, 5px);
+    min-height: auto !important;
     // scrollbar-width: thin;
     overflow-x: auto;
 
@@ -173,13 +173,13 @@ $post-card-height: 300px;
         vertical-align: top;
         display: inline-block;
         // width: $post-card-width !important;
-        height: $post-card-height; 
+        height: $post-card-height !important; 
         padding: 0;
         // margin: 5px 20px;
         width: 200px;
         .post-cover img {
-            height: 200px;
-            padding: 10px 10px 5px 10px;
+            height: 200px !important;
+            padding: 10px 10px 5px 10px !important;
         }
         &:hover {
             background-color:silver;

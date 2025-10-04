@@ -146,17 +146,18 @@
 }
 
 
-.header-search {
-   .search-content {
-      display: none;
-   }
-}
-.header-search.active {
-   .search-content.is-open {
-      display: block;
-      // min-height: 300px;
-   }
-}
+// .header-search {
+//    .search-content {
+//       display: none;
+//    }
+// }
+
+// .header-search.active {
+//    .search-content.is-open {
+//       display: block;
+//       // min-height: 300px;
+//    }
+// }
 
 @media screen and (min-width: variables.$lg-bp) {
    

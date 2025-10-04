@@ -84,26 +84,24 @@ searchToggle.addEventListener("click", () => {
   headerSearch.classList.toggle("active");
   document.body.classList.toggle("no-scroll");
 });
-searchClose.addEventListener("click", () => {
+searchClose.addEventListener("click", () => { 
   headerSearch.classList.toggle("active"); 
   if(window.innerWidth <= breakpoints.lg)
     document.body.classList.toggle("no-scroll"); 
   searchInput.value = ""
-
+  searchPostList.innerHTML = ""; 
+  searchSeeMoreLink.classList.add("d-none"); 
 });
 searchInput.addEventListener("click", () => {
-    headerSearch.classList.add("active");
+    headerSearch.classList.add("active"); 
 })
 
 // Optional: close search when clicking outside
 document.addEventListener("click", (e) => {
   if (!searchControll.contains(e.target) && headerSearch.classList.contains("active")) {
     headerSearch.classList.remove("active"); 
-    searchContent.classList.add("is-open"); 
-    // searchContent.style.display = "none"; 
     if(window.innerWidth <= breakpoints.lg)
         document.body.classList.toggle("no-scroll");
-    // searchInput.value = ""
   }
 });
 
@@ -171,9 +169,8 @@ searchInput.addEventListener("input", (e) => {
       searchContent.style.height = "auto"; 
       searchPostLoader.style.display = "none"; 
   });
-
-
 });
+
 
 const searchBtn = document.getElementById("searchBtn");
 searchBtn.addEventListener("click", (e) => { 
@@ -182,9 +179,8 @@ searchBtn.addEventListener("click", (e) => {
 })
 
 
-
 const historyLimit = 10; 
-const addPostToHIstory = (postId) => {
+const addPostToHistory = (postId) => {
   const historyStr = localStorage.getItem("postHistory");
   let history = historyStr ? historyStr.split(",") : []; 
   
@@ -226,7 +222,7 @@ const getHeaderNavContent = async (additionUserInfo, isAdmin ) => {
         authNavList.innerHTML = ``
         asideAuthNavList.innerHTML = ``; 
     }
-  }
+}
 
 const displayUserRoleBaseHtml = (additionUserInfo, isAdmin ) => {
     getHeaderNavContent(additionUserInfo, isAdmin ); 
@@ -244,16 +240,14 @@ const displayUserRoleBaseHtml = (additionUserInfo, isAdmin ) => {
 }
 
 firebase.auth().onAuthStateChanged(async function(user) {
-  const {data: additionUserInfo, isAdmin } = await getUserAddition(auth.currentUser?.uid);
-  displayUserRoleBaseHtml(additionUserInfo, isAdmin); 
+  if(user) {
+    const {data: additionUserInfo, isAdmin } = await getUserAddition(auth.currentUser?.uid);
+    displayUserRoleBaseHtml(additionUserInfo, isAdmin); 
+  }
 })
 
 
 
-//TODO: profle: add avatar/change name in setting 
-//TODO: fix search input disable when clicks to search btn many times
-//TODO: profile btn priority 
-//TODO: posts / post css files to page folder 
 
 //TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event 
 //TODO: localize categories names 

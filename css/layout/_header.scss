@@ -132,7 +132,7 @@ header {
           .search-close { display: none; background-color: white; }
         }
         .search-content {
-          // display: none;
+          display: none;
           width: 100%; 
           z-index: 999;
         }
@@ -145,6 +145,9 @@ header {
         }
         
         &.active {
+          .search-content.is-open {
+             display: block; 
+          }
           .search-close { 
             border: 2px solid rgb(145, 145, 145); 
             border-radius: 20px; 
