@@ -12,14 +12,15 @@ scss/
 */
 
 // теперь можно писать просто $main-color
-@use 'abstracts/index'as abstracts;
-@use 'base/index'as *;
-@use 'components/index'as components;
-@use 'pages/index'as pages;
-@use 'themes/index'as themes;
-@use 'vendors/index'as vendors; 
-@use 'utilities/index'as utilities;
-@use 'layout/index'as layout;
+@use 'abstracts/index' as abstracts;
+@use 'themes/index' as *;
+@use 'base/index' as *;
+@use 'components/index' as components;
+@use 'pages/index' as pages;
+
+@use 'vendors/index' as vendors; 
+@use 'utilities/index' as utilities;
+@use 'layout/index' as layout;
 
 /*
 Mobile (portrait)	320px – 480px	iPhone SE, Galaxy S5
@@ -46,3 +47,10 @@ Large Desktop	1440px and up	Full HD monitors, ultrawide screens
   border-top: 3px dashed orange;
   border-bottom: 3px dashed orange;
  }
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-@use '../abstracts/variables'as *;
+@use '../abstracts/variables' as *;
 
 .btn {
   padding: 10px;
@@ -8,66 +8,64 @@
 }
 
 @mixin createBtn($bgColor, $hColor, $aColor: "") {
-    background-color: $bgColor;
-    color: white;
-    cursor: pointer;
-    
-    &:hover { 
-      background-color: $hColor; 
-    }
+  background-color: $bgColor;
+  color: white;
+  cursor: pointer;
 
-    &:active {
-      background-color: $aColor;
-    }
-} 
+  &:hover {
+    background-color: $hColor;
+  }
 
-.btn-info { 
-  // @extend .btn; 
-  @include createBtn($info-color, $primary-color-hover, $primary-color-active); 
+  &:active {
+    background-color: $aColor;
+  }
 }
-
 
 .btn-primary {
   @extend .btn;
-  @include createBtn($primary-color, $primary-color-hover, $primary-color-active); 
-
+  @include createBtn($color-primary, $color-primary-hover, $color-primary-active);
 }
 
 .btn-secondary {
   @extend .btn;
-  @include createBtn($secondary-color, $secondary-color-hover); 
+  @include createBtn($color-secondary, $color-secondary-hover, $color-secondary-active);
 }
 
 .btn-danger {
   @extend .btn;
-  @include createBtn($danger-color, $danger-color-hover); 
-  
+  @include createBtn($color-danger, $color-danger-hover, $color-danger-active);
 }
 
-
-.btn-warning { 
-  @extend .btn; 
-  @include createBtn($warning-color, $warning-color-hover, $warning-color-active); 
+.btn-warning {
+  @extend .btn;
+  @include createBtn($color-warning, $color-warning-hover, $color-warning-active);
 }
 
-.btn-success { 
-  @extend .btn; 
-  @include createBtn($success-color, $success-color-hover, $success-color-active); 
-
+.btn-success {
+  @extend .btn;
+  @include createBtn($color-success, $color-success-hover, $color-success-active);
 }
 
-.login-btn, .sign-up-btn { 
-    font-size: 18px; 
-    padding: 8px 15px 8px 15px; 
+.btn-info {
+  @extend .btn;
+  @include createBtn($color-info, $color-info-hover, $color-info-active);
 }
+
+/* Auth Buttons */
+.login-btn,
+.sign-up-btn {
+  font-size: 18px;
+  padding: 8px 15px;
+}
+
 .login-btn {
-    @extend .btn-success; 
-    display: block;
-    margin: 0 5px;
+  @extend .btn-success;
+  display: block;
+  margin: 0 5px;
 }
 
 .sign-up-btn {
-   @extend .btn-secondary; 
-    display: block;
-    margin: 0 5px;
+  @extend .btn-secondary;
+  display: block;
+  margin: 0 5px;
 }

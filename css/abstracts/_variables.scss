@@ -1,31 +1,34 @@
 
-// variebles 
-$main-color: #3498db;
-
-$primary-color: rgb(63, 97, 236); 
-$primary-color-hover: rgb(19, 61, 228);
-$primary-color-active: rgb(116, 142, 244);
-
-$secondary-color: rgb(157, 157, 184);
-$secondary-color-hover: rgba(50, 50, 58, 0.667); 
-// hover
-// active
-$danger-color: rgba(178, 17, 17, 0.667); 
-$danger-color-hover: rgba(255, 106, 106, 0.667); 
-
-$info-color: rgb(86, 120, 255); 
-$info-color-hover: rgb(168, 168, 214); 
-
-$warning-color: #FFC107; 
-$warning-color-hover: #9e9066; 
-$warning-color-active: #FFD557;
 
 
-$success-color: #61a562; 
-$success-color-hover: #85bb86; 
-$success-color-active: #336734;
+$color-bg: var(--color-bg);
+$color-text: var(--color-text);
 
-$theme: 'dark';
+$color-primary: var(--color-primary);
+$color-primary-hover: var(--color-primary-hover);
+$color-primary-active: var(--color-primary-active);
+
+$color-secondary: var(--color-secondary);
+$color-secondary-hover: var(--color-secondary-hover);
+$color-secondary-active: var(--color-secondary-active);
+
+$color-danger: var(--color-danger);
+$color-danger-hover: var(--color-danger-hover);
+$color-danger-active: var(--color-danger-active);
+
+$color-info: var(--color-info);
+$color-info-hover: var(--color-info-hover);
+$color-info-active: var(--color-info-active);
+
+$color-warning: var(--color-warning);
+$color-warning-hover: var(--color-warning-hover);
+$color-warning-active: var(--color-warning-active);
+
+$color-success: var(--color-success);
+$color-success-hover: var(--color-success-hover);
+$color-success-active: var(--color-success-active);
+
+
 
 $xxl-bp: 1400px; 
 $xl-bp: 1200px;

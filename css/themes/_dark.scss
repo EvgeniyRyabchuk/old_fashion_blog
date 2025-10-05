@@ -1,0 +1,20 @@
+
+
+[data-theme="dark"] {
+  --color-bg: #1f1e1d; /* Deep charcoal with a hint of warmth */
+  --color-text: #e8e3dc; /* Soft, warm off-white text */
+
+  --color-primary: #d2b5b2; /* A slightly brighter dusty rose for contrast */
+  --color-primary-hover: #e0c8c5;
+  --color-primary-active: #c1a19e;
+
+  /* Secondary and state colors can often be shared or slightly tweaked */
+  --color-secondary: #8a8a8a;
+  --color-secondary-hover: #a0a0a0;
+  --color-secondary-active: #707070;
+  
+  --color-danger: #e29f95;
+  --color-success: #a0c2b2;
+
+    --color-bg-rgb: 31, 30, 29;
+}

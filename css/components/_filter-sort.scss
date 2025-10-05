@@ -1,6 +1,6 @@
 @use '../utilities/index.scss';
-@use '../abstracts/mixins' as mixins; 
-@use '../abstracts/variables'as variables;
+@use '../abstracts/index' as abs;
+
 
 .filter-sort {
   display: flex;
@@ -16,12 +16,16 @@
     label {
       font-size: 0.9rem;
       font-weight: 600;
+      color: abs.$color-text; 
     }
 
     select {
       padding: 0.35rem 0.6rem;
       border: 1px solid #ccc;
       border-radius: 6px;
+      
+      color: abs.$color-text; 
+      background-color: abs.$color-bg; 
     }
   }
 }
@@ -45,12 +49,13 @@
   // }
 }
 
-@media screen and (min-width: variables.$lg-bp) {
+@media screen and (min-width: abs.$lg-bp) {
   .filter-drawer-wrapper {
     position: static !important;
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important; 
+ 
 
     display: none;
     &.is-open {
@@ -68,7 +73,7 @@ $filterAppearTime: 0.3s;
   background-color: rgba(209, 209, 209, 0.6);
   z-index: 999;
   
-  @include mixins.animated-disappear-via-visibility($filterAppearTime);
+  @include abs.animated-disappear-via-visibility($filterAppearTime);
 
   .filter-drawer {
     // Mobile drawer behavior
@@ -84,6 +89,7 @@ $filterAppearTime: 0.3s;
     overflow-y: auto;
     z-index: 999;
     transition: right $filterAppearTime ease; 
+    background-color: abs.$color-secondary; 
 
     &__close {
       background: none;
@@ -133,6 +139,8 @@ $filterAppearTime: 0.3s;
         border: 1px solid #ccc;
         border-radius: 6px;
         cursor: pointer;
+        background-color: abs.$color-bg;
+        color: abs.$color-text; 
       }
 
       // input[type="checkbox"] {
@@ -149,6 +157,7 @@ $filterAppearTime: 0.3s;
 
         label {
           cursor: pointer;
+          color: abs.$color-text;
         }
 
       }
@@ -171,7 +180,9 @@ $filterAppearTime: 0.3s;
 
         gap: 0.3rem;
         font-size: 0.85rem;
-        background: #f7f7f7;
+        background-color: abs.$color-bg;
+        color: abs.$color-text; 
+
         border: 1px solid #ddd;
         border-radius: 6px;
         padding: 0.4rem 0.5rem;
@@ -179,10 +190,12 @@ $filterAppearTime: 0.3s;
 
         input {
           margin: 0;
+          background-color: abs.$color-bg;
+          color: abs.$color-text; 
         }
 
         &:hover {
-          background: #eee;
+          background: abs.$color-secondary-hover;
         }
 
         .tags-sign {
@@ -231,7 +244,7 @@ $filterAppearTime: 0.3s;
     }
 
     // Desktop inline layout
-    @media (min-width: variables.$lg-bp) {
+    @media (min-width: abs.$lg-bp) {
       position: static;
       width: 100%;
       height: auto;
@@ -267,7 +280,7 @@ $filterAppearTime: 0.3s;
 
   &.is-open {
     @extend .full-screen-fixed;
-    @include mixins.animated-appear-via-visibility($filterAppearTime);
+    @include abs.animated-appear-via-visibility($filterAppearTime);
 
     .filter-drawer {
       right: 0;
@@ -283,13 +296,14 @@ $filterAppearTime: 0.3s;
   padding: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background: #fafafa;
+  background: abs.$color-bg;
 
   &__label {
     display: block;
     font-weight: bold;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
+    color: abs.$color-text;
   }
 
   &__list {
@@ -298,7 +312,9 @@ $filterAppearTime: 0.3s;
     gap: 0.5rem;
 
     .filter-chip {
-      background: #e3e9ff;
+      background-color: abs.$color-secondary;
+      color: abs.$color-text; 
+
       border: 1px solid #c2cfff;
       border-radius: 20px;
       padding: 0.2rem 0.7rem;

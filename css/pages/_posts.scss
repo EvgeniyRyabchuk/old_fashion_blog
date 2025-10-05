@@ -1,5 +1,4 @@
-@use '../abstracts/placeholders';
-@use '../abstracts/variables' as variables; 
+@use '../abstracts/index' as abs;
 @use '../utilities/helpers'; 
 
 #main-content-title {
@@ -20,19 +19,27 @@
       width: calc(100% / 3);
       min-width: 300px;
       height: 550px;
+      &:hover {
+         background-color: abs.$color-secondary;
+         .post-title {
+            color: white;
+         }
+
+      }
       &::after {
          content: '';
          display: block;
-         height: 3px;
-         background-color: rgba(0, 0, 0);
+         height: 3px; 
          width: 0%;
          transition: 0.6s width ease-in;
          position: absolute;
          bottom: 0;
+         left: 0;
       }
 
       &:hover {
          &::after {
+            background-color: abs.$color-text; 
             width: 100%;
          }
       }
@@ -60,6 +67,7 @@
          .post-title {
             font-size: 20px;
             font-weight: 600;
+            color: abs.$color-text;
          }
       }
 
@@ -116,7 +124,7 @@
       width: 100%;
       padding: 0;
       margin: 7px 0;
-      background-color: rgba(255, 255, 255, 1);
+      background-color: abs.$color-bg;
       border: 2px dashed rgb(119, 119, 119);
       overflow: hidden;
       text-align: justify;
@@ -159,7 +167,7 @@
 //    }
 // }
 
-@media screen and (min-width: variables.$lg-bp) {
+@media screen and (min-width: abs.$lg-bp) {
    
    .search-content {
       position: absolute;
@@ -172,9 +180,9 @@
    .search-post-list {
       margin: 5px;
    
-   }
+   } 
 }
-@media screen and (max-width: variables.$xl-bp) {
+@media screen and (max-width: abs.$xl-bp) {
     .search-content { width: 100% !important }
 }
 

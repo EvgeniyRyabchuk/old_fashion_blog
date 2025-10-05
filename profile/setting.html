@@ -17,7 +17,7 @@
 
 </head>
 <body>
-    <header>
+   <header>
       <a class="default-link top-header-link" href="/">
          <div class="header-img-block">
             <h2 class="header-label">Old Fashion Blog</h2>
@@ -115,10 +115,10 @@
                   </select>
                </div>
                <div class="form-row">
-                  <select class="theme-select" id="themeSelect">
-                     <option value="RU">Default</option>
-                     <option value="UA">Light</option>
-                     <option value="EN">Dark</option>
+                  <select class="theme-select" id="themeSelector">
+                     <option value="default">Default</option>
+                     <option value="light">Light</option>
+                     <option value="dark">Dark</option>
                   </select>
                </div>
 
@@ -227,6 +227,7 @@
 
       </nav>
    </header>
+   
    <div class="main-wrapper">
         <main>
             <nav id="breadcrumbs" class="breadcrumbs">
@@ -249,7 +250,7 @@
 
             <div class="content-section">
                <div class="profile-settings">
-                  <h2>Profile Settings</h2>
+                  <h2  class="main-content-title" id="mainContentTitle">Profile Settings</h2>
                   <div class="avatar-section">
                      <div class="avatar-wrapper"> 
                         <img id="avatarPreview" src="../images/no-image.png" alt="Avatar">

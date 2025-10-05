@@ -1,11 +1,10 @@
+@use '../abstracts/index' as abs;
 
-@use '../abstracts/variables'as variables;
-@use '../abstracts/mixins'as mixins;
 
 
 $dropdown-menu-min-width: 100%;
 $appear-animation-time: 0.2s; 
-$header-link-hover-color: rgb(126, 126, 193); 
+$header-link-hover-color: abs.$color-secondary; 
 
 .dropdown {
     -webkit-tap-highlight-color: transparent;
@@ -19,7 +18,7 @@ $header-link-hover-color: rgb(126, 126, 193);
         position: absolute;
         left: 0; 
         min-width: $dropdown-menu-min-width;
-        background: #fff; // white background
+        background: abs.$color-bg; // white background
         // border: 2px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 
@@ -61,7 +60,7 @@ $header-link-hover-color: rgb(126, 126, 193);
     &.on-click {
         &.is-open {
             >.dropdown-menu {
-                @include mixins.animated-appear-via-max-height(true, $appear-animation-time); 
+                @include abs.animated-appear-via-max-height(true, $appear-animation-time); 
             }
             &.root {
                 >a::after {
@@ -71,7 +70,7 @@ $header-link-hover-color: rgb(126, 126, 193);
             }
         }
         .dropdown-menu {
-            @include mixins.animated-appear-via-max-height(false, $appear-animation-time);
+            @include abs.animated-appear-via-max-height(false, $appear-animation-time);
             li:hover {
                 background-color: transparent !important;
                 a { color: $header-link-hover-color !important; }
@@ -112,7 +111,7 @@ $header-link-hover-color: rgb(126, 126, 193);
 
 }
 
-@media screen and (max-width: variables.$xl-bp) {
+@media screen and (max-width: abs.$xl-bp) {
     .dropdown {
         &:hover {
             background-color: transparent;

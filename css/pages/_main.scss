@@ -1,12 +1,11 @@
-@use '../abstracts/mixins' as mixins;
-@use '../abstracts/placeholders';
+@use '../abstracts/index' as abs;
 
 // @mixin flexbox($direction: row, $justify: null, $align: null, $wrap: null, $gap: null) {
 
 $billboard-height: 550px;
 
 .billboard {
-    @include mixins.flexbox(row, null, null, null, 5px);
+    @include abs.flexbox(row, null, null, null, 5px);
     height: $billboard-height; 
     padding: 0 !important; 
     margin: 20px; 
@@ -37,7 +36,7 @@ $billboard-height: 550px;
             position: absolute;
             width: 100%;
             height: 30px;
-            @include mixins.flexbox(row, center, center, null, 5px);
+            @include abs.flexbox(row, center, center, null, 5px);
          
             .dot {
                 width: 40px;
@@ -70,7 +69,7 @@ $billboard-height: 550px;
             transition: transform 0.5s ease-in-out;
             
             .category {
-                @include mixins.flexbox(row, center, center);
+                @include abs.flexbox(row, center, center);
                 border: 1px solid black;
                 background-color: darkgray;
                 width: 100%;
@@ -99,15 +98,15 @@ $billboard-height: 550px;
 .right-btn {
     width: 30px;
     height: 100px;
-    border-radius: 10px;
-    border: 3px solid gray;
+    border-radius: 10px; 
+    border: 3px solid abs.$color-secondary-active;
     position: absolute;
     font-size: 1rem; 
     top: 50%;
     transform: translateY(-50%) scale(1);
     background-color: transparent;
     color: white;
-    opacity: 0.3;
+    opacity: 0.5;
     z-index: 2;
 
     &:hover {
@@ -158,7 +157,7 @@ $post-card-height: 300px;
         right: 15px;
     }
     
-    @include mixins.flexbox(row, null, null, nowrap !important, 5px);
+    @include abs.flexbox(row, null, null, nowrap !important, 5px);
     min-height: auto !important;
     // scrollbar-width: thin;
     overflow-x: auto;
@@ -192,7 +191,7 @@ $post-card-height: 300px;
 
     .see-more {
         @extend .default-link;
-        @include mixins.flexbox(row, center, center, null, 5px);
+        @include abs.flexbox(row, center, center, null, 5px);
         // flex: 0 0 $post-card-width;  // fixed width
         min-width: $post-card-width;
         height: $post-card-height;   // fixed height
@@ -263,8 +262,10 @@ $tag-height: 40px;
       padding: 0 15px;
       font-size: 1rem;
       text-decoration: none;
-      background-color: #f0f0f0;
-      color: #333;
+
+      background-color: abs.$color-secondary;
+      color: abs.$color-text; 
+      
       border-radius: 20px;
       transition: 0.2s;
       white-space: nowrap;

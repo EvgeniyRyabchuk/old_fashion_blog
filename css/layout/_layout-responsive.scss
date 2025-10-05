@@ -1,14 +1,13 @@
-@use '../abstracts/variables' as variables;
-@use '../abstracts/mixins' as mixins; 
-@use '../abstracts/placeholders';
+@use '../abstracts/index' as abs;
+
 
 header, footer, .main-wrapper {
-  max-width: variables.$xxl-bp; 
+  max-width: abs.$xxl-bp; 
   width: 100%;
   margin: 0 auto; 
 }
 
-@media screen and (max-width: variables.$xxl-bp) {
+@media screen and (max-width: abs.$xxl-bp) {
     .side-menu {
         display: none;
     }
@@ -18,9 +17,9 @@ header, footer, .main-wrapper {
     }
 }
 
-@media screen and (max-width: variables.$xl-bp) {
+@media screen and (max-width: abs.$xl-bp) {
     .billboard {
-        @include mixins.flexbox(column, null, null, null, 5px);
+        @include abs.flexbox(column, null, null, null, 5px);
         height: auto;
 
         .carousel {
@@ -32,11 +31,11 @@ header, footer, .main-wrapper {
 
         .vertical-stand {
             width: 100%;
-            @include mixins.flexbox(row, null, null, wrap, 5px);
+            @include abs.flexbox(row, null, null, wrap, 5px);
 
             .mobile-wrapper {
                 width: 100%;
-                @include mixins.flexbox(row, null, null, wrap, 0);
+                @include abs.flexbox(row, null, null, wrap, 0);
 
                 .category {
                     flex: 1 1 33%;
@@ -86,7 +85,7 @@ header, footer, .main-wrapper {
     
 }
 
-@media screen and (max-width: variables.$lg-bp) {
+@media screen and (max-width: abs.$lg-bp) {
     .auth-controll { display: none !important; }
 
     .upload_container {
@@ -105,10 +104,13 @@ header, footer, .main-wrapper {
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(var(--color-bg-rgb), 0.8); 
+            
+  
             padding: 10px;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
+            
         }
 
         // .search-content {
@@ -197,7 +199,7 @@ header, footer, .main-wrapper {
 
 }
 
-@media screen and (max-width: variables.$md-bp) {
+@media screen and (max-width: abs.$md-bp) {
     #profileBtnWrapper {
         display: none;
     }
@@ -211,7 +213,7 @@ header, footer, .main-wrapper {
 
     }
     .billboard {
-        @include mixins.flexbox(column, null, null, null, 2px);
+        @include abs.flexbox(column, null, null, null, 2px);
         margin: 0;
 
         .vertical-stand .mobile-wrapper .category {
@@ -252,13 +254,13 @@ header, footer, .main-wrapper {
     }
 }
 
-@media screen and (max-width: variables.$sm-bp) {
+@media screen and (max-width: abs.$sm-bp) {
     .post-cover {
         // height: 100% !important;
     }
 }
 
-@media screen and (max-width: variables.$xs-bp) {
+@media screen and (max-width: abs.$xs-bp) {
     .top-menu-content {
         flex-wrap: wrap;
     }

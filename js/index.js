@@ -76,7 +76,7 @@ document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
 
 
 
-
+const noDataLi = searchContent.querySelector(".no-data-li")
 
 //  ============================ search by posts title and tags vie searchIndex 
 
@@ -91,7 +91,10 @@ searchClose.addEventListener("click", () => {
   searchInput.value = ""
   searchPostList.innerHTML = ""; 
   searchSeeMoreLink.classList.add("d-none"); 
+  noDataLi.classList.add("d-none"); 
+  searchContent.classList.remove("is-open");  
 });
+
 searchInput.addEventListener("click", () => {
     headerSearch.classList.add("active"); 
 })
@@ -143,13 +146,11 @@ let text = null;
 searchInput.addEventListener("input", (e) => { 
   text = e.target.value; 
   searchPostList.innerHTML = ""; 
-  searchContent.querySelector(".no-data-li").classList.add("d-none"); 
+  noDataLi.classList.add("d-none"); 
   searchContent.classList.remove("is-open"); 
   searchSeeMoreLink.classList.add("d-none"); 
   
-  if(!text) {
-      return;
-  }
+  if(!text) return;
   
   debound.set(text, async (text) => {
       queryStrHandler.changePostsSearch(text); 
@@ -161,10 +162,10 @@ searchInput.addEventListener("input", (e) => {
       const items = await fetchPostsBySearch(text); 
 
       if (items.length > 0) {
-        searchContent.querySelector(".no-data-li").classList.add("d-none");
+        noDataLi.classList.add("d-none");
         showSeeMore(text, items.length);
       } else {
-        searchContent.querySelector(".no-data-li").classList.remove("d-none");
+        noDataLi.classList.remove("d-none");
       }
       searchContent.style.height = "auto"; 
       searchPostLoader.style.display = "none"; 
@@ -207,7 +208,7 @@ const getHeaderNavContent = async (additionUserInfo, isAdmin ) => {
   const commonHeaderNav = ` 
     <li><a href="/profile/setting.html">Settings</a></li> 
     <li><a href="/profile/comments.html">Comments</a></li>
-    <li style="padding: 0;"><button type="button" onclick="logout()">Logout</button></li>
+    <li style="padding: 0;"><button class="btn-danger" type="button" onclick="logout()">Logout</button></li>
     `;
 
     if(auth.currentUser) {
@@ -247,8 +248,25 @@ firebase.auth().onAuthStateChanged(async function(user) {
 })
 
 
+const themeSelector = document.getElementById('themeSelector');
+const root = document.documentElement;
+
+const savedTheme = localStorage.getItem('theme') || 'default';
+root.setAttribute('data-theme', savedTheme);
+themeSelector.value = savedTheme;
+
+themeSelector.addEventListener('change', () => {
+  const theme = themeSelector.value;
+  root.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+});
+
+
+//TODO: pagination, post edit, login, sign up, scrollbar, post page and comments 
+//TODO: change butger/close on svg icon 
 
 
 //TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event 
 //TODO: localize categories names 
-
+//TODO: login sign up btn appear when log out in mobile aside menu 
+//TODO: null search handling 

@@ -1,6 +1,7 @@
-@use '../abstracts/index';
+@use '../abstracts/index' as abs;
 
 .breadcrumbs {
+    color: abs.$color-text;
     padding: 10px 30px;
     a {
         @extend %menu-list-item;  
@@ -11,9 +12,9 @@
         li {
             display: inline-block;
             &:hover a {
-                color: grey;
-                // background-color: grey;
+                color: abs.$color-secondary;
             }
         }
     }
 }
+
