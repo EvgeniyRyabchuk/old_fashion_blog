@@ -7,19 +7,19 @@ let isAdmin = false; // default value
 let userAddition = null; 
 
 //TODO: if admin return isAdmin 
-async function getUserAddition(userId = null) {
+async function getUserAddition(userId = auth.currentUser?.uid) {
   let user = null; 
   let isAdmin = false; 
 
-  if (userId) {
-    const userDoc = await db.collection("users").doc(userId).get();
-    if (userDoc.exists) {
-      return { data: {id: userDoc.id, ...userDoc.data()}, isAdmin }; 
-    } 
-  } 
+  // if (userId) {
+  //   const userDoc = await db.collection("users").doc(userId).get();
+  //   if (userDoc.exists) {
+  //     return { data: {id: userDoc.id, ...userDoc.data()}, isAdmin }; 
+  //   } 
+  // } 
   
   // user = firebase.auth().currentUser;
-  // if (!user) return {data: null, isAdmin};
+  if (!userId) return {data: null, isAdmin};
   let snap = await db.collection("users").doc(userId).get(); 
   if(!snap.exists)
     snap = await db.collection("admins").doc(userId).get(); 
@@ -28,7 +28,7 @@ async function getUserAddition(userId = null) {
   else 
     isAdmin = true; 
 
-  return { data: snap.data(), isAdmin }; 
+  return { data: {userId: snap.id, ...snap.data()}, isAdmin }; 
 }
 
 auth.onAuthStateChanged(user => {

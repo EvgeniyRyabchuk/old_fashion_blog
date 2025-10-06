@@ -133,6 +133,10 @@ $post-card-width: 250px;
 $post-card-height: 300px;
 
 .post-row {
+    @include abs.custom-scrollbar(abs.$color-secondary,
+        abs.$color-secondary-text,
+        color-mix(in srgb, abs.$color-secondary-text, abs.$color-info-text 20%));
+
     padding: 0px 25px 10px 25px !important;
     .left-btn, .right-btn {
         background-color: rgb(139, 139, 139) !important;

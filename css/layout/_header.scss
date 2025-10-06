@@ -141,9 +141,10 @@ header {
         }
 
         .see-more {
-          color: abs.$color-secondary;
+          color: abs.$color-bg;
           &:hover {
-          color: abs.$color-secondary-active;
+            color: abs.$color-danger;
+            
           }
         }
         
@@ -283,13 +284,13 @@ header {
 
 .auth-nav-list {
   position: absolute;
-  background-color: abs.$color-secondary-active;
+  background-color: abs.$color-bg;
   top: 44px;
   right: 0;
   z-index: 99;
   margin: 0;
   width: 100%;
-
+  box-shadow: 0 0 5px abs.$color-secondary;
   li {
     text-align: center;
   }
@@ -348,10 +349,10 @@ header {
 .profile-btn-wrapper {
   position: relative;
   margin-left: 20px;
-  background-color: abs.$color-secondary;
+  background-color: abs.$color-warning;
   &:hover {
     .profile-btn {
-      background-color: abs.$color-secondary-hover;
+      background-color: abs.$color-warning-hover;
     }
 
     .profile-btn::after {
@@ -370,7 +371,7 @@ header {
   display: flex !important;
   align-items: center;
   padding: 6px 12px 6px 12px;
-
+  
   &::before,
   &::after {
     @extend %profileIconSize;
@@ -404,7 +405,7 @@ header {
   justify-content: center;
   margin: 0 15px;
 
-  background-color: abs.$color-secondary;
+  background-color: abs.$color-warning;
 
   .form-row {
     .aside-profile-btn {
@@ -541,3 +542,25 @@ $sideMenuWrapperAppearTime: 0.3s;
     }
   }
 }
+
+
+
+@media screen and (min-width: abs.$lg-bp) {
+   .search-content {
+      position: absolute;
+      background: linear-gradient(135deg, rgba(abs.$color-secondary-rgb, 0.8), 
+        rgba(abs.$color-bg-rgb, 0.8));
+      top: 50px;
+      right: 0;
+      border: 1px solid black;
+      width: 70% !important; 
+   }
+   .search-post-list {
+      margin: 5px;
+   
+   } 
+}
+@media screen and (max-width: abs.$xl-bp) {
+    .search-content { width: 100% !important }
+}
+

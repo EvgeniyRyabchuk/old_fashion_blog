@@ -1,4 +1,4 @@
-@use '../abstracts/placeholders'; 
+@use '../abstracts/index' as abs;
 @use '../utilities/helpers';
 
 
@@ -44,6 +44,10 @@
             border-radius: 30px;
             margin: 3px 3px 3px 0px;
         }
+    }
+
+    .user-name, .comment-row {
+      color: abs.$color-text;
     }
 
     .user-name {

@@ -50,7 +50,8 @@
                      <li><a href="/profile/setting.html">Settings</a></li>
                      <li><a href="/profile/comments.html">Comments</a></li>
                      <li style="padding: 0;">
-                        <button type="button" onclick="logout()">Logout</button>
+         
+                        <button class="btn-danger" type="button" onclick="logout()">Logout</button>
                      </li>
                   </ul>
                </div>
@@ -116,10 +117,10 @@
                   </select>
                </div>
                <div class="form-row">
-                  <select class="theme-select" id="themeSelect">
-                     <option value="RU">Default</option>
-                     <option value="UA">Light</option>
-                     <option value="EN">Dark</option>
+                  <select class="theme-select" id="themeSelector">
+                     <option value="default">Default</option>
+                     <option value="light">Light</option>
+                     <option value="dark">Dark</option>
                   </select>
                </div>
 
@@ -217,7 +218,7 @@
                      <li><a href="/profile/setting.html">Settings</a></li>
                      <li><a href="/profile/comments.html">Comments</a></li>
                      <li style="padding: 0;">
-                        <button type="button" onclick="logout()">Logout</button>
+                        <button class="btn-danger" type="button" onclick="logout()">Logout</button>
                      </li>
                   </ul>
                </div>
@@ -332,9 +333,15 @@
       </div>
    </footer>
 
-   <script src="../js/index.js"></script>
+   <script src="../js/utilities/debounce.js"></script>
+
+   <script src="../js/utilities/query-string-handler.js"></script> 
+   <script src="../js/utilities/render.js"></script> 
+   <script src="../js/utilities/loader.js"></script>
+
    <script src="../js/service/index.js"></script>
    <script src="../js/service/auth.js"></script>
+   <script src="../js/index.js"></script>
 
    
 

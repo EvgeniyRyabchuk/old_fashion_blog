@@ -1,33 +1,45 @@
 
 
 :root {
-  --color-bg: #fdfaf5; /* A soft, warm off-white */
-  --color-text: #2a2a2a; /* A warm, very dark gray instead of pure black */
-    
-  --color-primary: #c9a9a6; /* Muted, dusty rose for main actions */
+  --color-bg: #fdfaf5;
+  --color-bg-rgb: 253, 250, 245;
+  --color-text: #2a2a2a;
+  --color-text-rgb: 42, 42, 42;
+
+  --color-primary: #c9a9a6;
   --color-primary-hover: #b99390;
   --color-primary-active: #a87e7a;
-    
-  --color-secondary: #a0a0a0; /* Neutral gray for secondary text/borders */
+  --color-primary-text: #ffffff;
+  --color-primary-rgb: 201, 169, 166;
+
+  --color-secondary: #a0a0a0;
   --color-secondary-hover: #8c8c8c;
   --color-secondary-active: #787878;
+  --color-secondary-text: #000000;
+  --color-secondary-rgb: 160, 160, 160;
 
-  --color-danger: #d98c82; /* Desaturated, soft red */
+  --color-danger: #d98c82;
   --color-danger-hover: #e0a29a;
   --color-danger-active: #c4766c;
+  --color-danger-text: #ffffff;
+  --color-danger-rgb: 217, 140, 130;
 
-  --color-info: #7ea1c4; /* Muted, slate blue */
+  --color-info: #7ea1c4;
   --color-info-hover: #93b2d1;
   --color-info-active: #698db0;
-    
-  --color-warning: #e3b37c; /* Soft, muted gold */
+  --color-info-text: #ffffff;
+  --color-info-rgb: 126, 161, 196;
+
+  --color-warning: #e3b37c;
   --color-warning-hover: #ebc192;
   --color-warning-active: #d1a164;
+  --color-warning-text: #000000;
+  --color-warning-rgb: 227, 179, 124;
 
-  --color-success: #8dafa0; /* Calming, muted sage green */
+  --color-success: #8dafa0;
   --color-success-hover: #a2c2b3;
   --color-success-active: #789c8d;
-
-
-    --color-bg-rgb: 253, 250, 245;
+  --color-success-text: #ffffff;
+  --color-success-rgb: 141, 175, 160;
 }
+

@@ -24,7 +24,7 @@ scss/
   }
 }
 */
-.list-comment-container, footer .footer-content .footer-col .footer-data-wrapper, header nav ul, .side-menu-wrapper .side-menu .side-menu-list, .search-post-list, .breadcrumbs ul {
+footer .footer-content .footer-col .footer-data-wrapper, header nav ul, .side-menu-wrapper .side-menu .side-menu-list, .search-post-list, .breadcrumbs ul, .list-comment-container {
   list-style: none;
 }
 
@@ -87,68 +87,224 @@ footer a, header nav a, .side-menu-wrapper .side-menu .side-menu-list .side-menu
 }
 
 :root {
-  --color-bg: #fdfaf5; /* A soft, warm off-white */
-  --color-text: #2a2a2a; /* A warm, very dark gray instead of pure black */
-  --color-primary: #c9a9a6; /* Muted, dusty rose for main actions */
+  --color-bg: #fdfaf5;
+  --color-bg-rgb: 253, 250, 245;
+  --color-text: #2a2a2a;
+  --color-text-rgb: 42, 42, 42;
+  --color-primary: #c9a9a6;
   --color-primary-hover: #b99390;
   --color-primary-active: #a87e7a;
-  --color-secondary: #a0a0a0; /* Neutral gray for secondary text/borders */
+  --color-primary-text: #ffffff;
+  --color-primary-rgb: 201, 169, 166;
+  --color-secondary: #a0a0a0;
   --color-secondary-hover: #8c8c8c;
   --color-secondary-active: #787878;
-  --color-danger: #d98c82; /* Desaturated, soft red */
+  --color-secondary-text: #000000;
+  --color-secondary-rgb: 160, 160, 160;
+  --color-danger: #d98c82;
   --color-danger-hover: #e0a29a;
   --color-danger-active: #c4766c;
-  --color-info: #7ea1c4; /* Muted, slate blue */
+  --color-danger-text: #ffffff;
+  --color-danger-rgb: 217, 140, 130;
+  --color-info: #7ea1c4;
   --color-info-hover: #93b2d1;
   --color-info-active: #698db0;
-  --color-warning: #e3b37c; /* Soft, muted gold */
+  --color-info-text: #ffffff;
+  --color-info-rgb: 126, 161, 196;
+  --color-warning: #e3b37c;
   --color-warning-hover: #ebc192;
   --color-warning-active: #d1a164;
-  --color-success: #8dafa0; /* Calming, muted sage green */
+  --color-warning-text: #000000;
+  --color-warning-rgb: 227, 179, 124;
+  --color-success: #8dafa0;
   --color-success-hover: #a2c2b3;
   --color-success-active: #789c8d;
-  --color-bg-rgb: 253, 250, 245;
+  --color-success-text: #ffffff;
+  --color-success-rgb: 141, 175, 160;
 }
 
 [data-theme=light] {
   --color-bg: #ffffff;
+  --color-bg-rgb: 255, 255, 255;
   --color-text: #222;
+  --color-text-rgb: 34, 34, 34;
   --color-primary: #3d5cf2;
   --color-primary-hover: #2f4ae0;
   --color-primary-active: #233bc1;
+  --color-primary-text: #ffffff;
+  --color-primary-rgb: 61, 92, 242;
   --color-secondary: #9aa2b5;
   --color-secondary-hover: #7f8698;
   --color-secondary-active: #676d7d;
+  --color-secondary-text: #dbdbdb;
+  --color-secondary-rgb: 154, 162, 181;
   --color-danger: #e64545;
   --color-danger-hover: #ff5c5c;
   --color-danger-active: #c93131;
+  --color-danger-text: #ffffff;
+  --color-danger-rgb: 230, 69, 69;
   --color-info: #2f80ed;
   --color-info-hover: #4d96f2;
   --color-info-active: #2567d6;
+  --color-info-text: #ffffff;
+  --color-info-rgb: 47, 128, 237;
   --color-warning: #f5b82e;
   --color-warning-hover: #f8c953;
   --color-warning-active: #dca722;
+  --color-warning-text: #000000;
+  --color-warning-rgb: 245, 184, 46;
   --color-success: #4caf50;
   --color-success-hover: #64c567;
   --color-success-active: #3f8f43;
-  --color-bg-rgb: 255, 255, 255;
+  --color-success-text: #ffffff;
+  --color-success-rgb: 76, 175, 80;
 }
 
 [data-theme=dark] {
-  --color-bg: #1f1e1d; /* Deep charcoal with a hint of warmth */
-  --color-text: #e8e3dc; /* Soft, warm off-white text */
-  --color-primary: #d2b5b2; /* A slightly brighter dusty rose for contrast */
+  --color-bg: #1f1e1d;
+  --color-bg-rgb: 31, 30, 29;
+  --color-text: #e8e3dc;
+  --color-text-rgb: 232, 227, 220;
+  --color-primary: #d2b5b2;
   --color-primary-hover: #e0c8c5;
   --color-primary-active: #c1a19e;
-  /* Secondary and state colors can often be shared or slightly tweaked */
+  --color-primary-text: #1f1e1d;
+  --color-primary-rgb: 210, 181, 178;
   --color-secondary: #8a8a8a;
   --color-secondary-hover: #a0a0a0;
   --color-secondary-active: #707070;
+  --color-secondary-text: #ffffff;
+  --color-secondary-rgb: 138, 138, 138;
   --color-danger: #e29f95;
+  --color-danger-hover: #f0b4aa;
+  --color-danger-active: #c9877d;
+  --color-danger-text: #1f1e1d;
+  --color-danger-rgb: 226, 159, 149;
+  --color-info: #8fb6d6;
+  --color-info-hover: #a3c4e0;
+  --color-info-active: #749cbf;
+  --color-info-text: #1f1e1d;
+  --color-info-rgb: 143, 182, 214;
+  --color-warning: #e8bb85;
+  --color-warning-hover: #f0ca9e;
+  --color-warning-active: #d1a46f;
+  --color-warning-text: #1f1e1d;
+  --color-warning-rgb: 232, 187, 133;
   --color-success: #a0c2b2;
-  --color-bg-rgb: 31, 30, 29;
+  --color-success-hover: #b4d3c4;
+  --color-success-active: #89ad9e;
+  --color-success-text: #1f1e1d;
+  --color-success-rgb: 160, 194, 178;
 }
 
+/* Base Toolbar Styling */
+.ql-toolbar.ql-snow {
+  background: rgb(var(--color-bg-rgb));
+  border: 1px solid rgba(var(--color-border-rgb, 255, 255, 255), 0.2);
+  color: rgb(var(--color-text-rgb));
+}
+
+/* Icons and SVG lines */
+.ql-toolbar .ql-stroke {
+  stroke: rgb(var(--color-text-rgb)) !important;
+}
+
+.ql-toolbar .ql-fill {
+  fill: rgb(var(--color-text-rgb)) !important;
+}
+
+.ql-toolbar .ql-picker-label,
+.ql-toolbar .ql-picker-item {
+  color: rgb(var(--color-text-rgb)) !important;
+}
+
+/* Dropdown picker menu background and text */
+.ql-toolbar .ql-picker-options {
+  background: rgb(var(--color-bg-rgb));
+  border: 1px solid rgba(var(--color-border-rgb, 255, 255, 255), 0.2);
+}
+
+.ql-toolbar .ql-picker-item:hover,
+.ql-toolbar .ql-picker-item.ql-selected {
+  background: rgba(var(--color-text-rgb), 0.1);
+}
+
+/* Active button highlight */
+.ql-toolbar button.ql-active .ql-stroke,
+.ql-toolbar button.ql-active .ql-fill {
+  stroke: var(--color-accent, #4fa3ff) !important;
+  fill: var(--color-accent, #4fa3ff) !important;
+}
+
+/* Hover effect */
+.ql-toolbar button:hover svg {
+  stroke: var(--color-accent, #4fa3ff);
+}
+
+/* Quill editor area */
+.ql-container.ql-snow {
+  background: rgb(var(--color-bg-rgb));
+  color: rgb(var(--color-text-rgb));
+  border: 1px solid rgba(var(--color-border-rgb, 255, 255, 255), 0.2);
+}
+
+/* Handle color picker button labels (small squares) */
+.ql-toolbar .ql-color-picker .ql-picker-item,
+.ql-toolbar .ql-background .ql-picker-item {
+  border-radius: 3px;
+  border: 1px solid rgba(var(--color-border-rgb, 255, 255, 255), 0.2);
+}
+
+/* Fix mixed white/black icons in dropdowns */
+.ql-toolbar .ql-picker.ql-color-picker svg .ql-stroke {
+  stroke: rgb(var(--color-text-rgb)) !important;
+}
+
+.ql-toolbar .ql-picker.ql-color-picker svg .ql-fill {
+  fill: rgb(var(--color-text-rgb)) !important;
+}
+
+/* Force Quill editor content to follow theme colors */
+.ql-editor,
+.ql-editor * {
+  color: var(--color-text) !important;
+  background-color: var(--color-bg) !important;
+}
+
+/* Optional – keep code blocks readable */
+.ql-editor pre,
+.ql-editor code {
+  background-color: rgba(var(--color-bg-rgb), 0.9) !important;
+  color: var(--color-secondary-text) !important;
+}
+
+/* Fix links */
+.ql-editor a {
+  color: var(--color-accent, #4a6cf7) !important;
+}
+
+/* Headings */
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6 {
+  color: var(--color-text) !important;
+}
+
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ ├─ utilities/     
+ └─ main.scss    // точка входа
+*/
 * {
   box-sizing: border-box;
 }
@@ -170,28 +326,28 @@ select, button {
   cursor: pointer;
 }
 
-.btn, .btn-info, .btn-success, .login-btn, .btn-warning, .btn-danger, .auth-nav-list button, .aside-profile-btn-wrapper .auth-nav-list button, .btn-secondary, .sign-up-btn, .btn-primary {
+.btn, .btn-info, .btn-success, .login-btn, .btn-warning, .btn-danger, .auth-nav-list button, .aside-profile-btn-wrapper .auth-nav-list button, .table-wrapper table tbody td button:last-child, .btn-secondary, .sign-up-btn, .btn-primary, .table-wrapper table tbody td button:first-child {
   padding: 10px;
   margin: 5px;
   font-size: 17px;
   cursor: pointer;
 }
 
-.btn-primary {
+.btn-primary, .table-wrapper table tbody td button:first-child {
   background-color: var(--color-primary);
-  color: white;
+  color: var(--color-primary-text);
   cursor: pointer;
 }
-.btn-primary:hover {
+.btn-primary:hover, .table-wrapper table tbody td button:hover:first-child {
   background-color: var(--color-primary-hover);
 }
-.btn-primary:active {
+.btn-primary:active, .table-wrapper table tbody td button:active:first-child {
   background-color: var(--color-primary-active);
 }
 
 .btn-secondary, .sign-up-btn {
   background-color: var(--color-secondary);
-  color: white;
+  color: var(--color-secondary-text);
   cursor: pointer;
 }
 .btn-secondary:hover, .sign-up-btn:hover {
@@ -201,21 +357,21 @@ select, button {
   background-color: var(--color-secondary-active);
 }
 
-.btn-danger, .auth-nav-list button, .aside-profile-btn-wrapper .auth-nav-list button {
+.btn-danger, .auth-nav-list button, .aside-profile-btn-wrapper .auth-nav-list button, .table-wrapper table tbody td button:last-child {
   background-color: var(--color-danger);
-  color: white;
+  color: var(--color-danger-text);
   cursor: pointer;
 }
-.btn-danger:hover, .auth-nav-list button:hover, .aside-profile-btn-wrapper .auth-nav-list button:hover {
+.btn-danger:hover, .auth-nav-list button:hover, .aside-profile-btn-wrapper .auth-nav-list button:hover, .table-wrapper table tbody td button:hover:last-child {
   background-color: var(--color-danger-hover);
 }
-.btn-danger:active, .auth-nav-list button:active, .aside-profile-btn-wrapper .auth-nav-list button:active {
+.btn-danger:active, .auth-nav-list button:active, .aside-profile-btn-wrapper .auth-nav-list button:active, .table-wrapper table tbody td button:active:last-child {
   background-color: var(--color-danger-active);
 }
 
 .btn-warning {
   background-color: var(--color-warning);
-  color: white;
+  color: var(--color-warning-text);
   cursor: pointer;
 }
 .btn-warning:hover {
@@ -227,7 +383,7 @@ select, button {
 
 .btn-success, .login-btn {
   background-color: var(--color-success);
-  color: white;
+  color: var(--color-success-text);
   cursor: pointer;
 }
 .btn-success:hover, .login-btn:hover {
@@ -239,7 +395,7 @@ select, button {
 
 .btn-info {
   background-color: var(--color-info);
-  color: white;
+  color: var(--color-info-text);
   cursor: pointer;
 }
 .btn-info:hover {
@@ -266,6 +422,18 @@ select, button {
   margin: 0 5px;
 }
 
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ ├─ utilities/     
+ └─ main.scss    // точка входа
+*/
 .default-btn, button {
   border: 0;
 }
@@ -352,6 +520,9 @@ select, button {
   border-radius: 30px;
   margin: 3px 3px 3px 0px;
 }
+.comment-container .user-name, .comment-container .comment-row {
+  color: var(--color-text);
+}
 .comment-container .user-name {
   margin: 3px 10px;
 }
@@ -413,15 +584,47 @@ select, button {
   font-weight: bold;
 }
 
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ ├─ utilities/     
+ └─ main.scss    // точка входа
+*/
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
   margin: 20px 0;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  background: #fff;
   height: 700px;
   position: relative;
+}
+.table-wrapper::-webkit-scrollbar {
+  width: 12px;
+  height: 10px;
+  border-radius: 3px;
+  background-color: var(--color-secondary);
+}
+.table-wrapper::-webkit-scrollbar-track {
+  background-color: var(--color-secondary);
+  border-radius: 3px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary-text);
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--color-secondary-text), var(--color-info-text) 20%);
+  border-radius: 3px;
+  cursor: pointer;
 }
 .table-wrapper table {
   width: 100%;
@@ -429,11 +632,12 @@ select, button {
   font-family: "Segoe UI", Tahoma, sans-serif;
   font-size: 0.95rem;
   table-layout: auto;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 .table-wrapper table thead {
-  background: #f4f6fb;
-  color: #333;
   font-weight: 600;
+  color: var(--color-primary-text);
 }
 .table-wrapper table thead th {
   text-align: left;
@@ -443,23 +647,32 @@ select, button {
   position: sticky;
   top: 0;
   z-index: 3;
-  background-color: white;
+  background-color: var(--color-primary-hover);
 }
 .table-wrapper table thead th:last-child {
   position: sticky;
   right: 0;
-  background: #f4f6fb;
+  background-color: var(--color-primary-active);
   z-index: 4;
 }
 .table-wrapper table tbody tr {
   transition: background 0.2s ease;
   cursor: pointer;
 }
+.table-wrapper table tbody tr:nth-child(odd) {
+  background: rgba(var(--color-info-rgb), 0.2);
+}
 .table-wrapper table tbody tr:nth-child(even) {
-  background: #fafafa;
+  background: rgba(var(--color-primary-rgb), 0.3);
+}
+.table-wrapper table tbody tr td:last-child {
+  position: sticky;
+  right: 0;
+  background: var(--color-primary-hover);
+  z-index: 2;
 }
 .table-wrapper table tbody tr:hover {
-  background: #f0f4ff;
+  background: rgba(var(--color-primary-rgb), 0.1);
 }
 .table-wrapper table tbody td {
   padding: 10px 15px;
@@ -500,27 +713,6 @@ select, button {
   cursor: pointer;
   transition: background 0.2s ease;
 }
-.table-wrapper table tbody td button:first-child {
-  background: #4a6cf7;
-  color: #fff;
-}
-.table-wrapper table tbody td button:first-child:hover {
-  background: #3855c9;
-}
-.table-wrapper table tbody td button:last-child {
-  background: #f44336;
-  color: #fff;
-}
-.table-wrapper table tbody td button:last-child:hover {
-  background: #d32f2f;
-}
-.table-wrapper table tbody td:last-child {
-  position: sticky;
-  right: 0;
-  background: #fff;
-  z-index: 2;
-}
-
 .loader-wrapper {
   background-color: rgba(147, 147, 147, 0.5);
   z-index: 1;
@@ -949,6 +1141,18 @@ scss/
   line-height: 1;
 }
 
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ ├─ utilities/     
+ └─ main.scss    // точка входа
+*/
 .pagination-wrapper {
   visibility: hidden;
 }
@@ -967,16 +1171,33 @@ scss/
 }
 .pagination__per-page label {
   margin-right: 0.5rem;
+  color: var(--color-text);
 }
 .pagination__per-page select {
   padding: 0.3rem 0.5rem;
   border-radius: 6px;
   border: 1px solid #ccc;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 .pagination__nav {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+.pagination__nav .next-page {
+  background-color: var(--color-info-active);
+  color: var(--color-info-text);
+}
+.pagination__nav .next-page:hover {
+  background-color: var(--color-info-hover);
+}
+.pagination__nav .prev-page {
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-text);
+}
+.pagination__nav .prev-page:hover {
+  background-color: var(--color-secondary-hover);
 }
 .pagination__nav button {
   padding: 0.45rem 0.75rem;
@@ -1005,21 +1226,25 @@ scss/
   height: 34px;
   padding: 0 8px;
   border-radius: 6px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: #333;
+  border: 2px solid transparent;
+  color: var(--color-text);
+  background-color: var(--color-bg);
   cursor: pointer;
   font-weight: 600;
 }
 .pagination__numbers .page-num:hover {
-  background: rgba(79, 70, 229, 0.06);
-  border-color: #ddd;
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-secondary-active);
 }
 .pagination__numbers .page-num.active {
-  background: #fff;
-  color: #111;
+  color: var(--color-primary-text);
+  background-color: var(--color-primary);
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 4px 10px rgba(79, 70, 229, 0.07);
+}
+.pagination__numbers .page-num.active:hover {
+  border-color: var(--color-primary-hover);
+  background-color: var(--color-primary-active);
 }
 .pagination__numbers .page-ellipsis {
   padding: 0 6px;
@@ -1028,13 +1253,15 @@ scss/
 .pagination__info {
   margin-left: 0.75rem;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--color-text);
 }
 .pagination__load-more {
   text-align: center;
   margin-bottom: 2rem;
 }
 .pagination__load-more button {
+  color: var(--color-success-text);
+  background-color: var(--color-success);
   padding: 0.7rem 1.5rem;
   border: none;
   border-radius: 8px;
@@ -1042,6 +1269,9 @@ scss/
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+}
+.pagination__load-more button:hover {
+  background-color: var(--color-success-active);
 }
 
 /*
@@ -1073,10 +1303,11 @@ scss/
 }
 .dropdown .dropdown-menu a {
   white-space: nowrap;
-  color: #000;
+  color: var(--color-text);
 }
 .dropdown .dropdown-menu li:hover {
-  background-color: rgb(195, 210, 210);
+  color: var(--color-secondary);
+  background-color: var(--color-secondary);
 }
 .dropdown .dropdown-menu .dropdown-menu {
   top: -15px;
@@ -1161,8 +1392,20 @@ scss/
     padding: 8px 15px !important;
   }
 }
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ ├─ utilities/     
+ └─ main.scss    // точка входа
+*/
 .login-wrapper {
-  background: #fff;
+  background: var(--color-bg);
   padding: 2.5rem 2rem;
   border-radius: 1rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -1175,7 +1418,7 @@ scss/
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.6rem;
-  color: #222;
+  color: var(--color-text);
 }
 .login-wrapper .input-group {
   margin-bottom: 1rem;
@@ -1187,6 +1430,8 @@ scss/
   border-radius: 0.6rem;
   font-size: 1rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 .login-wrapper .input-group input:focus {
   border-color: #6366f1;
@@ -1372,6 +1617,27 @@ scss/
   gap: 5px;
   min-height: auto !important;
   overflow-x: auto;
+}
+.post-row::-webkit-scrollbar {
+  width: 12px;
+  height: 10px;
+  border-radius: 3px;
+  background-color: var(--color-secondary);
+}
+.post-row::-webkit-scrollbar-track {
+  background-color: var(--color-secondary);
+  border-radius: 3px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.post-row::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary-text);
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+.post-row::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--color-secondary-text), var(--color-info-text) 20%);
+  border-radius: 3px;
+  cursor: pointer;
 }
 .post-row .left-btn, .post-row .right-btn {
   background-color: rgb(139, 139, 139) !important;
@@ -1587,6 +1853,18 @@ scss/
   transform: translateY(1px);
 }
 
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ ├─ utilities/     
+ └─ main.scss    // точка входа
+*/
 .post-content-section {
   position: relative;
 }
@@ -1623,7 +1901,7 @@ scss/
   padding: 20px;
   font-family: "Segoe UI", Roboto, sans-serif;
   line-height: 1.6;
-  color: #222;
+  color: var(--color-text);
 }
 .post-container .post-cover {
   height: 300px;
@@ -1670,8 +1948,8 @@ scss/
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 12px;
-  background: #e8f0ff;
-  color: #2a4d9b;
+  background: var(--color-info-active);
+  color: var(--color-info-text);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -1749,13 +2027,156 @@ scss/
     font-size: 0.85rem;
   }
 }
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ ├─ utilities/     
+ └─ main.scss    // точка входа
+*/
+#main-content-title {
+  margin: 5px 30px;
+}
+
+.posts-wrapper, .post-row {
+  padding: 0px 30px 30px 30px;
+  margin-top: 15px;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  min-height: 500px;
+}
+.posts-wrapper .post-card, .post-row .post-card {
+  position: relative;
+  padding: 10PX;
+  width: 33.3333333333%;
+  min-width: 300px;
+  height: 550px;
+}
+.posts-wrapper .post-card:hover, .post-row .post-card:hover {
+  background-color: var(--color-secondary);
+}
+.posts-wrapper .post-card:hover .post-title, .post-row .post-card:hover .post-title {
+  color: white;
+}
+.posts-wrapper .post-card::after, .post-row .post-card::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 0%;
+  transition: 0.6s width ease-in;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.posts-wrapper .post-card:hover::after, .post-row .post-card:hover::after {
+  background-color: var(--color-text);
+  width: 100%;
+}
+.posts-wrapper .post-card .post-cover img, .post-row .post-card .post-cover img {
+  padding: 15px 15px 10px 15px;
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  /* Or 'cover', 'fill', 'scale-down', 'none' */
+}
+.posts-wrapper .post-card .post-title-wrapper, .post-row .post-card .post-title-wrapper {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.posts-wrapper .post-card .post-title-wrapper .post-title, .post-row .post-card .post-title-wrapper .post-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.posts-wrapper .post-card .post-short-content, .post-row .post-card .post-short-content {
+  text-align: justify;
+  padding: 5px 20px 5px 20px;
+  max-height: 200px;
+  overflow-y: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 80%);
+  /* 👈 80% блока постепенно исчезает */
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 80%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+.posts-wrapper .post-card .more-wrapper, .post-row .post-card .more-wrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 0px;
+  margin: 0px 35px 10px 10px;
+  text-align: right;
+}
+.posts-wrapper .post-card .more-wrapper .read-more, .post-row .post-card .more-wrapper .read-more {
+  font-size: 18px;
+  color: grey;
+  cursor: pointer;
+}
+.posts-wrapper .post-card .more-wrapper .read-more:hover, .post-row .post-card .more-wrapper .read-more:hover {
+  color: cadetblue;
+}
+
+.search-post-list {
+  display: block;
+}
+.search-post-list a {
+  height: 85px;
+}
+.search-post-list li {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 7px 0;
+  background-color: var(--color-bg);
+  border: 2px dashed rgb(119, 119, 119);
+  overflow: hidden;
+  text-align: justify;
+  line-height: 1.3rem;
+}
+.search-post-list li a {
+  display: flex;
+  padding: 10px;
+}
+.search-post-list li a .post-cover {
+  width: 120px;
+}
+.search-post-list li a .post-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.search-post-list .post-title-wrapper {
+  margin: 0 15px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/*
+scss/
+ ├─ abstracts/   // переменные, функции, mixins
+ ├─ base/        // reset, typography, общие стили
+ ├─ components/  // кнопки, карточки 
+ ├─ layout/      // сетка, header, footer, sidebar 
+ ├─ pages/       // стили отдельных страниц
+ ├─ themes/      // темы (dark/light)
+ ├─ vendors/     // библиотеки, например normalize.css
+ ├─ utilities/     
+ └─ main.scss    // точка входа
+*/
 .upload_container {
   padding: 20px;
   border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--color-bg);
+  box-shadow: 0 4px 12px rgba(var(--color-text-rgb), 0.08);
   margin: 30px;
-  border: 1px solid black;
+  border: 1px solid var(--color-text);
   /* Category select styled like post view pill */
   /* Year range styled like date-range */
   /* Tags styled like pills */
@@ -1763,6 +2184,10 @@ scss/
 .upload_container h2 {
   margin-bottom: 20px;
   color: #2a2a2a;
+}
+.upload_container label {
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 .upload_container input[type=text],
 .upload_container input[type=number],
@@ -1774,6 +2199,8 @@ scss/
   width: 100%;
   margin-top: 6px;
   margin-bottom: 15px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 .upload_container input[type=text]:focus,
 .upload_container input[type=number]:focus,
@@ -1787,8 +2214,8 @@ scss/
   border: 1px solid #ccc;
   border-radius: 6px;
   line-height: 1.4; /* increases vertical spacing */
-  background: #e6f0ff;
-  color: #1a4fff;
+  background: var(--color-bg);
+  color: var(--color-text);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1804,19 +2231,20 @@ scss/
 }
 .upload_container .year-range label {
   font-size: 0.85rem;
-  color: #444;
+  color: var(--color-text);
 }
 .upload_container .year-range input {
   width: 90px;
   font-size: 0.9rem;
   color: #555;
   font-style: italic;
+  color: var(--color-text);
 }
 .upload_container .year-range button {
   padding: 6px 14px;
   font-size: 0.85rem;
   background: #4a6cf7;
-  color: #fff;
+  color: var(--color-text);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -1958,155 +2386,6 @@ scss/
  ├─ utilities/     
  └─ main.scss    // точка входа
 */
-#main-content-title {
-  margin: 5px 30px;
-}
-
-.posts-wrapper, .post-row {
-  padding: 0px 30px 30px 30px;
-  margin-top: 15px;
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
-  min-height: 500px;
-}
-.posts-wrapper .post-card, .post-row .post-card {
-  position: relative;
-  padding: 10PX;
-  width: 33.3333333333%;
-  min-width: 300px;
-  height: 550px;
-}
-.posts-wrapper .post-card:hover, .post-row .post-card:hover {
-  background-color: var(--color-secondary);
-}
-.posts-wrapper .post-card:hover .post-title, .post-row .post-card:hover .post-title {
-  color: white;
-}
-.posts-wrapper .post-card::after, .post-row .post-card::after {
-  content: "";
-  display: block;
-  height: 3px;
-  width: 0%;
-  transition: 0.6s width ease-in;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.posts-wrapper .post-card:hover::after, .post-row .post-card:hover::after {
-  background-color: var(--color-text);
-  width: 100%;
-}
-.posts-wrapper .post-card .post-cover img, .post-row .post-card .post-cover img {
-  padding: 15px 15px 10px 15px;
-  width: 100%;
-  height: 300px;
-  object-fit: contain;
-  /* Or 'cover', 'fill', 'scale-down', 'none' */
-}
-.posts-wrapper .post-card .post-title-wrapper, .post-row .post-card .post-title-wrapper {
-  text-align: center;
-  margin-bottom: 10px;
-}
-.posts-wrapper .post-card .post-title-wrapper .post-title, .post-row .post-card .post-title-wrapper .post-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--color-text);
-}
-.posts-wrapper .post-card .post-short-content, .post-row .post-card .post-short-content {
-  text-align: justify;
-  padding: 5px 20px 5px 20px;
-  max-height: 200px;
-  overflow-y: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 80%);
-  /* 👈 80% блока постепенно исчезает */
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-image: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 80%);
-  mask-repeat: no-repeat;
-  mask-size: 100% 100%;
-}
-.posts-wrapper .post-card .more-wrapper, .post-row .post-card .more-wrapper {
-  position: absolute;
-  bottom: 20px;
-  right: 0px;
-  margin: 0px 35px 10px 10px;
-  text-align: right;
-}
-.posts-wrapper .post-card .more-wrapper .read-more, .post-row .post-card .more-wrapper .read-more {
-  font-size: 18px;
-  color: grey;
-  cursor: pointer;
-}
-.posts-wrapper .post-card .more-wrapper .read-more:hover, .post-row .post-card .more-wrapper .read-more:hover {
-  color: cadetblue;
-}
-
-.search-post-list {
-  display: block;
-}
-.search-post-list a {
-  height: 85px;
-}
-.search-post-list li {
-  display: block;
-  width: 100%;
-  padding: 0;
-  margin: 7px 0;
-  background-color: var(--color-bg);
-  border: 2px dashed rgb(119, 119, 119);
-  overflow: hidden;
-  text-align: justify;
-  line-height: 1.3rem;
-}
-.search-post-list li a {
-  display: flex;
-  padding: 10px;
-}
-.search-post-list li a .post-cover {
-  width: 120px;
-}
-.search-post-list li a .post-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.search-post-list .post-title-wrapper {
-  margin: 0 15px;
-  width: 100%;
-  overflow: hidden;
-}
-
-@media screen and (min-width: 992px) {
-  .search-content {
-    position: absolute;
-    background: linear-gradient(135deg, rgba(180, 180, 180, 0.8), rgba(100, 100, 100, 0.8));
-    top: 50px;
-    right: 0;
-    border: 1px solid black;
-    width: 70% !important;
-  }
-  .search-post-list {
-    margin: 5px;
-  }
-}
-@media screen and (max-width: 1200px) {
-  .search-content {
-    width: 100% !important;
-  }
-}
-/*
-scss/
- ├─ abstracts/   // переменные, функции, mixins
- ├─ base/        // reset, typography, общие стили
- ├─ components/  // кнопки, карточки 
- ├─ layout/      // сетка, header, footer, sidebar 
- ├─ pages/       // стили отдельных страниц
- ├─ themes/      // темы (dark/light)
- ├─ vendors/     // библиотеки, например normalize.css
- ├─ utilities/     
- └─ main.scss    // точка входа
-*/
 .profile-btn::before, .profile-btn::after,
 .aside-profile-btn::before,
 .aside-profile-btn::after {
@@ -2221,10 +2500,10 @@ header nav .auth-nav-list-wrapper .header-search .search-content {
   z-index: 999;
 }
 header nav .auth-nav-list-wrapper .header-search .see-more {
-  color: var(--color-secondary);
+  color: var(--color-bg);
 }
 header nav .auth-nav-list-wrapper .header-search .see-more:hover {
-  color: var(--color-secondary-active);
+  color: var(--color-danger);
 }
 header nav .auth-nav-list-wrapper .header-search.active .search-content.is-open {
   display: block;
@@ -2331,12 +2610,13 @@ header nav > button {
 
 .auth-nav-list {
   position: absolute;
-  background-color: var(--color-secondary-active);
+  background-color: var(--color-bg);
   top: 44px;
   right: 0;
   z-index: 99;
   margin: 0;
   width: 100%;
+  box-shadow: 0 0 5px var(--color-secondary);
 }
 .auth-nav-list li {
   text-align: center;
@@ -2384,10 +2664,10 @@ header nav > button {
 .profile-btn-wrapper {
   position: relative;
   margin-left: 20px;
-  background-color: var(--color-secondary);
+  background-color: var(--color-warning);
 }
 .profile-btn-wrapper:hover .profile-btn {
-  background-color: var(--color-secondary-hover);
+  background-color: var(--color-warning-hover);
 }
 .profile-btn-wrapper:hover .profile-btn::after {
   transform: rotate(180deg);
@@ -2437,7 +2717,7 @@ header nav > button {
   flex-direction: column;
   justify-content: center;
   margin: 0 15px;
-  background-color: var(--color-secondary);
+  background-color: var(--color-warning);
 }
 .aside-profile-btn-wrapper .form-row .aside-profile-btn {
   width: 100%;
@@ -2536,6 +2816,24 @@ header nav > button {
   margin: 0 !important;
   padding: 15px;
   min-width: 300px;
+}
+@media screen and (min-width: 992px) {
+  .search-content {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(var(--color-secondary-rgb), 0.8), rgba(var(--color-bg-rgb), 0.8));
+    top: 50px;
+    right: 0;
+    border: 1px solid black;
+    width: 70% !important;
+  }
+  .search-post-list {
+    margin: 5px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .search-content {
+    width: 100% !important;
+  }
 }
 /*
 scss/

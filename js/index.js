@@ -108,7 +108,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-const debound = createDebounce(500);
+let debound = createDebounce(500);
 const queryStrHandler = QueryStringHandler();
 
 /////////////////////////// fetchPostsBySearch
@@ -262,11 +262,13 @@ themeSelector.addEventListener('change', () => {
 });
 
 
-//TODO: pagination, post edit, login, sign up, scrollbar, post page and comments 
 //TODO: change butger/close on svg icon 
+//TODO: null search handling 
+//TODO: login sign up btn appear when log out in mobile aside menu / appear when log out 
+//TODO: bg and text color theme mixim 
 
 
 //TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event 
 //TODO: localize categories names 
-//TODO: login sign up btn appear when log out in mobile aside menu 
-//TODO: null search handling 
+
+

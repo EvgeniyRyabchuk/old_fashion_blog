@@ -60,8 +60,14 @@ const loadCategoriesToSelect = async () => {
     console.log(selectedCategoryId);
   }
 
-
-  categories.forEach(cat => {
+  const placeholderOption = document.createElement("option");
+  placeholderOption.value = "";
+  placeholderOption.textContent = "-- Select category --";
+  placeholderOption.disabled = true;
+  placeholderOption.selected = true;
+  select.appendChild(placeholderOption);
+  
+  categories.forEach((cat, i) => {
     const option = document.createElement("option");
     option.value = cat.id;
     option.textContent = cat.name; 

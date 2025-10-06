@@ -1,3 +1,6 @@
+@use '../abstracts/index' as abs;
+@use '../components/buttons' as btns;
+
 
 .table-wrapper {
   width: 100%;
@@ -5,9 +8,13 @@
   margin: 20px 0;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  background: #fff;
+  
   height: 700px;
   position: relative;
+
+  @include abs.custom-scrollbar(abs.$color-secondary,
+    abs.$color-secondary-text,
+    color-mix(in srgb, abs.$color-secondary-text, abs.$color-info-text 20%));
 
   table {
     width: 100%;
@@ -15,12 +22,12 @@
     font-family: 'Segoe UI', Tahoma, sans-serif;
     font-size: 0.95rem; 
     table-layout: auto;
+    background-color: abs.$color-bg;
+    color: abs.$color-text;
 
     thead {
-      background: #f4f6fb;
-      color: #333;
       font-weight: 600;
-
+      color: abs.$color-primary-text;
       th {
         text-align: left;
         padding: 12px 15px;
@@ -31,14 +38,14 @@
         position: sticky;
         top: 0;
         z-index: 3;
-        background-color: white;
+        background-color: abs.$color-primary-hover;
       }
 
       // Sticky header for Actions col
       th:last-child {
         position: sticky;
         right: 0;
-        background: #f4f6fb;
+        background-color: abs.$color-primary-active;
         z-index: 4;
       }
     }
@@ -47,13 +54,23 @@
       tr {
         transition: background 0.2s ease;
         cursor: pointer;
-
+        &:nth-child(odd) {
+          background: rgba(abs.$color-info-rgb, 0.2) ; 
+          
+        }
         &:nth-child(even) {
-          background: #fafafa; // striped rows
+          background: rgba(abs.$color-primary-rgb, 0.3) ; 
         }
 
+        // Sticky Actions column cells
+        td:last-child {
+          position: sticky;
+          right: 0;
+          background: abs.$color-primary-hover;
+          z-index: 2;
+        }
         &:hover {
-          background: #f0f4ff; // subtle highlight
+          background: rgba(abs.$color-primary-rgb, 0.1);
         }
       }
 
@@ -103,32 +120,17 @@
           transition: background 0.2s ease;
 
           &:first-child {
-            background: #4a6cf7;
-            color: #fff;
-
-            &:hover {
-              background: #3855c9;
-            }
+            @extend .btn-primary; 
+            
           }
 
           &:last-child {
-            background: #f44336;
-            color: #fff;
-
-            &:hover {
-              background: #d32f2f;
-            }
+             @extend .btn-danger; 
           }
         }
       }
 
-      // Sticky Actions column cells
-      td:last-child {
-        position: sticky;
-        right: 0;
-        background: #fff;
-        z-index: 2;
-      }
+
     }
   }
 }

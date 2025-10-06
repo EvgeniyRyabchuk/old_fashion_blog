@@ -167,23 +167,4 @@
 //    }
 // }
 
-@media screen and (min-width: abs.$lg-bp) {
-   
-   .search-content {
-      position: absolute;
-      background: linear-gradient(135deg, rgba(180, 180, 180, 0.8), rgba(100, 100, 100, 0.8));
-      top: 50px;
-      right: 0;
-      border: 1px solid black;
-      width: 70% !important; 
-   }
-   .search-post-list {
-      margin: 5px;
-   
-   } 
-}
-@media screen and (max-width: abs.$xl-bp) {
-    .search-content { width: 100% !important }
-}
-
 

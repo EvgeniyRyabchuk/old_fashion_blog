@@ -24,10 +24,11 @@ $header-link-hover-color: abs.$color-secondary;
 
         a {
             white-space: nowrap; 
-            color: #000; 
+            color: abs.$color-text; 
         }
         li:hover {
-            background-color: rgb(195, 210, 210);
+            color: $header-link-hover-color;
+            background-color: $header-link-hover-color;
         }
         .dropdown-menu {
             top: -15px;
