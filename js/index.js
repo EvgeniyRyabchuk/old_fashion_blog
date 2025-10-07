@@ -257,9 +257,54 @@ themeSelector.value = savedTheme;
 
 themeSelector.addEventListener('change', () => {
   const theme = themeSelector.value;
-  root.setAttribute('data-theme', theme);
+  root.setAttribute('data-theme', theme); 
   localStorage.setItem('theme', theme);
 });
+
+
+// Load saved language or default
+
+const languageSelect = document.getElementById("languageSelect"); 
+
+const createLocalizer = (languageSelect) => {
+  const defaultLang = localStorage.getItem('lang') || 'en';
+  let translations = null;
+
+  async function setLanguage(lang) {
+    const response = await fetch(`/lang/${lang}.json`);
+    translations = await response.json();
+
+    localStorage.setItem('lang', lang);
+    document.documentElement.setAttribute('lang', lang); 
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = translations[key] || key;
+    });
+  }
+
+  // Handle dropdown change
+  languageSelect.addEventListener('change', e => {
+    setLanguage(e.target.value);
+  });
+
+  // Init on page load
+  languageSelect.value = defaultLang;
+  setLanguage(defaultLang);
+
+  const translate = (key) => {
+    return translations ? translations[key] : 'no translation'; 
+  }
+
+  return {
+    setLanguage,
+    translate
+
+  }
+}
+
+const i18n = createLocalizer(languageSelect);
+
 
 
 //TODO: change butger/close on svg icon 

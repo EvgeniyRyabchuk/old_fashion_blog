@@ -87,11 +87,11 @@ const renderPostsForTable = (post) => {
     tdUserCreatedAt.innerHTML = post.createdAt.toDate().toLocaleDateString(); 
     tdUserCreatedAt.classList.add("td-date"); 
     
-    editButton.innerText = 'Edit';
+    editButton.innerText = i18n.translate('post-edit') || 'Edit';
     editButton.type = 'button';
     editButton.onclick = onUpdatePostClick; 
     
-    deleteButton.innerHTML = 'Remove';
+    deleteButton.innerHTML = i18n.translate('post-remove') || 'Remove';
     deleteButton.type = "button"; 
 
     deleteButton.onclick = () => onDeletePostClick(post.id); 
@@ -185,7 +185,7 @@ function renderTags() {
 function renderMostPopularTags(tagsContainer, tags) {
   tags.forEach((tag, index) => {
     const a = document.createElement("a");
-    a.href = `/posts.html?tags=${tag.id}`;
+    a.href = `/posts.html?tags=${tag.id}`; 
     a.className = "tag";
     a.textContent = `${tag.name} (${tag.count})`;
     tagsContainer.appendChild(a);
@@ -206,7 +206,7 @@ const renderComments = (comment, additionUserInfo, isCreatedNew = false) => {
     const userCard = document.createElement("div");
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
-    removeBtn.innerText = "Remove";
+    removeBtn.innerText = i18n.translate('post-remove') || "Remove";
     removeBtn.classList.add("btn-danger");  
     if(isCreatedNew) {
       removeBtn.style = `display: block; margin-left: auto`;  
