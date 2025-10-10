@@ -43,3 +43,10 @@ button { @extend .default-btn ; }
     display: block;
   }
 }
+
+.switchable-flex {
+    display: none;
+  &.is-open {
+    display: flex;
+  }
+}

@@ -15,7 +15,7 @@ async function seedDatabase() {
   const data = JSON.parse(fs.readFileSync("./json/seed-data-2.json", "utf8"));
     
   for (const [collectionName, docs] of Object.entries(data)) {
-    for (const [docId, docData] of Object.entries(docs)) {
+    for (const [docId, docData] of Object.entries(docs)) { 
         docData.createdAt = Timestamp.now();
       await db.collection(collectionName).doc(docId).set(docData);
       console.log(`✅ Inserted ${collectionName}/${docId}`);

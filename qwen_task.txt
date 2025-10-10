@@ -1,0 +1,10 @@
+
+== ignore because already done start ==
+You need to create localization .json files depends on all .html files in this folder 
+I already have few in lang folder 
+Just add everything there 
+== ignore because already done end ==
+
+now go throught the all .html and add data-i18n attribute where will be corresponding key for localize work 
+remove current content from html tags that needs to be localize 
+let's /auth/login.html page will be the first and work with others files after

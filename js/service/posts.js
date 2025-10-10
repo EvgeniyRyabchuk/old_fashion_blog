@@ -176,7 +176,12 @@ const createOrUpdatePost = async (postId = null) => {
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
     } else {
-      const post = allPosts.find(p => p.id === postId); 
+      const pSnap = await db.collection("posts").doc(postId).get();
+      const post = { id: pSnap.id, ...pSnap.data() }; 
+
+      if (!pSnap.exists) {
+        throw new Error(`Post with ID ${postId} not found`);
+      }
       console.log('founded' + post.id);
       
       await db.collection("posts").doc(postId).update({ 
@@ -232,7 +237,7 @@ async function readPost(postId) {
   document.getElementById("postTitle").textContent = post.title;
   document.getElementById("postDate").textContent = post.createdAt.toDate().toLocaleDateString();
   document.getElementById("postDataRange").textContent = `${post.date_range_start}-${post.date_range_end}`;
-  document.getElementById("postCategory").textContent = post.category?.name ?? ""; 
+  document.getElementById("postCategory").textContent = getLocCatName(post.category);  
   
   // Tags
   const tagsContainer = document.getElementById("postTags");
@@ -345,7 +350,7 @@ const getLastPosts = async (count) => {
   lastPostsRow.toggleScrollButtons(); 
 }
 
-
+//======================================= history 
 const renderPostHistory = async () => {
   const historyStr = localStorage.getItem("postHistory");
   if (!historyStr) return;
@@ -353,7 +358,7 @@ const renderPostHistory = async () => {
   let history = historyStr.split(",");
   
   // Fetch posts by ID
-  const postsSnap = await db.collection("posts")
+  const postsSnap = await db.collection("posts") 
     .where(firebase.firestore.FieldPath.documentId(), "in", history)
     .get();
 
@@ -362,8 +367,8 @@ const renderPostHistory = async () => {
     ...p.data()
   }));
   
-  // if post is deleted then delete it from histtory as well 
-  history = history.filter(h => h === posts.find(p => p.id === h).id); 
+  // if post is deleted then delete it from history as well 
+  history = history.filter(h => h === posts.find(p => p.id === h)?.id); 
   localStorage.setItem("postHistory", history.join(","));
 
   const postHistorySection = document.getElementById("postHistory");
@@ -374,6 +379,9 @@ const renderPostHistory = async () => {
   })
   postHistoryRow.toggleScrollButtons(); 
 }
+//======================================= 
+
+
 
 function getPostContentPreview(html, maxLength = 150) {
   // Remove all HTML tags

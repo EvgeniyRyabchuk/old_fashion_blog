@@ -76,6 +76,7 @@ document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
 
 
 
+//======================================= search posts 
 const noDataLi = searchContent.querySelector(".no-data-li")
 
 //  ============================ search by posts title and tags vie searchIndex 
@@ -108,10 +109,13 @@ document.addEventListener("click", (e) => {
   }
 });
 
+
+
 let debound = createDebounce(500);
 const queryStrHandler = QueryStringHandler();
 
-/////////////////////////// fetchPostsBySearch
+
+
 async function fetchPostsBySearch(term) {
   if(term === "" || !term) {
     console.log("No term → return all posts or skip");
@@ -172,14 +176,22 @@ searchInput.addEventListener("input", (e) => {
   });
 });
 
-
 const searchBtn = document.getElementById("searchBtn");
 searchBtn.addEventListener("click", (e) => { 
+  if(!text) return; 
    const searchUrl = `/posts.html?${queryStrHandler.strQName.search}=${text}`; 
    window.location.href = searchUrl; 
 })
+//=======================================  
 
 
+
+
+
+
+
+
+//======================================= history 
 const historyLimit = 10; 
 const addPostToHistory = (postId) => {
   const historyStr = localStorage.getItem("postHistory");
@@ -193,22 +205,27 @@ const addPostToHistory = (postId) => {
   }
   localStorage.setItem("postHistory", history.join(","));
 }
+//=======================================
 
 
+
+//======================================= auth rerender  
 const getHeaderNavContent = async (additionUserInfo, isAdmin ) => { 
   const adminHeaderNav = `
-    <li><a href="/posts.html">My posts</a></li>
-    <li><a href="/profile/admin/create-edit-post.html">Post Editor / Table </a></li>
+    <li><a data-i18n="profile-nav-my-posts" href="/posts.html">My posts</a></li>
+    <li><a data-i18n="profile-nav-post-editor" href="/profile/admin/create-edit-post.html">Post Editor / Table </a></li>
   `;
 
   const userHeaderNav= `
-    <li><a href="/profile/admin/create-edit-post.html">Favorites</a></li>
+    <li><a data-i18n="profile-nav-favorites" href="/profile/admin/create-edit-post.html">Favorites</a></li>
   `;
 
   const commonHeaderNav = ` 
-    <li><a href="/profile/setting.html">Settings</a></li> 
-    <li><a href="/profile/comments.html">Comments</a></li>
-    <li style="padding: 0;"><button class="btn-danger" type="button" onclick="logout()">Logout</button></li>
+    <li><a data-i18n="profile-nav-settings" href="/profile/setting.html">Settings</a></li> 
+    <li><a data-i18n="profile-nav-comments" href="/profile/comments.html">Comments</a></li>
+    <li style="padding: 0;">
+    <button class="btn-danger" data-i18n="profile-nav-logout-btn"
+     type="button" onclick="logout()">Logout</button></li>
     `;
 
     if(auth.currentUser) {
@@ -233,6 +250,8 @@ const displayUserRoleBaseHtml = (additionUserInfo, isAdmin ) => {
       headerNavLoginBtnForm.style.display = "none"; 
       profileBtnWrapper.classList.add("is-open"); 
       asideProfileBtnWrapper.classList.add("is-open"); 
+
+      document.getElementById("authUserName").innerText = `: ${additionUserInfo.name}`;
     } else {
       headerNavLoginBtnForm.style.display = "flex"; 
       profileBtnWrapper.classList.remove("is-open"); 
@@ -246,8 +265,11 @@ firebase.auth().onAuthStateChanged(async function(user) {
     displayUserRoleBaseHtml(additionUserInfo, isAdmin); 
   }
 })
+//=======================================  
 
 
+
+//======================================= theme  
 const themeSelector = document.getElementById('themeSelector');
 const root = document.documentElement;
 
@@ -260,12 +282,13 @@ themeSelector.addEventListener('change', () => {
   root.setAttribute('data-theme', theme); 
   localStorage.setItem('theme', theme);
 });
+//=======================================  
 
 
+
+//======================================= lang
 // Load saved language or default
-
 const languageSelect = document.getElementById("languageSelect"); 
-
 const createLocalizer = (languageSelect) => {
   const defaultLang = localStorage.getItem('lang') || 'en';
   let translations = null;
@@ -280,6 +303,14 @@ const createLocalizer = (languageSelect) => {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       el.textContent = translations[key] || key;
+    });
+
+    // Translate attributes like placeholder, title, etc.
+    document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+      const attrData = el.getAttribute('data-i18n-attr'); 
+      // Example: placeholder:search-placeholder
+      const [attr, key] = attrData.split(':');
+      if (translations[key]) el.setAttribute(attr, translations[key]);
     });
   }
 
@@ -302,18 +333,20 @@ const createLocalizer = (languageSelect) => {
 
   }
 }
-
 const i18n = createLocalizer(languageSelect);
+const getLocCatName = (category) => {
+  return category[`name_${languageSelect.value}` || category.name_en]; 
+}
+
+
+//=======================================   
 
 
 
-//TODO: change butger/close on svg icon 
-//TODO: null search handling 
-//TODO: login sign up btn appear when log out in mobile aside menu / appear when log out 
-//TODO: bg and text color theme mixim 
-
-
+//TODO: notification 
+//TODO: breadcrubm translation 
+//TODO: text localize 
+//TODO: category dynamic loading with localize 
 //TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event 
-//TODO: localize categories names 
 
 

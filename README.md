@@ -25,8 +25,8 @@
 11. Notification 
 12. Seeder +++++
 13. Facker ++++++
-14. Localize 
-15. Theme 
+14. Localize +++++
+15. Theme ++++++
 
 
 

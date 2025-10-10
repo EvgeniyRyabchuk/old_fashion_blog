@@ -70,7 +70,7 @@ const loadCategoriesToSelect = async () => {
   categories.forEach((cat, i) => {
     const option = document.createElement("option");
     option.value = cat.id;
-    option.textContent = cat.name; 
+    option.textContent = getLocCatName(cat);  
     select.appendChild(option);
   });
 };

@@ -5,7 +5,7 @@
 <head>
    <meta charset="UTF-8"> 
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Main page</title>
+   <title data-i18n="title-main">Main page</title>
    <link rel="stylesheet" href="/css/output.css" type="text/css"> 
 
    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app-compat.js"></script>
@@ -28,7 +28,7 @@
    <header>
       <a class="default-link top-header-link" href="/">
          <div class="header-img-block">
-            <h2 class="header-label">Old Fashion Blog</h2>
+            <h2 class="header-label" data-i18n="header-blog-title">Old Fashion Blog</h2>
          </div>
       </a>
 
@@ -37,17 +37,17 @@
             <aside id="sideMenu" class="side-menu">
                <div class="top-aside-block">
                   <div class="close-aside" id="closeAside"></div>
-                  Menu
+                  <span data-i18n="header-menu">Menu</span>
                </div>
                <div class="form-row d-flex-center" style="margin: 20px 0;">
-                  <a class="login-btn" href="/auth/login.html">Login</a>
-                  <a class="sign-up-btn" href="/auth/register.html">Sign Up</a>
+                  <a class="login-btn" href="/auth/login.html" data-i18n="auth-login">Login</a>
+                  <a class="sign-up-btn" href="/auth/register.html" data-i18n="auth-sign-up">Sign Up</a>
                </div>
                <div class="aside-profile-btn-wrapper switchable" id="asideProfileBtnWrapper">
                   <div class="form-row">
                      <button class="aside-profile-btn" id="asideProfileBtn">
                         <!-- <img class="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
-                        Profile
+                        <span data-i18n="auth-profile">Profile</span>
                         <!-- <img class="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
                      </button>
                   </div>
@@ -57,31 +57,32 @@
                      <li><a href="/profile/setting.html">Settings</a></li>
                      <li><a href="/profile/comments.html">Comments</a></li>
                      <li style="padding: 0;">
-                        <button type="button" onclick="logout()">Logout</button>
+         
+                        <button class="btn-danger" type="button" onclick="logout()">Logout</button>
                      </li>
                   </ul>
                </div>
 
                <ul class="side-menu-list">
 
-                  <li><a class="side-menu-item" href="/" class="dropdown-item">Home</a></li>
+                  <li><a class="side-menu-item" href="/" class="dropdown-item" data-i18n="nav-home">Home</a></li>
                   <li class="dropdown on-click root">
-                     <a class="side-menu-item prevent" href="/posts.html" class="dropdown-toggle">All posts</a>
+                     <a class="side-menu-item prevent" href="/posts.html" class="dropdown-toggle" data-i18n="nav-all-posts">All posts</a>
                      <ul class="dropdown-menu">
                         <li class="">
                            <a class="side-menu-item" href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa"
-                              class="dropdown-toggle">Male</a>
+                              class="dropdown-toggle" data-i18n="nav-male">Male</a>
                         </li>
                         <li class="">
                            <a class="side-menu-item" href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ"
-                              class="dropdown-item">Female</a>
+                              class="dropdown-item" data-i18n="nav-female">Female</a>
                         </li>
                      </ul>
                   </li>
-                  <li><a class="side-menu-item" href="/news.html" class="dropdown-item">Contact</a></li>
-                  <li><a class="side-menu-item" href="/news.html" class="dropdown-item">About</a></li>
+                  <li><a class="side-menu-item" href="/news.html" class="dropdown-item" data-i18n="nav-contact">Contact</a></li>
+                  <li><a class="side-menu-item" href="/news.html" class="dropdown-item" data-i18n="nav-about">About</a></li>
                   <li class="side-menu-item">
-                     <a href="/galerry.html">Gallery</a>
+                     <a href="/galerry.html" data-i18n="nav-gallery">Gallery</a>
                   </li>
                </ul>
             </aside>
@@ -91,42 +92,48 @@
          <div class="top-menu-content">
             <div class="burger-menu-btn" id="burgerMenuBtn"></div>
             <ul class="guest-nav-list">
-               <li><a href="/" class="dropdown-item">Home</a></li>
+               <li><a href="/" class="dropdown-item" data-i18n="nav-home">Home</a></li>
                <li class="dropdown on-hover root">
-                  <a href="/posts.html" class="dropdown-toggle">All posts</a>
+                  <a href="/posts.html" class="dropdown-toggle" data-i18n="nav-all-posts">All posts</a>
                   <ul class="dropdown-menu">
                      <li class="">
-                        <a href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa" class="dropdown-toggle">Male</a>
+                        <a href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa" class="dropdown-toggle" data-i18n="nav-male">Male</a>
                      </li>
                      <li class="">
-                        <a href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ" class="dropdown-item">Female</a>
+                        <a href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ" class="dropdown-item" data-i18n="nav-female">Female</a>
                      </li>
                   </ul>
                </li>
 
-               <li><a href="/news.html" class="dropdown-item">Contact</a></li>
-               <li><a href="/news.html" class="dropdown-item">About</a></li>
+               <li><a href="/news.html" class="dropdown-item" data-i18n="nav-contact">Contact</a></li>
+               <li>
+                  <a href="/news.html" 
+                     class="dropdown-item" 
+                     data-i18n="nav-about">
+                     About
+                  </a>
+               </li>
             </ul>
 
 
             <!-- TODO: right  nav-list-wrapper --->
             <div class="auth-nav-list-wrapper">
                <div id="headerNavLoginBtnForm" class="form-row">
-                  <a class="login-btn" style="margin: 0 5px;" href="/auth/login.html">Login</a>
-                  <a class="sign-up-btn" style="margin: 0 5px;" href="/auth/register.html">Sign Up</a>
+                  <a class="login-btn" style="margin: 0 5px;" href="/auth/login.html" data-i18n="auth-login">Login</a>
+                  <a class="sign-up-btn" style="margin: 0 5px;" href="/auth/register.html" data-i18n="auth-sign-up">Sign Up</a>
                </div>
                <div class="form-row">
                   <select class="language-select" id="languageSelect">
-                     <option value="RU">RU</option>
-                     <option value="UA">UA</option>
-                     <option value="EN">EN</option>
+                     <option value="ru" data-i18n="lang-ru">RU</option> 
+                     <option value="ua" data-i18n="lang-ua">UA</option>
+                     <option selected value="en" data-i18n="lang-en">EN</option>
                   </select>
                </div>
                <div class="form-row">
                   <select class="theme-select" id="themeSelector">
-                     <option value="default">Default</option>
-                     <option value="light">Light</option>
-                     <option value="dark">Dark</option>
+                     <option value="default" data-i18n="theme-default">Default</option>
+                     <option value="light" data-i18n="theme-light">Light</option>
+                     <option value="dark" data-i18n="theme-dark">Dark</option>
                   </select>
                </div>
 
@@ -134,8 +141,8 @@
                <div class="form-row header-search" id="headerSearch">
                   <div class="d-flex-center form-row search-controll" id="searchControll">
                      <button class="search-close" id="searchClose" type="button">&times;</button>
-                     <input class="search-input" id="searchInput" type="text" placeholder="Search...">
-                     <button class="btn-info search-btn" id="searchBtn" type="button">Search</button>
+                     <input class="search-input" id="searchInput" type="text" placeholder="Search..." data-i18n-attr="placeholder:search-placeholder">
+                     <button class="btn-info search-btn" id="searchBtn" type="button" data-i18n="search-button">Search</button>
                      <!-- Icon-only button for mobile -->
                      <button class="search-toggle" id="searchToggle" type="button"></button>
                   </div>
@@ -164,7 +171,7 @@
                            </div>
                         </div>
                      </div>
-                     <div class="d-none no-data-li">No results found</div>
+                     <div class="d-none no-data-li" data-i18n="search-no-results">No results found</div>
                      <ul id="searchPostList" class="search-post-list">
 
                         <!-- <li>
@@ -206,7 +213,7 @@
                            </a>
                         </li>          -->
                      </ul>
-                     <a id="searchSeeMore" href="" class="d-none see-more">See More...</a>
+                     <a id="searchSeeMore" href="" class="d-none see-more" data-i18n="search-see-more">See More...</a>
                   </div>
                </div>
 
@@ -214,17 +221,17 @@
                   <div class="form-row">
                      <button class="profile-btn" id="profileBtn">
                         <!-- <img class="prifile-icon" src="./images/profile.png" width="22" height="22"/> -->
-                        Profile
+                        <span data-i18n="auth-profile">Profile</span>
                         <!-- <img class="arrow-down-icon" src="./images/down.png" width="22" height="22"/> -->
                      </button>
                   </div>
 
                   <ul id="authNavList" class="auth-nav-list">
-                     <li><a href="/posts.html">My posts</a></li>
-                     <li><a href="/profile/setting.html">Settings</a></li>
-                     <li><a href="/profile/comments.html">Comments</a></li>
+                     <li><a href="/posts.html" data-i18n="auth-my-posts">My posts</a></li>
+                     <li><a href="/profile/setting.html" data-i18n="auth-settings">Settings</a></li>
+                     <li><a href="/profile/comments.html" data-i18n="auth-comments">Comments</a></li>
                      <li style="padding: 0;">
-                        <button type="button" onclick="logout()">Logout</button>
+                        <button class="btn-danger" type="button" onclick="logout()" data-i18n="auth-logout">Logout</button>
                      </li>
                   </ul>
                </div>
@@ -261,16 +268,16 @@
                   <div class="filter-sort">
                      <!-- Sort is always visible -->
                      <div class="filter-sort__sort">
-                        <label for="sort">Sort by:</label>
+                        <label for="sort" data-i18n="posts-sort-by">Sort by:</label>
                         <select id="sort" name="sort">
-                           <option value="newest">Newest</option>
-                           <option value="oldest">Oldest</option>
-                           <option value="popular">Most Popular</option>
+                           <option value="newest" data-i18n="posts-sort-newest">Newest</option>
+                           <option value="oldest" data-i18n="posts-sort-oldest">Oldest</option>
+                           <option value="popular" data-i18n="posts-sort-popular">Most Popular</option>
                         </select>
                      </div>
                   </div>
                   <!-- Filter toggle button (mobile only) -->
-                  <button id="filterToggle" class="filter-toggle">Filters</button>
+                  <button id="filterToggle" class="filter-toggle" data-i18n="posts-filters">Filters</button>
                </div>
             </section>
             <!-- Filter Drawer -->
@@ -282,7 +289,7 @@
                   <form class="filter-drawer__container">
                      <!-- Category -->
                      <div class="filter-drawer__group">
-                     <label class="filter-drawer__label">Categories:</label>
+                     <label class="filter-drawer__label" data-i18n="posts-categories">Categories:</label>
                      <div id="categoriesContainer" class="filter-drawer__options categoriesContainer">
                         <label><input data-type="category" type="checkbox" value="tech"> Tech</label>
                         <label><input data-type="category" type="checkbox" value="design"> Design</label>
@@ -291,7 +298,7 @@
                      </div>
                      <!-- Tags -->
                      <div class="filter-drawer__group">
-                        <label class="filter-drawer__label">Tags:</label>
+                        <label class="filter-drawer__label" data-i18n="posts-tags">Tags:</label>
                         <div id="tagsContainer" class="filter-drawer__tags">
                            <label><input data-type="tag" type="checkbox" value="js">
                               <span class="tags-sign">#</span>JavaScript
@@ -307,7 +314,7 @@
                      </div>
                      <!-- Date Range -->
                      <div class="filter-drawer__group">
-                        <label>Date Range:</label>
+                        <label data-i18n="posts-date-range">Date Range:</label>
                         <div class="filter-drawer__date-range">
                            <input data-type="date-range-start" type="date" name="start_date" value="1800-09-04">
                            <span>—</span>
@@ -317,20 +324,20 @@
                   </form>
 
                   <div class="selected-filters">
-                     <span class="selected-filters__label">Selected Filters:</span>
+                     <span class="selected-filters__label" data-i18n="posts-selected-filters">Selected Filters:</span>
                      <div class="selected-filters__list"></div>
                   </div>
                   <!-- Actions -->
                   <div class="filter-drawer__actions">
-                     <button id="applyFilterBtn" type="button">Apply</button>
-                     <button id="resetFilterBtn" type="reset">Reset</button>
+                     <button id="applyFilterBtn" type="button" data-i18n="posts-apply">Apply</button>
+                     <button id="resetFilterBtn" type="reset" data-i18n="posts-reset">Reset</button>
                   </div>
                </div>
             </section>
             <!-- Content -->
             <section class="content-section">
-               <h2 class="main-content-title" id="mainContentTitle">Posts</h2>
-               <h3 id="noPostsData" class="no-data switchable">No data yet</h3>
+               <h2 class="main-content-title" id="mainContentTitle" data-i18n="posts-title">Posts</h2>
+               <h3 id="noPostsData" class="no-data switchable" data-i18n="posts-no-data">No data yet</h3>
                <div id="postLoader" class="loader-wrapper abs bg-transparent" style="height: 500px;">
                   <div class="loader">
                      <div class="circle-wrapper-1">
@@ -360,7 +367,7 @@
                 <div class="pagination-controls">
                    <!-- per page -->
                    <div class="pagination__per-page">
-                      <label for="perPageSelect">Posts per page:</label>
+                      <label for="perPageSelect" data-i18n="posts-per-page">Posts per page:</label>
                       <select id="perPageSelect">
                          <option value="5">5</option>
                          <option value="10" selected>10</option>
@@ -370,18 +377,18 @@
 
                    <!-- page navigation -->
                    <div class="pagination__nav">
-                      <button id="prevPage" class="prev-page" disabled>Prev</button>
+                      <button id="prevPage" class="prev-page" disabled data-i18n="posts-prev">Prev</button>
 
                       <div id="pageNumbers" class="pagination__numbers"></div>
 
-                      <button id="nextPage" class="next-page">Next</button>
+                      <button id="nextPage" class="next-page" data-i18n="posts-next">Next</button>
 
                       <span id="pageInfo" class="pagination__info">Page 1 of 10</span>
                    </div>
                 </div>
                 <!-- load more -->
                 <div class="pagination__load-more">
-                   <button id="loadMoreBtn">Load More</button>
+                   <button id="loadMoreBtn" data-i18n="posts-load-more">Load More</button>
                 </div>
             </div>
             </section>
@@ -392,53 +399,50 @@
       <div class="footer-content">
          <div class="footer-col">
             <div>
-               <span class="footer-label">Контакти</span>
+               <span class="footer-label" data-i18n="footer-contacts">Контакти</span>
                <ul class="footer-data-wrapper">
-                  <li class="footer-data-row">0-800-33-00-16</li>
-                  <li class="footer-data-row">
-                     telegram_button
-                     viber_button
-                  </li>
-                  <li class="footer-data-row">Пн-Нд: 10:00-19:00</li>
+                  <li class="footer-data-row" data-i18n="footer-phone">0-800-33-00-16</li>
+                  <li class="footer-data-row" >telegram_button viber_button</li>
+                  <li class="footer-data-row" data-i18n="footer-hours">Пн-Нд: 10:00-19:00</li>
                </ul>
             </div>
          </div>
          <nav class="footer-col">
             <div>
-               <span class="footer-label">Про компанію</span>
+               <span class="footer-label" data-i18n="footer-about-company">Про компанію</span>
                <ul class="footer-data-wrapper">
-                  <li class="footer-data-row">Про нас</li>
-                  <li class="footer-data-row">Нашi магазини</li>
-                  <li class="footer-data-row">Зворотний зв'язок</li>
-                  <li class="footer-data-row">Бонусна програма</li>
-                  <li class="footer-data-row">Мапа сайту</li>
+                  <li class="footer-data-row" data-i18n="footer-about-us">Про нас</li>
+                  <li class="footer-data-row" data-i18n="footer-stores">Нашi магазини</li>
+                  <li class="footer-data-row" data-i18n="footer-feedback">Зворотний зв'язок</li>
+                  <li class="footer-data-row" data-i18n="footer-bonus">Бонусна програма</li>
+                  <li class="footer-data-row" data-i18n="footer-site-map">Мапа сайту</li>
                </ul>
             </div>
          </nav>
          <nav class="footer-col">
             <div>
-               <span class="footer-label">Покупцям</span>
+               <span class="footer-label" data-i18n="footer-customers">Покупцям</span>
                <ul class="footer-data-wrapper">
-                  <li class="footer-data-row">Подарункові сертифікати</li>
-                  <li class="footer-data-row">Обмін/Повернення</li>
-                  <li class="footer-data-row">Угода користувача</li>
-                  <li class="footer-data-row">Питання та відповіді</li>
-                  <li class="footer-data-row">Оплата та доставка</li>
+                  <li class="footer-data-row" data-i18n="footer-gift-certificates">Подарункові сертифікати</li>
+                  <li class="footer-data-row" data-i18n="footer-exchange-return">Обмін/Повернення</li>
+                  <li class="footer-data-row" data-i18n="footer-terms">Угода користувача</li>
+                  <li class="footer-data-row" data-i18n="footer-questions">Питання та відповіді</li>
+                  <li class="footer-data-row" data-i18n="footer-payment-shipping">Оплата та доставка</li>
                </ul>
             </div>
          </nav>
          <div class="footer-col">
             <div>
                <div>
-                  <span class="footer-label">Наші соцмережі</span>
+                  <span class="footer-label" data-i18n="footer-social">Наші соцмережі</span>
                   <ul class="footer-data-wrapper d-flex">
-                     <li class="footer-data-row">Facebook</li>
-                     <li class="footer-data-row">Instagram</li>
+                     <li class="footer-data-row" data-i18n="footer-facebook">Facebook</li>
+                     <li class="footer-data-row" data-i18n="footer-instagram">Instagram</li>
                   </ul>
-                  <span class="footer-label">Приймаємо до оплати</span>
+                  <span class="footer-label" data-i18n="footer-payments">Приймаємо до оплати</span>
                   <ul class="footer-data-wrapper d-flex">
-                     <li class="footer-data-row">Visa</li>
-                     <li class="footer-data-row">Mastercard</li>
+                     <li class="footer-data-row" data-i18n="footer-visa">Visa</li>
+                     <li class="footer-data-row" data-i18n="footer-mastercard">Mastercard</li>
                   </ul>
                </div>
             </div>

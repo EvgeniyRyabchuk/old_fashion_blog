@@ -490,6 +490,13 @@ scss/
   display: block;
 }
 
+.switchable-flex {
+  display: none;
+}
+.switchable-flex.is-open {
+  display: flex;
+}
+
 .comment-container {
   box-shadow: 0px 0px 24px 0px rgb(197, 197, 197);
   padding: 10px;
@@ -2564,7 +2571,13 @@ header nav .auth-nav-list-wrapper .header-search .search-toggle {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--color-info) url("../images/search.png") no-repeat center/18px;
+  width: 30px;
+  height: 30px;
+  background-color: var(--color-text);
+  mask: url("/icons/search.svg") no-repeat center;
+  -webkit-mask: url("/icons/search.svg") no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
   border: none;
 }
 header nav .auth-nav-list-wrapper .header-search .search-toggle:hover {
@@ -2611,7 +2624,7 @@ header nav > button {
 .auth-nav-list {
   position: absolute;
   background-color: var(--color-bg);
-  top: 44px;
+  top: 42px;
   right: 0;
   z-index: 99;
   margin: 0;
@@ -2647,19 +2660,26 @@ header nav > button {
   width: 45px;
   height: 45px;
   cursor: pointer;
-  background-image: url("../../images/burger.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  color: var(--color-text);
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-text);
+  mask: url("/icons/burger.svg") no-repeat center;
+  -webkit-mask: url("/icons/burger.svg") no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
 }
 .top-menu > .top-menu-content .burger-menu-btn:hover {
   background-color: rgb(195, 195, 195);
 }
 .top-menu > .top-menu-content .burger-menu-btn.is-open {
-  background-image: url("../../images/close.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-text);
+  mask: url("/icons/close.svg") no-repeat center;
+  -webkit-mask: url("/icons/close.svg") no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
 }
 .profile-btn-wrapper {
   position: relative;
@@ -2692,18 +2712,24 @@ header nav > button {
 }
 .profile-btn::before,
 .aside-profile-btn::before {
-  background-image: url("../../../../images/profile.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-text);
+  mask: url("/icons/profile-round.svg") no-repeat center;
+  -webkit-mask: url("/icons/profile-round.svg") no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
   margin: 5px 10px 5px 5px;
 }
 .profile-btn::after,
 .aside-profile-btn::after {
-  background-image: url("../../../../images/down.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-text);
+  mask: url("/icons/down.svg") no-repeat center;
+  -webkit-mask: url("/icons/down.svg") no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
   margin: 5px 5px 5px 3px;
 }
 
@@ -2713,7 +2739,7 @@ header nav > button {
 
 .aside-profile-btn-wrapper {
   min-width: 300px;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   margin: 0 15px;
@@ -2735,7 +2761,8 @@ header nav > button {
   overflow: hidden;
   transition: max-height 0.5s ease-in-out;
   position: static;
-  background-color: grey;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   display: block;
   margin: 0;
   z-index: 0;
@@ -2803,10 +2830,13 @@ header nav > button {
   left: 10px;
   top: 10px;
   cursor: pointer;
-  background-image: url("../../images/close.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-text);
+  mask: url("/icons/close.svg") no-repeat center;
+  -webkit-mask: url("/icons/close.svg") no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
 }
 .side-menu-wrapper .side-menu .top-aside-block .close-aside:hover {
   background-color: rgb(195, 195, 195);

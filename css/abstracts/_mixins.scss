@@ -113,3 +113,16 @@
     cursor: pointer;
   }
 }
+
+
+@mixin icon-mask($icon-path, $size: 24px, $color: currentColor) {
+  // display: inline-block;
+  width: $size;
+  height: $size;
+  // color: abs.$color-text; 
+  background-color: $color; 
+  mask: url('#{$icon-path}') no-repeat center;
+  -webkit-mask: url('#{$icon-path}') no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}

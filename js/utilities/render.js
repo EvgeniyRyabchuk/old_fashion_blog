@@ -80,7 +80,7 @@ const renderPostsForTable = (post) => {
       tdImage.innerHTML = `<img src="${post.coverUrl}" width="100" height="100">`;
     }
 
-    tdCategory.innerHTML = post.category?.name || 'null';
+    tdCategory.innerHTML = getLocCatName(post.category);
     // tdImageCategoryID.id = "categorySelect";
     tdDateRange.innerHTML = `${post.date_range_start}-${post.date_range_end}`;
     tdUserId.innerHTML = post.userId;
@@ -96,7 +96,8 @@ const renderPostsForTable = (post) => {
 
     deleteButton.onclick = () => onDeletePostClick(post.id); 
    
-    actionWrapper.style.display = 'flex';    
+    actionWrapper.style.display = 'flex';   
+    actionWrapper.style.flexDirection = "column";  
     actionWrapper.appendChild(editButton);
     actionWrapper.appendChild(deleteButton);
     tdAction.appendChild(actionWrapper);

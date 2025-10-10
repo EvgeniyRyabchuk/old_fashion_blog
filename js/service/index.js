@@ -50,7 +50,9 @@ const fetchDataFirestore = async (
   if (search) { 
     const filterSortSection = document.getElementById("filterSortSection");
     filterSortSection.style.display = "none"; 
-    document.getElementById("mainContentTitle").innerText = `Search Posts by "${search}"`; 
+    document.getElementById("mainContentTitle").innerText 
+    = `${i18n.translate("search_posts_by")} "${search}"`; 
+    
     
     // search only works if you order by the field you want to search on
      ref = db.collection(colName)

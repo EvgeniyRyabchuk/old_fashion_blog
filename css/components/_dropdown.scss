@@ -41,7 +41,6 @@ $header-link-hover-color: abs.$color-secondary;
         &:hover {
             >.dropdown-menu {
                 display: block;
-           
                 transition: top 1s ease-in-out;
             } 
             &.root {
@@ -54,7 +53,6 @@ $header-link-hover-color: abs.$color-secondary;
         .dropdown-menu {
             display: none;
         }
-    
     }
 
     // action if its clickable dropdown 

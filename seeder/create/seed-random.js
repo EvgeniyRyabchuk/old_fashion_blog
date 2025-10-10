@@ -89,7 +89,7 @@ async function getCategoriesOrCreateIfNotExist() {
 
     staticCategories.forEach((sc) => {
       const docRef = catCol.doc();
-      batch.set(docRef, { name: sc.name });
+      batch.set(docRef, { name_en: sc.name_en, name_ua: sc.name_ua, name_ru: sc.name_ru}); 
     });
 
     await batch.commit();

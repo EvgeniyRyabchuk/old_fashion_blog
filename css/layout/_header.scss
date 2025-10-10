@@ -218,7 +218,9 @@ header {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: abs.$color-info url("../images/search.png") no-repeat center/18px;
+   
+          @include abs.icon-mask(abs.$icon-svg-search, 30px, abs.$color-text);
+          // background: abs.$color-info url("../images/search.png") no-repeat center/18px;
           // cursor: pointer;
           border: none;
           &:hover {
@@ -285,7 +287,7 @@ header {
 .auth-nav-list {
   position: absolute;
   background-color: abs.$color-bg;
-  top: 44px;
+  top: 42px;
   right: 0;
   z-index: 99;
   margin: 0;
@@ -308,6 +310,7 @@ header {
 
 }
 
+
 .top-menu {
   margin: 0 auto;
   background-color: abs.$color-bg;
@@ -322,20 +325,21 @@ header {
 
     $burger-size: 45px;
 
-    .burger-menu-btn {
+    .burger-menu-btn { 
       display: none;
       flex-shrink: 0;
       width: $burger-size;
       height: $burger-size;
       cursor: pointer;
-      @include abs.b-img-nr-contain('images/burger.png');
+      color: abs.$color-text;
+      @include abs.icon-mask(abs.$icon-svg-burger, 40px, abs.$color-text);
 
       &:hover {
         background-color: $switchable_bg_color
       }
 
       &.is-open {
-        @include abs.b-img-nr-contain('images/close.png');
+        @include abs.icon-mask(abs.$icon-svg-close, 40px, abs.$color-text); 
       }
     }
   }
@@ -381,12 +385,12 @@ header {
   }
 
   &::before {
-    @include abs.b-img-nr-contain('../../images/profile.png');
+    @include abs.icon-mask(abs.$icon-svg-profile-round, 20px, abs.$color-text); 
     margin: 5px 10px 5px 5px;
   }
 
   &::after {
-    @include abs.b-img-nr-contain('../../images/down.png');
+    @include abs.icon-mask(abs.$icon-svg-down, 20px, abs.$color-text); 
     margin: 5px 5px 5px 3px;
   }
 }
@@ -400,7 +404,8 @@ header {
 
 .aside-profile-btn-wrapper {
   min-width: $size-menu-width;
-  display: flex;
+  // display: flex;
+  display: none;
   flex-direction: column; 
   justify-content: center;
   margin: 0 15px;
@@ -447,7 +452,8 @@ header {
 
 
     position: static;
-    background-color: grey;
+    background-color: abs.$color-bg;
+    color: abs.$color-text;
     display: block;
     margin: 0;
     z-index: 0;
@@ -521,7 +527,7 @@ $sideMenuWrapperAppearTime: 0.3s;
           background-color: $switchable_bg_color;
         }
 
-        @include abs.b-img-nr-contain('images/close.png');
+        @include abs.icon-mask(abs.$icon-svg-close, 40px, abs.$color-text); 
 
       }
     }
