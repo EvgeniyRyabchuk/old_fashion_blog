@@ -1,0 +1,52 @@
+
+.default-btn { border: 0; }
+
+.default-bg { background-color: white !important; }
+
+.right-side { margin-left: auto;}
+
+.d-block { display: block !important; }
+
+.d-none { display: none !important; }
+
+.d-flex { display: flex; }
+
+button { @extend .default-btn ; }
+
+.w-100 { width: 100%; }
+
+.full-screen {
+  top: 0;
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+} 
+.full-screen-abs {
+  @extend .full-screen;
+  position: absolute;
+}
+.full-screen-fixed {
+  @extend .full-screen;
+  position: fixed;
+}
+
+.img-contain {
+    background-repeat: no-repeat;
+    background-size: contain;  
+    background-position: center;
+}
+
+
+.switchable {
+    display: none;
+  &.is-open {
+    display: block;
+  }
+}
+
+.switchable-flex {
+    display: none;
+  &.is-open {
+    display: flex;
+  }
+}

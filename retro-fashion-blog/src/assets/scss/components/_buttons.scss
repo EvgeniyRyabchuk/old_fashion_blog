@@ -1,0 +1,71 @@
+@use '../abstracts/variables' as *;
+
+.btn {
+  padding: 10px;
+  margin: 5px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+@mixin createBtn($bgColor, $textColor, $hColor, $aColor: "") {
+  background-color: $bgColor;
+  color: $textColor;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $hColor;
+  }
+
+  &:active {
+    background-color: $aColor;
+  }
+}
+
+.btn-primary {
+  @extend .btn;
+  @include createBtn($color-primary, $color-primary-text, $color-primary-hover, $color-primary-active);
+}
+
+.btn-secondary {
+  @extend .btn;
+  @include createBtn($color-secondary, $color-secondary-text, $color-secondary-hover, $color-secondary-active);
+}
+
+.btn-danger {
+  @extend .btn;
+  @include createBtn($color-danger, $color-danger-text, $color-danger-hover, $color-danger-active);
+}
+
+.btn-warning {
+  @extend .btn;
+  @include createBtn($color-warning, $color-warning-text, $color-warning-hover, $color-warning-active);
+}
+
+.btn-success {
+  @extend .btn;
+  @include createBtn($color-success, $color-success-text, $color-success-hover, $color-success-active);
+}
+
+.btn-info {
+  @extend .btn;
+  @include createBtn($color-info, $color-info-text, $color-info-hover, $color-info-active);
+}
+
+/* Auth Buttons */
+.login-btn,
+.sign-up-btn {
+  font-size: 18px;
+  padding: 8px 15px;
+}
+
+.login-btn {
+  @extend .btn-success;
+  display: block;
+  margin: 0 5px;
+}
+
+.sign-up-btn {
+  @extend .btn-secondary;
+  display: block;
+  margin: 0 5px;
+}

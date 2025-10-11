@@ -1,0 +1,27 @@
+[
+    {
+        "name_en": "Male",
+        "name_ua": "Чоловіче",
+        "name_ru": "Мужское"
+    },
+    {
+        "name_en": "Female",
+        "name_ua": "Жіноче",
+        "name_ru": "Женское"
+    },
+    {
+        "name_en": "News",
+        "name_ua": "Новини",
+        "name_ru": "Новости"
+    },
+    {
+        "name_en": "Trends",
+        "name_ua": "Тренди",
+        "name_ru": "Тренды"
+    },
+    {
+        "name_en": "Classic",
+        "name_ua": "Класика",
+        "name_ru": "Классика"
+    }
+]

@@ -1,0 +1,176 @@
+@use '../../assets/scss/abstracts/index' as abs;
+
+// @mixin flexbox($direction: row, $justify: null, $align: null, $wrap: null, $gap: null) {
+
+
+.left-btn,
+.right-btn {
+  width: 30px;
+  height: 100px;
+  border-radius: 10px;
+  border: 3px solid abs.$color-secondary-active;
+  position: absolute;
+  font-size: 1rem;
+  top: 50%;
+  transform: translateY(-50%) scale(1);
+  background-color: transparent;
+  color: white;
+  opacity: 0.5;
+  z-index: 2;
+
+  &:hover {
+    transition: 0.3s transform ease-in-out;
+    transform: translateY(-50%) scale(1.01);
+    cursor: pointer;
+
+    border-color: white;
+    opacity: 0.7;
+
+  }
+
+}
+
+.left-btn {
+  left: 5px;
+}
+
+.right-btn {
+  right: 5px;
+}
+
+$post-card-width: 250px;
+$post-card-height: 300px;
+
+.post-row {
+  @include abs.custom-scrollbar(abs.$color-secondary,
+          abs.$color-secondary-text,
+          color-mix(in srgb, abs.$color-secondary-text, abs.$color-info-text 20%));
+
+  padding: 0px 25px 10px 25px !important;
+  .left-btn, .right-btn {
+    background-color: rgb(139, 139, 139) !important;
+    color: white;
+    border-color: rgb(220, 218, 227);
+    opacity: 1;
+    display: none;
+    &:hover {
+      background-color: rgb(117, 117, 117) !important;
+      color: white;
+      border-color: rgb(170, 170, 170);
+
+    }
+    &.is-open {
+      display: block;
+    }
+  }
+  .left-btn {
+    left: 15px;
+  }
+  .right-btn {
+    right: 15px;
+  }
+
+  @include abs.flexbox(row, null, null, nowrap !important, 5px);
+  min-height: auto !important;
+  // scrollbar-width: thin;
+  overflow-x: auto;
+
+  h3 {
+    margin: 10px 0;
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
+  .post-card {
+    vertical-align: top;
+    display: inline-block;
+    // width: $post-card-width !important;
+    height: $post-card-height !important;
+    padding: 0;
+    // margin: 5px 20px;
+    width: 200px;
+    .post-cover img {
+      height: 200px !important;
+      padding: 10px 10px 5px 10px !important;
+    }
+    &:hover {
+      background-color:silver;
+      opacity: 0.5;
+    }
+    .post-short-content, .read-more, .more-wrapper  {
+      display: none;
+    }
+  }
+
+  .see-more {
+    @extend .default-link;
+    @include abs.flexbox(row, center, center, null, 5px);
+    // flex: 0 0 $post-card-width;  // fixed width
+    min-width: $post-card-width;
+    height: $post-card-height;   // fixed height
+
+    font-size: 2.5rem;
+    text-decoration: none; // ensure no underline
+    background: #f9f9f9; // optional: make it look like a card
+    border: 5px dashed #ccc; // differentiate visually
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #eee;
+      border-color: #999;
+    }
+    &::after {
+      content: " →"; // a single arrow instead of >>
+      font-weight: normal;
+    }
+    span {
+      font-weight: 900;
+      font-size: 3rem; // a bit smaller so it scales well
+    }
+  }
+}
+
+// TODO: scrollbar
+
+$tag-height: 40px;
+
+.tags-section {
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;          // keep tags in single row
+    gap: 10px;
+
+    padding-bottom: 5px;
+
+    .tag {
+      flex: 0 0 auto;          // fixed width by content
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: $tag-height;
+      padding: 0 15px;
+      font-size: 1rem;
+      text-decoration: none;
+
+      background-color: abs.$color-secondary;
+      color: abs.$color-text;
+
+      border-radius: 20px;
+      transition: 0.2s;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: #ddd;
+        color: #000;
+      }
+    }
+  }
+}

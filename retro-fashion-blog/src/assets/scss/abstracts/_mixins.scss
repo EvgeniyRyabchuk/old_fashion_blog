@@ -1,0 +1,128 @@
+
+
+@mixin b-img-nr-contain($url) {
+      background-image: url("../../"+$url);
+      background-repeat: no-repeat;
+      background-size: contain;  
+
+      background-position: center;
+}
+
+@mixin animated-appear-via-visibility($time: 0.5s, $translateX: null) {
+  @if $translateX != null {
+    transform: translateX($translateX);
+  }
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity $time ease, transform $time ease;
+}
+
+@mixin animated-disappear-via-visibility($time: 0.5s, $translateX: null) {
+  @if $translateX != null {
+    transform: translateX($translateX);
+  }
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+ transition: opacity $time ease, transform $time ease, visibility 0s $time, pointer-events 0s $time;
+}
+
+/*
+@mixin animated-appear-via-height-v1($is-open: false) {
+  @if $is-open {
+  transform: scaleY(1);
+  visibility: visible;
+  } @else {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.5s ease-in-out;
+  visibility: hidden;
+  }
+}
+*/
+
+//TODO: fix 
+// delay 
+@mixin animated-appear-via-max-height($is-open: false, $time: 0.3, $max: 1000px) {
+  @if $is-open {
+    // Set a large max-height
+    //TODO: cacl automaticaly 
+    max-height: $max;
+    overflow: hidden; 
+    // Use a very short transition for a near-instant effect
+    transition: max-height $time ease-in-out;
+  } @else {
+    max-height: 0;
+    overflow: hidden;
+    // Match the transition for a smooth collapse
+    transition: max-height $time ease-in-out;
+  }
+}
+
+
+
+
+// Flexbox utility generator
+@mixin flexbox($direction: row, $justify: null, $align: null, $wrap: null, $gap: null) {
+  display: flex;
+  flex-direction: $direction;
+
+  @if $justify != null {
+    justify-content: $justify;
+  }
+
+  @if $align != null {
+    align-items: $align;
+  }
+
+  @if $wrap != null {
+    flex-wrap: $wrap;
+  }
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+
+
+@mixin custom-scrollbar($track-color, $thumb-color, $hover-color) {
+  &::-webkit-scrollbar { 
+    width: 12px;
+    height: 10px;
+    border-radius: 3px;
+    background-color: $track-color;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $track-color;
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: $hover-color;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+}
+
+
+@mixin icon-mask($icon-path, $size: 24px, $color: currentColor) {
+  // display: inline-block;
+  width: $size;
+  height: $size;
+  // color: abs.$color-text; 
+  background-color: $color; 
+  mask: url('#{$icon-path}') no-repeat center;
+  -webkit-mask: url('#{$icon-path}') no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}

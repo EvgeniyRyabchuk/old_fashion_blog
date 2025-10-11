@@ -1,0 +1,129 @@
+{
+  "users": {
+    "LgOvwrWaXAb58JdHl8aXt5WNFpC2": {
+      "createdAt": "2025-09-19T12:00:00Z",
+      "email": "user1@gmail.com", 
+      "name": "John",
+      "avatar": "https://res.cloudinary.com/dpbmcoiru/image/upload/v1755438018/xux7fz6hr9wegual4ddm.png"
+    } 
+  },
+  "categories": {
+    "1": {
+      "name_en": "Male",
+      "name_ua": "Чоловіче",
+      "name_ru": "Мужское"
+    },
+    "2": {
+      "name_en": "Female",
+      "name_ua": "Жіноче",
+      "name_ru": "Женское"
+    },
+    "3": {
+      "name_en": "News",
+      "name_ua": "Новини",
+      "name_ru": "Новости"
+    },
+    "4": {
+      "name_en": "Trends",
+      "name_ua": "Тренди",
+      "name_ru": "Тренды"
+    },
+    "5": {
+      "name_en": "Classic",
+      "name_ua": "Класика",
+      "name_ru": "Классика"
+    }
+  }, 
+  "tags": {
+    "1": { "name": "jeans" },
+    "2": { "name": "sneakers" },
+    "3": { "name": "leatherjacket" }, 
+    "4": { "name": "newyorkfashion" },
+    "5": { "name": "londonstyle" },
+    "6": { "name": "parisstreetstyle" },
+    "7": { "name": "zara" },
+    "8": { "name": "affordablefashion" },
+    "9": { "name": "sustainablefashion" },
+    "10": { "name": "vintagefashion" },
+    "11": { "name": "casualstyle" },
+    "12": { "name": "streetstyle" }
+  },
+
+  "posts": {
+    "1": {
+      "categoryId": "1",
+      "content": "This is the first seeded post.",
+      "coverUrl": "https://picsum.photos/640/480",
+      "wideImgUrl": "https://picsum.photos/1200/600",
+      "createdAt": "2025-09-19T14:00:00Z",
+      "date_range_start": "1983",
+      "date_range_end": "1990",
+      "title": "Post 1 Sneakers with Leather Jacket",
+      "userId": "AzkfJd3AjmaD3r3hY1idYRS7HqA3",
+      "searchIndex": "sneakers leatherjacket Post 1 Sneakers with Leather Jacket" 
+    },
+    "2": {
+      "categoryId": "2",
+      "content": "This is another seeded post.",
+      "coverUrl": "https://picsum.photos/640/480",
+      "wideImgUrl": "https://picsum.photos/1200/600",
+      "createdAt": "2025-09-19T15:00:00Z",
+      "date_range_start": "2000",
+      "date_range_end": "2005",
+      "title": "Post 2. NewYork Fashion 2000-x", 
+      "userId": "AzkfJd3AjmaD3r3hY1idYRS7HqA3",
+      "searchIndex": "newyorkfashion Post 2. NewYork Fashion 2000-x"
+    },
+    "3": {
+      "categoryId": "3",
+      "content": "This is 3-th seeded post.",
+      "coverUrl": "https://picsum.photos/640/480",
+      "wideImgUrl": "https://picsum.photos/1200/600",
+      "createdAt": "2025-09-19T15:00:00Z",
+      "date_range_start": "1930",
+      "date_range_end": "1937",
+      "title": "Post 3. Leather Jacket",
+      "userId": "Y7QjNVNGpgeDAkuLvZoLNlbklV92",
+      "searchIndex": "leatherjacket Post 3. Leather Jacket"
+    }
+  },
+  "post_tag": {
+    "1": { "postId": "1", "tagId": "2" },
+    "2": { "postId": "1", "tagId": "3" }, 
+    "3": { "postId": "2", "tagId": "4" }
+  },
+  "comments": {
+    "1": { 
+      "content": "Great post!",
+      "createdAt": "2025-09-19T16:00:00Z",
+      "userId": "AzkfJd3AjmaD3r3hY1idYRS7HqA3",
+      "postId": "1"
+    },
+    "2": {
+      "content": "Very helpful, thanks!",
+      "createdAt": "2025-09-19T16:05:00Z", 
+      "userId": "Y7QjNVNGpgeDAkuLvZoLNlbklV92",
+      "postId": "1"
+    },
+    "3": {
+      "content": "Awesome topic. Keep posting more!",
+      "createdAt": "2025-09-19T16:05:00Z",
+      "userId": "2", 
+      "postId": "Y7QjNVNGpgeDAkuLvZoLNlbklV92"
+    }
+  },
+  "admins": {
+    "AzkfJd3AjmaD3r3hY1idYRS7HqA3": {
+      "createdAt": "2025-09-19T12:00:00Z",
+      "email": "jeka.rubchuk@gmail.com",
+      "name": "Jeka", 
+      "avatar": "/images/profile.png"
+    }, 
+    "Y7QjNVNGpgeDAkuLvZoLNlbklV92": {
+      "createdAt": "2025-09-19T13:00:00Z",
+      "email": "nastia@example.com",
+      "name": "Nastia",
+      "avatar": "https://res.cloudinary.com/dpbmcoiru/image/upload/v1758029647/vglmpyomwc563rhuco3h.png"
+    }
+  }
+}

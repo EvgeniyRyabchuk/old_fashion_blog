@@ -1,0 +1,18 @@
+@use '../../../assets/scss/abstracts/index' as *;
+
+main {
+  background-color: $color-bg;
+}
+
+.content-section {
+  padding: 20px;
+  position: relative;
+}
+
+.main-wrapper {
+  background-color: white;
+}
+
+.main-content-title {
+  color: $color-text;
+}

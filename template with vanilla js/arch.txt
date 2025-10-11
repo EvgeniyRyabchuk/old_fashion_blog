@@ -1,0 +1,54 @@
+# React App Folder Structure
+
+## Root Files
+- package.json
+- vite.config.js (or webpack.config.js)
+- .gitignore
+- README.md
+- index.html (minimal HTML for mounting React app)
+
+## Source Code Structure
+```
+src/
+├── App.jsx                 # Main application component
+├── main.jsx                # Entry point (mounts App to DOM)
+├── index.css               # Global styles
+├── assets/                 # Static assets
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+├── components/             # Reusable UI components
+│   ├── Header.jsx
+│   ├── Footer.jsx
+│   ├── Navigation.jsx
+│   └── ...
+├── pages/                  # Page components (route targets)
+│   ├── HomePage.jsx
+│   ├── AboutPage.jsx
+│   ├── ContactPage.jsx
+│   ├── PostsPage.jsx
+│   ├── PostPage.jsx
+│   ├── LoginPage.jsx
+│   ├── RegisterPage.jsx
+│   └── ...
+├── hooks/                  # Custom React hooks
+│   ├── useAuth.js
+│   └── ...
+├── context/                # React Context providers
+│   ├── AuthContext.jsx
+│   └── ...
+├── services/               # API/service functions
+│   ├── api.js
+│   └── ...
+├── utils/                  # Utility functions
+│   ├── helpers.js
+│   └── ...
+├── styles/                 # SCSS/CSS modules
+│   ├── globals.scss
+│   └── variables.scss
+├── data/                   # Static data, seed data
+│   └── posts.json
+└── lang/                   # Translation files
+    ├── en.json
+    └── ...
+```

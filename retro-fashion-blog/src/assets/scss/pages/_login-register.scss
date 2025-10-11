@@ -1,0 +1,91 @@
+@use '../abstracts/index' as abs;
+
+
+.login-wrapper {
+  background: abs.$color-bg;
+  padding: 2.5rem 2rem;
+  border-radius: 1rem; 
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 600px;
+  animation: fadeIn 0.6s ease;
+  margin: 0 auto;
+
+  
+  & h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    color: abs.$color-text;
+  }
+
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.6rem;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: abs.$color-bg;
+    color: abs.$color-text;
+  }
+
+  .input-group input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    outline: none;
+  }
+
+  & button {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: none;
+    border-radius: 0.6rem;
+    background: #6366f1;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 0.5rem;
+  }
+
+  & button:hover {
+    background: #4f46e5;
+  }
+
+  & .extra {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  & .extra a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  & .extra a:hover {
+    text-decoration: underline;
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

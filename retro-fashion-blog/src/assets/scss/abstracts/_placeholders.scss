@@ -1,0 +1,22 @@
+@use 'variables' as vars; 
+
+%menu-list {
+    list-style: none;
+}
+
+%menu-list-item {   
+    text-decoration: none; 
+    color: vars.$color-text; 
+    font-size: 18px; 
+}
+
+%default-link {
+    color: vars.$color-text;
+    text-decoration-line: none;
+}
+
+.default-link {
+    @extend %default-link; 
+}
+
+

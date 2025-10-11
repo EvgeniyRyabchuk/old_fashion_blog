@@ -1,0 +1,33 @@
+
+
+@use '../abstracts/index' as abs;
+
+* {
+   box-sizing: border-box;
+}
+
+body {
+
+   z-index: 9;
+   margin: 0;
+   padding: 0;
+   background-color: #AFAFAF;
+   // background-image: url(../../images/ChatGPT\ Image\ 1\ сент.\ 2025\ г.\,\ 16_49_09.png);
+   background-size: contain;
+
+   &.no-scroll {
+      overflow: hidden !important; 
+   }
+
+   background-image: url("/assets/images/bg.jpg");
+   // background-position: 50% 50%;
+    background-position: -600px -500px;
+   //  background-repeat: no-repeat;
+}
+
+
+select, button {
+   cursor: pointer;
+}
+
+

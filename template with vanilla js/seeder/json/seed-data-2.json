@@ -1,0 +1,140 @@
+{
+
+    "users": {
+        "LgOvwrWaXAb58JdHl8aXt5WNFpC2": {
+            "createdAt": "2025-09-19T12:00:00Z", 
+            "email": "user1@gmail.com",
+            "name": "John", 
+            "avatar": "https://res.cloudinary.com/dpbmcoiru/image/upload/v1755438018/xux7fz6hr9wegual4ddm.png"
+        }
+    },
+    "categories": {
+       "1": {
+           "name_en": "Male",
+           "name_ua": "Чоловіче", 
+           "name_ru": "Мужское"
+       },
+       "2": {
+           "name_en": "Female",
+           "name_ua": "Жіноче",
+           "name_ru": "Женское"
+       },
+       "3": {
+           "name_en": "News",
+           "name_ua": "Новини",
+           "name_ru": "Новости"
+       },
+       "4": {
+           "name_en": "Trends",
+           "name_ua": "Тренди",
+           "name_ru": "Тренды"
+       },
+       "5": {
+           "name_en": "Classic",
+           "name_ua": "Класика",
+           "name_ru": "Классика"
+       }
+    },
+    "tags": {
+        "1": {
+            "name": "jeans"
+        },
+        "2": {
+            "name": "sneakers"
+        },
+        "3": {
+            "name": "leatherjacket"
+        },
+        "4": {
+            "name": "newyorkfashion"
+        },
+        "5": {
+            "name": "londonstyle"
+        },
+        "6": {
+            "name": "parisstreetstyle"
+        },
+        "7": {
+            "name": "zara"
+        },
+        "8": {
+            "name": "affordablefashion"
+        },
+        "9": {
+            "name": "sustainablefashion"
+        },
+        "10": {
+            "name": "vintagefashion"
+        },
+        "11": {
+            "name": "casualstyle"
+        },
+        "12": {
+            "name": "streetstyle"
+        }
+    },
+
+    "posts": {
+        "hnc0KGGMpiYz4j8OTGpR": {
+            "content": "<h3>After a whirlwind week of eyecatching runways and celebrity front-row sightings,&nbsp;<a href=\"https://fashionista.com/tag/new-york-fashion-week\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(79, 149, 252); background-color: rgba(0, 0, 0, 0);\">New York Fashion Week</a>&nbsp;has officially come to an end.</h3><h3>Before our attention shifts across the pond for&nbsp;<a href=\"https://fashionista.com/tag/london-fashion-week\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(79, 149, 252); background-color: rgba(0, 0, 0, 0);\">London Fashion Week</a>, check out all of our Spring 2026 coverage of New York's must-see collections, below.</h3><p><br></p><p>History is rife with examples of people discovering that fame and success aren't nearly as satisfying as they appear from the outside. But many of us pursue them nonetheless. Including&nbsp;<a href=\"https://fashionista.com/designers/brandon-maxwell\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(79, 149, 252); background-color: rgba(0, 0, 0, 0);\">Brandon Maxwell</a>, who launched his namesake line in September of 2015, when he was best known as&nbsp;<a href=\"https://fashionista.com/tag/lady-gaga\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(79, 149, 252); background-color: rgba(0, 0, 0, 0);\">Lady Gaga</a>'s&nbsp;<a href=\"https://fashionista.com/tag/stylist\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(79, 149, 252); background-color: rgba(0, 0, 0, 0);\">stylist</a>. (Anyone else totally forget about that?)</p><p>For his celebratory 10-year-anniversary show at Sotheby's in New York City Tuesday night, he wrote his own show notes. They begin:</p><p><br></p><p><br></p><p><span style=\"color: rgb(177, 178, 178);\">A decade ago, my mom asked me what it would take for me to consider my brand a success.</span></p><p><span style=\"color: rgb(177, 178, 178);\">\"10 years,\" I told her.</span></p><p><span style=\"color: rgb(177, 178, 178);\">And here we are. That was quick.</span></p><p><br></p><p class=\"ql-align-center\"><em style=\"color: rgb(51, 51, 51);\">Few modern texts capture the futility of success better than Jacqueline Susann's 1966 novel \"Valley of the Dolls.\" A recording of the novel's poignant opening passage (which has stuck with me since I read it myself nearly 20 years ago), clipped from the book's 1967 film adaptation, was included in the soundtrack as models walked the runway:</em></p><p><br></p><p>\"At the time, [she] was not as celebrated as she is now,\" he noted. \"I don't want to explain too much [about] all my choices on this show, but they were all deliberate.\"</p><p>Perhaps relatedly, now that Maxwell's 10-year-marker has come and gone, the designer says his perception of success has naturally evolved, writing in the show notes, \"In the face of the challenges that come with running an independently-owned American fashion brand today, the courage to grow and unfold in relentless pursuit of passion is a success all its own.\"</p><p>I also asked him what advice he would give to the 10-years-ago version of himself that was just starting out, and the answer also fits into this theme of redefining success: \"Decide what success is for you and hold tight to that, and don't let it change based on what's going on in the industry, the world, people around you,\" he said. \"What's your bar? As long as you're meeting that, then nothing else really matters.\"</p><p><br></p><p><br></p><p><br></p><p><img src=\"https://res.cloudinary.com/dpbmcoiru/image/upload/v1758298123/w8tz7khw8bosxebsucbg.png\"></p>",
+            "coverUrl": "https://res.cloudinary.com/dpbmcoiru/image/upload/v1758298145/qgdaodagkf4yyfi6pk4k.webp",
+            "searchIndex": "newyorkfashion newyorkfashion",
+            "createdAt": "19 September 2025 at 19:20:48 UTC+3",
+            "date_range_end": 2005, 
+            "title": "newyorkfashion", 
+            "userId": "AzkfJd3AjmaD3r3hY1idYRS7HqA3",
+            "wideImgUrl": "https://res.cloudinary.com/dpbmcoiru/image/upload/v1758298146/zfuadx1waw9c3xejpchb.jpg",
+            "date_range_start": 2000,
+            "categoryId": "2" 
+        }
+    },
+    "post_tag": {
+        "1": {
+            "postId": "hnc0KGGMpiYz4j8OTGpR",
+            "tagId": "2"
+        },
+        "2": {
+            "postId": "hnc0KGGMpiYz4j8OTGpR",
+            "tagId": "3"
+        }
+    },
+    "comments": {
+        "1": {
+            "content": "Great post!",
+            "createdAt": "2025-09-19T16:00:00Z",
+            "userId": "AzkfJd3AjmaD3r3hY1idYRS7HqA3",
+            "postId": "hnc0KGGMpiYz4j8OTGpR"
+        },
+        "2": {
+            "content": "Very helpful, thanks!",
+            "createdAt": "2025-09-19T16:05:00Z",
+            "userId": "AzkfJd3AjmaD3r3hY1idYRS7HqA3",
+            "postId": "hnc0KGGMpiYz4j8OTGpR"
+        },
+        "3": {
+            "content": "Awesome topic. Keep posting more!",
+            "createdAt": "2025-09-19T16:05:00Z",
+            "userId": "Y7QjNVNGpgeDAkuLvZoLNlbklV92",
+            "postId": "hnc0KGGMpiYz4j8OTGpR"
+        }
+    },
+    "admins": {
+        "AzkfJd3AjmaD3r3hY1idYRS7HqA3": {
+            "createdAt": "2025-09-19T12:00:00Z", 
+            "email": "jeka.rubchuk@gmail.com",
+            "name": "Jeka",
+            "avatar": "/images/profile.png"
+        },
+        "Y7QjNVNGpgeDAkuLvZoLNlbklV92": {
+            "createdAt": "2025-09-19T13:00:00Z",
+            "email": "nastia@example.com",
+            "name": "Nastia",
+            "avatar": "https://res.cloudinary.com/dpbmcoiru/image/upload/v1758029647/vglmpyomwc563rhuco3h.png",
+        }
+    }
+
+
+
+
+
+}

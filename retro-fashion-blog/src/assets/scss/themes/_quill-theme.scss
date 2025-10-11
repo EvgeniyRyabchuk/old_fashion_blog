@@ -1,0 +1,91 @@
+/* Base Toolbar Styling */
+.ql-toolbar.ql-snow {
+  background: rgb(var(--color-bg-rgb));
+  border: 1px solid rgba(var(--color-border-rgb, 255,255,255), 0.2);
+  color: rgb(var(--color-text-rgb));
+}
+
+/* Icons and SVG lines */
+.ql-toolbar .ql-stroke {
+  stroke: rgb(var(--color-text-rgb)) !important;
+}
+.ql-toolbar .ql-fill {
+  fill: rgb(var(--color-text-rgb)) !important;
+}
+.ql-toolbar .ql-picker-label,
+.ql-toolbar .ql-picker-item {
+  color: rgb(var(--color-text-rgb)) !important;
+}
+
+/* Dropdown picker menu background and text */
+.ql-toolbar .ql-picker-options {
+  background: rgb(var(--color-bg-rgb));
+  border: 1px solid rgba(var(--color-border-rgb, 255,255,255), 0.2);
+}
+.ql-toolbar .ql-picker-item:hover,
+.ql-toolbar .ql-picker-item.ql-selected {
+  background: rgba(var(--color-text-rgb), 0.1);
+}
+
+/* Active button highlight */
+.ql-toolbar button.ql-active .ql-stroke,
+.ql-toolbar button.ql-active .ql-fill {
+  stroke: var(--color-accent, #4fa3ff) !important;
+  fill: var(--color-accent, #4fa3ff) !important;
+}
+
+/* Hover effect */
+.ql-toolbar button:hover svg {
+  stroke: var(--color-accent, #4fa3ff);
+}
+
+/* Quill editor area */
+.ql-container.ql-snow {
+  background: rgb(var(--color-bg-rgb));
+  color: rgb(var(--color-text-rgb));
+  border: 1px solid rgba(var(--color-border-rgb, 255,255,255), 0.2);
+}
+
+/* Handle color picker button labels (small squares) */
+.ql-toolbar .ql-color-picker .ql-picker-item,
+.ql-toolbar .ql-background .ql-picker-item {
+  border-radius: 3px;
+  border: 1px solid rgba(var(--color-border-rgb, 255,255,255), 0.2);
+}
+
+/* Fix mixed white/black icons in dropdowns */
+.ql-toolbar .ql-picker.ql-color-picker svg .ql-stroke {
+  stroke: rgb(var(--color-text-rgb)) !important;
+}
+.ql-toolbar .ql-picker.ql-color-picker svg .ql-fill {
+  fill: rgb(var(--color-text-rgb)) !important;
+}
+
+/* Force Quill editor content to follow theme colors */
+.ql-editor,
+.ql-editor * {
+  color: var(--color-text) !important;
+  background-color: var(--color-bg) !important;
+}
+
+/* Optional – keep code blocks readable */
+.ql-editor pre,
+.ql-editor code {
+  background-color: rgba(var(--color-bg-rgb), 0.9) !important;
+  color: var(--color-secondary-text) !important;
+}
+
+/* Fix links */
+.ql-editor a {
+  color: var(--color-accent, #4a6cf7) !important;
+}
+
+/* Headings */
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6 {
+  color: var(--color-text) !important;
+}

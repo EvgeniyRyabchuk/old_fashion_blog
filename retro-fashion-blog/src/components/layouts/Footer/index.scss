@@ -1,0 +1,50 @@
+@use '../../../assets/scss/abstracts/index' as abs;
+
+
+//TODO: placeholders not work but variables work
+
+footer {
+  margin: 20px auto !important;
+  padding: 20px;
+  background-color: abs.$color-bg;
+
+  span, li {
+    color:  abs.$color-text;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-around;
+
+    .footer-col {
+      .footer-label {
+        font-weight: 700;
+
+      }
+      padding: 10px;
+      &:last-child {
+        .footer-data-wrapper {
+          justify-content: space-between;
+          margin: 20px 0px;
+
+        }
+        .footer-data-wrapper li {
+          margin: 0 !important;
+
+        }
+      }
+      .footer-data-wrapper {
+        @extend %menu-list;
+        padding: 0;
+        .footer-data-row {
+          margin: 10px 15px;
+        }
+      }
+    }
+
+
+  }
+  a {
+    @extend %menu-list-item;
+  }
+}

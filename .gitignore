@@ -13,3 +13,13 @@ serviceAccount.json
 
 # Seeder JSON
 seeder/json/
+
+.idea/
+.vscode/
+.DS_Store
+
+
+
+dist/
+build/
+.cache/

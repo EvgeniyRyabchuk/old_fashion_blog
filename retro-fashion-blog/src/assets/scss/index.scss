@@ -1,0 +1,21 @@
+@use 'abstracts/index' as abstracts;
+@use 'themes/index' as *;
+@use 'base/index' as *;
+//@use 'components/index' as components;
+//@use 'pages/index' as pages;
+
+@use 'vendors/index' as vendors;
+@use 'utilities/index' as utilities;
+@use 'layout/index' as layout;
+
+
+
+.admin-post-top-panel {
+  @extend .d-flex-h-right-v-center;
+  padding: 10px 30px;
+  border-top: 3px dashed orange;
+  border-bottom: 3px dashed orange;
+}
+
+
+
