@@ -1,4 +1,4 @@
-@use '../../assets/scss/abstracts/index' as abs;
+@use '@scss/abstracts/index' as abs;
 
 $billboard-height: 550px;
 
@@ -71,7 +71,7 @@ $billboard-height: 550px;
         border: 1px solid black;
         background-color: darkgray;
         width: 100%;
-        height: $billboard-height / 2;
+        height: calc($billboard-height / 2);
         padding: 10px;
 
         @extend .default-link;

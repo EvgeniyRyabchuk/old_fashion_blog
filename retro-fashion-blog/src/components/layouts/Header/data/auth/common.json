@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Settings",
+    "link": "/profile/setting.html",
+    "dataI18n": "nav-home"
+  },
+  {
+    "name": "Comments",
+    "link": "/profile/comments.html",
+    "dataI18n": "nav-all-posts"
+  }
+]

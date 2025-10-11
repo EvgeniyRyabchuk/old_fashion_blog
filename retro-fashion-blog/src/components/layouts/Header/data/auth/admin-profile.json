@@ -1,0 +1,13 @@
+[
+  {
+    "name": "My posts",
+    "link": "/posts.html",
+    "dataI18n": "profile-nav-my-posts"
+  },
+  {
+    "name": "Post Editor / Table",
+    "link": "/profile/admin/create-edit-post.html",
+    "dataI18n": "profile-nav-post-editor"
+  }
+
+]

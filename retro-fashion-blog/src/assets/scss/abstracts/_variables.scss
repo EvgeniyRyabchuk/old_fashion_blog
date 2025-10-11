@@ -50,11 +50,15 @@ $md-bp: 768px;
 $sm-bp: 576px; 
 $xs-bp: 340px;
 
-$icon-svg-burger: "/assets/icons/burger.svg";
-$icon-svg-close: "/assets/icons/close.svg";
-$icon-svg-up: "/assets/icons/up.svg";
-$icon-svg-down: "/assets/icons/down.svg";
-$icon-svg-profile-round: "/assets/icons/profile-round.svg";
-$icon-svg-search: "/assets/icons/search.svg";
+$base-icon-path: "src/assets/icons/";
+$base-img-path: "src/assets/images/";
+
+
+$icon-svg-burger: "#{$base-icon-path}burger.svg";
+$icon-svg-close: "#{$base-icon-path}close.svg";
+$icon-svg-up: "#{$base-icon-path}up.svg";
+$icon-svg-down: "#{$base-icon-path}down.svg";
+$icon-svg-profile-round: "#{$base-icon-path}profile-round.svg";
+$icon-svg-search: "#{$base-icon-path}search.svg";
 
 

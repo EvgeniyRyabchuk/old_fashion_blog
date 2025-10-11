@@ -1,44 +1,92 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "./index.scss";
-import Dropdown from "../../Dropdown";
+import Dropdown from '@components/Dropdown';
 
-const guestNavListData = [
-    {
-        name: "Home",
-        link: "/",
-        dataI18n: "nav-home"
-    },
-    {
-        name: "All posts",
-        link: "/posts.html",
-        dataI18n: "nav-all-posts",
-        data: [
-            {
-                name: "Male",
-                link: "/posts.html?categories=7GGsEDG6hxJke8vh6PFa",
-                dataI18n: "nav-male",
-            },
-            {
-                name: "Female",
-                link: "/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ",
-                dataI18n: "nav-female",
-            }
-        ]
-    },
-    {
-        name: "Contact",
-        link: "/contacts.html",
-        dataI18n: "nav-contact",
-    },
-    {
-        name: "About",
-        link: "/about.html",
-        dataI18n: "nav-about",
-    }
-];
-
+import guestNavListData from './data/all/dropdown-menu-data.json';
+import userProfileList from './data/auth/user-profile.json';
+import adminProfileList from './data/auth/admin-profile.json';
+import commonProfileList from './data/auth/common.json';
+import ProfileMenu from "@layouts/Header/ProfileMenu";
 
 const Header = () => {
+
+
+    const verticalListItemOnClick = (e) => {
+        const curT = e.currentTarget;
+        if (e.target.tagName === "A" && e.target.classList.contains("prevent")) {
+            e.preventDefault();
+            if(curT.tagName.toLowerCase() === 'li') {
+                curT.classList.toggle("is-open");
+            }
+        }
+    }
+
+    useEffect(() => {
+
+        const searchPostLoader = document.getElementById("searchPostLoader");
+
+        const headerSearch = document.getElementById("headerSearch");
+        const searchToggle = document.getElementById("searchToggle");
+        const searchClose = document.getElementById("searchClose");
+        const searchInput = document.getElementById("searchInput");
+        const searchControll = document.getElementById("searchControll")
+        const searchContent = document.getElementById("searchContent");
+        const searchSeeMoreLink = searchContent.querySelector("#searchSeeMore");
+
+        const authNavList =  document.getElementById("authNavList");
+        const asideAuthNavList = document.querySelector("#asideAuthNavList");
+
+
+        const profileBtnWrapper = document.getElementById("profileBtnWrapper")
+        const asideProfileBtnWrapper = document.getElementById("asideProfileBtnWrapper");
+
+//TODO: change
+//         document.getElementById("profileBtnWrapper").addEventListener("mouseenter", (e) => {
+//             authNavList.classList.toggle("is-open");
+//         })
+//         document.getElementById("profileBtnWrapper").addEventListener("mouseleave", (e) => {
+//             authNavList.classList.toggle("is-open");
+//         })
+
+// open profile in aside menu
+//         document.getElementById("asideProfileBtnWrapper").addEventListener("click", (e) => {
+//             asideAuthNavList.classList.toggle("is-open");
+//             document.querySelector("#asideProfileBtn").classList.toggle("is-open");
+//         })
+
+
+        const setAsideIsOpen = () => {
+            document.querySelector("#sideMenu").classList.toggle("is-open");
+            // document.querySelector("#burgerMenuBtn").classList.toggle("is-open");
+            document.querySelector("#sideMenuWrapper").classList.toggle("is-open");
+            document.body.classList.toggle("no-scroll");
+        }
+
+// open aside menu
+        document.getElementById("burgerMenuBtn").addEventListener("click", (e) => {
+            setAsideIsOpen();
+        })
+        document.querySelector("#closeAside").addEventListener("click", (e) => {
+            setAsideIsOpen();
+        })
+        document.getElementById("sideMenuWrapper").addEventListener("click", (e) => {
+            if (e.target === e.currentTarget) {
+                setAsideIsOpen();
+            }
+        });
+
+        ///////////////////// dropdown
+        // document.querySelectorAll(".dropdown.on-click").forEach(dropdown => {
+        //     dropdown.addEventListener("click", e => {
+        //         // only preventDefault if the first child <a> is clicked
+        //         verticalListItemOnClick(e)
+        //     });
+        // });
+
+    }, []);
+
+
+
     return (
         <header>
             <a className="default-link top-header-link" href="/">
@@ -58,95 +106,30 @@ const Header = () => {
                             <a className="login-btn" href="/auth/login.html" data-i18n="auth-login">Login</a>
                             <a className="sign-up-btn" href="/auth/register.html" data-i18n="auth-sign-up">Sign Up</a>
                         </div>
-                        <div className="aside-profile-btn-wrapper switchable-flex" id="asideProfileBtnWrapper">
-                            <div className="form-row">
-                                <button className="aside-profile-btn" id="asideProfileBtn">
 
-                                    <span data-i18n="auth-profile">Profile</span>
+                        <ProfileMenu
+                            data={[...adminProfileList, ...commonProfileList]}
+                            rootСlassName={"aside-profile-btn-wrapper"}
+                            btnClassName={"aside-profile-btn"}
+                            switchableClass={"switchable-flex"}
+                            isClickable={true}
+                        />
 
-                                </button>
-                            </div>
-                            <ul id="asideAuthNavList" className="auth-nav-list d-none">
-                                <li><a href="/posts.html">My posts</a></li>
-                                <li><a href="/profile/setting.html">Settings</a></li>
-                                <li><a href="/profile/comments.html">Comments</a></li>
-                                <li style={{padding: 0}}>
+                        <Dropdown
+                            ulClassName={"side-menu-list"}
+                            onClick={verticalListItemOnClick}
+                            data={guestNavListData}
+                        />
 
-                                    <button className="btn-danger" type="button" onClick="logout()">Logout</button>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <ul className="side-menu-list">
-                            <li><a className="side-menu-item" href="/" className="dropdown-item"
-                                   data-i18n="nav-home">Home</a></li>
-                            <li className="dropdown on-click root">
-                                <a className="side-menu-item prevent" href="/posts.html" className="dropdown-toggle"
-                                   data-i18n="nav-all-posts">All posts</a>
-
-                                <ul className="dropdown-menu">
-                                    <li className="">
-                                        <a className="side-menu-item" href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa"
-                                           className="dropdown-toggle" data-i18n="nav-male">Male</a>
-                                    </li>
-                                    <li className="">
-                                        <a className="side-menu-item" href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ"
-                                           className="dropdown-item" data-i18n="nav-female">Female</a>
-                                    </li>
-                                    <li className="">
-                                        <a className="side-menu-item"
-                                           href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ"
-                                           className="dropdown-item">Classic</a>
-                                    </li>
-                                    <li className="">
-                                        <a className="side-menu-item"
-                                           href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ"
-                                           className="dropdown-item">Trends</a>
-                                    </li>
-                                    <li className="">
-                                        <a className="side-menu-item"
-                                           href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ"
-                                           className="dropdown-item">News</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a className="side-menu-item" href="/news.html" className="dropdown-item"
-                                   data-i18n="nav-contact">Contact</a></li>
-                            <li><a className="side-menu-item" href="/news.html" className="dropdown-item"
-                                   data-i18n="nav-about">About</a></li>
-                            <li className="side-menu-item">
-                                <a href="/galerry.html" data-i18n="nav-gallery">Gallery</a>
-                            </li>
-                        </ul>
                     </aside>
                 </div>
                 <div className="top-menu-content">
                     <div className="burger-menu-btn" id="burgerMenuBtn"></div>
-                    <Dropdown ulClassName={"guest-nav-list"} data={guestNavListData} />
-                    {/*<ul className="guest-nav-list">*/}
-                    {/*    <li><a href="/" className="dropdown-item" data-i18n="nav-home">Home</a></li>*/}
-                    {/*    <li className="dropdown on-hover root">*/}
-                    {/*        <a href="/posts.html" className="dropdown-toggle" data-i18n="nav-all-posts">All posts</a>*/}
-                    {/*        <ul className="dropdown-menu">*/}
-                    {/*            <li className="">*/}
-                    {/*                <a href="/posts.html?categories=7GGsEDG6hxJke8vh6PFa" className="dropdown-toggle"*/}
-                    {/*                   data-i18n="nav-male">Male</a>*/}
-                    {/*            </li>*/}
-                    {/*            <li className="">*/}
-                    {/*                <a href="/posts.html?categories=JlEtKUSmnLqoTtsDkDMQ" className="dropdown-item"*/}
-                    {/*                   data-i18n="nav-female">Female</a>*/}
-                    {/*            </li>*/}
-                    {/*        </ul>*/}
-                    {/*    </li>*/}
-                    {/*    <li><a href="/news.html" className="dropdown-item" data-i18n="nav-contact">Contact</a></li>*/}
-                    {/*    <li>*/}
-                    {/*        <a href="/news.html"*/}
-                    {/*           className="dropdown-item"*/}
-                    {/*           data-i18n="nav-about">*/}
-                    {/*            About*/}
-                    {/*        </a>*/}
-                    {/*    </li>*/}
-                    {/*</ul>*/}
+
+                    <Dropdown
+                        ulClassName={"guest-nav-list"}
+                        data={guestNavListData}
+                    />
 
                     <div className="auth-nav-list-wrapper">
                         <div id="headerNavLoginBtnForm" className="form-row">
@@ -155,6 +138,7 @@ const Header = () => {
                             <a className="sign-up-btn" style={{margin: "0 5px"}} href="/auth/register.html"
                                data-i18n="auth-sign-up">Sign Up</a>
                         </div>
+
                         <div className="form-row">
                             <select className="language-select" id="languageSelect">
                                 <option value="ru" data-i18n="lang-ru">RU</option>
@@ -219,27 +203,14 @@ const Header = () => {
                             </div>
                         </div>
 
-                        <div className="profile-btn-wrapper switchable" id="profileBtnWrapper">
-                            <div className="form-row">
-                                <button className="profile-btn" id="profileBtn">
-                                    <span data-i18n="auth-profile">
-                                        Profile
-                                    </span>
-                                    <span id="authUserName" className="auth-user-name"></span>
-                                </button>
-                            </div>
+                        <ProfileMenu
+                            data={[...adminProfileList, ...commonProfileList]}
+                            rootСlassName={"profile-btn-wrapper"}
+                            btnClassName={"profile-btn"}
+                            onHoverable={true}
+                            switchableClass={"switchable"}
+                        />
 
-                            <ul id="authNavList" className="auth-nav-list">
-                                <li><a href="/posts.html" data-i18n="auth-my-posts">My posts</a></li>
-                                <li><a href="/profile/setting.html" data-i18n="auth-settings">Settings</a></li>
-                                <li><a href="/profile/comments.html" data-i18n="auth-comments">Comments</a></li>
-                                <li style={{padding: 0}}>
-                                    <button className="btn-danger" type="button" onClick="logout()"
-                                            data-i18n="auth-logout">Logout
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </nav>

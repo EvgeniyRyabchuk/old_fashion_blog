@@ -1,6 +1,4 @@
-@use '../../assets/scss/abstracts/index' as abs;
-
-
+@use '@scss/abstracts/index' as abs;
 
 $dropdown-menu-min-width: 100%;
 $appear-animation-time: 0.2s;
@@ -31,7 +29,7 @@ $header-link-hover-color: abs.$color-secondary;
       background-color: $header-link-hover-color;
     }
     .dropdown-menu {
-      top: -15px;
+      top: 0;
       left: 100%;
     }
   }
