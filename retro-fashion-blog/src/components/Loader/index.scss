@@ -1,0 +1,92 @@
+
+@use "sass:list";
+@use '@scss/abstracts/placeholders';
+@use '@scss/abstracts/flex-box-tems';
+@use '@scss/utilities/helpers';
+
+// $loader-size: red, green, blue;
+
+$circle-count: 6;
+$animation-duration: 2s;
+$base-delay: 0.1s; // delay step
+
+$circle-color: rgb(42, 79, 189);
+$wrapper-bg-color: rgb(147, 147, 147, 0.5);
+
+// $loader-wrapper-size: calc(10%);
+$cirle-size-percent: 6%;
+$wrapper-circle-size-percent: 0.4;
+
+
+@mixin getDimensionForCircle() {
+  width: 100%;
+  aspect-ratio: 1 / 1; // to ideal circle
+}
+@mixin getDimensionForCircleWrapper() {
+  width: dimensionForWrapper();
+  height: dimensionForWrapper();
+}
+
+@function dimensionForWrapper () {
+  @return calc($wrapper-circle-size-percent * 100%);
+}
+
+.loader-wrapper {
+  &.bg-transparent { background-color: transparent; }
+  &.abs {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+  }
+  &.fixed {
+    @extend .full-screen-fixed;
+  }
+  @extend .d-flex-center;
+
+  background-color: $wrapper-bg-color;
+  z-index: 1;
+
+  .loader {
+    @include getDimensionForCircleWrapper();
+    position: relative;
+
+    @for $i from 1 through $circle-count {
+      .circle-wrapper-#{$i} {
+        position: absolute;
+        top: 0;
+        left: calc(100% / 2);
+        width: $cirle-size-percent;
+        height: 100%;
+        // transition: transform 1s ease-in-out;
+        // margin: 0 auto;
+        animation: circleMovement $animation-duration infinite ease-in-out;
+        // animation: pulse 2s infinite ease-in-out;
+        animation-delay: $i * $base-delay;
+
+        // transform-origin: center center;
+
+        .circle-#{$i} {
+          @include getDimensionForCircle();
+          background-color: $circle-color;
+          border-radius: 50%;  // always rounded
+        }
+      }
+    }
+
+  }
+}
+
+
+@keyframes circleMovement {
+  0% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

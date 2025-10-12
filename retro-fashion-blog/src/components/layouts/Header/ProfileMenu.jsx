@@ -2,19 +2,24 @@ import React, {useState} from 'react';
 import adminProfileList from "@layouts/Header/data/auth/admin-profile.json";
 import commonProfileList from "@layouts/Header/data/auth/common.json";
 
-const ProfileMenu = ({ data, rootСlassName, btnClassName, switchableClass, onHoverable, isClickable}) => {
+const ProfileMenu = ({ data, isAside, btnClassName, switchableClass, isHoverable, isClickable}) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
 
     return (
-        <div className={`${rootСlassName} ${switchableClass} ${isOpen ? "is-open" : ""}`}
-             onMouseEnter={onHoverable ?  () => setIsOpen(!isOpen)  : null}
-             onMouseLeave={onHoverable ?  () => setIsOpen(!isOpen) : null}
+        <div className={
+            `${isAside ? "aside-profile-btn-wrapper switchable-flex" : "profile-btn-wrapper switchable"}
+             ${isOpen ? "is-open" : ""}`
+        }
+             onMouseEnter={isHoverable ?  () => setIsOpen(!isOpen)  : null}
+             onMouseLeave={isHoverable ?  () => setIsOpen(!isOpen) : null}
              onClick={isClickable ? () => setIsOpen(!isOpen) : null }
         >
             <div className="form-row">
-                <button className={`${btnClassName}`} >
+                <button className={
+                    `${isAside ? "aside-profile-btn switchable-flex" : "profile-btn switchable"}`
+                } >
                     <span data-i18n="auth-profile">Profile</span>
                     <span className="auth-user-name">: Jeka</span>
                 </button>
