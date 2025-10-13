@@ -16,7 +16,7 @@ export default defineConfig({
       '@assets': path.resolve(srcPath, 'assets'),
       // Alias for the base SCSS folder
       '@scss': path.resolve(srcPath, 'assets/scss'),
-      '@layouts': path.resolve(srcPath, 'components/layouts'),
+      '@layouts': path.resolve(srcPath, 'components/StandardLayout'),
       '@pages': path.resolve(srcPath, 'pages'),
       '@utils': path.resolve(srcPath, 'utils'),
     },

@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
-import adminProfileList from "@layouts/Header/data/auth/admin-profile.json";
-import commonProfileList from "@layouts/Header/data/auth/common.json";
 
 const ProfileMenu = ({ data, isAside, btnClassName, switchableClass, isHoverable, isClickable}) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-
+    
     return (
         <div className={
             `${isAside ? "aside-profile-btn-wrapper switchable-flex" : "profile-btn-wrapper switchable"}

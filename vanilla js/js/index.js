@@ -341,7 +341,8 @@ const getLocCatName = (category) => {
 
 //=======================================   
 
-
+//TODO: routing: statuses, all screen grey when loading (change body image) 
+//TODO: auth: user, admin, AuthGuard,  
 
 
 //TODO: notification 

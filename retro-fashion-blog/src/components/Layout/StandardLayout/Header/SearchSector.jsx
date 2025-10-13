@@ -5,6 +5,9 @@ import queryStrHandler from "@utils/query-string-handler";
 import breakpoints from "@/constants/breakpoints";
 import { db } from "@/firebase/config";
 
+//TODO: fetch into service
+//TODO: mouse click up call close
+
 
 async function fetchPostsBySearch(term) {
     if(term === "" || !term) {
@@ -61,15 +64,6 @@ const SearchSector = () => {
 
     const searchControlRef = useRef(null); // ✅ useRef instead of getElementById
 
-    const showSeeMore = (text, length) => {
-        const seeMoreTriggerCount = 3;
-        const searchUrl = `/posts.html?${queryStrHandler.strQName.search}=${text}`;
-        if (length >= seeMoreTriggerCount) {
-            setSeeMoreLink(searchUrl);
-            setIsSeeMoreOpen(true);
-        }
-    }
-
 
 
     useEffect(() => {
@@ -89,12 +83,19 @@ const SearchSector = () => {
     }, [isActiveHeaderSearch]); // re-run when active state changes
 
 
+    const showSeeMore = (text, length) => {
+        const seeMoreTriggerCount = 3;
+        const searchUrl = `/posts.html?${queryStrHandler.strQName.search}=${text}`;
+        if (length >= seeMoreTriggerCount) {
+            setSeeMoreLink(searchUrl);
+            setIsSeeMoreOpen(true);
+        }
+    }
+
     const textChanged = async (text) => {
         queryStrHandler.changePostsSearch(text);
         setActiveHeaderSearch(true);
         setIsLoaderActive(true)
-
-        console.log(text);
 
         const items = await fetchPostsBySearch(text);
 
@@ -105,19 +106,28 @@ const SearchSector = () => {
             setIsNoData(true);
         }
 
-
         setSearchPostList(items);
         setIsSearchContentOpen(true);
         setIsLoaderActive(false);
     }
 
+
+    const closeAll = () => {
+        setIsSearchContentOpen(false);
+        setIsLoaderActive(false);
+        setIsSeeMoreOpen(false);
+        setIsNoData(false);
+    }
+
     useEffect(() => {
         if(text !== "") textChanged(text);
     }, [debouncedText]);
-
     useEffect(() => {
-        if(text === "") setActiveHeaderSearch(false);
+        if(text === "") {
+            closeAll();
+        }
     }, [text]);
+
 
     const removePostList = () => {
         setIsSeeMoreOpen(false);
@@ -134,7 +144,7 @@ const SearchSector = () => {
     }
 
     const onSearchToogleClick = () => {
-        setActiveHeaderSearch(!setActiveHeaderSearch);
+        setActiveHeaderSearch(true);
         document.body.classList.toggle("no-scroll");
     }
 
@@ -144,12 +154,13 @@ const SearchSector = () => {
     }
 
     const onSearchCloseClick = (e) => {
-        setActiveHeaderSearch(!setActiveHeaderSearch);
+        setActiveHeaderSearch(false);
         if(window.innerWidth <= breakpoints.lg)
             document.body.classList.toggle("no-scroll");
         setText("");
         setSearchPostList([]);
         removePostList();
+        closeAll();
     }
 
     return (
@@ -165,6 +176,7 @@ const SearchSector = () => {
                        type="text" placeholder="Search..."
                        data-i18n-attr="placeholder:search-placeholder"
                        onChange={onInputChange}
+                       value={text}
                        onClick={() => {
                            setActiveHeaderSearch(true);
                            console.log(123);
@@ -178,7 +190,6 @@ const SearchSector = () => {
                 >
                     Search
                 </button>
-
                 <button className="search-toggle"
                         id="searchToggle"
                         type="button"

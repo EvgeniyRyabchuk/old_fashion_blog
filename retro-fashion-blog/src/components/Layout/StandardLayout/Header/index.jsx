@@ -3,14 +3,13 @@ import "./index.scss";
 import Dropdown from '@components/Dropdown';
 
 import guestNavListData from './data/all/dropdown-menu-data.json';
-import userProfileList from './data/auth/user-profile.json';
 import adminProfileList from './data/auth/admin-profile.json';
 import commonProfileList from './data/auth/common.json';
-import ProfileMenu from "@layouts/Header/ProfileMenu";
-import AuthOffer from "@layouts/Header/AuthOffer";
-import LangSelector from "@layouts/Header/Selectors/LangSelector";
-import ThemeSelector from "@layouts/Header/Selectors/ThemeSelector";
-import SearchSector from "@layouts/Header/SearchSector";
+import ProfileMenu from "./ProfileMenu";
+import AuthOffer from "./AuthOffer";
+import LangSelector from "./Selectors/LangSelector";
+import ThemeSelector from "./Selectors/ThemeSelector";
+import SearchSector from "./SearchSector";
 
 const Header = () => {
 
