@@ -1,4 +1,4 @@
-@use '../abstracts/index' as abs;
+@use '@scss/abstracts' as abs;
 
 
 header, footer, .main-wrapper {
@@ -6,6 +6,7 @@ header, footer, .main-wrapper {
   width: 100%;
   margin: 0 auto; 
 }
+
 
 @media screen and (max-width: abs.$xxl-bp) {
     .side-menu {
@@ -18,41 +19,10 @@ header, footer, .main-wrapper {
 }
 
 @media screen and (max-width: abs.$xl-bp) {
-    .billboard {
-        @include abs.flexbox(column, null, null, null, 5px);
-        height: auto;
 
-        .carousel {
-            width: 100%;
-            margin: 10px 0;
-            height: 40vh;
-            aspect-ratio: 16 / 9;
-        }
-
-        .vertical-stand {
-            width: 100%;
-            @include abs.flexbox(row, null, null, wrap, 5px);
-
-            .mobile-wrapper {
-                width: 100%;
-                @include abs.flexbox(row, null, null, wrap, 0);
-
-                .category {
-                    flex: 1 1 33%;
-                    padding: 5px;
-                    max-width: 33%;
-                }
-            }
-
-            .slider {
-                display: none;
-            }
-        }
-    }
-
-     .top-menu-content {
+    .top-menu-content {
         // margin: 10px !important;
-        padding: 10px 8px !important;
+        //padding: 10px 8px !important;
         
         .burger-menu-btn {
             display: block !important; 
@@ -71,7 +41,7 @@ header, footer, .main-wrapper {
     }
 
     .profile-btn-wrapper {
-        display: none;
+        display: none !important;
     }
 
     .posts-wrapper {
@@ -81,8 +51,6 @@ header, footer, .main-wrapper {
     .content-section {
         padding: 10px;
     }
-
-    
 }
 
 @media screen and (max-width: abs.$lg-bp) {
@@ -125,19 +93,7 @@ header, footer, .main-wrapper {
     }
     .header-img-block {
         height: 60px !important;
-    } 
-
-    // .top-menu-content {
-    //     // margin: 10px 60mportant;
-    //     padding: 10px 8px !important;
-        
-    //     .burger-menu-btn {
-    //         display: block !important; 
-    //     }
-    //     .guest-nav-list, .auth-nav-list-wrapper {
-    //         display: none;
-    //     } 
-    // }   
+    }
 
     footer {
         padding: 10px;
@@ -183,12 +139,11 @@ header, footer, .main-wrapper {
     }
 
     .auth-nav-list-wrapper {
-        margin: 5px 0 5px 0 !important;
+        margin: 5px 0 5px 0;
         width: 100%;
         justify-content: right !important;
         gap: 10px;
     }
-
 
     .top-header-link {
         padding: 0;
@@ -196,7 +151,6 @@ header, footer, .main-wrapper {
             font-size: 1rem
         }
     }
-
 }
 
 @media screen and (max-width: abs.$md-bp) {
@@ -211,16 +165,6 @@ header, footer, .main-wrapper {
             right: 5px;
         }
 
-    }
-    .billboard {
-        @include abs.flexbox(column, null, null, null, 2px);
-        margin: 0;
-
-        .vertical-stand .mobile-wrapper .category {
-            flex: 1 1 50%;
-            padding: 5px;
-            max-width: none;
-        }
     }
 
     .post-card {
@@ -255,9 +199,7 @@ header, footer, .main-wrapper {
 }
 
 @media screen and (max-width: abs.$sm-bp) {
-    .post-cover {
-        // height: 100% !important;
-    }
+
 }
 
 @media screen and (max-width: abs.$xs-bp) {
@@ -265,9 +207,6 @@ header, footer, .main-wrapper {
         flex-wrap: wrap;
     }
 }
-
-
-
 
 
 

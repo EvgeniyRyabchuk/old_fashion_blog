@@ -35,7 +35,6 @@ const createLocalizer = () => {
         translate
     }
 }
-const i18n = createLocalizer();
 
 
-export default i18n;
+export default createLocalizer;

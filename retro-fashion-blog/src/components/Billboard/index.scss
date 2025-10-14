@@ -91,3 +91,52 @@ $billboard-height: 550px;
   }
 
 }
+
+
+@media screen and (max-width: abs.$xl-bp) {
+  .billboard {
+    @include abs.flexbox(column, null, null, null, 5px);
+    height: auto;
+
+    .carousel {
+      width: 100%;
+      margin: 10px 0;
+      height: 40vh;
+      aspect-ratio: 16 / 9;
+    }
+
+    .vertical-stand {
+      width: 100%;
+      @include abs.flexbox(row, null, null, wrap, 5px);
+
+      .mobile-wrapper {
+        width: 100%;
+        @include abs.flexbox(row, null, null, wrap, 0);
+
+        .category {
+          flex: 1 1 33%;
+          padding: 5px;
+          max-width: 33%;
+        }
+      }
+
+      .slider {
+        display: none;
+      }
+    }
+  }
+
+}
+
+@media screen and (max-width: abs.$md-bp) {
+  .billboard {
+    @include abs.flexbox(column, null, null, null, 2px);
+    margin: 0;
+
+    .vertical-stand .mobile-wrapper .category {
+      flex: 1 1 50%;
+      padding: 5px;
+      max-width: none;
+    }
+  }
+}

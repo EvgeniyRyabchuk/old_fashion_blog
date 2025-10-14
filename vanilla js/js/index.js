@@ -341,8 +341,13 @@ const getLocCatName = (category) => {
 
 //=======================================   
 
-//TODO: routing: statuses, all screen grey when loading (change body image) 
+//TODO: routing: statuses, a href = react navigation 
 //TODO: auth: user, admin, AuthGuard,  
+//main page: carousel, roll, last posts 
+
+
+//TODO: check Loadable loader screen work 
+//TODO: rework lang change for react 
 
 
 //TODO: notification 

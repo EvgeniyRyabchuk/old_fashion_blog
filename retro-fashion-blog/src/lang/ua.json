@@ -133,6 +133,7 @@
 
   "dont-have-account": "Ще не ма?",
 
+  "name-placeholder": "Ім'я",
   "email-placeholder": "Пошта",
   "password-placeholder": "Пароль"
 }

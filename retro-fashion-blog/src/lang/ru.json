@@ -131,7 +131,8 @@
 
   "dont-have-account": "Нет аккаунта?",
 
+  "name-placeholder": "Имя",
   "email-placeholder": "Почта",
   "password-placeholder": "Пароль"
-  
+
 }

@@ -1,22 +1,26 @@
 import React, {Suspense} from 'react';
-import Loader from "@components/Loader";
+import {StandardLoader} from "@components/Loader";
+
 
 
 export const PageLoader = (
     <div style={{ position: "relative", top: '100px'}}>
-        <Loader active={true} />
+        <StandardLoader active={true} />
     </div>
 )
 
 export const PageLoaderElement = () => {
     return (
         <div style={{
-            position: "fixed",
-            top: '50%',
-            left: '50%',
-            zIndex: '999'
+            position: "absolute",
+            top: '0',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            zIndex: '999',
+            backgroundColor: 'red'
         }}>
-            <Loader active={true} />
+            <StandardLoader active={true} />
         </div>
     )
 }
@@ -24,7 +28,7 @@ export const PageLoaderElement = () => {
 const Loadable = (Component) => (props) => {
     return (
         <div>
-            <Suspense fallback={PageLoader}>
+            <Suspense fallback={PageLoaderElement}>
                 <Component {...props} />
             </Suspense>
         </div>

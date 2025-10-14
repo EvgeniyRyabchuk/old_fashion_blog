@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import Loader from "@components/Loader";
+import { StandardLoader } from "@components/Loader";
 import useDebounce from "@/hooks/useDebounce";
 import queryStrHandler from "@utils/query-string-handler";
 import breakpoints from "@/constants/breakpoints";
@@ -205,7 +205,7 @@ const SearchSector = () => {
                      height: isLoaderActive ? "300px" : "",
                  }}
             >
-                <Loader isActive={isLoaderActive} />
+                <StandardLoader isActive={isLoaderActive} />
 
                 <div
                     className={`no-data-li ${!isNoData ? "d-none" : ""}`}

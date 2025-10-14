@@ -130,6 +130,7 @@
 
   "dont-have-account": "Dont have an account?",
 
+  "name-placeholder": "Name",
   "email-placeholder": "Email",
   "password-placeholder": "Password"
 }

@@ -14,7 +14,7 @@ $circle-color: rgb(42, 79, 189);
 $wrapper-bg-color: rgb(147, 147, 147, 0.5);
 
 // $loader-wrapper-size: calc(10%);
-$cirle-size-percent: 6%;
+$circle-size-percent: 6%;
 $wrapper-circle-size-percent: 0.4;
 
 
@@ -57,7 +57,7 @@ $wrapper-circle-size-percent: 0.4;
         position: absolute;
         top: 0;
         left: calc(100% / 2);
-        width: $cirle-size-percent;
+        width: $circle-size-percent;
         height: 100%;
         // transition: transform 1s ease-in-out;
         // margin: 0 auto;

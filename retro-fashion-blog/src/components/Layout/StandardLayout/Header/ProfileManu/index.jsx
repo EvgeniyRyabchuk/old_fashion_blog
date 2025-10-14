@@ -1,25 +1,49 @@
 import React, {useState} from 'react';
+import {useAuth} from "@/context/AuthContext";
+import './index.scss';
+import {logout} from "@/services/auth";
 
-const ProfileMenu = ({ data, isAside, btnClassName, switchableClass, isHoverable, isClickable}) => {
+const Space = () => {
+
+    return (
+        <span style={{ marginRight: '4px' }}></span>
+    )
+}
+
+const ProfileMenu = ({
+         data,
+         isAside,
+         isHoverable,
+         isClickable
+    }) => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const { user, loading: authLoading } = useAuth();
 
-    
+
+
     return (
-        <div className={
-            `${isAside ? "aside-profile-btn-wrapper switchable-flex" : "profile-btn-wrapper switchable"}
-             ${isOpen ? "is-open" : ""}`
+        <div className={isAside ?
+            `aside-profile-btn-wrapper switchable-flex is-open`
+            : "profile-btn-wrapper switchable is-open"
         }
              onMouseEnter={isHoverable ?  () => setIsOpen(!isOpen)  : null}
              onMouseLeave={isHoverable ?  () => setIsOpen(!isOpen) : null}
              onClick={isClickable ? () => setIsOpen(!isOpen) : null }
         >
             <div className="form-row">
+
                 <button className={
                     `${isAside ? "aside-profile-btn switchable-flex" : "profile-btn switchable"}`
                 } >
                     <span data-i18n="auth-profile">Profile</span>
-                    <span className="auth-user-name">: Jeka</span>
+                    <span className="auth-user-name">
+                        {!authLoading && user ? (
+                            <>
+                                :<Space />{user.name}
+                            </>
+                        ) : ""}
+                    </span>
                 </button>
             </div>
 
@@ -31,7 +55,7 @@ const ProfileMenu = ({ data, isAside, btnClassName, switchableClass, isHoverable
                     <button className="btn-danger"
                             data-i18n="profile-nav-logout-btn"
                             type="button"
-                            onClick="logout()">
+                            onClick={() => logout()}>
                         Logout
                     </button>
                 </li>

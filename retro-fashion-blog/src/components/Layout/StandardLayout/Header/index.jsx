@@ -5,15 +5,17 @@ import Dropdown from '@components/Dropdown';
 import guestNavListData from './data/all/dropdown-menu-data.json';
 import adminProfileList from './data/auth/admin-profile.json';
 import commonProfileList from './data/auth/common.json';
-import ProfileMenu from "./ProfileMenu";
+import ProfileMenu from "./ProfileManu";
 import AuthOffer from "./AuthOffer";
 import LangSelector from "./Selectors/LangSelector";
 import ThemeSelector from "./Selectors/ThemeSelector";
 import SearchSector from "./SearchSector";
+import {useAuth} from "@/context/AuthContext";
 
 const Header = () => {
 
     const [isAsideOpen, setIsAsideOpen] = useState(false);
+    const { user, loading: authLoading } = useAuth();
 
     const onBurgerClick = () => {
         setIsAsideOpen(!isAsideOpen);
@@ -35,31 +37,6 @@ const Header = () => {
         }
     }
 
-    useEffect(() => {
-
-        const searchPostLoader = document.getElementById("searchPostLoader");
-
-        const headerSearch = document.getElementById("headerSearch");
-        const searchToggle = document.getElementById("searchToggle");
-        const searchClose = document.getElementById("searchClose");
-        const searchInput = document.getElementById("searchInput");
-        const searchControll = document.getElementById("searchControll")
-        const searchContent = document.getElementById("searchContent");
-        const searchSeeMoreLink = searchContent.querySelector("#searchSeeMore");
-
-        const authNavList =  document.getElementById("authNavList");
-        const asideAuthNavList = document.querySelector("#asideAuthNavList");
-
-
-        const profileBtnWrapper = document.getElementById("profileBtnWrapper")
-        const asideProfileBtnWrapper = document.getElementById("asideProfileBtnWrapper");
-
-
-
-    }, []);
-
-
-
     return (
         <header>
             <a className="default-link top-header-link" href="/">
@@ -78,12 +55,17 @@ const Header = () => {
                             <span data-i18n="header-menu">Menu</span>
                         </div>
 
-                        <AuthOffer className={'form-row d-flex-center'} style={{ margin: "20px 0" }} />
+                        {(!authLoading && !user) &&
+                            <AuthOffer className={'form-row d-flex-center'} style={{ margin: "20px 0" }} />
+                        }
 
-                        <ProfileMenu
-                            data={[...adminProfileList, ...commonProfileList]}
-                            isClickable={true} isAside={true}
-                        />
+                        {(!authLoading && user) &&
+                            <ProfileMenu
+                                data={[...adminProfileList, ...commonProfileList]}
+                                isClickable={true}
+                                isAside={true}
+                            />
+                        }
 
                         <Dropdown
                             ulClassName={"side-menu-list"}
@@ -99,7 +81,9 @@ const Header = () => {
                     <Dropdown ulClassName={"guest-nav-list"} data={guestNavListData} />
 
                     <div className="auth-nav-list-wrapper">
-                        <AuthOffer className={'form-row'} />
+                        {(!authLoading && !user) &&
+                            <AuthOffer className={'form-row'} />
+                        }
 
                         <LangSelector />
 
@@ -107,10 +91,13 @@ const Header = () => {
 
                         <SearchSector />
 
-                        <ProfileMenu
-                            data={[...adminProfileList, ...commonProfileList]}
-                            isAside={false} isHoverable={false}
-                        />
+                        {(!authLoading && user) &&
+                            <ProfileMenu
+                                data={[...adminProfileList, ...commonProfileList]}
+                                isAside={false}
+                                isHoverable={true}
+                            />
+                        }
 
                     </div>
                 </div>
