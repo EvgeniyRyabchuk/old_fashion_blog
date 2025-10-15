@@ -9,14 +9,18 @@ export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isAuth, setIsAuth] = useState(false);
+
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(
             async (firebaseUser) => {
                 if(firebaseUser) {
                     setUser(await getAuthUserById(firebaseUser.uid));
+                    setIsAuth(true);
                 } else {
                     setUser(null);
+                    setIsAuth(false);
                 }
                 setLoading(false);
         });
@@ -25,9 +29,8 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
 
-
     return (
-        <AuthContext.Provider value={{ user, setUser, loading  }}>
+        <AuthContext.Provider value={{ user, setUser, loading, isAuth  }}>
             {children}
         </AuthContext.Provider>
     );

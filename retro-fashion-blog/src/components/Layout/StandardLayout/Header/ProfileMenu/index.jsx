@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useAuth} from "@/context/AuthContext";
 import './index.scss';
 import {logout} from "@/services/auth";
+import { Authenticated as ProfileList } from '@components/Layout/StandardLayout/Header/data';
+
+import {Link} from "react-router-dom";
 
 const Space = () => {
 
@@ -11,7 +14,6 @@ const Space = () => {
 }
 
 const ProfileMenu = ({
-         data,
          isAside,
          isHoverable,
          isClickable
@@ -20,6 +22,12 @@ const ProfileMenu = ({
     const [isOpen, setIsOpen] = useState(false);
     const { user, loading: authLoading } = useAuth();
 
+    const linkList = useMemo(() =>
+            user.isAdmin ?
+                [...ProfileList.admin, ...ProfileList.common] :
+                [...ProfileList.user, ...ProfileList.common],
+        [user]
+    )
 
 
     return (
@@ -38,18 +46,20 @@ const ProfileMenu = ({
                 } >
                     <span data-i18n="auth-profile">Profile</span>
                     <span className="auth-user-name">
-                        {!authLoading && user ? (
+                        {!authLoading && user && (
                             <>
                                 :<Space />{user.name}
                             </>
-                        ) : ""}
+                        )}
                     </span>
                 </button>
             </div>
 
             <ul className={`auth-nav-list ${isOpen ? "is-open" : ""}`}>
-                {data.map((item, index) => (
-                    <li key={index}><a data-i18n={item.dataI18n} href={item.link}>{item.name}</a></li>
+                {linkList.map((item, index) => (
+                    <li key={index}>
+                        <Link data-i18n={item.dataI18n} to={item.link}>{item.name}</Link> 
+                    </li>
                 ))}
                 <li style={{padding: 0}}>
                     <button className="btn-danger"

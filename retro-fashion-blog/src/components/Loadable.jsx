@@ -18,7 +18,7 @@ export const PageLoaderElement = () => {
             right: '0',
             bottom: '0',
             zIndex: '999',
-            backgroundColor: 'red'
+            // backgroundColor: 'red'
         }}>
             <StandardLoader active={true} />
         </div>
@@ -28,7 +28,7 @@ export const PageLoaderElement = () => {
 const Loadable = (Component) => (props) => {
     return (
         <div>
-            <Suspense fallback={PageLoaderElement}>
+            <Suspense fallback={<PageLoaderElement/>}>
                 <Component {...props} />
             </Suspense>
         </div>

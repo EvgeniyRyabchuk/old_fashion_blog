@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.scss';
+import {Link} from "react-router-dom";
 
 const Billboard = () => {
     return (
@@ -14,32 +15,32 @@ const Billboard = () => {
             </div>
             <div className="vertical-stand">
                 <div className="mobile-wrapper">
-                    <a className="category" href="/posts.html?categories=1">
+                    <Link className="category" to="/posts?categories=1">
                         Male
-                    </a>
-                    <a className="category">
+                    </Link>
+                    <Link className="category" to="/posts?categories=1">
                         Female
-                    </a>
-                    <a className="category" href="/posts.html?categories=1">
+                    </Link>
+                    <Link className="category" to="/posts?categories=1">
                         Classic
-                    </a>
-                    <a className="category" href="/posts.html?categories=2">
+                    </Link>
+                    <Link className="category" to="/posts?categories=1">
                         News
-                    </a>
+                    </Link>
                 </div>
                 <div className="slider">
-                    <a className="category" href="/posts.html?categories=1">
+                    <Link className="category" to="/posts?categories=1">
                         Male
-                    </a>
-                    <a className="category" href="/posts.html?categories=1">
+                    </Link>
+                    <Link className="category" to="/posts?categories=1">
                         Female
-                    </a>
-                    <a className="category" href="/posts.html?categories=1">
+                    </Link>
+                    <Link className="category" to="/posts?categories=1">
                         Classic
-                    </a>
-                    <a className="category" href="/posts.html?categories=2">
+                    </Link>
+                    <Link className="category" to="/posts?categories=1">
                         News
-                    </a>
+                    </Link>
                 </div>
             </div>
         </section>

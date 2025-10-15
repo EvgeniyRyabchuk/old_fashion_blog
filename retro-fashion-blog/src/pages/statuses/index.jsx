@@ -1,9 +1,9 @@
 import React from 'react';
 
-const StatusWrapper = () => {
+const StatusWrapper = ({ children }) => {
     return (
-        <div>
-            
+        <div style={{ height: "500px", padding: '2rem' }}>
+            {children}
         </div>
     );
 };

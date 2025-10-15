@@ -1,12 +1,16 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import PATHS from "@/constants/paths";
 
 const AuthOffer = ({ className }) => {
     return (
         <div className={className}>
-            <a className="login-btn" style={{margin: "0 5px"}} href="/login"
-               data-i18n="auth-login">Login</a>
-            <a className="sign-up-btn" style={{margin: "0 5px"}} href="/sign-up"
-               data-i18n="auth-sign-up">Sign Up</a>
+            <Link className="login-btn" style={{margin: "0 5px"}} to={PATHS.LOGIN}
+               data-i18n="auth-login">Login
+            </Link>
+            <Link className="sign-up-btn" style={{margin: "0 5px"}} to={PATHS.SIGN_UP}
+               data-i18n="auth-sign-up">Sign Up
+            </Link>
         </div>
     );
 };

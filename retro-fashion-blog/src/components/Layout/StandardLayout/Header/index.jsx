@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react';
 import "./index.scss";
 import Dropdown from '@components/Dropdown';
 
-import guestNavListData from './data/all/dropdown-menu-data.json';
-import adminProfileList from './data/auth/admin-profile.json';
-import commonProfileList from './data/auth/common.json';
-import ProfileMenu from "./ProfileManu";
+import guestNavListData from './data/common-nav';
+import ProfileMenu from "./ProfileMenu";
 import AuthOffer from "./AuthOffer";
 import LangSelector from "./Selectors/LangSelector";
 import ThemeSelector from "./Selectors/ThemeSelector";
 import SearchSector from "./SearchSector";
 import {useAuth} from "@/context/AuthContext";
+import {Link} from "react-router-dom";
+import PATHS from "@/constants/paths";
 
 const Header = () => {
 
@@ -39,11 +39,11 @@ const Header = () => {
 
     return (
         <header>
-            <a className="default-link top-header-link" href="/">
+            <Link className="default-link top-header-link" to={PATHS.HOME}>
                 <div className="header-img-block">
                     <h2 className="header-label" data-i18n="header-blog-title">Old Fashion Blog</h2>
                 </div>
-            </a>
+            </Link>
 
             <nav className="top-menu">
                 <div id="sideMenuWrapper"
@@ -61,7 +61,6 @@ const Header = () => {
 
                         {(!authLoading && user) &&
                             <ProfileMenu
-                                data={[...adminProfileList, ...commonProfileList]}
                                 isClickable={true}
                                 isAside={true}
                             />
@@ -93,7 +92,6 @@ const Header = () => {
 
                         {(!authLoading && user) &&
                             <ProfileMenu
-                                data={[...adminProfileList, ...commonProfileList]}
                                 isAside={false}
                                 isHoverable={true}
                             />

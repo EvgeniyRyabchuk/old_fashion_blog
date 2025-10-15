@@ -3,6 +3,8 @@ import './index.scss';
 import {useAuth} from "@/context/AuthContext";
 import {login, register} from "@/services/auth";
 import {StandardLoader} from "@components/Loader";
+import {Link, useNavigate} from "react-router-dom";
+import PATHS from "@/constants/paths";
 
 
 const AuthForm = ({ isAccountExist }) => {
@@ -11,6 +13,7 @@ const AuthForm = ({ isAccountExist }) => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const { user, setUser, loading: authLoading } = useAuth();
+    const navigate = useNavigate();
 
     const onAuthBtnCLick = async () => {
         let user = null;
@@ -19,17 +22,20 @@ const AuthForm = ({ isAccountExist }) => {
         } else {
             user = await register(name, email, password);
         }
-        if(user) setUser(user);
+        if(user) {
+            setUser(user);
+            navigate("/");
+        }
     }
 
     return (
         <section className="content-section">
-            {!authLoading && user ? (<h1>{user.id} </h1>) : ""}
-            {!authLoading && !user ? (<StandardLoader isActive={authLoading}/>) : ""}
+            {!authLoading && user && (<h1>{user.id} </h1>) }
+            {!authLoading && !user && (<StandardLoader isActive={authLoading}/>) }
 
             <div className="login-wrapper">
                 <h2
-                    data-i18n={isAccountExist ? "auth-login": "auth-sign-up"}>
+                    data-i18n={isAccountExist ? "authenticated-login": "authenticated-sign-up"}>
                     {isAccountExist ? "Log in" : "Sign up"}
                 </h2>
 
@@ -67,18 +73,19 @@ const AuthForm = ({ isAccountExist }) => {
                     {isAccountExist ? "Login": "Sign Up"}
                 </button>
 
-                {isAccountExist ? (
+                {isAccountExist && (
                     <div className="extra">
                         <p>
                             <snan data-i18n="dont-have-account">
                                 Don't have an account?
                             </snan>
-                            <a href="./register.html"
+                            <Link to={PATHS.SIGN_UP}
                                data-i18n="auth-sign-up">
                                 Sign up
-                            </a></p>
+                            </Link>
+                        </p>
                     </div>
-                ) : ""}
+                ) }
 
             </div>
 

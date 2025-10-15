@@ -341,14 +341,14 @@ const getLocCatName = (category) => {
 
 //=======================================   
 
-//TODO: routing: statuses, a href = react navigation 
+//TODO: routing: statuses, a href = react navigation,   exact: true,
 //TODO: auth: user, admin, AuthGuard,  
-//main page: carousel, roll, last posts 
-
+//TODO: main page: carousel, roll, last posts 
+//TODO: category load dynamicly 
 
 //TODO: check Loadable loader screen work 
 //TODO: rework lang change for react 
-
+//TODO: change red 
 
 //TODO: notification 
 //TODO: breadcrubm translation 

@@ -4,9 +4,7 @@ import firebase from "firebase/app";
 
 const adminsIds = ["AzkfJd3AjmaD3r3hY1idYRS7HqA3"]; // array of admin user ids
 
-
 async function getAuthUserById(userId = auth.currentUser?.uid) {
-
     let isAdmin = false;
 
     if (!userId) return {isAdmin};
@@ -22,16 +20,11 @@ async function getAuthUserById(userId = auth.currentUser?.uid) {
 }
 
 async function login(email, password) {
-    // const email = document.getElementById("email").value;
-    // const password = document.getElementById("password").value;
-
     try {
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
 
         console.log("Logged in:", user.email, "UID:", user.uid);
-
-        // window.location.href = "/";
 
         return user;
 
@@ -41,10 +34,6 @@ async function login(email, password) {
 }
 
 async function register(name, email, password) {
-    // const name = document.getElementById("name").value;
-    // const email = document.getElementById("email").value;
-    // const password = document.getElementById("password").value;
-
     try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
@@ -57,8 +46,6 @@ async function register(name, email, password) {
             userId: user.uid
         });
 
-        window.location.href = "/";
-
         return user;
 
     } catch(error) {
@@ -68,7 +55,6 @@ async function register(name, email, password) {
 
 const logout = () => {
     auth.signOut().then(() => {
-        window.location.href = "/";
         console.log("User signed out successfully.");
     }).catch((error) => {
         console.error("Error signing out:", error);

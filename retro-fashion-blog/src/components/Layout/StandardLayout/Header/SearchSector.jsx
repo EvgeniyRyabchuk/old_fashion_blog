@@ -4,6 +4,8 @@ import useDebounce from "@/hooks/useDebounce";
 import queryStrHandler from "@utils/query-string-handler";
 import breakpoints from "@/constants/breakpoints";
 import { db } from "@/firebase/config";
+import {Link} from "react-router-dom";
+import PATHS from "@/constants/paths";
 
 //TODO: fetch into service
 //TODO: mouse click up call close
@@ -11,7 +13,7 @@ import { db } from "@/firebase/config";
 
 async function fetchPostsBySearch(term) {
     if(term === "" || !term) {
-        console.log("No term → return all posts or skip");
+        console.log("No term → return common-nav posts or skip");
         return [];
     }
     const postsRef = db.collection("posts");
@@ -217,7 +219,7 @@ const SearchSector = () => {
                 <ul id="searchPostList" className="search-post-list">
                     {searchPostList.map((post) => (
                         <li key={post.id}>
-                            <a href={`/post.html?id=${post.id}`}>
+                            <Link to={PATHS.POST(post.id)}>
                                 <div className="post-cover d-flex-v-center">
                                     <img src={post.coverUrl} alt="Post Img"/>
                                 </div>
@@ -226,20 +228,20 @@ const SearchSector = () => {
                                     {post.title}
                                   </span>
                                 </div>
-                            </a>
+                            </Link>
                         </li>)
                     )}
                 </ul>
 
-                <a
+                <Link
                     id="searchSeeMore"
-                    href={seeMoreLink}
+                    to={seeMoreLink}
                     className={`see-more ${!isSeeMoreOpen ? "d-none" : ""}`}
                     data-i18n="search-see-more"
 
                 >
                     See More...
-                </a>
+                </Link>
             </div>
         </div>
     );
