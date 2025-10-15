@@ -4,8 +4,6 @@ import './index.scss';
 import {logout} from "@/services/auth";
 import { Authenticated as ProfileList } from '@components/Layout/StandardLayout/Header/data';
 
-import {Link} from "react-router-dom";
-
 const Space = () => {
 
     return (
@@ -16,7 +14,8 @@ const Space = () => {
 const ProfileMenu = ({
          isAside,
          isHoverable,
-         isClickable
+         isClickable,
+         onSelected
     }) => {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -31,16 +30,17 @@ const ProfileMenu = ({
 
 
     return (
-        <div className={isAside ?
-            `aside-profile-btn-wrapper switchable-flex is-open`
+        <div className={isAside
+            ? "aside-profile-btn-wrapper switchable-flex is-open"
             : "profile-btn-wrapper switchable is-open"
         }
-             onMouseEnter={isHoverable ?  () => setIsOpen(!isOpen)  : null}
-             onMouseLeave={isHoverable ?  () => setIsOpen(!isOpen) : null}
-             onClick={isClickable ? () => setIsOpen(!isOpen) : null }
+             onMouseEnter={() => isHoverable && setIsOpen(true) }
+             onMouseLeave={() => isHoverable && setIsOpen(false) }
+             onClick={() => {
+                 isClickable && setIsOpen(!isOpen);
+             }}
         >
             <div className="form-row">
-
                 <button className={
                     `${isAside ? "aside-profile-btn switchable-flex" : "profile-btn switchable"}`
                 } >
@@ -57,15 +57,22 @@ const ProfileMenu = ({
 
             <ul className={`auth-nav-list ${isOpen ? "is-open" : ""}`}>
                 {linkList.map((item, index) => (
-                    <li key={index}>
-                        <Link data-i18n={item.dataI18n} to={item.link}>{item.name}</Link> 
+                    <li key={index} onClick={() => onSelected(item.link) }>
+                        <a  data-i18n={item.dataI18n}
+                            href={item.link}
+                            onClick={(e) => e.preventDefault()}>
+                            {item.name}
+                        </a>
                     </li>
                 ))}
                 <li style={{padding: 0}}>
                     <button className="btn-danger"
                             data-i18n="profile-nav-logout-btn"
                             type="button"
-                            onClick={() => logout()}>
+                            onClick={() => {
+                                logout();
+                                onSelected();
+                            }}>
                         Logout
                     </button>
                 </li>

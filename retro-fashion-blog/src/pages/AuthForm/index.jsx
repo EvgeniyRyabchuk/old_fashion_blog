@@ -61,7 +61,7 @@ const AuthForm = ({ isAccountExist }) => {
                 <div className="input-group">
                     <input id="password"
                            type="password"
-                           data-i18n-attr="pla  ceholder:password-placeholder"
+                           data-i18n-attr="placeholder:password-placeholder"
                            placeholder="Password"
                            onChange={(e) => setPassword(e.target.value)}
                     />

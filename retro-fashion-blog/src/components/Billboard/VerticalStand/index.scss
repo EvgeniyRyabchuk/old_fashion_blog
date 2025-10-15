@@ -1,0 +1,36 @@
+@use '@assets/scss/abstracts' as abs;
+@use 'sass:math';
+
+.vertical-stand {
+  width: 30%;
+  z-index: 1;
+  overflow: hidden; // hide overflow outside view
+
+  .slider, .mobile-wrapper {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s ease-in-out;
+
+    .category {
+      @include abs.flexbox(row, center, center);
+      border: 1px solid black;
+      background-color: darkgray;
+      width: 100%;
+      height: math.div(abs.$billboard-height, 2);
+      padding: 10px;
+
+      @extend .default-link;
+
+      color: white;
+      font-size: 4rem;
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .mobile-wrapper {
+    display: none;
+  }
+}

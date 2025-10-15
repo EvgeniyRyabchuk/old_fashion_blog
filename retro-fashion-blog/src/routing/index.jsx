@@ -7,7 +7,6 @@ import LayoutSuspense from "@components/Layout";
 import AuthGuard from "@/auth/AuthGuard";
 
 
-
 const Routing = () => {
 
     const routesWithAuthGuard = useMemo(() => {

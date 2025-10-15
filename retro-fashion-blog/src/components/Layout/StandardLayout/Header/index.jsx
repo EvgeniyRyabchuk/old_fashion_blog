@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import "./index.scss";
 import Dropdown from '@components/Dropdown';
 
@@ -9,13 +9,14 @@ import LangSelector from "./Selectors/LangSelector";
 import ThemeSelector from "./Selectors/ThemeSelector";
 import SearchSector from "./SearchSector";
 import {useAuth} from "@/context/AuthContext";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import PATHS from "@/constants/paths";
 
 const Header = () => {
 
     const [isAsideOpen, setIsAsideOpen] = useState(false);
     const { user, loading: authLoading } = useAuth();
+    const navigate = useNavigate();
 
     const onBurgerClick = () => {
         setIsAsideOpen(!isAsideOpen);
@@ -37,6 +38,11 @@ const Header = () => {
         }
     }
 
+    const onSelected = (link) => {
+        link && navigate(link);
+        setIsAsideOpen(false);
+    }
+
     return (
         <header>
             <Link className="default-link top-header-link" to={PATHS.HOME}>
@@ -48,7 +54,8 @@ const Header = () => {
             <nav className="top-menu">
                 <div id="sideMenuWrapper"
                      className={`side-menu-wrapper ${isAsideOpen ? "is-open" : ""}`}
-                     onClick={onEmptyAreaClick}>
+                     onClick={onEmptyAreaClick}
+                >
                     <aside id="sideMenu" className={`side-menu ${isAsideOpen ? "is-open" : ""}`}>
                         <div className="top-aside-block">
                             <div className="close-aside" id="closeAside" onClick={onBurgerClick}></div>
@@ -63,17 +70,19 @@ const Header = () => {
                             <ProfileMenu
                                 isClickable={true}
                                 isAside={true}
+                                onSelected={onSelected}
                             />
                         }
 
                         <Dropdown
                             ulClassName={"side-menu-list"}
                             onClick={verticalListItemOnClick}
+                            onSelected={onSelected}
                             data={guestNavListData}
                         />
-
                     </aside>
                 </div>
+
                 <div className="top-menu-content">
                     <div className="burger-menu-btn" id="burgerMenuBtn" onClick={onBurgerClick}></div>
 
@@ -94,9 +103,9 @@ const Header = () => {
                             <ProfileMenu
                                 isAside={false}
                                 isHoverable={true}
+                                onSelected={onSelected}
                             />
                         }
-
                     </div>
                 </div>
             </nav>

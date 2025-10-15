@@ -6,11 +6,9 @@ const AuthContext = createContext();
 
 
 export const AuthProvider = ({ children }) => {
-
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isAuth, setIsAuth] = useState(false);
-
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(
@@ -27,7 +25,6 @@ export const AuthProvider = ({ children }) => {
 
         return () => unsubscribe();
     }, []);
-
 
     return (
         <AuthContext.Provider value={{ user, setUser, loading, isAuth  }}>
