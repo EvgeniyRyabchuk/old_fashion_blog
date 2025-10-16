@@ -37,9 +37,9 @@ const lastPostsRow = createScrollRow(
   "lastPostsLeftBtn", 
   "lastPostsRightBtn",
 ); 
-const postHistoryRow = createScrollRow(
-  300,
-  "postHistory", 
-  "postHistoryLeftBtn", 
-  "postHistoryRightBtn"
-); 
+// const postHistoryRow = createScrollRow(
+//   300,
+//   "postHistory", 
+//   "postHistoryLeftBtn", 
+//   "postHistoryRightBtn"
+// ); 

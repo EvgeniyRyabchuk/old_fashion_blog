@@ -341,8 +341,8 @@ const getLocCatName = (category) => {
 
 //=======================================   
 
-//TODO: routing: statuses, a href = react navigation,   exact: true,
-//TODO: auth: user, admin, AuthGuard,  
+//TODO: move data to constants 
+//TODO: routing:   exact: true,
 //TODO: main page: carousel, roll, last posts 
 //TODO: category load dynamicly 
 

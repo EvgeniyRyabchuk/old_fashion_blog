@@ -357,7 +357,7 @@ const renderPostHistory = async () => {
   
   let history = historyStr.split(",");
   
-  // Fetch posts by ID
+  // Fetch posts by IDs
   const postsSnap = await db.collection("posts") 
     .where(firebase.firestore.FieldPath.documentId(), "in", history)
     .get();
