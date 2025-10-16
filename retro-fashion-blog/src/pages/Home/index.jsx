@@ -1,39 +1,29 @@
-import React from 'react';
+
 import './index.scss';
 import Breadcrumb from "../../components/Breadcrumb";
 import Billboard from "../../components/Billboard";
+import LastPosts from "@pages/Home/LastPosts";
+import PostHistory from "@pages/Home/PostHistory";
+import MostPopularTags from "@pages/Home/MostPopularTags";
+
+const Invisible = () => (<div style={{visibility: "hidden"}}>dsf</div>)
 
 const Home = () => {
+
     return (
         <>
             <Breadcrumb/>
 
-            <div style={{visibility: "hidden"}}>dsf</div>
+            {/*to prevent padding collapse*/}
+            <Invisible />
 
             <Billboard/>
 
+            <LastPosts/>
 
-            <section className="content-section">
-                <h3 className="main-content-title" data-i18n="section-last-posts">Last Posts</h3>
-                <div className="post-row" id="lastPostsSection">
-                    <button id="lastPostsLeftBtn" className="left-btn">◀</button>
-                    <button id="lastPostsRightBtn" className="right-btn">▶</button>
-                </div>
-            </section>
+            <MostPopularTags />
 
-            <section className="content-section tags-section">
-                <h3 className="main-content-title" data-i18n="section-most-popular-tags">Most Popular Tags</h3>
-                <div id="tagsRow" className="tags-row">
-                </div>
-            </section>
-
-            <section className="content-section">
-                <h3 className="main-content-title" data-i18n="section-view-history">View History</h3>
-                <div className="post-row" id="postHistory">
-                    <button id="postHistoryLeftBtn" className="left-btn">◀</button>
-                    <button id="postHistoryRightBtn" className="right-btn">▶</button>
-                </div>
-            </section>
+            <PostHistory />
         </>
     );
 };

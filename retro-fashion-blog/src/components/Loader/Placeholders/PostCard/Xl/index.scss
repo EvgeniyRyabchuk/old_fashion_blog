@@ -1,0 +1,65 @@
+.post-card-xl.loader {
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-bg, #1e1e1e);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  .skeleton {
+    position: relative;
+    background: #2a2a2a;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.08),
+                    transparent
+    );
+    animation: shimmer 1.4s infinite;
+  }
+
+  @keyframes shimmer {
+    100% {
+      left: 100%;
+    }
+  }
+
+  .post-cover.skeleton {
+    width: 100%;
+    height: 180px;
+  }
+
+  .skeleton-text {
+    height: 16px;
+    width: 100%;
+  }
+
+  .skeleton-text.short {
+    width: 80%;
+  }
+
+  .skeleton-text.shorter {
+    width: 60%;
+  }
+
+  .skeleton-button {
+    width: 120px;
+    height: 28px;
+  }
+
+
+}
+

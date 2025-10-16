@@ -25,9 +25,7 @@
 
     border-color: white;
     opacity: 0.7;
-
   }
-
 }
 
 .left-btn {
@@ -38,21 +36,23 @@
   right: 5px;
 }
 
-$post-card-width: 250px;
-$post-card-height: 300px;
 
-.post-row {
+
+.post-row-h-scrollable {
   @include abs.custom-scrollbar(abs.$color-secondary,
           abs.$color-secondary-text,
-          color-mix(in srgb, abs.$color-secondary-text, abs.$color-info-text 20%));
+          color-mix(in srgb, abs.$color-secondary-text, abs.$color-info-text 20%)
+  );
 
-  padding: 0px 25px 10px 25px !important;
+  padding: 0 25px 10px 25px !important;
+
   .left-btn, .right-btn {
     background-color: rgb(139, 139, 139) !important;
     color: white;
     border-color: rgb(220, 218, 227);
     opacity: 1;
     display: none;
+
     &:hover {
       background-color: rgb(117, 117, 117) !important;
       color: white;
@@ -63,6 +63,7 @@ $post-card-height: 300px;
       display: block;
     }
   }
+
   .left-btn {
     left: 15px;
   }
@@ -70,7 +71,7 @@ $post-card-height: 300px;
     right: 15px;
   }
 
-  @include abs.flexbox(row, null, null, nowrap !important, 5px);
+  @include abs.flexbox(row, null, null, nowrap !important, 10px);
   min-height: auto !important;
   // scrollbar-width: thin;
   overflow-x: auto;
@@ -81,33 +82,12 @@ $post-card-height: 300px;
     font-weight: 300;
   }
 
-  .post-card {
-    vertical-align: top;
-    display: inline-block;
-    // width: $post-card-width !important;
-    height: $post-card-height !important;
-    padding: 0;
-    // margin: 5px 20px;
-    width: 200px;
-    .post-cover img {
-      height: 200px !important;
-      padding: 10px 10px 5px 10px !important;
-    }
-    &:hover {
-      background-color:silver;
-      opacity: 0.5;
-    }
-    .post-short-content, .read-more, .more-wrapper  {
-      display: none;
-    }
-  }
-
   .see-more {
     @extend .default-link;
     @include abs.flexbox(row, center, center, null, 5px);
     // flex: 0 0 $post-card-width;  // fixed width
-    min-width: $post-card-width;
-    height: $post-card-height;   // fixed height
+    min-width: abs.$post-card-lg-width;
+    height: abs.$post-card-lg-height;   // fixed height
 
     font-size: 2.5rem;
     text-decoration: none; // ensure no underline
@@ -132,45 +112,5 @@ $post-card-height: 300px;
   }
 }
 
-// TODO: scrollbar
 
-$tag-height: 40px;
 
-.tags-section {
-
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-  }
-
-  .tags-row {
-    display: flex;
-    flex-wrap: wrap;          // keep tags in single row
-    gap: 10px;
-
-    padding-bottom: 5px;
-
-    .tag {
-      flex: 0 0 auto;          // fixed width by content
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: $tag-height;
-      padding: 0 15px;
-      font-size: 1rem;
-      text-decoration: none;
-
-      background-color: abs.$color-secondary;
-      color: abs.$color-text;
-
-      border-radius: 20px;
-      transition: 0.2s;
-      white-space: nowrap;
-
-      &:hover {
-        background-color: #ddd;
-        color: #000;
-      }
-    }
-  }
-}

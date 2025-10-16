@@ -1,0 +1,41 @@
+@use '@scss/abstracts/index' as abs;
+
+
+.tags-section {
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;          // keep tags in single row
+    gap: 10px;
+
+    padding-bottom: 5px;
+
+    .tag {
+      flex: 0 0 auto;          // fixed width by content
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: abs.$tag-height;
+      padding: 0 15px;
+      font-size: 1rem;
+      text-decoration: none;
+
+      background-color: abs.$color-secondary;
+      color: abs.$color-text;
+
+      border-radius: 20px;
+      transition: 0.2s;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: #ddd;
+        color: #000;
+      }
+    }
+  }
+}
