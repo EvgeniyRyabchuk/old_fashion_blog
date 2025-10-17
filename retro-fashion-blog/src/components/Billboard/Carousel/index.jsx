@@ -48,13 +48,12 @@ const Carousel = ({ carouselInterval = 10000 }) => {
                 carouselBottomPanel.current,
                 carouselInterval
             );
-
             // Start the loop and save the instance to state
             newCarousel.startLoop();
             setMainCarousel(newCarousel);
 
             // Clean up the loop when the component unmounts
-            return () => newCarousel.stopLoop();
+            return () => newCarousel.stop();
         }
     }, [carouselInterval]); // Dependencies ensure it runs only if interval changes
 

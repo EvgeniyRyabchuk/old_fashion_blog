@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import './index.scss';
 import {PostCardSize} from '@/constants/sizes';
 import {Link} from "react-router-dom";
-
+import PATHS from '@/constants/paths';
 
 const PostCard = ({ post, size }) => {
 
@@ -15,7 +15,7 @@ const PostCard = ({ post, size }) => {
 
     return (
         <article className={containerClass}>
-            <Link to={`/post.html?id=${post.id}`}>
+            <Link to={PATHS.POST(post.id)}>
                 <div className="post-cover">
                     <img src={post.coverUrl}
                          alt={post.title}
@@ -31,10 +31,10 @@ const PostCard = ({ post, size }) => {
                 </div>
             </Link>
             <div className="more-wrapper">
-                <a href="/post.html?id=2Sm03CgjZYY4txkRwS14"
+                <Link to={PATHS.POST(post.id)}>
                    className="read-more">
                     Read More &gt;&gt;
-            </a>
+                </Link>
             </div>
         </article>
     );

@@ -1,0 +1,49 @@
+@use '@scss/abstracts' as abs;
+
+.filter-sort {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+
+  &__sort {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: abs.$color-text;
+    }
+
+    select {
+      padding: 0.35rem 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+
+      color: abs.$color-text;
+      background-color: abs.$color-bg;
+    }
+  }
+}
+
+
+.filter-toggle {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #444;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #222;
+  }
+
+  // @media (min-width: 768px) {
+  //   display: none; // hide toggle on desktop
+  // }
+}

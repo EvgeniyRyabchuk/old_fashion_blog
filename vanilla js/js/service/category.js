@@ -12,7 +12,7 @@ const loadCategoriesToCollection = async (collection) => {
     const catSnap = await db.collection("categories")
       .where(firebase.firestore.FieldPath.documentId(), "in", batch)
       .get();
-
+    
     catSnap.forEach(doc => {
       categories[doc.id] = {
         id: doc.id,

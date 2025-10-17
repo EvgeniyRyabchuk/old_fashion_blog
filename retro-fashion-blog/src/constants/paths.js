@@ -6,6 +6,7 @@ const PATHS = {
     POSTS: '/posts',
     POST: (postId) => `/posts/${postId}`,
 
+    POSTS_BY_TAG: (tagId) => `/posts?tags=${tagId}`,
     // Session Routes
     LOGIN: '/login',
     SIGN_UP: '/sign-up',

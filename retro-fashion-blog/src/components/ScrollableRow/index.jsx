@@ -43,7 +43,11 @@ const ScrollableRow = ({ callback, Card, Placeholder, cardProps }) => {
             <div className="post-row-h-scrollable" id="lastPostsSection" ref={section}>
                 <button id="lastPostsLeftBtn" className="left-btn" ref={leftBtn}>◀</button>
                 <button id="lastPostsRightBtn" className="right-btn" ref={rightBtn}>▶</button>
-                {isLoading && new Array(5).fill(<Placeholder />)}
+                {isLoading &&
+                    new Array(5).fill(null).map((_, index) => (
+                        <Placeholder key={index} />
+                    ))
+                }
                 {items.map((post) => (
                     <Card key={post.id} post={post} {...cardProps} />
                 ))}

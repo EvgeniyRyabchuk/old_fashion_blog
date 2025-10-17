@@ -86,7 +86,11 @@ const Header = () => {
                 <div className="top-menu-content">
                     <div className="burger-menu-btn" id="burgerMenuBtn" onClick={onBurgerClick}></div>
 
-                    <Dropdown ulClassName={"guest-nav-list"} data={guestNavListData} />
+                    <Dropdown
+                        ulClassName={"guest-nav-list"}
+                        data={guestNavListData}
+                        onSelected={onSelected}
+                    />
 
                     <div className="auth-nav-list-wrapper">
                         {(!authLoading && !user) &&

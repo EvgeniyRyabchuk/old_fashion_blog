@@ -87,7 +87,10 @@ const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, 
 
     return {
         get index() { return index; },
-        startLoop
+        startLoop,
+        stop: () => {
+            clearInterval(intervalId);
+        }
     }
 }
 

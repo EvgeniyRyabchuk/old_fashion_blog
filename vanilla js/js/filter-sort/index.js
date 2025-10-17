@@ -28,7 +28,7 @@ closeBtn.addEventListener("click", () => {
 });
 
 filterDrawerWrapper.addEventListener("click", (e) => {
-  if(e.currentTarget == e.target) {
+  if(e.currentTarget === e.target) { 
      switchFilter(false); 
   }
 })
@@ -161,11 +161,12 @@ const loadFromPostQueryStr = () => {
 const renderCategoriesToFilter = async () => {
     const categories = await readAllCategoires(); 
     const categoryContainer = document.getElementById("categoriesContainer");
-    categoryContainer.innerHTML = "";
+    categoryContainer.innerHTML = ""; 
     categories.forEach(c => { 
       renderCheckboxes(c.id, c.name, categoryContainer, "category"); 
     });
 }
+
 const renderTagsToFilter = async () => {
     const tags = await readAllTags(); 
     const tagsContainer = document.getElementById("tagsContainer");
@@ -176,7 +177,7 @@ const renderTagsToFilter = async () => {
 }
 
 async function renderSelectableElements() {
-    await renderCategoriesToFilter();
+    await renderCategoriesToFilter(); 
     await renderTagsToFilter(); 
     addEventListenerToInput(document.querySelector(`[data-type="date-range-start"]`)) 
     addEventListenerToInput(document.querySelector(`[data-type="date-range-end"]`))

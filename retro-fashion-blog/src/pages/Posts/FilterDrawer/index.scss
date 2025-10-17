@@ -1,52 +1,26 @@
-@use '../utilities/index.scss';
-@use '../abstracts/index' as abs;
 
+@use '@scss/abstracts' as abs;
+@use '@scss/utilities';
 
-.filter-sort {
+.tags {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
 
-
-  &__sort {
+  .tag {
+    background: #eee;
+    padding: 5px 10px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 5px;
 
-    label {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: abs.$color-text; 
-    }
-
-    select {
-      padding: 0.35rem 0.6rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      
-      color: abs.$color-text; 
-      background-color: abs.$color-bg; 
+    span {
+      cursor: pointer;
+      font-weight: bold;
     }
   }
-}
-
-.filter-toggle {
-  padding: 0.5rem 1rem;
-  border: none;
-  background: #444;
-  color: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s ease;
-
-  &:hover {
-    background: #222;
-  }
-
-  // @media (min-width: 768px) {
-  //   display: none; // hide toggle on desktop
-  // }
 }
 
 @media screen and (min-width: abs.$lg-bp) {
@@ -54,13 +28,13 @@
     position: static !important;
     opacity: 1 !important;
     visibility: visible !important;
-    pointer-events: auto !important; 
- 
+    pointer-events: auto !important;
+
 
     display: none;
     &.is-open {
       display: block !important;
-      
+
     }
   }
 }
@@ -71,7 +45,7 @@ $filterAppearTime: 0.3s;
   @extend .full-screen-fixed;
   background-color: rgba(209, 209, 209, 0.6);
   z-index: 999;
-  
+
   @include abs.animated-disappear-via-visibility($filterAppearTime);
 
   .filter-drawer {
@@ -87,8 +61,8 @@ $filterAppearTime: 0.3s;
     padding: 1rem;
     overflow-y: auto;
     z-index: 999;
-    transition: right $filterAppearTime ease; 
-    background-color: abs.$color-secondary; 
+    transition: right $filterAppearTime ease;
+    background-color: abs.$color-secondary;
 
     &__close {
       background: none;
@@ -139,7 +113,7 @@ $filterAppearTime: 0.3s;
         border-radius: 6px;
         cursor: pointer;
         background-color: abs.$color-bg;
-        color: abs.$color-text; 
+        color: abs.$color-text;
       }
 
       // input[type="checkbox"] {
@@ -180,7 +154,7 @@ $filterAppearTime: 0.3s;
         gap: 0.3rem;
         font-size: 0.85rem;
         background-color: abs.$color-bg;
-        color: abs.$color-text; 
+        color: abs.$color-text;
 
         border: 1px solid #ddd;
         border-radius: 6px;
@@ -190,7 +164,7 @@ $filterAppearTime: 0.3s;
         input {
           margin: 0;
           background-color: abs.$color-bg;
-          color: abs.$color-text; 
+          color: abs.$color-text;
         }
 
         &:hover {
@@ -266,7 +240,7 @@ $filterAppearTime: 0.3s;
         flex-wrap: wrap;
         gap: 1.5rem;
         align-items: flex-start;
-        margin: 20px 0px;
+        margin: 20px 0;
       }
 
       &__tags {
@@ -309,7 +283,7 @@ $filterAppearTime: 0.3s;
 
     .filter-chip {
       background-color: abs.$color-secondary;
-      color: abs.$color-text; 
+      color: abs.$color-text;
 
       border: 1px solid #c2cfff;
       border-radius: 20px;

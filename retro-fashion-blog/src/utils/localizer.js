@@ -32,7 +32,8 @@ const createLocalizer = () => {
 
     return {
         setLanguage,
-        translate
+        translate,
+        getLocCatName
     }
 }
 

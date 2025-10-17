@@ -20,13 +20,13 @@ const tagInputKeyDown = (e) => {
     }
 }
 
-//TODO: fix
-try {
-// Add tag on Enter
-    tagInput.addEventListener("keydown", tagInputKeyDown);
-} catch (e) {
-    console.log(e);
-}
+// //TODO: fix
+// try {
+// // Add tag on Enter
+//     tagInput.addEventListener("keydown", tagInputKeyDown);
+// } catch (e) {
+//     console.log(e);
+// }
 
 
 
@@ -146,7 +146,7 @@ const loadTagsToCollection = async (collection) => {
     return collection;
 };
 
-const readAllTags = async () => {
+const fetchAllTags = async () => {
     try {
         const snapshot = await db.collection("tags").get();
         const tags = snapshot.docs.map(doc => ({
@@ -171,7 +171,6 @@ const fetchMostPopularTags = async (count) => {
     snapshot.forEach(doc => {
         const data = doc.data();
         // assuming each doc has a 'tag' field
-
         if (data.tagId) {
             tagCounts[data.tagId] = (tagCounts[data.tagId] || 0) + 1;
         }
@@ -199,5 +198,5 @@ const fetchMostPopularTags = async (count) => {
 
 export {
     fetchMostPopularTags,
-
+    fetchAllTags
 }
