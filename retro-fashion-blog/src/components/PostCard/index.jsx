@@ -3,6 +3,8 @@ import './index.scss';
 import {PostCardSize} from '@/constants/sizes';
 import {Link} from "react-router-dom";
 import PATHS from '@/constants/paths';
+import {HtmlContent} from "@utils/helper";
+import {getPostContentPreview} from "@utils/format";
 
 const PostCard = ({ post, size }) => {
 
@@ -27,11 +29,12 @@ const PostCard = ({ post, size }) => {
                     </span>
                 </div>
                 <div className="post-short-content">
-                    {post.content}
+                    {size === PostCardSize.lg && post.content}
+                    {size === PostCardSize.xl && getPostContentPreview(post.content) }
                 </div>
             </Link>
             <div className="more-wrapper">
-                <Link to={PATHS.POST(post.id)}>
+                <Link to={PATHS.POST(post.id)}
                    className="read-more">
                     Read More &gt;&gt;
                 </Link>

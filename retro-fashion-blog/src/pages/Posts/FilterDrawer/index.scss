@@ -25,7 +25,7 @@
 
 @media screen and (min-width: abs.$lg-bp) {
   .filter-drawer-wrapper {
-    position: static !important;
+    position: relative;
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;

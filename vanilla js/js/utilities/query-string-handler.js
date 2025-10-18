@@ -71,7 +71,7 @@ const QueryStringHandler = () => {
   const changePostsFilter = ({ cIds, tIds, startDate, endDate }) => {
       addOrDeleteParams([
         {name: strQName.categories, value: cIds.join(",")},
-        {name: strQName.tags, value: tIds.join(",")},
+        {name: strQName.tags, value: tIds.join(",")}, 
         {name: strQName.startDate, value: startDate}, 
         {name: strQName.endDate, value: endDate}
       ]); 
