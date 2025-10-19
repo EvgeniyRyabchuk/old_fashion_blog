@@ -1,12 +1,16 @@
 @use '@scss/abstracts' as abs;
 
-
 header, footer, .main-wrapper {
-  max-width: abs.$xxl-bp; 
-  width: 100%;
-  margin: 0 auto; 
+
+    width: 100%;
+    margin: 0 auto;
 }
 
+@media screen and (min-width: abs.$xxl-bp) {
+    header, footer, .main-wrapper {
+        max-width: abs.$xxl-bp;
+    }
+}
 
 @media screen and (max-width: abs.$xxl-bp) {
     .side-menu {
@@ -45,7 +49,7 @@ header, footer, .main-wrapper {
     }
 
     .posts-wrapper {
-       padding: 0px 0px 30px 0px !important;
+       padding: 0 0 30px 0 !important;
     }
 
     .content-section {
@@ -88,9 +92,10 @@ header, footer, .main-wrapper {
         // }
     }
 
-    .post-card  {
+    .post-card, .post-card-xl, .post-card-lg  {
         width: 50% !important;
     }
+
     .header-img-block {
         height: 60px !important;
     }
@@ -167,7 +172,7 @@ header, footer, .main-wrapper {
 
     }
 
-    .post-card {
+    .post-card, .post-card-xl, .post-card-lg  {
         width: 100% !important;
     }
 

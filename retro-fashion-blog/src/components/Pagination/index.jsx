@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import './index.scss';
 import {usePaginate} from "@/hooks/usePaginate";
+import PageNumbers from "@components/Pagination/PageNumber";
+
+
+
 
 const Pagination = ({
                         fetchData,
@@ -15,6 +19,7 @@ const Pagination = ({
         totalCount,
         totalPages,
         currentPage,
+        setCurrentPage,
         perPage,
         setPerPage,
         goToPage,
@@ -33,25 +38,25 @@ const Pagination = ({
 
     console.log(currentPage)
 
-
-    const getPageList = (total, current) => {
+    //TODO: replace to component
+    const pageList = useMemo(() => {
         const delta = 2;
-        if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+        if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
 
         const range = [];
-        const left = Math.max(2, current - delta);
-        const right = Math.min(total - 1, current + delta);
+        const left = Math.max(2, currentPage - delta);
+        const right = Math.min(totalPages - 1, totalPages + delta);
 
         range.push(1);
         if (left > 2) range.push("...");
         for (let i = left; i <= right; i++) range.push(i);
-        if (right < total - 1) range.push("...");
-        range.push(total);
+        if (right < totalPages - 1) range.push("...");
+        range.push(totalPages);
 
         return range;
-    };
+    }, [totalPages, currentPage])
 
-    const pages = getPageList(totalPages, currentPage);
+    // const pages = getPageList(totalPages, currentPage);
 
     return (
         <div className={`pagination-wrapper ${items.length > 0 && "is-open"}`}>
@@ -59,7 +64,13 @@ const Pagination = ({
 
                 <div className="pagination__per-page">
                     <label htmlFor="perPageSelect" data-i18n="posts-per-page">Posts per page:</label>
-                    <select id="perPageSelect" value={perPage} onChange={(e) => setPerPage(e.target.value)} >
+                    <select id="perPageSelect"
+                            value={perPage}
+                            onChange={(e) => {
+                                setCurrentPage(1);
+                                setPerPage(e.target.value)}
+                            }
+                            >
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
@@ -71,38 +82,27 @@ const Pagination = ({
                     <button
                         id="prevPage"
                         className="prev-page"
-                        disabled data-i18n="posts-prev"
-                        onClick={() => goToPage(currentPage - 1)}>
+                        disabled={currentPage === 1}
+                        data-i18n="posts-prev"
+                        onClick={() => goToPage(currentPage - 1)}
+                    >
                         Prev
                     </button>
 
-                    <div id="pageNumbers"
-                         className="pagination__numbers"
-                         onClick={goToPage}>
-                        {pages.map((p, idx) =>
-                            p === "..." ? (
-                                <span key={`ellipsis-${idx}`} className="page-ellipsis px-2">...</span>
-                            ) : (
-                                <button
-                                    key={p}
-                                    className={`page-num px-3 py-1 rounded border ${
-                                        p === currentPage ? "active bg-blue-600 text-white" : "bg-white"
-                                    }`}
-                                    type="button"
-                                    aria-current={p === currentPage ? "page" : undefined}
-                                    onClick={() => goToPage(p)}
-                                >
-                                    {p}
-                                </button>
-                            )
-                        )}
-                    </div>
+                    <PageNumbers
+                        pageList={pageList}
+                        currentPage={currentPage}
+                        goToPage={goToPage}
+                    />
+
 
                     <button
                         id="nextPage"
                         className="next-page"
                         data-i18n="posts-next"
-                        onClick={() => goToPage(currentPage + 1)}>
+                        disabled={currentPage >= totalPages}
+                        onClick={() => goToPage(currentPage + 1)}
+                    >
                         Next
                     </button>
 
@@ -113,13 +113,16 @@ const Pagination = ({
             </div>
 
              {/* load more */}
-            <div className="pagination__load-more">
-                <button id="loadMoreBtn"
-                        data-i18n="posts-load-more"
-                        onClick={loadMore}>
-                    Load More
-                </button>
-            </div>
+            { currentPage < totalPages &&
+                <div className="pagination__load-more">
+                    <button id="loadMoreBtn"
+                            data-i18n="posts-load-more"
+                            onClick={loadMore}>
+                        Load More
+                    </button>
+                </div>
+            }
+
         </div>
     );
 };

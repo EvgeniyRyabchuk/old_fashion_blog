@@ -12,7 +12,7 @@ const Home = () => {
 
     return (
         <>
-            <Breadcrumb/>
+            {/*<Breadcrumb/>*/}
 
             {/*to prevent padding collapse*/}
             <Invisible />

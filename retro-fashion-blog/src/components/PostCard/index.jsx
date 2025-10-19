@@ -25,7 +25,7 @@ const PostCard = ({ post, size }) => {
                 </div>
                 <div className="post-title-wrapper">
                     <span className="post-title">
-                        {post.title}
+                        {post.title} <br/> {post.id}
                     </span>
                 </div>
                 <div className="post-short-content">

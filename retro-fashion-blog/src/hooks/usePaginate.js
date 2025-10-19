@@ -1,48 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
-import { db } from "@/firebase/config";
+import {useCallback, useEffect, useMemo, useState} from "react";
+import {db} from "@/firebase/config";
+import createCursorHandler from "@utils/cursor-handler";
 
-// Cursor handler
-function createCursorHandler(colName) {
-    let lastDocCache = {};
-    const cursorName = `lastDocCache_${colName}`;
 
-    const restoreLastDocCache = async () => {
-        const raw = localStorage.getItem(cursorName);
-        if (!raw) return {};
-
-        const cache = JSON.parse(raw);
-        const rebuilt = {};
-
-        for (const [page, docId] of Object.entries(cache)) {
-            const snap = await db.collection(colName).doc(docId).get();
-            if (snap.exists) rebuilt[page] = snap;
-        }
-        lastDocCache = rebuilt;
-        return rebuilt;
-    };
-
-    const saveCursor = (lastDoc, page) => {
-        lastDocCache[page] = lastDoc;
-        const cacheToSave = JSON.parse(localStorage.getItem(cursorName) || "{}");
-        cacheToSave[page] = lastDoc.id;
-        localStorage.setItem(cursorName, JSON.stringify(cacheToSave));
-    };
-
-    const deleteCursor = () => {
-        lastDocCache = {};
-        localStorage.removeItem(cursorName);
-    };
-
-    return {
-        get lastDocCache() {
-            return lastDocCache;
-        },
-        cursorName,
-        saveCursor,
-        restoreLastDocCache,
-        deleteCursor,
-    };
-}
 
 // 🔹 Main React Hook
 export function usePaginate({
@@ -54,25 +14,27 @@ export function usePaginate({
     setItems
 }) {
 
-    // const [items, setItems] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [perPage, setPerPage] = useState(perPageDefault);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    const cursorHandler = createCursorHandler(colName);
+    const cursorHandler = useMemo(() => createCursorHandler(colName), []);
+    const [isFirstCall, setIsFirstCall] = useState(true);
 
-    // Restore cursor cache only once
-    useEffect(() => {
-        cursorHandler.restoreLastDocCache();
-    }, []);
 
-    const renderPosts = useCallback(async () => {
+    const renderPosts = useCallback(async (newCurrentPage) => {
+        // Restore cursor cache only once
+        if(isFirstCall) {
+            await cursorHandler.restoreLastDocCache();
+            setIsFirstCall(false);
+        }
+
         setLoading(true);
 
         const { items, totalCount: newTotal } = await fetchData({
-            page: currentPage,
+            page: newCurrentPage,
             perPage,
             cursorHandler,
         });
@@ -81,6 +43,8 @@ export function usePaginate({
         setTotalCount(newTotal);
         setTotalPages(Math.max(1, Math.ceil(newTotal / perPage)));
         setLoading(false);
+
+
     }, [colName, currentPage, perPage]);
 
     const loadMore = useCallback(async () => {
@@ -103,12 +67,13 @@ export function usePaginate({
 
     const goToPage = (page) => {
         setCurrentPage(page);
+        renderPosts(page);
     };
 
     // Fetch data when page/perPage changes
     useEffect(() => {
-        renderPosts();
-    }, [currentPage, perPage]);
+        renderPosts(1);
+    }, [perPage]);
 
     const resetPagination = () => {
         cursorHandler.deleteCursor();
@@ -123,6 +88,7 @@ export function usePaginate({
         totalCount,
         totalPages,
         currentPage,
+        setCurrentPage,
         perPage,
         setPerPage,
         goToPage,

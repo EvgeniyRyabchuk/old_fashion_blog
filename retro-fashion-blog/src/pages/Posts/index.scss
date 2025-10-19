@@ -6,12 +6,13 @@
 }
 
 .posts-wrapper, .post-row {
-  padding: 0px 30px 30px 30px;
+  padding: 0 30px 30px 30px;
   margin-top: 15px;
   display: flex;
-  width: 100%;
+  width: 100% !important;
   flex-wrap: wrap;
   min-height: 500px;
+  //gap: 10px;
 }
 
 

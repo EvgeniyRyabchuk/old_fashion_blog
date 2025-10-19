@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './index.scss';
 
 import SortSection from "@pages/Posts/SortSection";
 import FilterDrawer from "@pages/Posts/FilterDrawer";
 import breakpoints from "@/constants/breakpoints";
 import Pagination from "@components/Pagination";
-import {StandardLoader} from "@components/Loader";
+import {PostCardXl, StandardLoader} from "@components/Loader";
 import {useFetching} from "@/hooks/useFetching";
 import {db} from "@/firebase/config";
 import {useLang} from "@/context/LangContext";
@@ -13,6 +13,7 @@ import {fetchDataFirestore} from "@/services";
 import postFilterQueryCreator from "@utils/post-filter-query-creator";
 import PostCard from "@components/PostCard";
 import {PostCardSize} from "@/constants/sizes";
+import Breadcrumb from "@components/Breadcrumb";
 
 
 const Posts = () => {
@@ -30,21 +31,38 @@ const Posts = () => {
 
     const [posts, setPosts] = useState([]);
 
-    const [fetchPosts, isLoading, error] = useFetching(async ({page, perPage, cursorHandler, options}) => {
-         const res = await fetchDataFirestore(
-            "posts", page, perPage, cursorHandler, {
+    const [fetchPosts, isLoading, error] = useFetching(async ({page, perPage, cursorHandler, options: restOptions }) => {
+        // const { isLoadMore } = options || {};
+        const options= {
             orderField: "createdAt", // must exist in your docs
             filterHandler: postFilterQueryCreator,
-            options: {t, ...options}
-        })
-        setPosts(res.items)
+            t,
+            ...restOptions
+        }
+        const res = await fetchDataFirestore(
+            "posts",
+            page,
+            perPage,
+            cursorHandler,
+            options
+        )
+        // if(isLoadMore)
+        //     setPosts(res.items)
         return res;
     })
 
-
+    //TODO: fix second page open lag
 
     return (
         <>
+            <Breadcrumb
+                items={[
+                    { to: "/", label: "Home" },
+                    // { to: "/blog", label: "Blog" },
+                    { label: "React Pagination" },
+                ]}
+            />
+
             <SortSection
                 onFilterChange={(e) => console.log(e.target.value)}
                 onFilterToggle={switchFilter}
@@ -59,13 +77,21 @@ const Posts = () => {
             <section className="content-section">
                 <h2 className="main-content-title" id="mainContentTitle" data-i18n="posts-title">Posts</h2>
                 <h3 id="noPostsData" className="no-data switchable" data-i18n="posts-no-data">No data yet</h3>
-                <div id="postLoader" className="loader-wrapper abs bg-transparent" style={{height: "500px"}}>
-                    {isLoading && <StandardLoader isActive={true}/>}
-                </div>
+
+
+
                 <div className="posts-wrapper" id="postsWrapper">
-                    {posts.map(post => (
-                        <PostCard key={post.id} post={post} size={PostCardSize.xl} />
-                    ))}
+                    {isLoading &&
+                        // <StandardLoader isActive={true} style={{height: "500px"}}/>
+                        new Array(6).fill(null).map((_, index) => (
+                            <PostCardXl key={index} />
+                        ))
+                    }
+                    {!isLoading &&
+                        posts.map(post => (
+                            <PostCard key={post.id} post={post} size={PostCardSize.xl} />
+                        ))
+                    }
                 </div>
 
                 <Pagination

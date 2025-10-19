@@ -77,7 +77,7 @@ const fetchDataFirestore = async (
     id: d.id,
     ...d.data()
   }));
-
+  
   // save cursor
   if (snap.docs.length > 0) {
     const lastDoc = snap.docs[snap.docs.length - 1];

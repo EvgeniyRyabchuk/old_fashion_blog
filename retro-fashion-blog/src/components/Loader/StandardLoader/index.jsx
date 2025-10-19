@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import './index.scss';
 
-const StandardLoader = ({ isActive }) => {
+const StandardLoader = ({ isActive, ...props }) => {
 
     return (
         <div id="searchPostLoader"
-             className={`loader-wrapper abs bg-transparent ${isActive ? "flex" : "d-none"} `}>
+             className={`loader-wrapper abs bg-transparent ${isActive ? "flex" : "d-none"} `}
+             {...props}
+        >
             <div className={`loader`}>
                 <div className="circle-wrapper-1">
                     <div className="circle-1"></div>

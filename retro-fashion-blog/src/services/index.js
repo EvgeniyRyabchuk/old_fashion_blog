@@ -1,15 +1,19 @@
 
 import {fetchPostsByIds, fetchLastPosts} from './posts'
 import {db} from "@/firebase/config";
+import {toggleBodyScroll} from "@utils/helper";
 
 const fetchDataFirestore = async (
     colName,
     page,
     perPage,
     cursorHandler,
-    options = {},
-    beforeItemsLoaded,
-    afterItemsLoaded) => {
+    options
+) => {
+
+
+    // toggleBodyScroll(true, options && options.isLoadMore);
+
     // await beforeItemsLoaded(options.isLoadMore);
     const orderField = options.orderField || "createdAt";
 
@@ -67,6 +71,8 @@ const fetchDataFirestore = async (
     const totalCountSnap = await ref.get();
     const totalCount = totalCountSnap.size;
     console.log(`total ${totalCount}`);
+
+    toggleBodyScroll(false, options && options.isLoadMore);
 
     return {
         items: posts,

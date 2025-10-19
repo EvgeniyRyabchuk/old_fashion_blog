@@ -1,24 +1,23 @@
 import React from 'react';
 import './index.scss';
+import {Link} from "react-router-dom";
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ isOpen = true, items }) => {
 
 
     return (
-        <nav id="breadcrumbs" className="d-none breadcrumbs">
+        <nav id="breadcrumbs" className={`${!isOpen && "d-none"} breadcrumbs`}>
             <ul>
-                <li>
-                    <a href="/">Home</a>
-                    <span>/</span>
-                </li>
-                <li>
-                    <a href="/">Products</a>
-                    <span>/</span>
-                </li>
-                <li>
-                    <a href="/">Categories</a>
-                    <span>/</span>
-                </li>
+                {items.map((item, index) => (
+                    <span key={index}>
+                      {item.to ? (
+                          <Link to={item.to}>{item.label}</Link>
+                      ) : (
+                          <span>{item.label}</span>
+                      )}
+                        {index < items.length - 1 && " / "}
+                    </span>
+                ))}
             </ul>
         </nav>
     );

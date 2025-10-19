@@ -70,7 +70,7 @@ const afterPostsLoaded = async (posts) => {
   allPosts = posts;  
   postLoader.style.display = "none"; 
   document.querySelector(".pagination-wrapper").classList.add("is-open"); 
-
+  
   const noPostsData = document.getElementById("noPostsData"); 
   if(noPostsData) {
     if(posts.length === 0) noPostsData.classList.add("is-open"); 

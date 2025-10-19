@@ -1,11 +1,11 @@
 @use '@scss/abstracts/index' as *;
 
+
 main {
   background-color: $color-bg;
 }
 
 .content-section {
-  padding: 20px;
   position: relative;
 }
 
@@ -15,4 +15,12 @@ main {
 
 .main-content-title {
   color: $color-text;
+  padding: 20px;
+}
+
+@media screen and (max-width: $xl-bp) {
+  .content-section, .main-content-title  {
+    padding: 10px;
+  }
+
 }

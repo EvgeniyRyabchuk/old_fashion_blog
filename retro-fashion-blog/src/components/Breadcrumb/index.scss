@@ -3,8 +3,16 @@
 .breadcrumbs {
   color: abs.$color-text;
   padding: 10px 30px;
+  font-size: 1rem;
   a {
     @extend %menu-list-item;
+    color: abs.$color-primary-hover;
+    &:hover {
+      color: abs.$color-primary-active;
+    }
+  }
+  span {
+    color: abs.$color-secondary-active;
   }
   ul {
     padding: 0;
