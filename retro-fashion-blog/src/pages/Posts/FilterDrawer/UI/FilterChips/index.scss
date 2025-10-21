@@ -1,0 +1,49 @@
+@use '@scss/utilities';
+@use '@scss/abstracts' as abs;
+
+.selected-filters {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: abs.$color-bg;
+
+  &__label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: abs.$color-text;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+.filter-chip {
+  background-color: abs.$color-secondary;
+  color: abs.$color-text;
+  border: 1px solid #c2cfff;
+  border-radius: 20px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: default;
+
+  .remove {
+    cursor: pointer;
+    font-weight: bold;
+    color: #444;
+    font-size: 1rem;
+    line-height: 1;
+  }
+}
+
+.no-filters {
+  // Add any specific styles for the "No filters selected" text if needed
+}

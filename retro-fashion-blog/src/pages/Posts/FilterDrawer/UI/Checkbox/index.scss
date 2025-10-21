@@ -1,0 +1,42 @@
+@use '@scss/utilities';
+@use '@scss/abstracts' as abs;
+
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  background-color: abs.$color-bg;
+  color: abs.$color-text;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+
+  input {
+    margin: 0;
+    background-color: abs.$color-bg;
+    color: abs.$color-text;
+  }
+
+  &:hover {
+    background: abs.$color-secondary-hover;
+  }
+
+  .tags-sign {
+    font-weight: 600;
+    font-size: 18px;
+    font-style: oblique;
+  }
+}
+
+.checkbox-container.category {
+  background-color: transparent;
+  border: none;
+  &:hover {
+    background: abs.$color-secondary-hover;
+  }
+}
+

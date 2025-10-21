@@ -12,9 +12,6 @@ const fetchDataFirestore = async (
 ) => {
 
 
-    // toggleBodyScroll(true, options && options.isLoadMore);
-
-    // await beforeItemsLoaded(options.isLoadMore);
     const orderField = options.orderField || "createdAt";
 
     // ref for filtered query
@@ -66,13 +63,11 @@ const fetchDataFirestore = async (
         cursorHandler.saveCursor(lastDoc, page);
     }
 
-    // await afterItemsLoaded(posts);
-
     const totalCountSnap = await ref.get();
     const totalCount = totalCountSnap.size;
     console.log(`total ${totalCount}`);
 
-    toggleBodyScroll(false, options && options.isLoadMore);
+
 
     return {
         items: posts,

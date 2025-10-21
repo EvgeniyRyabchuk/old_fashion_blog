@@ -4,25 +4,28 @@ import {useFetching} from "@/hooks/useFetching";
 import {fetchAllCategories} from "@/services/categories";
 import {fetchAllTags} from "@/services/tags";
 import {useLang} from "@/context/LangContext";
-import Checkbox from "@pages/Posts/FilterDrawer/UI/Checkbox";
-import FilterChips from "@pages/Posts/FilterDrawer/UI/FilterChips";
+import Checkbox from "./UI/Checkbox";
+import FilterChips from "./UI/FilterChips";
 import {StandardLoader} from "@components/Loader";
+import {defaultEndDate, defaultStartDate, defEndYear, defStartYear} from "@/constants/default";
+import useQueryParams from "@/hooks/useQueryParams";
 
-const defStartYear = '1800';
-const defEndYear = '2025';
-const defStartDate = `${defStartYear}-01-01`;
-const defEndDate = `${defEndYear}-01-01`;
 
-//TODO: mobile fil]ter drawer
 
-const FilterDrawer = ({ isOpen, onClose }) => {
+const FilterDrawer = ({
+          isOpen,
+          onClose,
+          onCommit,
+          searchParams
+}) => {
+    console.log("filter drawer ")
 
     const { getLocCatName } = useLang();
 
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
-    const [dateRangeStart, setDateRangeStart] = useState(defStartDate);
-    const [dateRangeEnd, setDateRangeEnd] = useState(defEndDate);
+    const [dateRangeStart, setDateRangeStart] = useState(defStartYear);
+    const [dateRangeEnd, setDateRangeEnd] = useState(defEndYear);
 
     const [chips, setChips] = useState([]);
 
@@ -53,17 +56,18 @@ const FilterDrawer = ({ isOpen, onClose }) => {
         allTagsCheckboxes.forEach(t => t.checked = false);
 
         const onlyDates = chips.filter(c => c.type === "date-range-start" || c.type === "date-range-end")
+
         setChips(onlyDates);
     }
 
     const resetDateRange = () => {
-        setDateRangeStart(defStartDate);
-        setDateRangeEnd(defEndDate);
+        setDateRangeStart(defaultStartDate);
+        setDateRangeEnd(defaultEndDate);
         setChips([]);
     }
 
     const handleCheckboxChange = (e) => {
-        if(dateRangeStart !== defStartDate || dateRangeEnd !== defEndDate) {
+        if(dateRangeStart !== defaultStartDate || dateRangeEnd !== defaultEndDate) {
             resetDateRange();
         }
         const { checked, value, dataset } = e.target;
@@ -160,6 +164,21 @@ const FilterDrawer = ({ isOpen, onClose }) => {
 
 
 
+    const onApply = () => {
+        const params = {
+            categories: chips.filter(c => c.type === 'category').map(c => c.value).join(','),
+            tags: chips.filter(c => c.type === 'tag').map(c => c.value).join(','),
+        };
+        onCommit(params);
+    }
+
+    const onReset = () => {
+        resetAllButDateRange();
+        resetDateRange();
+        onCommit({}, true);
+        // onClose();
+    }
+
     return (
         <section
             id="filterDrawerWrapper"
@@ -169,7 +188,8 @@ const FilterDrawer = ({ isOpen, onClose }) => {
                     onClose();
                 }
             }}
-            style={{ position: isLoading ? "relative" : "fixed" }}>
+            // style={{ position: isLoading ? "relative" : "fixed" }}
+        >
             {isLoading && <StandardLoader isActive={true} />}
 
             <div
@@ -250,8 +270,16 @@ const FilterDrawer = ({ isOpen, onClose }) => {
 
                  {/*Actions*/}
                 <div className="filter-drawer__actions">
-                    <button id="applyFilterBtn" type="button" data-i18n="posts-apply">Apply</button>
-                    <button id="resetFilterBtn" type="reset" data-i18n="posts-reset">Reset</button>
+                    <button id="applyFilterBtn"
+                            type="button"
+                            data-i18n="posts-apply"
+                            onClick={onApply}
+                    >Apply</button>
+                    <button id="resetFilterBtn"
+                            type="reset"
+                            data-i18n="posts-reset"
+                            onClick={onReset}
+                    >Reset</button>
                 </div>
             </div>
         </section>

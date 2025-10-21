@@ -1,7 +1,6 @@
 import {useCallback, useEffect, useMemo, useState} from "react";
-import {db} from "@/firebase/config";
 import createCursorHandler from "@utils/cursor-handler";
-
+import {toggleBodyScroll} from "@utils/helper";
 
 
 // 🔹 Main React Hook
@@ -23,15 +22,15 @@ export function usePaginate({
     const cursorHandler = useMemo(() => createCursorHandler(colName), []);
     const [isFirstCall, setIsFirstCall] = useState(true);
 
-
     const renderPosts = useCallback(async (newCurrentPage) => {
+        setLoading(true);
+        toggleBodyScroll(true, false);
+        setCurrentPage(newCurrentPage);
         // Restore cursor cache only once
         if(isFirstCall) {
             await cursorHandler.restoreLastDocCache();
             setIsFirstCall(false);
         }
-
-        setLoading(true);
 
         const { items, totalCount: newTotal } = await fetchData({
             page: newCurrentPage,
@@ -45,12 +44,14 @@ export function usePaginate({
         setLoading(false);
 
 
-    }, [colName, currentPage, perPage]);
+    }, [colName, perPage]);
+
+    const [pageForLoadMore, setPageForLoadMore] = useState(currentPage);
 
     const loadMore = useCallback(async () => {
-        if (currentPage >= totalPages) return;
+        if (pageForLoadMore >= totalPages) return;
 
-        const nextPage = currentPage + 1;
+        const nextPage = pageForLoadMore + 1;
         setLoading(true);
 
         const { items: newItems } = await fetchData({
@@ -59,25 +60,39 @@ export function usePaginate({
             cursorHandler,
             options: { isLoadMore: true },
         });
+        console.log(newItems, pageForLoadMore);
 
         setItems((prev) => [...prev, ...newItems]);
-        setCurrentPage(nextPage);
+        setPageForLoadMore(nextPage);
         setLoading(false);
-    }, [currentPage, totalPages, perPage]);
+    }, [currentPage, totalPages, perPage, pageForLoadMore]);
 
-    const goToPage = (page) => {
-        setCurrentPage(page);
-        renderPosts(page);
+    useEffect(() => {
+        setPageForLoadMore(currentPage);
+    }, [currentPage]);
+
+    // useEffect(() => {
+    //     setCurrentPage(1);
+    // }, [perPage]);
+
+
+    const goToPage = async (page) => {
+        // updateSearchParams({ page });
+
+        await renderPosts(page);
     };
 
     // Fetch data when page/perPage changes
-    useEffect(() => {
-        renderPosts(1);
-    }, [perPage]);
+    // useEffect(() => {
+    //     renderPosts(1);
+    // }, [perPage]);
 
     const resetPagination = () => {
         cursorHandler.deleteCursor();
-        setCurrentPage(1);
+        // updateSearchParams({page: 1, perPage });
+        setCurrentPage(initialPage);
+        setPerPage(perPageDefault);
+
         setItems([]);
         setTotalCount(0);
         setTotalPages(1);
@@ -88,13 +103,14 @@ export function usePaginate({
         totalCount,
         totalPages,
         currentPage,
-        setCurrentPage,
         perPage,
-        setPerPage,
         goToPage,
         loadMore,
         reload: renderPosts,
         resetPagination,
         loading,
+        setPerPage,
+        setCurrentPage,
+        pageForLoadMore
     };
 }

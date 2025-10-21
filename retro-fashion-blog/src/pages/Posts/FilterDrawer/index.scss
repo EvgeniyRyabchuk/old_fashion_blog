@@ -1,31 +1,58 @@
-
-@use '@scss/abstracts' as abs;
 @use '@scss/utilities';
+@use '@scss/abstracts' as abs;
 
-.tags {
+
+
+.filter-sort {
   display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 8px;
+  justify-content: space-between;
+  align-items: center;
 
-  .tag {
-    background: #eee;
-    padding: 5px 10px;
-    border-radius: 20px;
+
+  &__sort {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.5rem;
 
-    span {
-      cursor: pointer;
-      font-weight: bold;
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: abs.$color-text;
+    }
+
+    select {
+      padding: 0.35rem 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+
+      color: abs.$color-text;
+      background-color: abs.$color-bg;
     }
   }
 }
 
+.filter-toggle {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #444;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #222;
+  }
+
+  // @media (min-width: 768px) {
+  //   display: none; // hide toggle on desktop
+  // }
+}
+
 @media screen and (min-width: abs.$lg-bp) {
   .filter-drawer-wrapper {
-    position: relative;
+    position: static !important;
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
@@ -38,6 +65,7 @@
     }
   }
 }
+
 
 $filterAppearTime: 0.3s;
 
@@ -127,12 +155,6 @@ $filterAppearTime: 0.3s;
         flex-direction: column;
         overflow: auto;
         max-height: 200px;
-
-        label {
-          cursor: pointer;
-          color: abs.$color-text;
-        }
-
       }
     }
 
@@ -145,38 +167,6 @@ $filterAppearTime: 0.3s;
       max-width: 300px;
       overflow-y: auto;
       padding-right: 0.4rem;
-
-      label {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-
-        gap: 0.3rem;
-        font-size: 0.85rem;
-        background-color: abs.$color-bg;
-        color: abs.$color-text;
-
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        padding: 0.4rem 0.5rem;
-        cursor: pointer;
-
-        input {
-          margin: 0;
-          background-color: abs.$color-bg;
-          color: abs.$color-text;
-        }
-
-        &:hover {
-          background: abs.$color-secondary-hover;
-        }
-
-        .tags-sign {
-          font-weight: 600;
-          font-size: 18px;
-          font-style: oblique;
-        }
-      }
     }
 
     &__date-range {
@@ -240,7 +230,7 @@ $filterAppearTime: 0.3s;
         flex-wrap: wrap;
         gap: 1.5rem;
         align-items: flex-start;
-        margin: 20px 0;
+        margin: 20px 0px;
       }
 
       &__tags {
@@ -257,50 +247,6 @@ $filterAppearTime: 0.3s;
 
     .filter-drawer {
       right: 0;
-    }
-  }
-}
-
-.selected-filters {
-  margin-top: 1rem;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: abs.$color-bg;
-
-  &__label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: abs.$color-text;
-  }
-
-  &__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-
-    .filter-chip {
-      background-color: abs.$color-secondary;
-      color: abs.$color-text;
-
-      border: 1px solid #c2cfff;
-      border-radius: 20px;
-      padding: 0.2rem 0.7rem;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      cursor: default;
-
-      .remove {
-        cursor: pointer;
-        font-weight: bold;
-        color: #444;
-        font-size: 1rem;
-        line-height: 1;
-      }
     }
   }
 }

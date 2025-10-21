@@ -1,5 +1,5 @@
 import React from "react";
-import FilterDrawer from "@pages/Posts/FilterDrawer";
+import './index.scss';
 
 const FilterChips = ({ chips, setChips, onRemove }) => {
     const handleRemove = (chip) => {
@@ -40,12 +40,6 @@ const FilterChips = ({ chips, setChips, onRemove }) => {
                             data-value={chip.value}
                         >
                             {renderLabel(chip)}
-                            {/*{chip.type === "category" && `#${chip.label}`}*/}
-                            {/*{chip.type === "tag" && `#${chip.label}`}*/}
-                            {/*{chip.type === "date-start" && `From: ${chip.label}`}*/}
-                            {/*{chip.type === "date-end" && `To: ${chip.label}`}*/}
-                            {/*{!["tag", "date-start", "date-end", "category"].includes(chip.type) &&*/}
-                            {/*    chip.label}*/}
                             <span
                                 className="remove"
                                 role="button"
