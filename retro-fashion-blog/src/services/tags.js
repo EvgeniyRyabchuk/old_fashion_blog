@@ -198,5 +198,6 @@ const fetchMostPopularTags = async (count) => {
 
 export {
     fetchMostPopularTags,
-    fetchAllTags
+    fetchAllTags,
+    loadTagsToCollection
 }

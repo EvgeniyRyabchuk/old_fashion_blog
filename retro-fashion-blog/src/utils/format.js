@@ -12,8 +12,14 @@ function getPostContentPreview(html, maxLength = 150) {
     return text;
 }
 
+const getDateTimeFormat = (str) => {
+    const date = str.toDate();
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+}
+
 export {
     getDateRangeWitToORFrom,
-    getPostContentPreview
+    getPostContentPreview,
+    getDateTimeFormat
 }
 

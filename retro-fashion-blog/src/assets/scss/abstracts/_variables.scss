@@ -43,6 +43,7 @@ $color-success-active: var(--color-success-active);
 $color-success-text: var(--color-success-text);
 $color-success-rgb: var(--color-success-rgb);
 
+
 $xxl-bp: 1400px; 
 $xl-bp: 1200px;
 $lg-bp: 992px;
@@ -50,8 +51,8 @@ $md-bp: 768px;
 $sm-bp: 576px; 
 $xs-bp: 340px;
 
-$base-icon-path: "src/assets/icons/";
-$base-img-path: "src/assets/images/";
+$base-icon-path: "@assets/icons/";
+$base-img-path: "@assets/images/";
 
 
 $icon-svg-burger: "#{$base-icon-path}burger.svg";

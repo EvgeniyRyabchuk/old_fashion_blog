@@ -44,8 +44,8 @@
           color-mix(in srgb, abs.$color-secondary-text, abs.$color-info-text 20%)
   );
 
-  padding: 0 25px 10px 25px !important;
-
+  //padding: 0 25px 10px 25px !important;
+  padding-bottom: 10px;
   .left-btn, .right-btn {
     background-color: rgb(139, 139, 139) !important;
     color: white;

@@ -341,10 +341,14 @@ const getLocCatName = (category) => {
 
 //=======================================   
 
+//TODO: profile button, search scss, no body bg image 
+//TODO: chnage seed: user default img url 
+
 //TODO: move data to constants 
 //TODO: routing:   exact: true,
 //TODO: main page: carousel, roll, last posts 
 //TODO: category load dynamicly 
+
 
 //TODO: check Loadable loader screen work 
 //TODO: rework lang change for react 

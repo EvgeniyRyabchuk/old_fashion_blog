@@ -19,7 +19,12 @@ const fetch = async () => {
     // if post is deleted then delete it from history as well
     history = history.filter(h => h === posts.find(p => p.id === h)?.id);
     localStorage.setItem("postHistory", history.join(","));
-    return history;
+
+    const orderedPosts = history.map(h => {
+        return posts.find(p => p.id === h);
+    })
+
+    return orderedPosts;
 };
 
 

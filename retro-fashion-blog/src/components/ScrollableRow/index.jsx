@@ -38,7 +38,7 @@ const ScrollableRow = ({ callback, Card, Placeholder, cardProps }) => {
     }, [items, itemsRow]);
 
     return (
-        <section className="content-section">
+        <section className="content-section" style={{ padding: '20px' }}>
             <h3 className="main-content-title" data-i18n="section-last-posts">Last Posts</h3>
             <div className="post-row-h-scrollable" id="lastPostsSection" ref={section}>
                 <button id="lastPostsLeftBtn" className="left-btn" ref={leftBtn}>◀</button>

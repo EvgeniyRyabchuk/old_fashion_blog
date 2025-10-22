@@ -13,7 +13,7 @@ const PublicRoutes = [
     { path: PATHS.HOME, element: <Home />, exact: true },
     { path: PATHS.ABOUT, element: <About />, exact: true},
     { path: PATHS.POSTS, element: <PostsPage />, exact: true},
-    { path: PATHS.POST(":userId"), element: <PostPage />, exact: true},
+    { path: PATHS.POST(":postId"), element: <PostPage />, exact: true},
 
     ...SessionRoutes,
     ...StatusesRoutes

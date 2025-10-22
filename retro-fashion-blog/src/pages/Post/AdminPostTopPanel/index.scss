@@ -1,0 +1,9 @@
+@use "@scss/abstracts";
+
+.admin-post-top-panel {
+  @extend .d-flex-h-right-v-center;
+  padding: 10px 30px;
+  border-top: 3px dashed orange;
+  border-bottom: 3px dashed orange;
+}
+

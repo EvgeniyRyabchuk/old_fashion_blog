@@ -17,7 +17,7 @@ const MostPopularTags = () => {
     }, []);
 
     return (
-        <section className="content-section tags-section">
+        <section className="content-section tags-section" style={{ padding: '20px' }}>
             <h3 className="main-content-title" data-i18n="section-most-popular-tags">Most Popular Tags</h3>
             <div id="tagsRow" className="tags-row">
                 {tags.map((tag) => (

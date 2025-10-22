@@ -2,6 +2,9 @@
 
 import firebase from "firebase/app";
 import {db} from "@/firebase/config";
+import {loadCategoriesToCollection} from "@/services/categories";
+import {loadTagsToCollection} from "@/services/tags";
+import addPostToHistory from "@utils/postHistory";
 
 
 // Fetch posts by IDs
@@ -10,10 +13,32 @@ const fetchPostsByIds = async (ids) => {
         .where(firebase.firestore.FieldPath.documentId(), "in", ids)
         .get();
 
-    return postsSnap.docs.map(p => ({
+
+    const posts = postsSnap.docs.map(p => ({
         id: p.id,
         ...p.data()
     }));
+
+    // await loadCategoriesToCollection([post]);
+    // await loadTagsToCollection([post]);
+    // addPostToHistory(post.id);
+
+    return posts;
+}
+
+async function fetchPostById(postId) {
+    const postSnap = await db.collection('posts').doc(postId).get();
+    const post = {
+        id: postSnap.id,
+        ...postSnap.data()
+    }
+
+    await loadCategoriesToCollection([post]);
+    await loadTagsToCollection([post]);
+    addPostToHistory(post.id);
+
+    return post;
+
 }
 
 
@@ -40,7 +65,41 @@ const fetchLastPosts = async (count = 10) => {
     // lastPostsRow.toggleScrollButtons();
 }
 
+
+const removePostById = async (pId) => {
+    try {
+        // delete post itself
+        await db.collection("posts").doc(pId).delete();
+
+        // batch delete comments + post_tag
+        const batch = db.batch();
+
+        const commentsSnap = await db.collection("comments").where("postId", "==", pId).get();
+        commentsSnap.forEach(doc => batch.delete(doc.ref));
+
+        const tagsSnap = await db.collection("post_tag").where("postId", "==", pId).get();
+        tagsSnap.forEach(doc => batch.delete(doc.ref));
+
+        await batch.commit();
+
+        // if(postsPaginator) {
+        //     await postsPaginator.reload();
+        //     if(currentPaginationEnv.lastUrlPart === "create-edit-post.html") {
+        //         clearUpTheForm();
+        //     }
+        // }
+        // else {
+        //     window.history.back();
+        // }
+        console.log("Document and related data successfully deleted!");
+    } catch (err) {
+        console.error("Error deleting document: ", err);
+    }
+}
+
 export {
     fetchPostsByIds,
-    fetchLastPosts
+    fetchLastPosts,
+    fetchPostById,
+    removePostById
 }
