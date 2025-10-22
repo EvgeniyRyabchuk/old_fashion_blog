@@ -6,7 +6,6 @@ import LastPosts from "@pages/Home/LastPosts";
 import PostHistory from "@pages/Home/PostHistory";
 import MostPopularTags from "@pages/Home/MostPopularTags";
 
-const Invisible = () => (<div style={{visibility: "hidden"}}>dsf</div>)
 
 const Home = () => {
 
@@ -15,7 +14,7 @@ const Home = () => {
             {/*<Breadcrumb/>*/}
 
             {/*to prevent padding collapse*/}
-            <Invisible />
+
 
             <Billboard/>
 
