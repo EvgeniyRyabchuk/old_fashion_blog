@@ -69,14 +69,13 @@ const useQueryParams = (deps) => {
     const postFilterQueryCreator = useCallback(async () => {
         let categories = [...document.querySelectorAll('input[data-type="category"]:checked')].map(el => el.value);
         let tags = [...document.querySelectorAll('input[data-type="tag"]:checked')].map(el => el.value);
-        const startDate = document.querySelector('input[data-type="date-range-start"]').value;
-        const endDate = document.querySelector('input[data-type="date-range-end"]').value;
-        const sort = document.getElementById("sort").value;
+        const startDate = document.querySelector('input[data-type="date-range-start"]')?.value;
+        const endDate = document.querySelector('input[data-type="date-range-end"]')?.value;
+
 
         const params = {
             categories,
             tags,
-            sort
         }
 
         let query = db.collection("posts");
@@ -112,13 +111,7 @@ const useQueryParams = (deps) => {
 
         }
 
-        if (sort === "newest") {
-            query = query.orderBy("createdAt", "desc");
-        } else if (sort === "oldest") {
-            query = query.orderBy("createdAt", "asc");
-        } else if (sort === "popular") {
-            query = query.orderBy("views", "desc");
-        }
+
 
         return query;
     }, []);

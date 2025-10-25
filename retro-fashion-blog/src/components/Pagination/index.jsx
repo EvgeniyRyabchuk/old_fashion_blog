@@ -17,7 +17,8 @@ const Pagination = ({
                         goToPage,
                         loadMore,
                         onPerPageChange,
-                        pageForLoadMore
+                        pageForLoadMore,
+                        isScrollUp = true
 
 
 }) => {
@@ -65,7 +66,7 @@ const Pagination = ({
                         className="prev-page"
                         disabled={currentPage === 1}
                         data-i18n="posts-prev"
-                        onClick={() => goToPage(currentPage - 1)}
+                        onClick={() => goToPage(currentPage - 1, isScrollUp)}
                     >
                         Prev
                     </button>
@@ -82,7 +83,7 @@ const Pagination = ({
                         className="next-page"
                         data-i18n="posts-next"
                         disabled={currentPage >= totalPages || pageForLoadMore >= totalPages}
-                        onClick={() => goToPage(currentPage + 1)}
+                        onClick={() => goToPage(currentPage + 1, isScrollUp)}
                     >
                         Next
                     </button>

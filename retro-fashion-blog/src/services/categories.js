@@ -50,32 +50,6 @@ const fetchAllCategories = async () => {
     }
 }
 
-const loadCategoriesToSelect = async () => {
-    const categories = await readAllCategories();
-    const select = document.getElementById("categorySelect");
-    select.innerHTML = ""; // очистить
-    select.onchange = async (e) => {
-        const categoryId = e.target.value;
-        // const snapshot = await db.collection("categories").doc(categoryId).get();
-        // const category = snapshot.data();
-        selectedCategoryId = categoryId
-        console.log(selectedCategoryId);
-    }
-
-    const placeholderOption = document.createElement("option");
-    placeholderOption.value = "";
-    placeholderOption.textContent = "-- Select category --";
-    placeholderOption.disabled = true;
-    placeholderOption.selected = true;
-    select.appendChild(placeholderOption);
-
-    categories.forEach((cat, i) => {
-        const option = document.createElement("option");
-        option.value = cat.id;
-        option.textContent = getLocCatName(cat);
-        select.appendChild(option);
-    });
-};
 
 
 export {

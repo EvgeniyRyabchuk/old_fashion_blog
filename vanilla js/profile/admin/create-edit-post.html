@@ -23,6 +23,7 @@
 
 </head>
 
+
 <body>
 
    <header>
@@ -573,7 +574,7 @@
       <script>
         const coverImg = createImageDragDrop(
             "coverImg",
-            "coverPreview",
+            "coverPreview", 
             "postImgPlaceholder",
             "deletePostCoverImgBtn"
         );
@@ -610,7 +611,7 @@
                 setPostToUpdate(post); 
             }
         }
-
+        
         loadCategoriesToSelect(); 
         
         fetchPostFromQSIfExist(); 

@@ -46,7 +46,7 @@ const createImageDragDrop = (
   imgPlaceholder.addEventListener("click", () => {
     input.click();
   });
-
+  
   const showPreview = (url) => {
     // previewElem.innerHTML =`<img src="${url}" width="150">`;
     previewElem.style.backgroundImage = `url(${url})`;  

@@ -1,40 +1,6 @@
 import {db} from "@/firebase/config";
 import firebase from "firebase/app";
 
-const tagInput = document.getElementById("tagInput");
-const tagsContainer = document.getElementById("tagsContainer");
-
-let tags = [];
-
-const tagInputKeyDown = (e) => {
-    if (e.key === "Enter" && tagInput.value.trim() !== "") {
-        e.preventDefault();
-        const newTag = tagInput.value.trim();
-
-        if (!tags.includes(newTag)) {
-            tags.push(newTag);
-            // renderTags();
-        }
-
-        tagInput.value = "";
-    }
-}
-
-// //TODO: fix
-// try {
-// // Add tag on Enter
-//     tagInput.addEventListener("keydown", tagInputKeyDown);
-// } catch (e) {
-//     console.log(e);
-// }
-
-
-
-// Remove tag
-function removeTag(index) {
-    tags.splice(index, 1);
-    // renderTags();
-}
 
 async function deleteTagsByPostId(postId) {
     const snap = await db.collection("post_tag")
@@ -55,15 +21,11 @@ async function deleteTagsByPostId(postId) {
     console.log("All tags deleted for post:", postId);
 }
 
-async function addTagsIfNotExist(post) {
+async function addTagsIfNotExist(post, tags) {
     const batch = db.batch();
     let existTags = [];
 
     await deleteTagsByPostId(post.id);
-    console.log(tags);
-
-    // const tagsFromHtml = Array.from(document.querySelectorAll('.tag'))
-    //   .map(el => el.firstChild.nodeValue.trim());
 
     console.log(tags);
 
@@ -199,5 +161,6 @@ const fetchMostPopularTags = async (count) => {
 export {
     fetchMostPopularTags,
     fetchAllTags,
-    loadTagsToCollection
+    loadTagsToCollection,
+    addTagsIfNotExist
 }

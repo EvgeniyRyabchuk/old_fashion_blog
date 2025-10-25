@@ -17,9 +17,15 @@ const getDateTimeFormat = (str) => {
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 }
 
+function buildSearchIndex(title, tags) {
+    const text = title + " " + tags.join(" ");
+    return text.toLowerCase(); // normalize for easier matching
+}
+
 export {
     getDateRangeWitToORFrom,
     getPostContentPreview,
-    getDateTimeFormat
+    getDateTimeFormat,
+    buildSearchIndex
 }
 

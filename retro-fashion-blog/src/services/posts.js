@@ -3,8 +3,11 @@
 import firebase from "firebase/app";
 import {db} from "@/firebase/config";
 import {loadCategoriesToCollection} from "@/services/categories";
-import {loadTagsToCollection} from "@/services/tags";
+import {addTagsIfNotExist, loadTagsToCollection} from "@/services/tags";
 import addPostToHistory from "@utils/postHistory";
+import {loadToCloudinary} from "@/services/image";
+import {defaultCoverUrl, defaultWideImgUrl} from "@/constants/default";
+import {buildSearchIndex} from "@utils/format";
 
 
 // Fetch posts by IDs
@@ -43,28 +46,13 @@ async function fetchPostById(postId) {
 
 
 const fetchLastPosts = async (count = 10) => {
-    const snap = await db.collection("posts").limit(count).get();
+    const snap =
+        await db.collection("posts")
+        .orderBy("createdAt", "desc")
+        .limit(count)
+        .get();
     return snap.docs.map(p => ({ id: p.id, ...p.data() }) )
-
-
-    // const lastPostsSection = document.getElementById("lastPostsSection");
-
-    // posts.forEach(p => {
-    //     const article = renderPostsForGrid(p);
-    //     lastPostsSection.appendChild(article);
-    // })
-    //
-    // if(posts.length >= 10) {
-    //     const link = document.createElement("a");
-    //     link.href = "/posts.html";
-    //     link.className = "see-more";
-    //     link.innerHTML = "See <br/> More... <br/>";
-    //
-    //     lastPostsSection.appendChild(link);
-    // }
-    // lastPostsRow.toggleScrollButtons();
 }
-
 
 const removePostById = async (pId) => {
     try {
@@ -97,9 +85,73 @@ const removePostById = async (pId) => {
     }
 }
 
+const createOrUpdatePost = async (post, user) => {
+    const {
+        title,
+        categoryId,
+        content,
+        coverUrl,
+        wideImgUrl,
+        startDate,
+        endDate,
+        tags
+    } = post;
+
+    const postId = post?.id;
+
+    try {
+        let createdOrUpdatedPost = null;
+        if(!postId) {
+            createdOrUpdatedPost = await db.collection("posts").add({
+                title,
+                content,
+                coverUrl,
+                wideImgUrl,
+                date_range_start: startDate,
+                date_range_end: endDate,
+                searchIndex: buildSearchIndex(title, tags),
+                categoryId,
+                userId: user.id,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        } else {
+            // const pSnap = await db.collection("posts").doc(postId).get();
+            // const post = { id: pSnap.id, ...pSnap.data() };
+            //
+            // if (!pSnap.exists) {
+            //     throw new Error(`Post with ID ${postId} not found`);
+            // }
+            // console.log('founded' + post.id);
+
+            await db.collection("posts").doc(postId).update({
+                title: title,
+                content: content,
+                coverUrl: coverUrl ?? post.coverUrl,
+                wideImgUrl: wideImgUrl ?? post.wideImgUrl,
+                searchIndex: buildSearchIndex(title, tags),
+                date_range_start: startDate,
+                date_range_end: endDate,
+                categoryId,
+                // updateAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            const updatedSnap = await db.collection("posts").doc(postId).get();
+            createdOrUpdatedPost = { id: updatedSnap.id, ...updatedSnap.data() };
+        }
+
+        await addTagsIfNotExist(createdOrUpdatedPost, tags);
+
+        console.log("Post created!");
+    } catch (err) {
+        console.error("Error adding document:", err);
+        alert("Error: " + err.message);
+    }
+
+}
+
 export {
     fetchPostsByIds,
     fetchLastPosts,
     fetchPostById,
-    removePostById
+    removePostById,
+    createOrUpdatePost
 }

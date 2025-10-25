@@ -3,6 +3,12 @@ function HtmlContent({ html }) {
     return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
+async function urlToFile(url, filename) {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    return new File([blob], filename, { type: blob.type });
+}
+
 function toggleBodyScroll(isLoading, isLoadMore = false) {
     if(!isLoadMore)
         document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -15,4 +21,8 @@ function toggleBodyScroll(isLoading, isLoadMore = false) {
     }
 }
 
-export { HtmlContent, toggleBodyScroll };
+export {
+    HtmlContent,
+    toggleBodyScroll,
+    urlToFile
+};

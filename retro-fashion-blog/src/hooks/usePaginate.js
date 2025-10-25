@@ -22,9 +22,11 @@ export function usePaginate({
     const cursorHandler = useMemo(() => createCursorHandler(colName), []);
     const [isFirstCall, setIsFirstCall] = useState(true);
 
-    const renderPosts = useCallback(async (newCurrentPage) => {
+    const renderPosts = useCallback(async (newCurrentPage, isScrollUp = true) => {
         setLoading(true);
-        toggleBodyScroll(true, false);
+        console.log(isScrollUp, 'scroll')
+        if(isScrollUp)
+            toggleBodyScroll(true, false);
         setCurrentPage(newCurrentPage);
         // Restore cursor cache only once
         if(isFirstCall) {
@@ -76,10 +78,10 @@ export function usePaginate({
     // }, [perPage]);
 
 
-    const goToPage = async (page) => {
+    const goToPage = async (page, isScrollUp = true) => {
         // updateSearchParams({ page });
 
-        await renderPosts(page);
+        await renderPosts(page, isScrollUp);
     };
 
     // Fetch data when page/perPage changes

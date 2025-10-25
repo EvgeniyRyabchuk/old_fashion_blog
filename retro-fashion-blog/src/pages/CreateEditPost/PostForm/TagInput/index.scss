@@ -1,0 +1,56 @@
+/* Tags styled like pills */
+.tag-manager {
+  margin: 15px 0;
+
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+
+    .tag-pill {
+      padding: 4px 10px;
+      border-radius: 14px;
+      background: #f1f3f5;
+      font-size: 0.8rem;
+      color: #444;
+      font-weight: 500;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+
+      .remove-tag {
+        margin-left: 6px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        color: #888;
+
+        &:hover {
+          color: #e60000;
+        }
+      }
+    }
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+
+  .tag {
+    background: #eee;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    span {
+      cursor: pointer;
+      font-weight: bold;
+    }
+  }
+
+}

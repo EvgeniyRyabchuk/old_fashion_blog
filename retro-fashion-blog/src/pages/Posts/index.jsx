@@ -85,7 +85,7 @@ const Posts = () => {
     useEffect(() => {
         updateSearchParams({ sort: orderField, page: currentPage, perPage });
         reload(currentPage);
-    }, [orderField, currentPage, perPage]);
+    }, [orderField, perPage]);
 
     return (
         <>

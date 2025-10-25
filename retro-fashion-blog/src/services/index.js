@@ -12,7 +12,7 @@ const fetchDataFirestore = async (
 ) => {
 
 
-    const orderField = options.orderField || "createdAt";
+    const sort = options.sort || "createdAt";
 
     // ref for filtered query
     let ref = null;
@@ -20,7 +20,15 @@ const fetchDataFirestore = async (
     if(options.filterHandler) {
         ref = await options.filterHandler();
     } else {
-        ref = db.collection(colName).orderBy(orderField, "desc");
+        ref = db.collection(colName).orderBy("createdAt", "desc");
+    }
+
+    if (sort === "newest") {
+        ref = ref.orderBy("createdAt", "desc");
+    } else if (sort === "oldest") {
+        ref = ref.orderBy("createdAt", "asc");
+    } else if (sort === "popular") {
+        ref = ref.orderBy("views", "desc");
     }
 
     const params = Object.fromEntries(new URLSearchParams(window.location.search));

@@ -1,0 +1,219 @@
+@use '@scss/abstracts' as abs;
+
+
+.upload_container {
+  padding: 20px;
+  border-radius: 12px;
+  background: abs.$color-bg;
+
+  box-shadow: 0 4px 12px rgba(abs.$color-text-rgb, 0.08);
+  margin: 30px;
+  border: 1px solid abs.$color-text;
+  h2 {
+    margin-bottom: 20px;
+    color: #2a2a2a;
+  }
+  label {
+    background-color: abs.$color-bg;
+    color: abs.$color-text;
+  }
+  input[type="text"],
+  input[type="number"],
+  select {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    // max-width: 400px;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    background-color: abs.$color-bg;
+    color: abs.$color-text;
+    &:focus {
+      border-color: #4a6cf7;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(74,108,247,0.2);
+    }
+  }
+
+  /* Category select styled like post view pill */
+  .category-select {
+    padding: 0.5rem 0.8rem;  /* more breathing room inside */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    line-height: 1.4;        /* increases vertical spacing */
+    background: abs.$color-bg;
+    color: abs.$color-text;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+
+  /* Year range styled like date-range */
+  .year-range {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+
+    label {
+      font-size: 0.85rem;
+      color: abs.$color-text;
+    }
+
+    input {
+      width: 90px;
+      font-size: 0.9rem;
+      color: #555;
+      font-style: italic;
+      color: abs.$color-text;
+    }
+
+    button {
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      background: #4a6cf7;
+      color: abs.$color-text;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: #3855c9;
+      }
+    }
+  }
+
+
+
+  // Variables for colors and dimensions
+  $placeholder-border-color: #ccc;
+  $placeholder-bg-color: #7a7a7a;
+  $placeholder-bg-hover-color: #929292;
+  $placeholder-text-color: #ffffff;
+
+  $placeholder-size: 300px;
+  $placeholder-border-radius: 8px;
+
+  // wrapper d-flex-center  d-flex-wrap
+  .wrapper {
+    // gap: 10px;
+    @include abs.flexbox(row, center, center, wrap, 20px);
+
+
+    .post-wide-img-wrapper {
+      flex: 2 2 auto;
+    }
+    .post-cover-img-wrapper {
+      flex: 1 1 auto;
+    }
+  }
+
+  .preview {
+    // width: $placeholder-size;
+    border: 2px dashed $placeholder-border-color;
+    display: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    min-width: 300px;
+  }
+
+  .post-cover-img-wrapper .cover-preview {
+    aspect-ratio: 1 / 1;
+  }
+
+  .post-wide-img-wrapper .post-img-placeholder {
+    // width: 100% !important;
+    min-width: 500px;
+    align-self: flex-start;
+    aspect-ratio: 1340 / 300;
+  }
+
+
+  .post-cover-img-wrapper {
+    max-width: 400px;
+    min-width: 300px;
+    // max-width: 500px;
+  }
+
+  .post-create-form-wrapper {
+    flex: 2 2 400px;
+  }
+
+  .post-img-placeholder.drag-over,
+  .post-wide-img-placeholder.drag-over {
+    border: 2px dashed #007bff;
+    background-color: rgba(0, 123, 255, 0.05);
+    span {
+      color: #007bff;
+    }
+  }
+
+
+  .post-cover-img-wrapper .post-img-placeholder {
+    aspect-ratio: 1 / 1;
+  }
+
+  .image-placeholder {
+    border: 5px dashed $placeholder-border-color;
+    border-radius: $placeholder-border-radius;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    background-color: $placeholder-bg-color;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      border-color: #b6b6b6; // Darker border on hover
+      background-color: $placeholder-bg-hover-color;
+    }
+    &:active {
+      border-color: #171717; // Darker border on hover
+    }
+    // Hide the actual file input
+    .hidden-input {
+      display: none;
+    }
+    // The visible content
+    .placeholder-content {
+      text-align: center;
+      color: $placeholder-text-color;
+      font-family: sans-serif;
+      transition: opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+
+      // --- Add the big plus sign here ---
+      &::before {
+        content: "+"; // The plus sign itself
+        font-size: 4em; // Make it big! (e.g., 4 times the base font size)
+        color: $placeholder-border-color; // A muted color
+        line-height: 1; // Adjust line height to properly center
+        margin-bottom: 0.2em; // Space between plus and text
+      }
+    }
+
+    // The image preview
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+  }
+
+}
