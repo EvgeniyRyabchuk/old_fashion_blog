@@ -9,15 +9,17 @@ async function urlToFile(url, filename) {
     return new File([blob], filename, { type: blob.type });
 }
 
-function toggleBodyScroll(isLoading, isLoadMore = false) {
+function toggleBodyScroll(isLoading, isLoadMore = false, isScrollUp = true) {
+    if(!isScrollUp) return;
+
     if(!isLoadMore)
         document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
 
     if(isLoading) {
-        // if(!isLoadMore)
-        // document.body.classList.add("no-scroll");
+        if(!isLoadMore)
+            document.body.classList.add("no-scroll");
     } else {
-        // document.body.classList.remove("no-scroll");
+        document.body.classList.remove("no-scroll");
     }
 }
 

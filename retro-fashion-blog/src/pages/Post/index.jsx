@@ -10,11 +10,12 @@ import Breadcrumb from "@components/Breadcrumb";
 import CommentSection from "@pages/Post/CommentSection";
 import AdminPostTopPanel from "@pages/Post/AdminPostTopPanel";
 import StandardWrapperLoader from "@components/Loader/StandardWrapperLoader";
+import {useAuth} from "@/context/AuthContext";
 
 
 const Post = () => {
     console.log('post')
-
+    const { isAuth, user } = useAuth();
     const { postId } = useParams();
     const [post, setPost] = useState(null);
     console.log(post || null);
@@ -47,7 +48,10 @@ const Post = () => {
 
             {!isLoading && post &&
                 <>
-                    <AdminPostTopPanel />
+                    { isAuth && user.isAdmin &&
+                        <AdminPostTopPanel />
+                    }
+
 
                     <section
                         id="postContentSection"

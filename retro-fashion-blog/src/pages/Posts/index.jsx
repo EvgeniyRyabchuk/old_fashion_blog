@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import './index.scss';
 
 import SortSection from "@pages/Posts/SortSection";
-import FilterDrawer from "@pages/Posts/FilterDrawer";
 import breakpoints from "@/constants/breakpoints";
 import Pagination from "@components/Pagination";
 import {PostCardXl} from "@components/Loader";
@@ -15,12 +14,13 @@ import Breadcrumb from "@components/Breadcrumb";
 import useQueryParams from "@/hooks/useQueryParams";
 import {usePaginate} from "@/hooks/usePaginate";
 import {defPage, defPerPage} from "@/constants/default";
+import FilterDrawer from "@pages/Posts/FilterDrawer";
 
 
 const colName = "posts";
 
 const Posts = () => {
-    console.log('posts')
+
 
     const [isFilterOpen, setIsFilterOpen] = React.useState(false);
 
@@ -35,15 +35,19 @@ const Posts = () => {
 
     const [posts, setPosts] = useState([]);
 
-    const [order, setOrder] = useState("asc");
-    const [orderField, setOrderField] = useState("newest");
+
 
     const { updateSearchParams, postFilterQueryCreator, setSearchParams, searchParams } = useQueryParams();
+
+    const [order, setOrder] = useState("asc");
+    const [orderField, setOrderField] = useState(searchParams.get("sort") ?? "newest");
+
+    console.log(orderField);
 
     const [fetchPosts, isPostFetchLoading, error] = useFetching(async ({page, perPage, cursorHandler, options: restOptions }) => {
         // const { isLoadMore } = options || {};
         const options= {
-            orderField: orderField, // must exist in your docs
+            sort: orderField, // must exist in your docs
             filterHandler: postFilterQueryCreator,
             t,
             ...restOptions
@@ -69,23 +73,30 @@ const Posts = () => {
         loadMore,
         reload,
         resetPagination,
-        loading,
+        loading: paginationLoading,
         setPerPage,
         setCurrentPage,
         pageForLoadMore
     } = usePaginate({
         colName,
         fetchData: fetchPosts,
-        perPageDefault: defPerPage,
-        initialPage: defPage,
+        perPageDefault: parseInt(searchParams.get("perPage") ?? defPerPage),
+        initialPage: parseInt(searchParams.get("page") ?? defPage),
         setItems: setPosts,
-        items: posts
+        items: posts,
+        reloadDeps: [orderField],
+        isScrollUp: true,
     });
 
     useEffect(() => {
-        updateSearchParams({ sort: orderField, page: currentPage, perPage });
         reload(currentPage);
     }, [orderField, perPage]);
+
+    useEffect(() => {
+        updateSearchParams({ sort: orderField, page: pageForLoadMore, perPage });
+    }, [orderField, perPage, pageForLoadMore]);
+
+    console.log('posts', posts);
 
     return (
         <>
@@ -98,11 +109,12 @@ const Posts = () => {
             />
 
             <SortSection
-                onFilterChange={(e) => {
-                    setOrderField(e.target.value);
-                }}
+                value={orderField}
+                setValue={setOrderField}
                 onFilterToggle={switchFilter}
+                isActive={!isPostFetchLoading && !paginationLoading}
             />
+
 
             <FilterDrawer
                 isOpen={isFilterOpen}
@@ -112,15 +124,17 @@ const Posts = () => {
                     updateSearchParams({sort: orderField, ...params}, isReset);
                     reload(1);
                 }}
-                searchParams={searchParams}
+                isActive={!isPostFetchLoading && !paginationLoading}
             />
+
+
 
             <section className="content-section">
                 {/*<h2 className="main-content-title" id="mainContentTitle" data-i18n="posts-title">Posts</h2>*/}
                 <h3 id="noPostsData" className="no-data switchable" data-i18n="posts-no-data">No data yet</h3>
 
                 <div className="posts-wrapper" id="postsWrapper">
-                    {(isPostFetchLoading || loading) &&
+                    {(isPostFetchLoading || paginationLoading) &&
                         // <StandardLoader isActive={true} style={{height: "500px"}}/>
                         new Array(6).fill(null).map((_, index) => (
                             <PostCardXl key={index} />
@@ -131,7 +145,7 @@ const Posts = () => {
                             <PostCard key={post.id} post={post} size={PostCardSize.xl} />
                         ))
                     }
-                    { !isPostFetchLoading && posts.length > 0 && (
+                    { !isPostFetchLoading && !paginationLoading && posts.length === 0 && (
                         <p>No post</p>
                     ) }
                 </div>
@@ -154,6 +168,7 @@ const Posts = () => {
                         setCurrentPage(1);
                     }}
                     pageForLoadMore={pageForLoadMore}
+                    isScrollUp={true}
                 />
             </section>
 

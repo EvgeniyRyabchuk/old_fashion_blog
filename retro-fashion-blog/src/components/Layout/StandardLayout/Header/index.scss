@@ -316,9 +316,9 @@ header {
   background-color: abs.$color-bg;
 
 
-  >.top-menu-content {
+  > .top-menu-content {
     display: flex;
-    margin: 0 0px;
+    margin: 0;
     box-shadow: 1px 1px 100px rgba($color: #000000, $alpha: 0.2);
     padding: 0 10px;
     align-items: center;
@@ -327,7 +327,7 @@ header {
 
     .burger-menu-btn {
       display: none;
-      flex-shrink: 0;
+      //flex-shrink: 0;
       width: $burger-size;
       height: $burger-size;
       cursor: pointer;
@@ -511,7 +511,7 @@ $sideMenuWrapperAppearTime: 0.3s;
       text-align: center;
       padding: 25px 20px 20px 20px;
       font-size: 20px;
-      margin-bottom: 20px;
+      //margin-bottom: 20px;
       position: relative;
       color: abs.$color-text;
       .close-aside {
@@ -550,6 +550,47 @@ $sideMenuWrapperAppearTime: 0.3s;
 }
 
 
+.search-post-list {
+  @extend %menu-list;
+  display: block;
+  a {
+    height: 85px;
+  }
+  li {
+    @extend %menu-list-item;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 7px 0;
+    background-color: abs.$color-bg;
+    border: 2px dashed rgb(119, 119, 119);
+    overflow: hidden;
+    text-align: justify;
+    line-height: 1.3rem;
+
+    a {
+      @extend %default-link;
+      display: flex;
+      padding: 10px;
+      .post-cover {
+        width: 120px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+
+  .post-title-wrapper {
+    // padding: 0px 15px 15px 15px;
+    margin: 0 15px;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
 
 @media screen and (min-width: abs.$lg-bp) {
   .search-content {
@@ -563,8 +604,8 @@ $sideMenuWrapperAppearTime: 0.3s;
   }
   .search-post-list {
     margin: 5px;
-
   }
+
 }
 @media screen and (max-width: abs.$xl-bp) {
   .search-content { width: 100% !important }

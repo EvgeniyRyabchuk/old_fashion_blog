@@ -363,13 +363,13 @@ const Td = ({ col, row, index }) => {
     }
 
     return (
-        <td key={`${row.id}-${col.key}`}>
+        <td >
             {getContent()}
         </td>
     )
 }
 
-const Table = ({ cols, rows = staticRows }) => {
+const Table = ({ cols, rows }) => {
     return (
         <div className="table-wrapper">
             <table id="postsTable">
@@ -386,7 +386,7 @@ const Table = ({ cols, rows = staticRows }) => {
                         <tr key={row.id}>
                             {/*{console.log(row.id)}*/}
                             { cols.map((col, i) => (
-                                <Td index={i} col={col} row={row} />
+                                <Td key={`${row.id}-${col.key}`} index={i} col={col} row={row} />
                             ))}
                         </tr>
                     ))}

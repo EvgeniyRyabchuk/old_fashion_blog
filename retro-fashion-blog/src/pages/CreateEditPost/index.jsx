@@ -13,20 +13,21 @@ import {loadTagsToCollection} from "@/services/tags";
 import {StandardLoader} from "@components/Loader";
 import {getPostContentPreview} from "@utils/format";
 import PostForm from "@pages/CreateEditPost/PostForm";
+import {toggleBodyScroll} from "@utils/helper";
 
 const colName = "posts";
 
 const staticCols = [
-    { dataI18n: "create-edit-t-id", name: "ID", key: "id" },
-    { dataI18n: "create-edit-t-title", name: "Title", key: "title" },
-    { dataI18n: "create-edit-t-content", name: "Content", key: "content", type: "largeText" },
-    { dataI18n: "create-edit-t-coverUrl", name: "Cover URL", key: "coverUrl", type: "img" },
-    { dataI18n: "create-edit-t-category", name: "Category", key: "category" },
-    { dataI18n: "create-edit-t-dateRange", name: "Date Range", key: "dateRange" },
-    { dataI18n: "create-edit-t-userId", name: "Creator User ID", key: "userId" },
-    { dataI18n: "create-edit-t-createdAt", name: "Created At", key: "createdAt" },
-    { dataI18n: "create-edit-t-tags", name: "Tags", key: "tags" },
-    { dataI18n: "create-edit-t-actions", name: "Actions", key: "actions", type: "actions" },
+    { dataI18n: "create-edit-t-id",         name: "ID",                 key: "id" },
+    { dataI18n: "create-edit-t-title",      name: "Title",              key: "title" },
+    { dataI18n: "create-edit-t-content",    name: "Content",            key: "content", type: "largeText" },
+    { dataI18n: "create-edit-t-coverUrl",   name: "Cover URL",          key: "coverUrl", type: "img" },
+    { dataI18n: "create-edit-t-category",   name: "Category",           key: "category" },
+    { dataI18n: "create-edit-t-dateRange",  name: "Date Range",         key: "dateRange" },
+    { dataI18n: "create-edit-t-userId",     name: "Creator User ID",    key: "userId" },
+    { dataI18n: "create-edit-t-createdAt",  name: "Created At",         key: "createdAt" },
+    { dataI18n: "create-edit-t-tags",       name: "Tags",               key: "tags" },
+    { dataI18n: "create-edit-t-actions",    name: "Actions",            key: "actions", type: "actions" },
 ];
 
 const EditRemove = ({ onDeleteClick, onEditClick}) => {
@@ -89,7 +90,8 @@ const CreateEditPost = () => {
         perPageDefault: defPerPage,
         initialPage: defPage,
         setItems: setPosts,
-        items: posts
+        items: posts,
+        isScrollUp: false,
     });
 
     useEffect(() => {
@@ -112,8 +114,12 @@ const CreateEditPost = () => {
         if(!posts && posts.length === 0) return [];
 
         const actionSectionGenerate = (id) => (
-            <EditRemove onEditClick={() => onEditTablePostClick(id)}
-                        onDeleteClick={() => onDeleteTablePostClick(id)}
+            <EditRemove
+                onEditClick={() => {
+                    toggleBodyScroll(false, false, true);
+                    onEditTablePostClick(id)
+                }}
+                onDeleteClick={() => onDeleteTablePostClick(id)}
             />
         );
 
@@ -145,7 +151,7 @@ const CreateEditPost = () => {
             </section>
 
             <section className="content-section">
-                <StandardLoader isActive={isPostFetchLoading} />
+                <StandardLoader isActive={isPostFetchLoading || loading} />
 
                 <Table cols={staticCols} rows={tableRows} />
 

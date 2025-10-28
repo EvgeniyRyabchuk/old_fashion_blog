@@ -1,0 +1,7 @@
+.disabled {
+  filter: brightness(0.9) contrast(0.9) saturate(0.7);
+  pointer-events: none;
+  user-select: none;
+  cursor: not-allowed;
+  transition: filter 0.25s ease;
+}

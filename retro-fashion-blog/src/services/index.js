@@ -22,7 +22,7 @@ const fetchDataFirestore = async (
     } else {
         ref = db.collection(colName).orderBy("createdAt", "desc");
     }
-
+    console.log('====================================')
     if (sort === "newest") {
         ref = ref.orderBy("createdAt", "desc");
     } else if (sort === "oldest") {

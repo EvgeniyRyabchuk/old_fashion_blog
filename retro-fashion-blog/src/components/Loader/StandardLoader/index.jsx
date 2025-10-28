@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './index.scss';
 
-const StandardLoader = ({ isActive, ...props }) => {
+const StandardLoader = ({ isActive = true, ...props }) => {
 
     return (
         <div id="searchPostLoader"

@@ -24,7 +24,10 @@ const DragDropImage = ({ setFile, file, url, setUrl, defImage, wrapperClassName}
         setUrl
     )
 
-    const onDeleteImageBtnClick = () => setFile(null)
+    const onDeleteImageBtnClick = () => {
+        setFile(null);
+        setUrl(null);
+    }
 
     useEffect(() => {
         if(!file || !url) onImgDelete();

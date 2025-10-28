@@ -53,6 +53,12 @@ const LayoutSuspense = () => {
 
     const suspenseLayout = useMemo(() => {
         if (layout === null) return (<LayoutLoaderScreen />);
+        setTimeout(() => {
+            document.querySelector("body").scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 3000)
+
+
+
         return (
             <Suspense fallback={<LayoutLoaderScreen />}>
                 {layout}

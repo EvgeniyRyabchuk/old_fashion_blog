@@ -30,7 +30,7 @@ const Routing = () => {
                         <Route
                             path={route.path}
                             element={route.element}
-                            exact={route.exact}
+                            // exact={route.exact}
                         />
                     )
                 ]}

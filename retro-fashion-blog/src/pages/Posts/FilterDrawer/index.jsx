@@ -10,14 +10,13 @@ import {StandardLoader} from "@components/Loader";
 import {defaultEndDate, defaultStartDate, defEndYear, defStartYear} from "@/constants/default";
 import useQueryParams from "@/hooks/useQueryParams";
 
-
-
 const FilterDrawer = ({
-          isOpen,
-          onClose,
-          onCommit,
-          searchParams
-}) => {
+                          isOpen,
+                          onClose,
+                          onCommit,
+                          searchParams,
+                          isActive
+                      }) => {
     console.log("filter drawer ")
 
     const { getLocCatName } = useLang();
@@ -30,19 +29,24 @@ const FilterDrawer = ({
     const [chips, setChips] = useState([]);
 
     const addChipIfNotExist = (value, label, type) => {
-        if(type === "date-range-start" || type === "date-range-end") {
-            setChips((prev) => {
-                if(prev.find(p => p.type === type))
-                    return prev.map(p => p.type === type ? { label, value, type } : p);
-                else
-                    return [...prev, { label, value, type }];
-            });
-        } else {
-            setChips((prev) => {
-                if (prev.some((c) => c.value === value && c.type === type)) return prev;
-                return [...prev, { label, value, type }];
-            });
-        }
+        setChips((prev) => {
+            // Check if chip already exists
+            const exists = prev.some((c) => c.value === value && c.type === type);
+            if (exists) return prev;
+
+            // For date-range chips, replace existing ones of the same type
+            if(type === "date-range-start" || type === "date-range-end") {
+                const filtered = prev.filter(p => p.type !== type);
+                return [...filtered, { label, value, type }];
+            }
+
+            // For regular chips, just add if not exists
+            return [...prev, { label, value, type }];
+        });
+    }
+
+    const removeChip = (value, type) => {
+        setChips((prev) => prev.filter((c) => !(c.value === value && c.type === type)));
     }
 
     const resetAllButDateRange = () => {
@@ -63,7 +67,7 @@ const FilterDrawer = ({
     const resetDateRange = () => {
         setDateRangeStart(defaultStartDate);
         setDateRangeEnd(defaultEndDate);
-        setChips([]);
+        setChips(prev => prev.filter(c => c.type !== "date-range-start" && c.type !== "date-range-end"));
     }
 
     const handleCheckboxChange = (e) => {
@@ -72,14 +76,28 @@ const FilterDrawer = ({
         }
         const { checked, value, dataset } = e.target;
         const type = dataset.type;
-        const label = e.target.name || value;
-        console.log("check")
+
+        // Get the proper label based on type and value
+        let label = e.target.name || value; // fallback to value if name is not available
+
+        if (type === "category") {
+            const category = categories.find(cat => cat.id === value);
+            if (category) {
+                label = getLocCatName(category);
+            }
+        } else if (type === "tag") {
+            const tag = tags.find(t => t.id === value);
+            if (tag) {
+                label = tag.name;
+            }
+        }
+
         if (checked) {
             // add chip if not exists
             addChipIfNotExist(value, label, type);
         } else {
             // remove chip
-            setChips((prev) => prev.filter((c) => c.value !== value || c.type !== type));
+            removeChip(value, type);
         }
     };
 
@@ -87,22 +105,11 @@ const FilterDrawer = ({
         const { value, dataset } = e.target;
         resetAllButDateRange();
         const type = dataset.type;
-        const alreadyExist = chips.find((c) => c.type === type);
 
         if(type === "date-range-start") setDateRangeStart(value);
         if(type === "date-range-end") setDateRangeEnd(value);
 
         addChipIfNotExist(value, value, type);
-
-        // } else {
-        //
-        //     if(type === "date-range-start" && new Date(value).getFullYear() === new Date(queryStrHandler.defaultStartDate).getFullYear())
-        //         alreadyExist.remove();
-        //     if(type === "date-range-end" && new Date(value).getFullYear() === new Date(queryStrHandler.defaultStartDate).getFullYear())
-        //         alreadyExist.remove();
-        //
-        //     alreadyExist.innerHTML = getDateRangeWitToORFrom(input);
-        // }
     }
 
     const handleRemove = (chip) => {
@@ -111,8 +118,15 @@ const FilterDrawer = ({
             `.filter-drawer input[data-type="${chip.type}"][value="${chip.value}"]`
         );
         if (input) {
-            if (input.type === "checkbox") input.checked = false;
-            if (input.type === "date") input.value = "";
+            if (input.type === "checkbox") {
+                input.checked = false;
+                // Remove the chip since handleCheckboxChange will be triggered
+                removeChip(chip.value, chip.type);
+            }
+            if (input.type === "date") {
+                input.value = "";
+                removeChip(chip.value, chip.type);
+            }
         }
     };
 
@@ -129,46 +143,114 @@ const FilterDrawer = ({
         fetchAllSelectable();
     }, []);
 
+    // Initialize chips and checkbox states from query params
+    useEffect(() => {
+        if (categories.length > 0 && tags.length > 0) {
+            const urlParams = Object.fromEntries(new URLSearchParams(window.location.search));
+
+            // Initialize chips state directly from URL params
+            const initialChips = [];
+
+            // Handle categories - get proper display names
+            if (urlParams.categories) {
+                const catIds = urlParams.categories.split(",");
+                catIds.forEach(id => {
+                    const category = categories.find(cat => cat.id === id);
+                    if (category) {
+                        initialChips.push({
+                            label: getLocCatName(category),
+                            value: category.id,
+                            type: 'category'
+                        });
+                    }
+                });
+            }
+
+            // Handle tags - get proper display names
+            if (urlParams.tags) {
+                const tagIds = urlParams.tags.split(",");
+                tagIds.forEach(id => {
+                    const tag = tags.find(t => t.id === id);
+                    if (tag) {
+                        initialChips.push({
+                            label: tag.name,
+                            value: tag.id,
+                            type: 'tag'
+                        });
+                    }
+                });
+            }
+
+            // Handle date ranges
+            if (urlParams.startDate) {
+                initialChips.push({
+                    label: urlParams.startDate,
+                    value: urlParams.startDate,
+                    type: 'date-range-start'
+                });
+                setDateRangeStart(urlParams.startDate);
+            }
+
+            if (urlParams.endDate) {
+                initialChips.push({
+                    label: urlParams.endDate,
+                    value: urlParams.endDate,
+                    type: 'date-range-end'
+                });
+                setDateRangeEnd(urlParams.endDate);
+            }
+
+            // Set the initial chips state
+            setChips(initialChips);
+        }
+    }, [categories, tags]); // Only run when categories and tags are loaded
+
+    // Update DOM checkboxes based on initial chips state
+    useEffect(() => {
+        // Only run after categories and tags are loaded to avoid issues
+        if (categories.length > 0 && tags.length > 0) {
+            // Update category checkboxes based on chips
+            chips
+                .filter(chip => chip.type === 'category')
+                .forEach(chip => {
+                    const checkbox = document.querySelector(`[value="${chip.value}"][data-type="category"]`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+
+            // Update tag checkboxes based on chips
+            chips
+                .filter(chip => chip.type === 'tag')
+                .forEach(chip => {
+                    const checkbox = document.querySelector(`[value="${chip.value}"][data-type="tag"]`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+        }
+    }, [categories, tags, chips]);
 
     const params = useMemo(() => Object.fromEntries(new URLSearchParams(window.location.search)), [])
+
     // 1. Search input
     useEffect(() => {
         const searchInput = document.querySelector('#searchInput');
         if (params.search && searchInput) searchInput.value = params.search;
     }, []);
 
-    // select chips after selectables loaded
-    useEffect(() => {
-        if (params.categories && categories.length > 0) {
-            const catIds = params.categories.split(",");
-            catIds.forEach(id => {
-                const checkbox = document.querySelector(`[value="${id}"][data-type="category"]`);
-                if (checkbox) {
-                    checkbox.checked = true;
-                    handleCheckboxChange({ target: { checked: true, value: id, dataset: {type: "category"} }});
-                }
-            });
-        }
-        if (params.tags && tags.length > 0) {
-            const tagIds = params.tags.split(",");
-            tagIds.forEach(id => {
-                const checkbox = document.querySelector(`[value="${id}"][data-type="tag"]`);
-                if (checkbox) {
-                    checkbox.checked = true;
-                    handleCheckboxChange({ target: { checked: true, value: id, dataset: {type: "tag"} }});
-                }
-            });
-        }
-
-    }, [categories, tags])
-
-
-
     const onApply = () => {
         const params = {
             categories: chips.filter(c => c.type === 'category').map(c => c.value).join(','),
             tags: chips.filter(c => c.type === 'tag').map(c => c.value).join(','),
         };
+        // Add date range if they exist
+        const startDateChip = chips.find(c => c.type === 'date-range-start');
+        const endDateChip = chips.find(c => c.type === 'date-range-end');
+
+        if (startDateChip) params.startDate = startDateChip.value;
+        if (endDateChip) params.endDate = endDateChip.value;
+
         onCommit(params);
     }
 
@@ -182,7 +264,7 @@ const FilterDrawer = ({
     return (
         <section
             id="filterDrawerWrapper"
-            className={`filter-drawer-wrapper ${isOpen && "is-open"}`}
+            className={`filter-drawer-wrapper ${isOpen && "is-open"} ${!isActive && "disabled"}`}
             onClick={(e) => {
                 if(e.currentTarget === e.target) {
                     onClose();
@@ -190,10 +272,10 @@ const FilterDrawer = ({
             }}
             // style={{ position: isLoading ? "relative" : "fixed" }}
         >
-            {isLoading && <StandardLoader isActive={true} />}
+            {isLoading && <StandardLoader />}
 
             <div
-                className={`filter-drawer ${isOpen && "is-open"}`}
+                className={`filter-drawer ${isOpen && "is-open"} ${!isActive && "disabled"}`}
                 id="filterDrawer"
                 style={{ height: isLoading ? "350px" : "100%"  }}
             >
@@ -268,7 +350,7 @@ const FilterDrawer = ({
                     </>
                 }
 
-                 {/*Actions*/}
+                {/*Actions*/}
                 <div className="filter-drawer__actions">
                     <button id="applyFilterBtn"
                             type="button"

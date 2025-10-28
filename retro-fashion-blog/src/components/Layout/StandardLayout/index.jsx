@@ -17,7 +17,7 @@ const StandartLayout = () => {
                 <Outlet />
             </Main>
 
-            <Footer />
+            {/*<Footer />*/}
         </div>
     );
 };

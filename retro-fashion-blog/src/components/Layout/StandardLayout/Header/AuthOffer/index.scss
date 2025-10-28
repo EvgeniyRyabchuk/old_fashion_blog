@@ -1,0 +1,16 @@
+@use '@scss/abstracts' as abs;
+
+.login-btn, sign-up-btn {
+  margin: 0 5px
+}
+
+
+.auth-offer, .auth-offer-mobile {
+   margin: 20px 0;
+}
+
+@media screen and (max-width: abs.$xl-bp) {
+  .auth-offer {
+    display: none !important;
+  }
+}

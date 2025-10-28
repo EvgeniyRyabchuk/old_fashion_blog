@@ -14,7 +14,7 @@ const FilterChips = ({ chips, setChips, onRemove }) => {
             case "tag":
                 return `#${chip.label}`;
             case "category":
-                return `#${chip.label}`;
+                return `${chip.label}`;
             case "date-start":
                 return `From: ${chip.label}`;
             case "date-end":

@@ -19,8 +19,6 @@ const Pagination = ({
                         onPerPageChange,
                         pageForLoadMore,
                         isScrollUp = true
-
-
 }) => {
     console.log(currentPage)
 

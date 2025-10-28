@@ -5,7 +5,7 @@ import {StandardLoader} from "@components/Loader";
 
 export const PageLoader = (
     <div style={{ position: "relative", top: '100px'}}>
-        <StandardLoader active={true} />
+        <StandardLoader isActive={true} />
     </div>
 )
 
@@ -20,7 +20,7 @@ export const PageLoaderElement = () => {
             zIndex: '999',
             // backgroundColor: 'red'
         }}>
-            <StandardLoader active={true} />
+            <StandardLoader isActive={true} />
         </div>
     )
 }

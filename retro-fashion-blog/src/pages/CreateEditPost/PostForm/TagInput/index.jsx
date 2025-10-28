@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./index.scss";
 
 const TagInput = ({ tags, setTags }) => {
-
+    console.log(123)
     const [inputValue, setInputValue] = useState("");
 
     // Handle Enter press
@@ -42,13 +42,13 @@ const TagInput = ({ tags, setTags }) => {
 
             <div className="tags tags-container" id="tagsContainer">
                 {tags.map((tag, index) => (
-                    <div className="tag" key={tag.id}>
-                        <span className="tag-text">{tag.name}</span>
+                    <div className="tag" key={index}>
+                        <span className="tag-text">{tag?.name || tag}</span>
                         <button
                             type="button"
                             className="tag-remove"
-                            onClick={() => removeTag(tag.id)}
-                            aria-label={`Remove tag ${tag.name}`}
+                            onClick={() => removeTag(index)}
+                            aria-label={`Remove tag ${tag?.name || tag}`}
                         >
                             ✕
                         </button>

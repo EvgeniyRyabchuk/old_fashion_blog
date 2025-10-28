@@ -105,7 +105,7 @@ const CommentSection = () => {
                             {comment.content}
                         </div>
 
-                        { (user.isAdmin || user.id === comment.user.id) &&
+                        { (isAuth && (user.isAdmin || user.id === comment.user.id)) &&
                                 <button
                                     className="btn-danger"
                                     type="button"

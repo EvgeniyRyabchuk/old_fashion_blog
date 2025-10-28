@@ -11,7 +11,7 @@ export default function PageNumbers({ pageList, currentPage, goToPage, isOnlyCur
                     <span key={`ellipsis-${idx}`}
                           className="page-ellipsis px-2 select-none">
                             ...
-                        </span>
+                    </span>
                 ) :
                  (<button
                     key={p}
@@ -28,11 +28,10 @@ export default function PageNumbers({ pageList, currentPage, goToPage, isOnlyCur
                 </button>)
             )
 
-        if(isOnlyCurrentPage) {
-            const curP = pageList.find(p => p === currentPage);
-            return render([curP]);
-        }
-        return  render(pageList)
+        if(isOnlyCurrentPage)
+            return render([currentPage]);
+
+        return render(pageList)
 
     }, [isOnlyCurrentPage, pageList, currentPage])
 

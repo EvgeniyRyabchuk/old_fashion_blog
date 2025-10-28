@@ -4,13 +4,14 @@ import Dropdown from '@components/Dropdown';
 
 import guestNavListData from './data/common-nav';
 import ProfileMenu from "./ProfileMenu";
-import AuthOffer from "./AuthOffer";
+import Index from "./AuthOffer";
 import LangSelector from "./Selectors/LangSelector";
 import ThemeSelector from "./Selectors/ThemeSelector";
 import SearchSector from "./SearchSector";
 import {useAuth} from "@/context/AuthContext";
 import {Link, useNavigate} from "react-router-dom";
 import PATHS from "@/constants/paths";
+import AuthOffer from "./AuthOffer";
 
 const Header = () => {
 
@@ -63,7 +64,9 @@ const Header = () => {
                         </div>
 
                         {(!authLoading && !user) &&
-                            <AuthOffer className={'form-row d-flex-center'} style={{ margin: "20px 0" }} />
+                            <AuthOffer className={'auth-offer-mobile form-row d-flex-center'}
+                                       onSelected={onSelected}
+                            />
                         }
 
                         {(!authLoading && user) &&
@@ -94,7 +97,10 @@ const Header = () => {
 
                     <div className="auth-nav-list-wrapper">
                         {(!authLoading && !user) &&
-                            <AuthOffer className={'form-row'} />
+                            <AuthOffer
+                                onClick={onSelected}
+                                className={'auth-offer form-row d-flex-center'}
+                            />
                         }
 
                         <LangSelector />

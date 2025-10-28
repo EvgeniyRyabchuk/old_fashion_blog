@@ -9,8 +9,10 @@ export function usePaginate({
     fetchData,   // async ({ page, perPage, cursorHandler, options }) => { items, totalCount }
     perPageDefault = 10,
     initialPage = 1,
-    items,
-    setItems
+    items = [],
+    setItems,
+    reloadDeps = [],
+    isScrollUp = false,
 }) {
 
     const [totalCount, setTotalCount] = useState(0);
@@ -22,11 +24,12 @@ export function usePaginate({
     const cursorHandler = useMemo(() => createCursorHandler(colName), []);
     const [isFirstCall, setIsFirstCall] = useState(true);
 
-    const renderPosts = useCallback(async (newCurrentPage, isScrollUp = true) => {
+    const renderPosts = useCallback(async (newCurrentPage) => {
         setLoading(true);
         console.log(isScrollUp, 'scroll')
-        if(isScrollUp)
-            toggleBodyScroll(true, false);
+        toggleBodyScroll(true, false, isScrollUp);
+        setItems([]);
+
         setCurrentPage(newCurrentPage);
         // Restore cursor cache only once
         if(isFirstCall) {
@@ -44,9 +47,9 @@ export function usePaginate({
         setTotalCount(newTotal);
         setTotalPages(Math.max(1, Math.ceil(newTotal / perPage)));
         setLoading(false);
+        toggleBodyScroll(false, false, isScrollUp);
 
-
-    }, [colName, perPage]);
+    }, [colName, perPage, ...reloadDeps]);
 
     const [pageForLoadMore, setPageForLoadMore] = useState(currentPage);
 
@@ -65,7 +68,7 @@ export function usePaginate({
         console.log(newItems, pageForLoadMore);
 
         setItems((prev) => [...prev, ...newItems]);
-        setPageForLoadMore(nextPage);
+        setCurrentPage(nextPage);
         setLoading(false);
     }, [currentPage, totalPages, perPage, pageForLoadMore]);
 
@@ -78,10 +81,9 @@ export function usePaginate({
     // }, [perPage]);
 
 
-    const goToPage = async (page, isScrollUp = true) => {
+    const goToPage = async (page) => {
         // updateSearchParams({ page });
-
-        await renderPosts(page, isScrollUp);
+        await renderPosts(page);
     };
 
     // Fetch data when page/perPage changes
@@ -94,7 +96,6 @@ export function usePaginate({
         // updateSearchParams({page: 1, perPage });
         setCurrentPage(initialPage);
         setPerPage(perPageDefault);
-
         setItems([]);
         setTotalCount(0);
         setTotalPages(1);
