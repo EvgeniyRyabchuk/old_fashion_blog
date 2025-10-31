@@ -26,8 +26,7 @@ const Post = () => {
 
     useEffect(() => {
         fetchPost();
-
-    }, []);
+    }, [postId]);
 
     const { getLocCatName } = useLang();
 
@@ -45,13 +44,11 @@ const Post = () => {
                 />
             }
 
-
             {!isLoading && post &&
                 <>
                     { isAuth && user.isAdmin &&
                         <AdminPostTopPanel />
                     }
-
 
                     <section
                         id="postContentSection"

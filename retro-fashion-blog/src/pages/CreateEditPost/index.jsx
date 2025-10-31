@@ -14,6 +14,10 @@ import {StandardLoader} from "@components/Loader";
 import {getPostContentPreview} from "@utils/format";
 import PostForm from "@pages/CreateEditPost/PostForm";
 import {toggleBodyScroll} from "@utils/helper";
+import Spoiler from "@components/Spoiler";
+import {removePostById} from "@/services/posts";
+import {useAuth} from "@/context/AuthContext";
+import Spinner from "@components/Loader/Spinner";
 
 const colName = "posts";
 
@@ -31,28 +35,33 @@ const staticCols = [
 ];
 
 const EditRemove = ({ onDeleteClick, onEditClick}) => {
+    const [fetchDeleteRes, isLoading,  error] = useFetching(onDeleteClick);
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
             <button type="button" onClick={onEditClick}>Edit</button>
-            <button type="button" onClick={onDeleteClick}>Remove</button>
+            <button type="button" onClick={() => fetchDeleteRes() }>
+                {isLoading ? (<Spinner />) : ("Remove")}
+            </button>
         </div>
     )
 }
 
+
 const CreateEditPost = () => {
 
+    const [isSpoilerPostCreateOpen, setIsSpoilerPostCreateOpen] = useState(false);
+    const { user, isAuth } = useAuth();
     const { t, getLocCatName } = useLang();
     const { updateSearchParams, postFilterQueryCreator, setSearchParams, searchParams } = useQueryParams();
 
-
     const [posts, setPosts] = useState([]);
     const [order, setOrder] = useState("asc");
-    const [sort, setSort] = useState("newest");
+    const [orderField, setOrderField] = useState("newest");
 
     const [fetchPosts, isPostFetchLoading, error] = useFetching(async ({page, perPage, cursorHandler, options: restOptions }) => {
         // const { isLoadMore } = options || {};
         const options= {
-            sort, // must exist in your docs
+            sort: orderField, // must exist in your docs
             filterHandler: postFilterQueryCreator,
             t,
             ...restOptions
@@ -94,21 +103,18 @@ const CreateEditPost = () => {
         isScrollUp: false,
     });
 
+
     useEffect(() => {
-        updateSearchParams({ sort: sort, page: currentPage, perPage });
         reload(currentPage);
-    }, [sort, perPage]);
+    }, [orderField, perPage]);
+
+    useEffect(() => {
+        updateSearchParams({ sort: orderField, page: pageForLoadMore, perPage });
+    }, [orderField, perPage, pageForLoadMore]);
+
+
 
     console.log(posts);
-
-    const onEditTablePostClick = (id) => {
-        console.log('post id edit ', id)
-        updateSearchParams({ postId: id})
-    }
-    const onDeleteTablePostClick = (id) => {
-        console.log('post id delete ', id);
-
-    }
 
     const tableRows = useMemo(() => {
         if(!posts && posts.length === 0) return [];
@@ -117,9 +123,19 @@ const CreateEditPost = () => {
             <EditRemove
                 onEditClick={() => {
                     toggleBodyScroll(false, false, true);
-                    onEditTablePostClick(id)
+                    setIsSpoilerPostCreateOpen(true);
+                    updateSearchParams({ postId: id})
                 }}
-                onDeleteClick={() => onDeleteTablePostClick(id)}
+                onDeleteClick={async () => {
+                    //TODO: test
+                    if(!isAuth || !user.isAdmin) return;
+                    await removePostById(id)
+                    if(posts.length > 1)
+                        reload(currentPage);
+                    else
+                        reload(currentPage - 1);
+                    //TODO: clear from if there is postId in url
+                }}
             />
         );
 
@@ -141,16 +157,19 @@ const CreateEditPost = () => {
     console.log(tableRows)
 
 
-
     return (
         <>
-            <section className="content-section">
-                <PostForm onCommit={() => {
-                    reload(1);
-                }} />
+            <section className="content-section post-form-section">
+                <Spoiler
+                    title="Create Post"
+                    setIsOpen={setIsSpoilerPostCreateOpen}
+                    isOpen={isSpoilerPostCreateOpen}
+                >
+                    <PostForm onCommit={() => reload(1) } />
+                </Spoiler>
             </section>
 
-            <section className="content-section">
+            <section className="content-section post-table-section">
                 <StandardLoader isActive={isPostFetchLoading || loading} />
 
                 <Table cols={staticCols} rows={tableRows} />
@@ -176,7 +195,6 @@ const CreateEditPost = () => {
                     isScrollUp={false}
                 />
             </section>
-
         </>
     );
 };

@@ -124,7 +124,8 @@ const fetchAllTags = async () => {
     }
 }
 
-const fetchMostPopularTags = async (count) => {
+const fetchMostPopularTags = async () => {
+    const count = 10;
     const tagCounts = {}; // { tagName: count }
 
     // Fetch all post-tag documents

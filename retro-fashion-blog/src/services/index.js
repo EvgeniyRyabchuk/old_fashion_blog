@@ -31,14 +31,12 @@ const fetchDataFirestore = async (
         ref = ref.orderBy("views", "desc");
     }
 
-    const params = Object.fromEntries(new URLSearchParams(window.location.search));
-    const search = params.search;
-
-    if (search) {
-        const filterSortSection = document.getElementById("filterSortSection");
-        filterSortSection.style.display = "none";
-        document.getElementById("mainContentTitle").innerText
-            = `${options.t("search_posts_by")} "${search}"`;
+    const search = options.search;
+    if (options.search) {
+        // const filterSortSection = document.getElementById("filterSortSection");
+        // filterSortSection.style.display = "none";
+        // document.getElementById("mainContentTitle").innerText
+        //     = `${options.t("search_posts_by")} "${search}"`;
 
 
         // search only works if you order by the field you want to search on

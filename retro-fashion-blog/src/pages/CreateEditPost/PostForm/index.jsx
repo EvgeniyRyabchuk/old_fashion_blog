@@ -11,22 +11,22 @@ import {useLang} from "@/context/LangContext";
 import TagInput from "@pages/CreateEditPost/PostForm/TagInput";
 import {loadToCloudinary} from "@/services/image";
 import {useSearchParams} from "react-router-dom";
-import {urlToFile} from "@utils/helper";
+import {toggleBodyScroll, urlToFile} from "@utils/helper";
 import useQueryParams from "@/hooks/useQueryParams";
+import {StandardLoader} from "@components/Loader";
+import Spinner from "@components/Loader/Spinner";
 
 const PostForm = ({ onCommit  }) => {
 
     const { user, isAuth } = useAuth();
     const { getLocCatName } = useLang();
 
-
-
     // ================= FETCH POST ==================
 
     const [postToEdit, setPostToEdit] = useState(null);
+    const [loadedPostId, setLoadedPostId] = useState(null); // Track which post ID was loaded
     const { updateSearchParams, postFilterQueryCreator, setSearchParams, searchParams } = useQueryParams();
     const postId = searchParams.get("postId");
-
 
 
     // ================= FETCH CATEGORIES ==================
@@ -61,6 +61,9 @@ const PostForm = ({ onCommit  }) => {
 
 
     const [fetchPost, isFetchPostLoading, fetchPostError] = useFetching(async () => {
+        // Don't refetch if we already loaded the same post
+        if (postId && loadedPostId === postId) return;
+        
         const post = await fetchPostById(postId);
 
         setPostToEdit(post);
@@ -78,8 +81,8 @@ const PostForm = ({ onCommit  }) => {
         // setCoverImgFile(await urlToFile(post.coverUrl, "cover.jpg"))
         // setWideImgFile(await urlToFile(post.wideImgUrl, "wide.jpg"))
 
-
         setPostToEdit(post);
+        setLoadedPostId(postId); // Mark that we've loaded this post
     })
 
     useEffect(() => {
@@ -112,7 +115,7 @@ const PostForm = ({ onCommit  }) => {
             else coverUrl = defaultCoverUrl;
 
             if(wideImgFile) wideImgUrl = await loadToCloudinary(wideImgFile);
-            else if (wideImgUrl) coverUrl = postToEdit.wideImgUrl
+            else if (wideImgUrl) wideImgUrl = postToEdit.wideImgUrl
             else wideImgUrl = defaultWideImgUrl;
         }
 
@@ -151,6 +154,7 @@ const PostForm = ({ onCommit  }) => {
     }
 
     const onCancel = () => {
+        toggleBodyScroll(false, false, true)
         clearUpTheForm();
     }
 
@@ -170,20 +174,15 @@ const PostForm = ({ onCommit  }) => {
         
         setCategoryId(null);
         setPostToEdit(null);
+        setLoadedPostId(null); // Reset loaded post ID when form is cleared
 
         updateSearchParams({ postId: null })
     }
 
     return (
         <>
-            <h2
-                className="main-content-title"
-                id="mainContentTitle"
-                data-i18n="create-post">
-                Create Post
-            </h2>
-
-            <div className="upload_container">
+            <div className={`upload_container ${isFetchPostLoading ? "disabled" : ""}`}>
+                { isFetchPostLoading && <StandardLoader /> }
                 <div className="wrapper d-flex-center d-flex-wrap">
                     <div className="post-create-form-wrapper">
                         <label htmlFor="title" data-i18n="post-title">Title</label>
@@ -283,9 +282,11 @@ const PostForm = ({ onCommit  }) => {
                 <button className="btn-primary"
                         id="savePost"
                         onClick={onSave}
-                        data-i18n="save-post">
+                        data-i18n="save-post"
+                        style={{ marginRight: "10px" }}
+                >
                     Save Post
-                    {isAddPostLoading && <p>Loading...</p>}
+                    {isAddPostLoading && <Spinner style={{ marginLeft: "5px" }} />}
                 </button>
 
                 <button

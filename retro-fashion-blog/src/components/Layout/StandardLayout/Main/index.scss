@@ -2,7 +2,7 @@
 
 
 main {
-  background-color: $color-bg;
+
 }
 
 .content-section {
@@ -10,8 +10,8 @@ main {
 }
 
 .main-wrapper {
-  background-color: white;
   min-height: 100vh;
+  background-color: $color-bg;
 }
 
 .main-content-title {

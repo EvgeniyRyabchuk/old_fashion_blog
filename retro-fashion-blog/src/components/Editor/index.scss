@@ -1,6 +1,6 @@
 .editor-wrapper {
-
   margin: 2rem auto;
+  position: relative;
 }
 
 #toolbar {
@@ -8,4 +8,22 @@
   border-radius: 6px 6px 0 0;
   background: #fafafa;
   padding: 8px;
+}
+
+/* Hide ReactQuill's clipboard element */
+.ql-clipboard {
+  left: -1000px !important;
+  height: 1px !important;
+  overflow-y: hidden !important;
+  position: absolute !important;
+  top: -1000px !important;
+  visibility: hidden !important;
+}
+
+/* Handle any other hidden elements ReactQuill might create */
+.editor-wrapper [style*="visibility: hidden"], 
+.editor-wrapper [style*="display: none"] {
+  position: absolute !important;
+  left: -10000px !important;
+  top: -10000px !important;
 }

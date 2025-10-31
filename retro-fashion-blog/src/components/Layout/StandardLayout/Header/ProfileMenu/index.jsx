@@ -3,6 +3,8 @@ import {useAuth} from "@/context/AuthContext";
 import './index.scss';
 import {logout} from "@/services/auth";
 import { Authenticated as ProfileList } from '@components/Layout/StandardLayout/Header/data';
+import {useNavigate} from "react-router-dom";
+import PATHS from "@/constants/paths";
 
 const Space = () => {
 
@@ -28,6 +30,7 @@ const ProfileMenu = ({
         [user]
     )
 
+    const navigate = useNavigate();
 
     return (
         <div className={isAside
@@ -71,6 +74,7 @@ const ProfileMenu = ({
                             type="button"
                             onClick={() => {
                                 logout();
+                                navigate(PATHS.HOME);
                                 onSelected();
                             }}>
                         Logout

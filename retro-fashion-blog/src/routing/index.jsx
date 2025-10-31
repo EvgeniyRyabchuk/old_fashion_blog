@@ -5,6 +5,7 @@ import routes from "./routes";
 import {useMemo} from "react";
 import LayoutSuspense from "@components/Layout";
 import AuthGuard from "@/auth/AuthGuard";
+import ScrollToTop from "@components/ScrollToTop";
 
 
 const Routing = () => {
@@ -22,20 +23,22 @@ const Routing = () => {
     }, []);
 
     return (
-        <Routes>
-            <Route
-                element={<LayoutSuspense />}
-                children={[
-                    routesWithAuthGuard.map(route =>
-                        <Route
-                            path={route.path}
-                            element={route.element}
-                            // exact={route.exact}
-                        />
-                    )
-                ]}
-            />
-        </Routes>
+        <>
+            <ScrollToTop />
+            <Routes>
+                <Route
+                    element={<LayoutSuspense />}
+                    children={[
+                        routesWithAuthGuard.map(route =>
+                            <Route
+                                path={route.path}
+                                element={route.element}
+                            />
+                        )
+                    ]}
+                />
+            </Routes>
+        </>
     )
 }
 

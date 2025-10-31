@@ -27,11 +27,11 @@ export const PageLoaderElement = () => {
 
 const Loadable = (Component) => (props) => {
     return (
-        <div>
+        <>
             <Suspense fallback={<PageLoaderElement/>}>
                 <Component {...props} />
             </Suspense>
-        </div>
+        </>
     );
 };
 

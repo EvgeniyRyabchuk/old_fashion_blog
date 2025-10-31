@@ -5,14 +5,13 @@ import userRole from "@/auth/roles";
 import PATHS from "@/constants/paths";
 
 const CreateEditPost = Loadable(lazy(() => import('@pages/CreateEditPost')));
-const Setting = Loadable(lazy(() => import('@pages/Setting')));
+// const Setting = Loadable(lazy(() => import('@pages/Setting')));
 
 
 const AdminRoutes = [
     {
         path: PATHS.ADMIN_POSTS,
         element: <CreateEditPost />,
-        exact: true,
         authenticated: true,
         accessRoles: [userRole.Admin]
     },

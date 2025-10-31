@@ -3,7 +3,14 @@ import './index.scss';
 import {Link} from "react-router-dom";
 
 
-const Dropdown = ({ ulClassName, data, onClick, onSelected }) => {
+const Dropdown = ({
+                      ulClassName,
+                      data,
+                      onClick,
+                      onSelected,
+                      isHoverable = false,
+                      isClickable = false
+}) => {
     const [content,setContent] = useState([]);
 
     const render = (data) => {
@@ -13,7 +20,11 @@ const Dropdown = ({ ulClassName, data, onClick, onSelected }) => {
                 return (
                     <li key={index}
                         className={`dropdown root ${onClick ? "on-click" : 'on-hover'}`}
-                        onClick={onClick}
+                        onClick={(e) => {
+                            console.log(123)
+                            if(isHoverable) onSelected(item.link);
+                            if(isClickable) onClick(e);
+                        }}
                     >
                         <a  href={item.link}
                             className={"side-menu-item prevent"}
@@ -29,7 +40,10 @@ const Dropdown = ({ ulClassName, data, onClick, onSelected }) => {
                 )
             } else if(!item.data || item.data.length === 0) {
                 return (
-                    <li key={index} onClick={() => onSelected(item.link)}>
+                    <li key={index} onClick={(e) => {
+                        e.stopPropagation();
+                        onSelected(item.link);
+                    }}>
                         <a href={item.link}
                            className="side-menu-item"
                            data-i18n={item.dataI18n}

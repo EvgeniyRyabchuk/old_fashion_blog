@@ -15,6 +15,7 @@ import useQueryParams from "@/hooks/useQueryParams";
 import {usePaginate} from "@/hooks/usePaginate";
 import {defPage, defPerPage} from "@/constants/default";
 import FilterDrawer from "@pages/Posts/FilterDrawer";
+import * as sea from "node:sea";
 
 
 const colName = "posts";
@@ -22,7 +23,7 @@ const colName = "posts";
 const Posts = () => {
 
 
-    const [isFilterOpen, setIsFilterOpen] = React.useState(false);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     const switchFilter = () => {
         setIsFilterOpen(!isFilterOpen);
@@ -39,6 +40,7 @@ const Posts = () => {
 
     const { updateSearchParams, postFilterQueryCreator, setSearchParams, searchParams } = useQueryParams();
 
+    const search = searchParams.get("search") ?? "";
     const [order, setOrder] = useState("asc");
     const [orderField, setOrderField] = useState(searchParams.get("sort") ?? "newest");
 
@@ -50,6 +52,7 @@ const Posts = () => {
             sort: orderField, // must exist in your docs
             filterHandler: postFilterQueryCreator,
             t,
+            search,
             ...restOptions
         }
 
@@ -84,13 +87,13 @@ const Posts = () => {
         initialPage: parseInt(searchParams.get("page") ?? defPage),
         setItems: setPosts,
         items: posts,
-        reloadDeps: [orderField],
+        reloadDeps: [orderField, search],
         isScrollUp: true,
     });
 
     useEffect(() => {
         reload(currentPage);
-    }, [orderField, perPage]);
+    }, [orderField, perPage, search]);
 
     useEffect(() => {
         updateSearchParams({ sort: orderField, page: pageForLoadMore, perPage });
@@ -108,26 +111,43 @@ const Posts = () => {
                 ]}
             />
 
-            <SortSection
-                value={orderField}
-                setValue={setOrderField}
-                onFilterToggle={switchFilter}
-                isActive={!isPostFetchLoading && !paginationLoading}
-            />
+            {search === "" && (
+                <>
+                    <section id="filterSortSection" className={`d-flex`} style={{padding: "10px 30px" }}>
+                        <div className="d-flex" style={{width: "100%", justifyContent: "space-between" }}>
+                            <SortSection
+                                value={orderField}
+                                setValue={setOrderField}
+                                onFilterToggle={switchFilter}
+                                isActive={!isPostFetchLoading && !paginationLoading}
+                            />
+                            <button id="filterToggle"
+                                    className="filter-toggle"
+                                    data-i18n="posts-filters"
+                                    onClick={() => switchFilter()}
+                            >
+                                Filters
+                            </button>
+                        </div>
+                    </section>
 
-
-            <FilterDrawer
-                isOpen={isFilterOpen}
-                onClose={() => setIsFilterOpen(false)}
-                reload={reload}
-                onCommit={(params, isReset = false) => {
-                    updateSearchParams({sort: orderField, ...params}, isReset);
-                    reload(1);
-                }}
-                isActive={!isPostFetchLoading && !paginationLoading}
-            />
-
-
+                    { !isPostFetchLoading && !paginationLoading && (
+                            <FilterDrawer
+                                isOpen={isFilterOpen}
+                                onClose={() => switchFilter() }
+                                reload={reload}
+                                onCommit={(params, isReset = false) => {
+                                    updateSearchParams({sort: orderField, ...params}, isReset);
+                                    reload(1);
+                                    setIsFilterOpen(false);
+                                    // switchFilter();
+                                }}
+                                isActive={!isPostFetchLoading && !paginationLoading}
+                            />
+                        )
+                    }
+                </>
+            )}
 
             <section className="content-section">
                 {/*<h2 className="main-content-title" id="mainContentTitle" data-i18n="posts-title">Posts</h2>*/}

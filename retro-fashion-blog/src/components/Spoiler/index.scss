@@ -1,0 +1,81 @@
+@use '@scss/abstracts' as abs;
+
+.spoiler {
+  margin: 1rem 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: abs.$color-primary;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+
+  &.open {
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+
+  &__btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #222;
+    text-align: left;
+    border-radius: 12px;
+    transition: background 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      background: abs.$color-primary-active;
+      color: abs.$color-primary-text;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #007bff;
+      outline-offset: 3px;
+    }
+  }
+
+  &__arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+    font-size: 0.9rem;
+    margin-left: 0.75rem;
+
+    &::before {
+      content: "▼";
+      display: block;
+      transform-origin: center;
+    }
+  }
+
+  &.open &__arrow::before {
+    transform: rotate(-180deg);
+  }
+
+  &__content {
+    padding: 0.75rem 1.25rem 1.25rem;
+    color: #444;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    //animation: fadeIn 1s ease;
+
+    p, ul, ol {
+      margin: 0.75rem 0;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

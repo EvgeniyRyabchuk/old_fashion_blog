@@ -115,14 +115,6 @@ const createOrUpdatePost = async (post, user) => {
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
         } else {
-            // const pSnap = await db.collection("posts").doc(postId).get();
-            // const post = { id: pSnap.id, ...pSnap.data() };
-            //
-            // if (!pSnap.exists) {
-            //     throw new Error(`Post with ID ${postId} not found`);
-            // }
-            // console.log('founded' + post.id);
-
             await db.collection("posts").doc(postId).update({
                 title: title,
                 content: content,
@@ -145,7 +137,27 @@ const createOrUpdatePost = async (post, user) => {
         console.error("Error adding document:", err);
         alert("Error: " + err.message);
     }
+}
 
+
+async function fetchPostsBySearch(term) {
+    if(term === "" || !term) {
+        console.log("No term → return common-nav posts or skip");
+        return [];
+    }
+    const postsRef = db.collection("posts");
+    // 1. Search posts by title
+    const postsByTitleSnap = await postsRef
+        .orderBy("searchIndex")
+        .orderBy("createdAt", "desc")
+        .startAt(term.toLowerCase())
+        .endAt(term.toLowerCase() + "\uf8ff")
+        .limit(10)
+        .get();
+
+    const posts = postsByTitleSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // renderPostsForSearch(posts);
+    return posts;
 }
 
 export {
@@ -153,5 +165,6 @@ export {
     fetchLastPosts,
     fetchPostById,
     removePostById,
-    createOrUpdatePost
+    createOrUpdatePost,
+    fetchPostsBySearch
 }

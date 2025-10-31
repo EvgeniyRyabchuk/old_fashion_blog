@@ -68,6 +68,7 @@
 
 
 $filterAppearTime: 0.3s;
+$mixedBg: color-mix(in srgb, abs.$color-bg, abs.$color-info-active 15%);
 
 .filter-drawer-wrapper {
   @extend .full-screen-fixed;
@@ -83,19 +84,34 @@ $filterAppearTime: 0.3s;
     right: -320px;
     width: 320px;
     height: 100%;
-    background: #fff;
+    //@include abs.flexbox(column);
+
     border-left: 1px solid #ddd;
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    overflow-y: auto;
     z-index: 999;
     transition: right $filterAppearTime ease;
-    background-color: abs.$color-secondary;
+    //background-color: abs.$color-bg;
+    background-color: $mixedBg;
+
+    .scrollable-content {
+      height: 100%;
+      overflow-y: auto;
+      scrollbar-width: none;
+
+      @media (max-width: abs.$lg-bp) {
+        padding-bottom: 3rem;
+      }
+    }
+
+    &__top {
+      margin: 5px 0;
+    }
 
     &__close {
       background: none;
       border: none;
-      font-size: 2rem;
+      font-size: 3rem;
       line-height: 1;
       cursor: pointer;
       color: #333;
@@ -169,16 +185,33 @@ $filterAppearTime: 0.3s;
       padding-right: 0.4rem;
     }
 
+
     &__date-range {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      @include abs.flexbox(row, center, center, wrap, 0.5rem);
+
+    }
+    
+    @media (max-width: abs.$lg-bp) {
+      .dash {
+        display: none;
+      }
     }
 
     &__actions {
       display: flex;
       gap: 0.75rem;
-      margin-top: 1rem;
+      //margin-top: 1rem;
+      background-color: $mixedBg;
+      padding: 1rem;
+      @media (max-width: abs.$lg-bp) {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+
+      }
+
 
       button {
         padding: 0.45rem 1rem;
@@ -217,8 +250,11 @@ $filterAppearTime: 0.3s;
       overflow: visible;
       transition: none;
 
+
       &.is-open {
         right: auto;
+        top: 0;
+        bottom: 0;
       }
 
       &__group {
@@ -231,6 +267,7 @@ $filterAppearTime: 0.3s;
         gap: 1.5rem;
         align-items: flex-start;
         margin: 20px 0px;
+        height: 90% !important;
       }
 
       &__tags {

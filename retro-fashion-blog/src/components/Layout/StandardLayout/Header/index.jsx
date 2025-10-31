@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import "./index.scss";
 import Dropdown from '@components/Dropdown';
 
@@ -14,7 +14,7 @@ import PATHS from "@/constants/paths";
 import AuthOffer from "./AuthOffer";
 
 const Header = () => {
-
+    console.log('header')
     const [isAsideOpen, setIsAsideOpen] = useState(false);
     const { user, loading: authLoading } = useAuth();
     const navigate = useNavigate();
@@ -44,6 +44,18 @@ const Header = () => {
         setIsAsideOpen(false);
     }
 
+    //TODO: to multi deep
+    const mobileGuestNavListData = useMemo(() => {
+        return guestNavListData.map((item, index) => {
+            if(item.data && item.data.length > 0) {
+                return {...item, data: [
+                            { name: item.name, link: item.link, dataI18n: item.dataI18n },
+                        ...item.data]};
+            }
+            return item;
+        })
+    }, [])
+
     return (
         <header>
             <Link className="default-link top-header-link" to={PATHS.HOME}>
@@ -64,8 +76,9 @@ const Header = () => {
                         </div>
 
                         {(!authLoading && !user) &&
-                            <AuthOffer className={'auth-offer-mobile form-row d-flex-center'}
-                                       onSelected={onSelected}
+                            <AuthOffer
+                                className={'auth-offer-mobile form-row d-flex-center'}
+                                onSelected={onSelected}
                             />
                         }
 
@@ -76,29 +89,31 @@ const Header = () => {
                                 onSelected={onSelected}
                             />
                         }
-
+                        {/* mobile dropdown */}
                         <Dropdown
                             ulClassName={"side-menu-list"}
                             onClick={verticalListItemOnClick}
                             onSelected={onSelected}
-                            data={guestNavListData}
+                            data={mobileGuestNavListData}
+                            isClickable={true}
                         />
                     </aside>
                 </div>
 
                 <div className="top-menu-content">
                     <div className="burger-menu-btn" id="burgerMenuBtn" onClick={onBurgerClick}></div>
-
+                    {/* desktop dropdown */}
                     <Dropdown
                         ulClassName={"guest-nav-list"}
                         data={guestNavListData}
                         onSelected={onSelected}
+                        isHoverable={true}
                     />
 
                     <div className="auth-nav-list-wrapper">
                         {(!authLoading && !user) &&
                             <AuthOffer
-                                onClick={onSelected}
+                                onSelected={onSelected}
                                 className={'auth-offer form-row d-flex-center'}
                             />
                         }

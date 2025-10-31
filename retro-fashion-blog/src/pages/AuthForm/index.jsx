@@ -5,6 +5,8 @@ import {login, register} from "@/services/auth";
 import {StandardLoader} from "@components/Loader";
 import {Link, useNavigate} from "react-router-dom";
 import PATHS from "@/constants/paths";
+import {useFetching} from "@/hooks/useFetching";
+import Spinner from "@components/Loader/Spinner";
 
 
 const AuthForm = ({ isAccountExist }) => {
@@ -14,11 +16,10 @@ const AuthForm = ({ isAccountExist }) => {
     const [password, setPassword] = React.useState('');
     const { user, setUser, loading: authLoading } = useAuth();
     const navigate = useNavigate();
-
-    const onAuthBtnCLick = async () => {
+    const [auth, isAuthTryLoading, error] = useFetching(async () => {
         let user = null;
         if(isAccountExist) {
-             user = await login(email, password);
+            user = await login(email, password);
         } else {
             user = await register(name, email, password);
         }
@@ -26,7 +27,21 @@ const AuthForm = ({ isAccountExist }) => {
             setUser(user);
             navigate("/");
         }
+    });
+
+    const onAuthBtnCLick = async () => {
+        auth();
     }
+
+    const onKeyDown = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault(); // optional, stops form submit if inside a form
+            console.log("Enter pressed!");
+            onAuthBtnCLick();
+        }
+    }
+
+
 
     return (
         <section className="content-section">
@@ -46,6 +61,7 @@ const AuthForm = ({ isAccountExist }) => {
                                placeholder="Name"
                                data-i18n-attr="placeholder:name-placeholder"
                                onChange={(e) => setName(e.target.value)}
+                               onKeyDown={onKeyDown}
                         />
                     </div>
                 ) : null}
@@ -56,6 +72,7 @@ const AuthForm = ({ isAccountExist }) => {
                            data-i18n-attr="placeholder:email-placeholder"
                            placeholder="Email"
                            onChange={(e) => setEmail(e.target.value)}
+                           onKeyDown={onKeyDown}
                     />
                 </div>
                 <div className="input-group">
@@ -64,21 +81,25 @@ const AuthForm = ({ isAccountExist }) => {
                            data-i18n-attr="placeholder:password-placeholder"
                            placeholder="Password"
                            onChange={(e) => setPassword(e.target.value)}
+                           onKeyDown={onKeyDown}
                     />
                 </div>
 
                 <button type="button"
                         onClick={onAuthBtnCLick}
                         data-i18n="auth-login">
-                    {isAccountExist ? "Login": "Sign Up"}
+                        <>
+                            {isAccountExist ? "Login": "Sign Up"}
+                            {isAuthTryLoading && <Spinner style={{ marginLeft: "5px"}} />}
+                        </>
                 </button>
 
                 {isAccountExist && (
                     <div className="extra">
                         <p>
-                            <snan data-i18n="dont-have-account">
+                            <span data-i18n="dont-have-account">
                                 Don't have an account?
-                            </snan>
+                            </span>
                             <Link to={PATHS.SIGN_UP}
                                data-i18n="auth-sign-up">
                                 Sign up

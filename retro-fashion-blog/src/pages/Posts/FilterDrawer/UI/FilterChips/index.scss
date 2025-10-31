@@ -2,11 +2,12 @@
 @use '@scss/abstracts' as abs;
 
 .selected-filters {
-  margin-top: 1rem;
-  padding: 0.8rem;
+  margin: 0.5rem 0;
+  padding: 0.8rem 0.5rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   background: abs.$color-bg;
+
 
   &__label {
     display: block;

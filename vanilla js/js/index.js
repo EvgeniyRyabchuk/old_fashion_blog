@@ -341,23 +341,34 @@ const getLocCatName = (category) => {
 
 //=======================================   
 
-//TODO: profile button, search scss, no body bg image 
-//TODO: chnage seed: user default img url 
+//TODO: return scrollablalitility in unsubscribe 
+//TODO: spoiler for post create form, .disable form when loading 
+//TODO: filter opacity remove 
+
+
+//TODO: selecting category undo tags 
+//TODO: date selecting do not work 
+
+
 
 //TODO: move data to constants 
 //TODO: routing:   exact: true,
-//TODO: main page: carousel, roll, last posts 
-//TODO: category load dynamicly 
 
-
-//TODO: check Loadable loader screen work 
 //TODO: rework lang change for react 
-//TODO: change red 
+//TODO: save selected lang and select it from url 
+//TODO: text localize 
+//TODO: chnage seed: user default img url 
 
 //TODO: notification 
 //TODO: breadcrubm translation 
-//TODO: text localize 
+//TODO: category load dynamicly 
+
+
 //TODO: category dynamic loading with localize 
+
+//TODO: MOBILE FIX 
+// 1. selecting post call scroll up 
+
 //TODO: when i change perPage to 5 and go from page 1 to 3 i see first page. Remove page btn event 
 
 

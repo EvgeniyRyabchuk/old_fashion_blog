@@ -8,18 +8,9 @@ const SortSection = ({ onFilterToggle, setValue, value, isActive }) => {
 
 
     return (
-        <section id="filterSortSection"
-                 className={`d-flex`}
-                 style={{padding: "10px 30px" }}
-        >
-            <div className="d-flex"
-                 style={{
-                     width: "100%",
-                     justifyContent: "space-between"
-            }}>
+
 
                 <div className="filter-sort">
-
                     <div className="filter-sort__sort">
                         <label htmlFor="sort" data-i18n="posts-sort-by">Sort by:</label>
                         <select
@@ -41,15 +32,8 @@ const SortSection = ({ onFilterToggle, setValue, value, isActive }) => {
                     </div>
                 </div>
 
-                <button id="filterToggle"
-                        className="filter-toggle"
-                        data-i18n="posts-filters"
-                        onClick={onFilterToggle}
-                >
-                    Filters
-                </button>
-            </div>
-        </section>
+
+
     );
 };
 

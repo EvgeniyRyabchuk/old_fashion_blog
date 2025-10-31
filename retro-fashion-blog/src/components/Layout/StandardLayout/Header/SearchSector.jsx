@@ -4,54 +4,18 @@ import useDebounce from "@/hooks/useDebounce";
 import queryStrHandler from "@utils/query-string-handler";
 import breakpoints from "@/constants/breakpoints";
 import { db } from "@/firebase/config";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import PATHS from "@/constants/paths";
+import {fetchPostsBySearch} from "@/services/posts";
 
 //TODO: fetch into service
 //TODO: mouse click up call close
 
 
-async function fetchPostsBySearch(term) {
-    if(term === "" || !term) {
-        console.log("No term → return common-nav posts or skip");
-        return [];
-    }
-    const postsRef = db.collection("posts");
-    // 1. Search posts by title
-    const postsByTitleSnap = await postsRef
-        .orderBy("searchIndex")
-        .orderBy("createdAt", "desc")
-        .startAt(term.toLowerCase())
-        .endAt(term.toLowerCase() + "\uf8ff")
-        .limit(10)
-        .get();
-
-    const posts = postsByTitleSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    // renderPostsForSearch(posts);
-    return posts;
-}
-
-
-
-
-// const searchPostLoader = document.getElementById("searchPostLoader");
-//
-// const searchPostLoader = document.getElementById("searchPostLoader");
-//
-// const headerSearch = document.getElementById("headerSearch");
-// const searchToggle = document.getElementById("searchToggle");
-// const searchClose = document.getElementById("searchClose");
-// const searchInput = document.getElementById("searchInput");
-// const searchControll = document.getElementById("searchControll")
-// const searchContent = document.getElementById("searchContent");
-// const searchSeeMoreLink = searchContent.querySelector("#searchSeeMore");
-//
-// const noDataLi = searchContent.querySelector(".no-data-li")
-
 const SearchSector = () => {
     const [text, setText] = useState('');
     const debouncedText = useDebounce(text, 500);
-
+    const navigate = useNavigate();
     const [searchPostList, setSearchPostList] = useState([]);
 
     const [isActiveHeaderSearch, setActiveHeaderSearch] = useState(false);
@@ -65,8 +29,6 @@ const SearchSector = () => {
 
 
     const searchControlRef = useRef(null); // ✅ useRef instead of getElementById
-
-
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -83,7 +45,6 @@ const SearchSector = () => {
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
     }, [isActiveHeaderSearch]); // re-run when active state changes
-
 
     const showSeeMore = (text, length) => {
         const seeMoreTriggerCount = 3;
@@ -113,7 +74,6 @@ const SearchSector = () => {
         setIsLoaderActive(false);
     }
 
-
     const closeAll = () => {
         setIsSearchContentOpen(false);
         setIsLoaderActive(false);
@@ -129,7 +89,6 @@ const SearchSector = () => {
             closeAll();
         }
     }, [text]);
-
 
     const removePostList = () => {
         setIsSeeMoreOpen(false);
@@ -152,7 +111,8 @@ const SearchSector = () => {
 
     const onSearchBtnClick = () => {
         if(!text) return;
-        window.location.href = `/posts.html?${queryStrHandler.strQName.search}=${text}`;
+        setActiveHeaderSearch(false);
+        navigate(`${PATHS.POSTS}?search=${text}`);
     }
 
     const onSearchCloseClick = (e) => {
@@ -181,7 +141,7 @@ const SearchSector = () => {
                        value={text}
                        onClick={() => {
                            setActiveHeaderSearch(true);
-                           console.log(123);
+
                        }}
                 />
                 <button className="btn-info search-btn"

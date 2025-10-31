@@ -48,15 +48,17 @@ const CommentSection = () => {
 
     return (
         <div className="comment-container">
-            <div id="authCommentProtection" className="auth-protection">
-                <div className="form-row d-flex-center" style={{margin: "20px 0", gap: "5px"}}>
-                    <p data-i18n="post-auth-required">
-                        To write your comment you need to be authenticated
-                    </p>
-                    <Link className="login-btn" to={PATHS.LOGIN}>Login</Link>
-                    <Link className="sign-up-btn" to={PATHS.SIGN_UP}>Sign Up</Link>
+            { !isAuthLoading && !isAuth &&
+                <div id="authCommentProtection" className="auth-protection">
+                    <div className="form-row d-flex-center" style={{margin: "20px 0", gap: "5px"}}>
+                        <p data-i18n="post-auth-required">
+                            To write your comment you need to be authenticated
+                        </p>
+                        <Link className="login-btn" to={PATHS.LOGIN}>Login</Link>
+                        <Link className="sign-up-btn" to={PATHS.SIGN_UP}>Sign Up</Link>
+                    </div>
                 </div>
-            </div>
+            }
 
             {!isAuthLoading && isAuth &&
                 <div id="curUserWriteSection" className={`write-comment-container is-open`}>

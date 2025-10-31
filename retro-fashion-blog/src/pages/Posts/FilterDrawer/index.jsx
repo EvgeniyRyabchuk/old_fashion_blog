@@ -9,6 +9,8 @@ import FilterChips from "./UI/FilterChips";
 import {StandardLoader} from "@components/Loader";
 import {defaultEndDate, defaultStartDate, defEndYear, defStartYear} from "@/constants/default";
 import useQueryParams from "@/hooks/useQueryParams";
+import {toggleBodyScroll} from "@utils/helper";
+import breakpoints from "@/constants/breakpoints";
 
 const FilterDrawer = ({
                           isOpen,
@@ -18,6 +20,7 @@ const FilterDrawer = ({
                           isActive
                       }) => {
     console.log("filter drawer ")
+
 
     const { getLocCatName } = useLang();
 
@@ -258,7 +261,6 @@ const FilterDrawer = ({
         resetAllButDateRange();
         resetDateRange();
         onCommit({}, true);
-        // onClose();
     }
 
     return (
@@ -270,85 +272,83 @@ const FilterDrawer = ({
                     onClose();
                 }
             }}
-            // style={{ position: isLoading ? "relative" : "fixed" }}
         >
             {isLoading && <StandardLoader />}
 
             <div
                 className={`filter-drawer ${isOpen && "is-open"} ${!isActive && "disabled"}`}
                 id="filterDrawer"
-                style={{ height: isLoading ? "350px" : "100%"  }}
             >
-                <div style={{ margin: "10px 0" }}>
-                    <button
-                        type="button"
-                        className="filter-drawer__close"
-                        id="filterCloseBtn"
-                        onClick={onClose}
-                    >
-                        &times;
-                    </button>
+                <div className="scrollable-content">
+                    <div className="filter-drawer__top">
+                        <button
+                            type="button"
+                            className="filter-drawer__close"
+                            id="filterCloseBtn"
+                            onClick={onClose}
+                        >
+                            &times;
+                        </button>
+                    </div>
+                    { !isLoading &&
+                        <>
+                            <FilterChips chips={chips} setChips={setChips} onRemove={handleRemove} />
+                            <form className="filter-drawer__container">
+                                {/* Category */}
+                                <div className="filter-drawer__group">
+                                    <label className="filter-drawer__label" data-i18n="posts-categories">Categories:</label>
+                                    <div id="categoriesContainer" className="filter-drawer__options categoriesContainer">
+                                        {categories.map(category => (
+                                            <Checkbox
+                                                name={getLocCatName(category)}
+                                                value={category.id}
+                                                key={category.id}
+                                                onSelect={(e) => handleCheckboxChange(e) }
+                                                datasetType="category"
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                                {/*Tags */}
+                                <div className="filter-drawer__group">
+                                    <label className="filter-drawer__label" data-i18n="posts-tags">Tags:</label>
+                                    <div id="tagsContainer" className="filter-drawer__tags">
+                                        {tags.map(tag => (
+                                            <Checkbox
+                                                name={tag.name}
+                                                value={tag.id}
+                                                key={tag.id}
+                                                onSelect={(e) => handleCheckboxChange(e)}
+                                                datasetType="tag"
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                                {/* Date Range */}
+                                <div className="filter-drawer__group">
+                                    <label data-i18n="posts-date-range">Date Range:</label>
+                                    <div className="filter-drawer__date-range">
+                                        <input
+                                            data-type="date-range-start"
+                                            type="date"
+                                            name="start_date"
+                                            value={dateRangeStart}
+                                            onChange={handleDateChange}
+                                        />
+                                        <span className="dash">—</span>
+                                        <input
+                                            data-type="date-range-end"
+                                            type="date"
+                                            name="end_date"
+                                            value={dateRangeEnd}
+                                            onChange={handleDateChange}
+                                        />
+                                    </div>
+                                </div>
+                            </form>
+                        </>
+                    }
                 </div>
-
-                { !isLoading &&
-                    <>
-                        <form className="filter-drawer__container">
-                            {/* Category */}
-                            <div className="filter-drawer__group">
-                                <label className="filter-drawer__label" data-i18n="posts-categories">Categories:</label>
-                                <div id="categoriesContainer" className="filter-drawer__options categoriesContainer">
-                                    {categories.map(category => (
-                                        <Checkbox
-                                            name={getLocCatName(category)}
-                                            value={category.id}
-                                            key={category.id}
-                                            onSelect={(e) => handleCheckboxChange(e) }
-                                            datasetType="category"
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                            {/*Tags */}
-                            <div className="filter-drawer__group">
-                                <label className="filter-drawer__label" data-i18n="posts-tags">Tags:</label>
-                                <div id="tagsContainer" className="filter-drawer__tags">
-                                    {tags.map(tag => (
-                                        <Checkbox
-                                            name={tag.name}
-                                            value={tag.id}
-                                            key={tag.id}
-                                            onSelect={(e) => handleCheckboxChange(e)}
-                                            datasetType="tag"
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                            {/* Date Range */}
-                            <div className="filter-drawer__group">
-                                <label data-i18n="posts-date-range">Date Range:</label>
-                                <div className="filter-drawer__date-range">
-                                    <input
-                                        data-type="date-range-start"
-                                        type="date"
-                                        name="start_date"
-                                        value={dateRangeStart}
-                                        onChange={handleDateChange}
-                                    />
-                                    <span>—</span>
-                                    <input
-                                        data-type="date-range-end"
-                                        type="date"
-                                        name="end_date"
-                                        value={dateRangeEnd}
-                                        onChange={handleDateChange}
-                                    />
-                                </div>
-                            </div>
-                        </form>
-
-                        <FilterChips chips={chips} setChips={setChips} onRemove={handleRemove} />
-                    </>
-                }
 
                 {/*Actions*/}
                 <div className="filter-drawer__actions">

@@ -5,7 +5,7 @@ import {fetchMostPopularTags} from "@/services/tags";
 import PATHS from "@/constants/paths";
 
 const MostPopularTags = () => {
-
+    console.log(123)
     const [tags, setTags] = useState([]);
     const [fetch, isLoading, error, ] = useFetching(async () => {
         const loadedTags = await fetchMostPopularTags();

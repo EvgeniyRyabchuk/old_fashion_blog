@@ -1,0 +1,20 @@
+Summary,Description,Issue Type,Priority
+Return scrollability in unsubscribe,Restore scrolling behavior after unsubscribe action.,Task,Medium
+Spoiler for post create form; disable form when loading,Add spoiler/accordion behavior in post creation form. Disable inputs while loading.,Task,Medium
+SCSS loading issue on login page when not logged in,Fix style loading issues on login page for unauthenticated users.,Bug,High
+Delete image if selected existed post,Remove or reset image field when an existing post is selected.,Task,Medium
+Remove filter opacity,Eliminate opacity effect from filters to improve clarity.,Improvement,Low
+Selecting category should undo tags,When a new category is selected, reset related tags to avoid conflicts.,Bug,Medium
+Date selection not working,Fix date picker functionality to allow valid date selection.,Bug,High
+Move data to constants,Refactor code to move hardcoded data to constants file for maintainability.,Refactor,Low
+Fix routing: exact: true,Ensure routes are configured with 'exact: true' where necessary.,Task,Medium
+Rework language change for React app,Refactor language switcher logic for better UX and i18n consistency.,Improvement,High
+Save selected language and load from URL,Persist chosen language in local storage or query param and pre-select it on load.,Task,Medium
+Text localization,Translate all UI text elements and integrate with localization system.,Task,High
+Change seed: user default image URL,Update seed data to include correct default user image URL.,Task,Low
+Implement notification system,Add notification component for events and status updates.,Feature,High
+Breadcrumb translation,Localize breadcrumb labels according to selected language.,Improvement,Medium
+Dynamic category loading,Load categories dynamically from API instead of static list.,Feature,High
+Dynamic category loading with localization,Ensure category names are localized when loading dynamically.,Improvement,High
+Mobile fix: selecting post should scroll up,Fix mobile UI so that selecting a post automatically scrolls content to top.,Bug,Medium
+Pagination fix for perPage=5,Fix pagination logic: when perPage=5 and navigating to page 3, avoid showing first page again. Remove broken page button event.,Bug,High

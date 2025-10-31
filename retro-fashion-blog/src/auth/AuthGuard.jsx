@@ -32,9 +32,9 @@ const AuthGuard = ({accessRoles, children}) => {
     }, [isAuth])
 
     return (
-        <Fragment>
+        <>
             {isAuth && children}
-        </Fragment>
+        </>
     );
 };
 

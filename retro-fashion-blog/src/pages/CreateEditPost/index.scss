@@ -1,0 +1,11 @@
+@use '@scss/abstracts' as abs;
+
+.post-form-section, .post-table-section {
+  padding: 10px 20px;
+}
+
+@media (max-width: abs.$xl-bp) {
+  .post-form-section, .post-table-section {
+    padding: 5px;
+  }
+}

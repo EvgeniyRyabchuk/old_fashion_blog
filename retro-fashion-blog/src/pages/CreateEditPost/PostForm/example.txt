@@ -1,0 +1,35 @@
+
+Changes Made to src/pages/CreateEditPost\PostForm/index.jsx:
+
+1. Added a new state variable to track which post ID was already loaded:
+
+    1    const [loadedPostId, setLoadedPostId] = useState(null); // Track which post ID was loaded
+
+2. Updated the fetch function to prevent re-fetching the same post:
+
+    1    const [fetchPost, isFetchPostLoading, fetchPostError] = useFetching(async () => {
+    2        // Don't refetch if we already loaded the same post
+    3        if (postId && loadedPostId === postId) return;
+    4
+    5        const post = await fetchPostById(postId);
+    6
+    7        // ... existing code to set state ...
+    8        setLoadedPostId(postId); // Mark that we've loaded this post
+    9    })
+
+3. Added reset of loadedPostId when clearing the form:
+
+    1    const clearUpTheForm = () => {
+    2        // ... existing code ...
+    3        setLoadedPostId(null); // Reset loaded post ID when form is cleared
+    4        // ... rest of existing code ...
+    5    }
+
+4. Fixed a bug in the onSave function's wide image URL assignment:
+
+1    // Fixed this line (was incorrectly assigning to coverUrl):
+2    else if (wideImgUrl) wideImgUrl = postToEdit.wideImgUrl
+
+These changes ensure that when the PostForm component re-mounts (such as when the spoiler opens), it won't unnecessarily re-fetch the same post data if it's already loaded for that postId. This fixes the issue you reported where the
+post was being loaded again without necessity when the spoiler opened.
+
