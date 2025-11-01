@@ -1,4 +1,5 @@
-import React, {useMemo, useRef, useState} from "react";
+import React, { useMemo, useRef } from "react";
+import { useField } from 'formik';
 
 import './index.scss';
 import ReactQuill from "react-quill";
@@ -55,8 +56,8 @@ const CustomToolbar = () => (
     </div>
 );
 
-const Editor = ({ value, setValue}) => {
-
+const Editor = ({ name, ...props }) => {
+    const [field, meta, helpers] = useField(name);
     const quillRef = useRef(null);
     const fileInputRef = useRef(null);
 
@@ -104,6 +105,9 @@ const Editor = ({ value, setValue}) => {
         "clean"
     ];
 
+    const { value, onChange } = field;
+    const { setValue } = helpers;
+
     return (
         <div className="editor-wrapper">
             <CustomToolbar />
@@ -117,11 +121,12 @@ const Editor = ({ value, setValue}) => {
                 // placeholder="Write something awesome..."
                 style={{ height: "500px", marginBottom: "50px" }}
                 ref={quillRef}
-
             />
-            {/*<hr />*/}
-            {/*<h4>Preview (HTML):</h4>*/}
-            {/*<pre>{value}</pre>*/}
+            
+            {/* Show error if field has error and is touched */}
+            {meta.touched && meta.error && (
+                <div className="error-message">{meta.error}</div>
+            )}
 
             {/* hidden file input for image upload */}
             <input

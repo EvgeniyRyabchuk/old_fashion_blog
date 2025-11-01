@@ -1,10 +1,8 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import "./index.scss";
 import Dropdown from '@components/Dropdown';
 
 import guestNavListData from './data/common-nav';
-import ProfileMenu from "./ProfileMenu";
-import Index from "./AuthOffer";
 import LangSelector from "./Selectors/LangSelector";
 import ThemeSelector from "./Selectors/ThemeSelector";
 import SearchSector from "./SearchSector";
@@ -12,6 +10,9 @@ import {useAuth} from "@/context/AuthContext";
 import {Link, useNavigate} from "react-router-dom";
 import PATHS from "@/constants/paths";
 import AuthOffer from "./AuthOffer";
+import ProfileMenu from "@components/Layout/StandardLayout/Header/ProfileMenu";
+import {useFetching} from "@/hooks/useFetching";
+import {fetchAllCategories} from "@/services/categories";
 
 const Header = () => {
     console.log('header')
@@ -44,17 +45,28 @@ const Header = () => {
         setIsAsideOpen(false);
     }
 
+
+    const [categories, setCategories] = useState([]);
+    const [fetchCategories, isLoading, error] = useFetching(async () => {
+        const cList = await fetchAllCategories();
+        setCategories(cList.map(c => ({ name: c.name_en, link: `${PATHS.POSTS}?categories=${c.id}`, dataI18n: c.dataI18n })))
+    })
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
     //TODO: to multi deep
-    const mobileGuestNavListData = useMemo(() => {
+    const mobileGuestNavCategoriesList = useMemo(() => {
         return guestNavListData.map((item, index) => {
-            if(item.data && item.data.length > 0) {
-                return {...item, data: [
-                            { name: item.name, link: item.link, dataI18n: item.dataI18n },
-                        ...item.data]};
+            if(item.name === "All posts" && categories.length > 0) {
+                return {
+                    ...item, data: categories
+                };
             }
             return item;
         })
-    }, [])
+    }, [categories])
+
 
     return (
         <header>
@@ -94,7 +106,7 @@ const Header = () => {
                             ulClassName={"side-menu-list"}
                             onClick={verticalListItemOnClick}
                             onSelected={onSelected}
-                            data={mobileGuestNavListData}
+                            data={mobileGuestNavCategoriesList}
                             isClickable={true}
                         />
                     </aside>
@@ -105,7 +117,7 @@ const Header = () => {
                     {/* desktop dropdown */}
                     <Dropdown
                         ulClassName={"guest-nav-list"}
-                        data={guestNavListData}
+                        data={mobileGuestNavCategoriesList}
                         onSelected={onSelected}
                         isHoverable={true}
                     />

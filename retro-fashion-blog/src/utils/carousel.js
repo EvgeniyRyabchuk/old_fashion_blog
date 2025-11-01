@@ -1,25 +1,35 @@
-
+import PATHS from "@/constants/paths";
 
 
 const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, bottomPanel, interval) => {
     let index = 0;
     let intervalId = null;
 
-    if (images.length > 0)
+    if (images.length > 0) {
         displayElem.style.backgroundImage = `url(${images[0].imgUrl})`;
+        const span = document.createElement("span");
+        span.innerText = images[0].title;
+        span.classList.add("carousel-text"); // so you can style it in CSS
+        displayElem.appendChild(span);
+    }
 
     const changeImg = (index) => {
         displayElem.style.backgroundImage = `url(${images[index].imgUrl})`;
+        const span = displayElem.querySelector("span");
+        if (span) span.innerText = images[index].title;
+
         changeActiveDot(index);
+
         if (intervalId) {
             clearInterval(intervalId);
             startLoop(interval);
         }
     }
 
-    const onDotClick = (index) => {
-        changeImg(index);
-        changeActiveDot(index);
+    const onDotClick = (idx) => {
+        changeImg(idx);
+        changeActiveDot(idx);
+        index = idx; 
     }
 
     const createDots = () => {
@@ -75,7 +85,7 @@ const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, 
 
     displayElem.addEventListener("click", (e) => {
         if(e.target === e.currentTarget)
-            window.location.href = `/post.html?postId=${images[index].postId}`;
+            window.location.href = PATHS.POST(images[0].postId);
     })
 
     const startLoop = () => {

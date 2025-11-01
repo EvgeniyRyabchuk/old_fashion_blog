@@ -1,4 +1,5 @@
 import PATHS from "@/constants/paths";
+import categories from "./categories";
 
 export default [
   {
@@ -10,18 +11,7 @@ export default [
     name: "All posts",
     link: PATHS.POSTS,
     dataI18n: "nav-common-nav-posts",
-    data: [
-      {
-        name: "Male",
-        link: `${PATHS.POSTS}?categories=7GGsEDG6hxJke8vh6PFa`,
-        dataI18n: "nav-male"
-      },
-      {
-        name: "Female",
-        link:  `${PATHS.POSTS}?categories=JlEtKUSmnLqoTtsDkDMQ`,
-        dataI18n: "nav-female"
-      }
-    ]
+    // data: categories
   },
   {
     name: "Contact",

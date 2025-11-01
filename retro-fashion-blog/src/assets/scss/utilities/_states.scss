@@ -1,7 +1,24 @@
+@use '@scss/abstracts' as abs;
+
 .disabled {
   filter: brightness(0.9) contrast(0.9) saturate(0.7);
   pointer-events: none;
   user-select: none;
   cursor: not-allowed;
   transition: filter 0.25s ease;
+}
+
+.error-message {
+  padding: 5px;
+  color: abs.$color-danger-active;
+  font-weight: 800;
+}
+
+.form-error-message {
+  color: red;
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 4px;
+  margin: 10px 0;
+  background-color: #ffe6e6;
 }

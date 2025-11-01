@@ -10,11 +10,13 @@ import {fetchAllCategories} from "@/services/categories";
 import {useLang} from "@/context/LangContext";
 import TagInput from "@pages/CreateEditPost/PostForm/TagInput";
 import {loadToCloudinary} from "@/services/image";
-import {useSearchParams} from "react-router-dom";
 import {toggleBodyScroll, urlToFile} from "@utils/helper";
 import useQueryParams from "@/hooks/useQueryParams";
 import {StandardLoader} from "@components/Loader";
 import Spinner from "@components/Loader/Spinner";
+import validationSchema from './validationSchema'
+import { Formik, Form, Field, ErrorMessage} from "formik";
+
 
 const PostForm = ({ onCommit  }) => {
 
@@ -22,7 +24,6 @@ const PostForm = ({ onCommit  }) => {
     const { getLocCatName } = useLang();
 
     // ================= FETCH POST ==================
-
     const [postToEdit, setPostToEdit] = useState(null);
     const [loadedPostId, setLoadedPostId] = useState(null); // Track which post ID was loaded
     const { updateSearchParams, postFilterQueryCreator, setSearchParams, searchParams } = useQueryParams();
@@ -30,7 +31,6 @@ const PostForm = ({ onCommit  }) => {
 
 
     // ================= FETCH CATEGORIES ==================
-
     const [categories, setCategories] = useState([]);
     useEffect(() => {
         const fetchCategories = async () => {
@@ -41,14 +41,6 @@ const PostForm = ({ onCommit  }) => {
     }, [])
 
 
-    // ================= CREATE FORM FIELDS ==================
-
-    const [title, setTitle] = useState("");
-    const [categoryId, setCategoryId] = useState("");
-    const [dateRangeStart, setDateRangeStart] = useState(defStartYear);
-    const [dateRangeEnd, setDateRangeEnd] = useState(defEndYear);
-
-
     const [coverImgFile, setCoverImgFile] = useState(null);
     const [coverImgUrl, setCoverImgUrl] = useState(null);
 
@@ -57,31 +49,19 @@ const PostForm = ({ onCommit  }) => {
 
     const [tags, setTags] = useState([]);
 
-    const [editorText, setEditorText] = useState("");
-
-
     const [fetchPost, isFetchPostLoading, fetchPostError] = useFetching(async () => {
         // Don't refetch if we already loaded the same post
         if (postId && loadedPostId === postId) return;
-        
+
         const post = await fetchPostById(postId);
 
         setPostToEdit(post);
-        setTitle(post.title);
-        setCategoryId(post.categoryId);
-        setDateRangeStart(post.date_range_start);
-        setDateRangeEnd(post.date_range_end);
 
-        setTags(post.tags);
-        setEditorText(post.content);
-
+        // Update non-Formik state values
         setCoverImgUrl(post.coverUrl ?? defaultCoverUrl);
         setWideImgUrl(post.wideImgUrl ?? defaultWideImgUrl);
+        setTags(post.tags);
 
-        // setCoverImgFile(await urlToFile(post.coverUrl, "cover.jpg"))
-        // setWideImgFile(await urlToFile(post.wideImgUrl, "wide.jpg"))
-
-        setPostToEdit(post);
         setLoadedPostId(postId); // Mark that we've loaded this post
     })
 
@@ -95,7 +75,8 @@ const PostForm = ({ onCommit  }) => {
         await createOrUpdatePost(data, user);
     })
 
-    const onSave = async () => {
+    // onSubmit
+    const onSave = async (values) => {
 
         let coverUrl, wideImgUrl = null;
 
@@ -120,8 +101,8 @@ const PostForm = ({ onCommit  }) => {
         }
 
 
-        const startDate = new Date(dateRangeStart).getFullYear();
-        const endDate = new Date(dateRangeEnd).getFullYear();
+        const startDate = new Date(values.dateRangeStart).getFullYear();
+        const endDate = new Date(values.dateRangeEnd).getFullYear();
 
         if (!startDate || !endDate) {
             alert("Please select both dates.");
@@ -129,14 +110,14 @@ const PostForm = ({ onCommit  }) => {
         }
 
         let postFormData = {
-            title,
-            categoryId,
+            title: values.title,
+            categoryId: values.categoryId,
             startDate,
             endDate,
             coverUrl,
             wideImgUrl,
-            content: editorText,
-            tags: tags.map((tag) => tag.name),
+            content: values.editor,
+            tags: tags.map((tag) => tag?.name || tag),
         }
         if(postToEdit)
             postFormData = {
@@ -159,9 +140,6 @@ const PostForm = ({ onCommit  }) => {
     }
 
     const clearUpTheForm = () => {
-        setTitle("");
-        setEditorText("");
-
         setCoverImgFile(null);
         setWideImgFile(null);
         setCoverImgUrl(null);
@@ -169,137 +147,197 @@ const PostForm = ({ onCommit  }) => {
 
         setTags([]);
 
-        setDateRangeStart(defStartYear);
-        setDateRangeEnd(defEndYear);
-        
-        setCategoryId(null);
         setPostToEdit(null);
         setLoadedPostId(null); // Reset loaded post ID when form is cleared
 
         updateSearchParams({ postId: null })
     }
 
+    // Set initial values based on whether we're editing or creating
+    const getInitialValues = () => {
+        if (postId && postToEdit) {
+            return {
+                title: postToEdit.title,
+                categoryId: postToEdit.categoryId,
+                dateRangeStart: postToEdit.date_range_start,
+                dateRangeEnd: postToEdit.date_range_end,
+                editor: postToEdit.content,
+            };
+        }
+        return {
+            title: "",
+            categoryId: "",
+            dateRangeStart: defStartYear,
+            dateRangeEnd: defEndYear,
+            editor: "",
+        };
+    };
+
     return (
-        <>
             <div className={`upload_container ${isFetchPostLoading ? "disabled" : ""}`}>
                 { isFetchPostLoading && <StandardLoader /> }
-                <div className="wrapper d-flex-center d-flex-wrap">
-                    <div className="post-create-form-wrapper">
-                        <label htmlFor="title" data-i18n="post-title">Title</label>
-
-                        <input
-                            type="text"
-                            id="title"
-                            placeholder="Post title"
-                            data-i18n-attr="placeholder:post-title-placeholder"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-
-                        <br/>
-                        <br/>
-
-                        {/* category */}
-                        <div>
-                            <label htmlFor="category-select" data-i18n="post-category">Category</label>
-                            <select
-                                className="category-select"
-                                name="category"
-                                id="categorySelect"
-                                value={categoryId || ""}
-                                onChange={(e) => setCategoryId(e.target.value)}
-                            >
-                                <option value="" disabled>
-                                    — Select category —
-                                </option>
-                                {categories.map((category) => (
-                                    <option
-                                        key={category.id}
-                                        value={category.id}
-                                    >
-                                        {getLocCatName(category)}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/*date_range*/}
-                        <div className="year-range">
-                            <label htmlFor="startYear" data-i18n="from">From:</label>
-                            <input
-                                type="number"
-                                id="startYear"
-                                name="startYear"
-                                min="1800"
-                                max="2025"
-                                step="1"
-                                value={dateRangeStart}
-                                onChange={(e) => setDateRangeStart(e.target.value)}
-                            />
-
-                            <label htmlFor="endYear" data-i18n="to">To:</label>
-                            <input
-                                type="number"
-                                id="endYear"
-                                name="endYear"
-                                min="1800"
-                                max="2025"
-                                step="1"
-                                value={dateRangeEnd}
-                                onChange={(e) => setDateRangeEnd(e.target.value)}
-                            />
-
-                        </div>
-
-                        {/*tags*/}
-                        <TagInput tags={tags} setTags={setTags} />
-
-                    </div>
-
-                    <input type="file" id="quillImageInput" style={{display: "none"}}/>
-
-                    {/*wide*/}
-                    <DragDropImage
-                        file={wideImgFile}
-                        setFile={setWideImgFile}
-                        url={wideImgUrl}
-                        setUrl={setWideImgUrl}
-                        wrapperClassName="post-wide-img-wrapper"
-                    />
-                    {/*Cover Img*/}
-                    <DragDropImage
-                        file={coverImgFile}
-                        setFile={setCoverImgFile}
-                        url={coverImgUrl}
-                        setUrl={setCoverImgUrl}
-                        wrapperClassName="post-cover-img-wrapper"
-                    />
-
-                </div>
-
-                <Editor value={editorText} setValue={setEditorText} />
-
-                <button className="btn-primary"
-                        id="savePost"
-                        onClick={onSave}
-                        data-i18n="save-post"
-                        style={{ marginRight: "10px" }}
+                <Formik
+                    initialValues={getInitialValues()}
+                    validationSchema={validationSchema}
+                    onSubmit={onSave}
+                    enableReinitialize={true} // This allows form to reinitialize when initialValues change
+                    validateOnMount={false}
+                    validateOnChange={true}
+                    validateOnBlur={true}
                 >
-                    Save Post
-                    {isAddPostLoading && <Spinner style={{ marginLeft: "5px" }} />}
-                </button>
+                    {({ errors,
+                          touched,
+                          values,
+                          handleChange,
+                          setFieldValue,
+                          isSubmitting,
+                          submitCount
+                    }) => {
+                        // Update form values when postToEdit changes
+                        useEffect(() => {
+                            if (postId && postToEdit && loadedPostId === postId) {
+                                setFieldValue('title', postToEdit.title);
+                                setFieldValue('categoryId', postToEdit.categoryId);
+                                setFieldValue('dateRangeStart', postToEdit.date_range_start);
+                                setFieldValue('dateRangeEnd', postToEdit.date_range_end);
+                                setFieldValue('editor', postToEdit.content);
+                            }
+                        }, [postToEdit, loadedPostId, postId, setFieldValue]);
 
-                <button
-                    className="btn-secondary"
-                    id="reset"
-                    onClick={onCancel}
-                    data-i18n="cancel">
-                    Cancel
-                </button>
+                        return (
+                            <Form>
+                                <div className="wrapper d-flex-center d-flex-wrap">
+                                    <div className="post-create-form-wrapper">
 
+                                        <label htmlFor="title" data-i18n="post-title">
+                                            Title
+                                        </label>
+                                        <Field
+                                            type="text"
+                                            id="title"
+                                            name="title"
+                                            placeholder="Post title"
+                                            data-i18n-attr="placeholder:post-title-placeholder"
+                                        />
+                                        { errors.title && touched.title ? (
+                                            <div className="error-message">{errors.title}</div>
+                                        ) : null}
+
+                                        {/* category */}
+                                        <div style={{ margin: "10px 0"}}>
+                                            <label htmlFor="categoryId" data-i18n="post-category">Category</label>
+                                            <Field
+                                                as="select"
+                                                className="category-select"
+                                                name="categoryId"
+                                                id="categoryId"
+                                            >
+                                                <option value="" disabled>
+                                                    — Select category —
+                                                </option>
+                                                {categories.map((category) => (
+                                                    <option
+                                                        key={category.id}
+                                                        value={category.id}
+                                                    >
+                                                        {getLocCatName(category)}
+                                                    </option>
+                                                ))}
+                                            </Field>
+                                            { errors.categoryId && touched.categoryId ? (
+                                                <div className="error-message">{errors.categoryId}</div>
+                                            ) : null}
+                                        </div>
+
+                                        {/*date_range*/}
+                                        <div className="year-range">
+                                            <label htmlFor="dateRangeStart" data-i18n="from">From:</label>
+                                            <Field
+                                                type="number"
+                                                id="dateRangeStart"
+                                                name="dateRangeStart"
+                                                min="1800"
+                                                max="2025"
+                                                step="1"
+                                            />
+
+                                            <label htmlFor="dateRangeEnd" data-i18n="to">To:</label>
+                                            <Field
+                                                type="number"
+                                                id="dateRangeEnd"
+                                                name="dateRangeEnd"
+                                                min="1800"
+                                                max="2025"
+                                                step="1"
+                                            />
+                                        </div>
+                                        {/*tags*/}
+                                        <TagInput
+                                            tags={tags}
+                                            setTags={setTags}
+                                        />
+                                    </div>
+                                    <input type="file" id="quillImageInput" style={{ display: "none" }}/>
+
+                                    {/*wide*/}
+                                    <DragDropImage
+                                        file={wideImgFile}
+                                        setFile={setWideImgFile}
+                                        url={wideImgUrl}
+                                        setUrl={setWideImgUrl}
+                                        wrapperClassName="post-wide-img-wrapper"
+                                    />
+                                    {/*Cover Img*/}
+                                    <DragDropImage
+                                        file={coverImgFile}
+                                        setFile={setCoverImgFile}
+                                        url={coverImgUrl}
+                                        setUrl={setCoverImgUrl}
+                                        wrapperClassName="post-cover-img-wrapper"
+                                    />
+                                </div>
+
+                                <Editor
+                                    name="editor"
+                                />
+
+                                {/* General form error display - only show after submission attempt with errors */}
+                                {Object.keys(errors).length > 0 && submitCount > 0 && (
+                                    <div className="form-error-message">
+                                        <strong>Please fix the following errors:</strong>
+                                        <ul style={{margin: 0, paddingLeft: '20px'}}>
+                                            {Object.entries(errors).map(([field, message]) => (
+                                                <li key={field}>
+                                                    <strong>{field}:</strong> {message}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                <button className="btn-primary"
+                                        id="savePost"
+                                    // onClick={onSave}
+                                        type="submit"
+                                        data-i18n="save-post"
+                                        style={{ marginRight: "10px" }}
+                                >
+                                    Save Post
+                                    {isAddPostLoading && <Spinner style={{ marginLeft: "5px" }} />}
+                                </button>
+
+                                <button
+                                    className="btn-secondary"
+                                    id="reset"
+                                    onClick={onCancel}
+                                    data-i18n="cancel">
+                                    Cancel
+                                </button>
+                            </Form>
+                        );
+                    }}
+                </Formik>
             </div>
-        </>
-
     );
 };
 

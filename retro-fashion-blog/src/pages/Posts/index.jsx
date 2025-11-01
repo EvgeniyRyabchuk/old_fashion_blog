@@ -15,13 +15,13 @@ import useQueryParams from "@/hooks/useQueryParams";
 import {usePaginate} from "@/hooks/usePaginate";
 import {defPage, defPerPage} from "@/constants/default";
 import FilterDrawer from "@pages/Posts/FilterDrawer";
-import * as sea from "node:sea";
+import {toggleBodyScroll} from "@utils/helper";
+import {useLocation} from "react-router-dom";
 
 
 const colName = "posts";
 
 const Posts = () => {
-
 
     const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -35,8 +35,6 @@ const Posts = () => {
     const { t } = useLang();
 
     const [posts, setPosts] = useState([]);
-
-
 
     const { updateSearchParams, postFilterQueryCreator, setSearchParams, searchParams } = useQueryParams();
 
@@ -99,7 +97,6 @@ const Posts = () => {
         updateSearchParams({ sort: orderField, page: pageForLoadMore, perPage });
     }, [orderField, perPage, pageForLoadMore]);
 
-    console.log('posts', posts);
 
     return (
         <>

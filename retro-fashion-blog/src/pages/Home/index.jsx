@@ -18,7 +18,7 @@ const Home = () => {
 
             <Billboard/>
 
-            <LastPosts/>
+            <LastPosts />
 
             <MostPopularTags />
 

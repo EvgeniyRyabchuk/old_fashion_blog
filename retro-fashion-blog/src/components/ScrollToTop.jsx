@@ -7,6 +7,7 @@ const ScrollToTop = () => {
   useEffect(() => {
     // Scroll to top whenever the pathname changes
     window.scrollTo(0, 0);
+    document.querySelector("body").classList.remove("no-scroll");
   }, [pathname]);
 
   return null;

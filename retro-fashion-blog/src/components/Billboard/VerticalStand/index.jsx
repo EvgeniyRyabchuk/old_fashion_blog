@@ -1,38 +1,32 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import './index.scss';
 import PATHS from "@/constants/paths";
 import {createSlider, SliderDirection} from "@utils/carousel";
 import {useMediaQuery} from "@/hooks/useMediaQuery";
-import breakpoints from "@/constants/breakpoints";
+// import categories from "@components/Layout/StandardLayout/Header/data/common-nav/categories";
 import MaxWBreakpoints from "@/constants/MaxWBreakpoints";
+import {useFetching} from "@/hooks/useFetching";
+import {fetchAllCategories} from "@/services/categories";
 
-const categories = [
-    {
-        id: 1,
-        name: 'Male',
-    },
-    {
-        id: 2,
-        name: 'Female',
-    },
-    {
-        id: 3,
-        name: 'Classic',
-    },
-    {
-        id: 4,
-        name: 'News',
-    }
-];
 
 const VerticalStand = ({ interval = 6000, animationTime = 2}) => {
     const isMobile = useMediaQuery(MaxWBreakpoints.xl);
     const [sliderInstance, setSliderInstance] = useState(null);
     const slider = useRef(null);
 
+    const [categories, setCategories] = useState([]);
+    const [fetchCategories, isLoading, error] = useFetching(async () => {
+        const cList = await fetchAllCategories();
+        setCategories(cList)
+    })
     useEffect(() => {
-        if(slider.current) {
+        fetchCategories();
+    }, []);
+
+
+    useEffect(() => {
+        if(slider.current && categories.length > 0) {
             const categoriesVSlider = createSlider(slider.current);
             setSliderInstance(categoriesVSlider);
             return () => { categoriesVSlider.stop(); };
@@ -58,22 +52,29 @@ const VerticalStand = ({ interval = 6000, animationTime = 2}) => {
         <div className="vertical-stand">
             <div className="mobile-wrapper">
                 {categories.map((item) => (
-                    <Link key={`mobile-${item.id}`}
-                          className="category"
-                          to={`${PATHS.POSTS}?categories=${item.id}`}
-                    >
-                        {item.name}
-                    </Link>
+                    <div className="category" key={item.id}>
+                        <Link key={`mobile-${item.id}`}
+                              className="category-img scaled-0"
+                              to={`${PATHS.POSTS}?categories=${item.id}`}
+                              style={{backgroundImage: `url(${item.imgUrl})`}}
+                        >
+                            <span>{item.name_en}</span>
+                        </Link>
+                    </div>
+
                 ))}
             </div>
             <div className="slider" ref={slider}>
                 {categories.map((item) => (
-                    <Link key={`desktop-${item.id}`}
-                          className="category"
-                          to={`${PATHS.POSTS}?categories=${item.id}`}
-                    >
-                        {item.name}
-                    </Link>
+                    <div className="category" key={item.id}>
+                        <Link key={`desktop-${item.id}`}
+                              className="category-img scaled-in"
+                              to={`${PATHS.POSTS}?categories=${item.id}`}
+                              style={{backgroundImage: `url(${item.imgUrl})`}}
+                        >
+                            <span>{item.name_en}</span>
+                        </Link>
+                    </div>
                 ))}
             </div>
         </div>

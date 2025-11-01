@@ -160,11 +160,20 @@ async function fetchPostsBySearch(term) {
     return posts;
 }
 
+const fetchCarouselContent = async () => {
+    const snap =
+        await db.collection("carousel")
+            .orderBy("createdAt", "desc")
+            .get();
+    return snap.docs.map(p => ({ id: p.id, ...p.data() }) )
+}
+
 export {
     fetchPostsByIds,
     fetchLastPosts,
     fetchPostById,
     removePostById,
     createOrUpdatePost,
-    fetchPostsBySearch
+    fetchPostsBySearch,
+    fetchCarouselContent
 }

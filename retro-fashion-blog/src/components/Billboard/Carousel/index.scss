@@ -3,13 +3,37 @@
   .carousel {
     width: 70%;
     position: relative;
-    background-image: url('@assets/images/background_cover_1.png');
+    //background-image: url('@assets/images/carousel/background_cover_1.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     transition: 0.8s background-image ease-in-out;
     cursor: pointer;
 
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding-bottom: 35px;
+
+
+    .carousel-text {
+      max-width: 80%;
+      margin: 0 auto;
+      padding: 0.1em 0.2em;
+      color: white;
+      font-size: 1.4rem;                 // smaller, calm
+      font-weight: 300;                   // light
+      text-align: center;
+      line-height: 1.2;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); // minimal shadow for readability
+      background-color: rgba(0, 0, 0, 0.2);     // nearly transparent overlay
+      border-radius: 2px;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none;
+      word-break: break-word;
+      opacity: 0.85;
+
+    }
 
     .bottom-panel,
     .bottom-decorate {

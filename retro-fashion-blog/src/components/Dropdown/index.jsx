@@ -59,9 +59,8 @@ const Dropdown = ({
 
     useEffect(() => {
         const res = render(data);
-        // console.log(res)
         setContent(res);
-    }, [])
+    }, [data])
 
     return (
         <ul className={ulClassName}>

@@ -2,31 +2,40 @@ import React, {useEffect, useRef, useState} from 'react';
 import {createCarousel} from "@utils/carousel";
 import './index.scss';
 
-import img1 from '@assets/images/background_cover_1.png';
-import img2 from '@assets/images/background_cover_2.png';
-import img3 from '@assets/images/1960s-minidress4.jpg';
+import img1 from '@assets/images/carousel/background_cover_1.png';
+import img2 from '@assets/images/carousel/bg3.png';
+import img3 from '@assets/images/carousel/bg4.png';
+import img4 from '@assets/images/carousel/bg5.png';
+import {useFetching} from "@/hooks/useFetching";
+import {fetchAllCategories} from "@/services/categories";
+import PATHS from "@/constants/paths";
+import {fetchCarouselContent} from "@/services/posts";
 
-const imagesForCarousel = [
-    {
-        title: "Male",
-        imgUrl: img1,
-        postId: 1
-    },
-    {
-        title: "Female",
-        imgUrl: img2,
-        postId: 2
-    },
-    {
-        title: "Male",
-        imgUrl: img3,
-        postId: 3
-    },
-]
+// const imagesForCarousel = [
+//     {
+//         title: "Male",
+//         imgUrl: img1,
+//         postId: 1
+//     },
+//     {
+//         title: "Female",
+//         imgUrl: img2,
+//         postId: 2
+//     },
+//     {
+//         title: "Male",
+//         imgUrl: img3,
+//         postId: 3
+//     },
+//     {
+//         title: "Male",
+//         imgUrl: img4,
+//         postId: 4
+//     },
+// ]
 
 const Carousel = ({ carouselInterval = 10000 }) => {
-
-    //TODO: fetch images dynamically
+    console.log("Carousel")
 // 1. Define refs
     const carouselLeftBtn = useRef(null);
     const carouselRightBtn = useRef(null);
@@ -36,12 +45,22 @@ const Carousel = ({ carouselInterval = 10000 }) => {
     // 2. State to hold the carousel instance
     const [mainCarousel, setMainCarousel] = useState(null);
 
+    const [content, setContent] = useState([]);
+    const [fetchContent, isLoading, error] = useFetching(async () => {
+        const data = await fetchCarouselContent();
+        setContent(data);
+    })
+    console.log(content)
+    useEffect(() => {
+        fetchContent();
+    }, []);
+
     // 3. useEffect runs AFTER the component has rendered and refs are attached to the DOM
     useEffect(() => {
         // Double-check refs are not null before creating the object
-        if (displayCarouselElem.current) {
+        if (displayCarouselElem.current && content.length > 0) {
             const newCarousel = createCarousel(
-                imagesForCarousel,
+                content,
                 displayCarouselElem.current,
                 carouselLeftBtn.current,
                 carouselRightBtn.current,
@@ -55,7 +74,7 @@ const Carousel = ({ carouselInterval = 10000 }) => {
             // Clean up the loop when the component unmounts
             return () => newCarousel.stop();
         }
-    }, [carouselInterval]); // Dependencies ensure it runs only if interval changes
+    }, [carouselInterval, content]); // Dependencies ensure it runs only if interval changes
 
 
     return (

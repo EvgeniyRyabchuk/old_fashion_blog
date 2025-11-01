@@ -40,6 +40,8 @@ async function getOrCreateTags(tagMinCountToCreateNew = 0) {
   console.log(tags);
   return tags;
 }
+
+
 async function attachTagsToPost(batch, postRef, tags, tagMinCount, tagMaxCount) {
       // Attach 1-3 random tags
     const numTags = faker.number.int({ min: tagMinCount, max: tagMaxCount });
@@ -53,6 +55,8 @@ async function attachTagsToPost(batch, postRef, tags, tagMinCount, tagMaxCount) 
       });
     });
 }
+
+
 async function createComments(batch, postRef, commentMinCount, commentMaxCount) {
   const usersSnapshot = await db.collection("users").get();
   if (usersSnapshot.empty) {
@@ -89,7 +93,14 @@ async function getCategoriesOrCreateIfNotExist() {
 
     staticCategories.forEach((sc) => {
       const docRef = catCol.doc();
-      batch.set(docRef, { name_en: sc.name_en, name_ua: sc.name_ua, name_ru: sc.name_ru}); 
+      batch.set(docRef, { 
+        name_en: sc.name_en,
+        name_ua: 
+        sc.name_ua, 
+        name_ru: sc.name_ru,
+        dataI18n: sc.dataI18n,
+        imgUrl: sc.imgUrl
+      }); 
     });
 
     await batch.commit();
@@ -99,6 +110,53 @@ async function getCategoriesOrCreateIfNotExist() {
 
   return catSnapshot;
 }
+
+async function createCarouselFromLastPosts() {
+  const carouselCol = db.collection("carousel");
+  let carouselSnap = await carouselCol.get();
+
+  // Skip if already exists
+  if (!carouselSnap.empty) {
+    console.log("Carousel already exists. Skipping seeding.");
+    return carouselSnap;
+  }
+
+  // Fetch last 4 posts ordered by creation date or timestamp
+  const postsSnap = await db
+    .collection("posts")
+    .orderBy("createdAt", "desc")
+    .limit(4)
+    .get();
+
+  if (postsSnap.empty) {
+    console.log("No posts found to create carousel content.");
+    return null;
+  }
+
+  const batch = db.batch();
+
+  postsSnap.docs.forEach((doc, i) => {
+    const post = doc.data();
+
+    const carouselItem = {
+      title: post.title || `Post #${i + 1}`,
+      imgUrl: post.wideImgUrl,
+      postId: doc.id, 
+      createdAt: new Date(),
+    };
+
+    const newDocRef = carouselCol.doc();
+    batch.set(newDocRef, carouselItem);
+  });
+
+  await batch.commit();
+
+  console.log("✅ Carousel seeded from latest posts!");
+  carouselSnap = await carouselCol.get();
+
+  return carouselSnap;
+}
+
 
 async function getUsersAndAdminsOrCreateIfNotExist() {
    const staticData = JSON.parse(
@@ -209,7 +267,10 @@ async function seedPostsWithTagsAndComments(count = 5) {
 }
 
 seedPostsWithTagsAndComments(postCount)
-  .then(() => process.exit())
+  .then(() => { 
+    createCarouselFromLastPosts();
+    // process.exit()
+  })
   .catch(err => {
     console.error("Seeder failed:", err);
     process.exit(1);
