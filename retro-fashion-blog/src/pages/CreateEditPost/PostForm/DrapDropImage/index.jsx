@@ -43,9 +43,11 @@ const DragDropImage = ({ setFile, file, url, setUrl, defImage, wrapperClassName}
                 ref={coverImgPreviewRef}
                 style={isPreviewShow ? showPreviewStyles : hidePreviewStyles}
             >
-                <button id="deletePostCoverImgBtn"
-                        className="btn-danger"
-                        onClick={onDeleteImageBtnClick}
+                <button
+                    id="deletePostCoverImgBtn"
+                    className="btn-danger"
+                    type="button"
+                    onClick={onDeleteImageBtnClick}
                 >
                     X
                 </button>

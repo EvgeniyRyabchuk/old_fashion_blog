@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./index.scss";
 
-const TagInput = ({ tags, setTags }) => {
-    console.log(123)
-    const [inputValue, setInputValue] = useState("");
+const TagInput = ({ tags, setTags} ) => {
+    const [inputValue, setInputValueLocal] = useState("");
+
+
+    const setInputValue = setInputValueLocal;
 
     // Handle Enter press
     const handleKeyDown = (e) => {
@@ -23,6 +25,7 @@ const TagInput = ({ tags, setTags }) => {
     const removeTag = (indexToRemove) => {
         setTags((prev) => prev.filter((_, index) => index !== indexToRemove));
     };
+
 
     return (
         <div className="tag-manager">

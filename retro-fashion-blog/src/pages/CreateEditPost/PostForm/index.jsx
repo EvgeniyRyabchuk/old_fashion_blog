@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Editor from "@components/Editor";
 import './index.scss';
 import DragDropImage from "@pages/CreateEditPost/PostForm/DrapDropImage";
@@ -16,18 +16,15 @@ import {StandardLoader} from "@components/Loader";
 import Spinner from "@components/Loader/Spinner";
 import validationSchema from './validationSchema'
 import { Formik, Form, Field, ErrorMessage} from "formik";
+import {toast} from "react-toastify";
 
 
-const PostForm = ({ onCommit  }) => {
+const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }) => {
 
     const { user, isAuth } = useAuth();
     const { getLocCatName } = useLang();
 
-    // ================= FETCH POST ==================
-    const [postToEdit, setPostToEdit] = useState(null);
-    const [loadedPostId, setLoadedPostId] = useState(null); // Track which post ID was loaded
     const { updateSearchParams, postFilterQueryCreator, setSearchParams, searchParams } = useQueryParams();
-    const postId = searchParams.get("postId");
 
 
     // ================= FETCH CATEGORIES ==================
@@ -51,7 +48,7 @@ const PostForm = ({ onCommit  }) => {
 
     const [fetchPost, isFetchPostLoading, fetchPostError] = useFetching(async () => {
         // Don't refetch if we already loaded the same post
-        if (postId && loadedPostId === postId) return;
+        if (!postId) return;
 
         const post = await fetchPostById(postId);
 
@@ -61,27 +58,31 @@ const PostForm = ({ onCommit  }) => {
         setCoverImgUrl(post.coverUrl ?? defaultCoverUrl);
         setWideImgUrl(post.wideImgUrl ?? defaultWideImgUrl);
         setTags(post.tags);
-
-        setLoadedPostId(postId); // Mark that we've loaded this post
     })
-
+    console.log(isFetchPostLoading, "123")
     useEffect(() => {
         if (!postId) return;
         fetchPost();
     }, [postId])
 
 
-    const [fetchPostManagement, isAddPostLoading, addPostError] = useFetching(async (data) => {
-        await createOrUpdatePost(data, user);
+    const [changePost, isAddUpdatePostLoading, addPostError, setIsAddUpdatePostLoading] = useFetching(async (data) => {
+        const newPost = await createOrUpdatePost(data, user);
+        if(postToEdit)
+            toast.info(`Post #${newPost.id} updated" successfully}`);
+        else
+            toast.success(`Post #${newPost.id} added successfully`);
+
     })
 
     // onSubmit
     const onSave = async (values) => {
-
+        setIsAddUpdatePostLoading(true);
         let coverUrl, wideImgUrl = null;
 
+        // if post is new
         if(!postToEdit) {
-            // if post is new and cover img loaded then upload it to cloudinary
+            // and cover img loaded then upload it to cloudinary
             if(coverImgFile) coverUrl = await loadToCloudinary(coverImgFile);
             // if post is new and no cover img load default
             else coverUrl = defaultCoverUrl;
@@ -90,6 +91,7 @@ const PostForm = ({ onCommit  }) => {
             else wideImgUrl = defaultWideImgUrl;
         }
 
+        // if post already existed
         if(postToEdit) {
             if(coverImgFile) coverUrl = await loadToCloudinary(coverImgFile);
             else if (coverImgUrl) coverUrl = postToEdit.coverUrl
@@ -100,12 +102,12 @@ const PostForm = ({ onCommit  }) => {
             else wideImgUrl = defaultWideImgUrl;
         }
 
-
         const startDate = new Date(values.dateRangeStart).getFullYear();
         const endDate = new Date(values.dateRangeEnd).getFullYear();
 
         if (!startDate || !endDate) {
             alert("Please select both dates.");
+            setIsAddUpdatePostLoading(false);
             return;
         }
 
@@ -119,6 +121,8 @@ const PostForm = ({ onCommit  }) => {
             content: values.editor,
             tags: tags.map((tag) => tag?.name || tag),
         }
+
+        // if this is post editing then overwrite old date with new
         if(postToEdit)
             postFormData = {
             ...postToEdit,
@@ -127,19 +131,17 @@ const PostForm = ({ onCommit  }) => {
 
         console.log(postFormData);
 
-        await fetchPostManagement(postFormData);
-
-        clearUpTheForm();
+        await changePost(postFormData);
 
         onCommit();
     }
 
-    const onCancel = () => {
+    const baseOnCancel = (resetForm) => {
         toggleBodyScroll(false, false, true)
-        clearUpTheForm();
+        clearUpTheForm(resetForm);
     }
 
-    const clearUpTheForm = () => {
+    const clearUpTheForm = (resetForm = null) => {
         setCoverImgFile(null);
         setWideImgFile(null);
         setCoverImgUrl(null);
@@ -148,9 +150,21 @@ const PostForm = ({ onCommit  }) => {
         setTags([]);
 
         setPostToEdit(null);
-        setLoadedPostId(null); // Reset loaded post ID when form is cleared
 
-        updateSearchParams({ postId: null })
+        updateSearchParams({ postId: null });
+        
+        // Reset Formik form if resetForm is provided
+        if (resetForm) {
+            resetForm({
+                values: {
+                    title: "",
+                    categoryId: "",
+                    dateRangeStart: defStartYear,
+                    dateRangeEnd: defEndYear,
+                    editor: "",
+                }
+            });
+        }
     }
 
     // Set initial values based on whether we're editing or creating
@@ -173,15 +187,19 @@ const PostForm = ({ onCommit  }) => {
         };
     };
 
+
     return (
-            <div className={`upload_container ${isFetchPostLoading ? "disabled" : ""}`}>
+            <div className={`upload_container ${isFetchPostLoading || isAddUpdatePostLoading ? "disabled" : ""}`}>
                 { isFetchPostLoading && <StandardLoader /> }
                 <Formik
                     initialValues={getInitialValues()}
                     validationSchema={validationSchema}
-                    onSubmit={onSave}
+                    onSubmit={async (values, { resetForm }) => {
+                        await onSave(values);
+                        clearUpTheForm(resetForm); // ✅ resets to initialValues
+                    }}
                     enableReinitialize={true} // This allows form to reinitialize when initialValues change
-                    validateOnMount={false}
+                    validateOnMount={false} 
                     validateOnChange={true}
                     validateOnBlur={true}
                 >
@@ -191,18 +209,21 @@ const PostForm = ({ onCommit  }) => {
                           handleChange,
                           setFieldValue,
                           isSubmitting,
-                          submitCount
-                    }) => {
+                          submitCount,
+                          resetForm,
+                      }) => {
                         // Update form values when postToEdit changes
                         useEffect(() => {
-                            if (postId && postToEdit && loadedPostId === postId) {
+                            if (postId && postToEdit) {
                                 setFieldValue('title', postToEdit.title);
                                 setFieldValue('categoryId', postToEdit.categoryId);
                                 setFieldValue('dateRangeStart', postToEdit.date_range_start);
                                 setFieldValue('dateRangeEnd', postToEdit.date_range_end);
                                 setFieldValue('editor', postToEdit.content);
                             }
-                        }, [postToEdit, loadedPostId, postId, setFieldValue]);
+                        }, [postToEdit, postId, setFieldValue]);
+
+
 
                         return (
                             <Form>
@@ -272,10 +293,7 @@ const PostForm = ({ onCommit  }) => {
                                             />
                                         </div>
                                         {/*tags*/}
-                                        <TagInput
-                                            tags={tags}
-                                            setTags={setTags}
-                                        />
+                                        <TagInput tags={tags} setTags={setTags} />
                                     </div>
                                     <input type="file" id="quillImageInput" style={{ display: "none" }}/>
 
@@ -297,9 +315,7 @@ const PostForm = ({ onCommit  }) => {
                                     />
                                 </div>
 
-                                <Editor
-                                    name="editor"
-                                />
+                                <Editor name="editor" />
 
                                 {/* General form error display - only show after submission attempt with errors */}
                                 {Object.keys(errors).length > 0 && submitCount > 0 && (
@@ -317,20 +333,21 @@ const PostForm = ({ onCommit  }) => {
 
                                 <button className="btn-primary"
                                         id="savePost"
-                                    // onClick={onSave}
                                         type="submit"
                                         data-i18n="save-post"
                                         style={{ marginRight: "10px" }}
                                 >
-                                    Save Post
-                                    {isAddPostLoading && <Spinner style={{ marginLeft: "5px" }} />}
+                                    {saveBtnTitle}
+                                    {isSubmitting && <Spinner style={{ marginLeft: "5px" }} />}
                                 </button>
 
                                 <button
                                     className="btn-secondary"
                                     id="reset"
-                                    onClick={onCancel}
-                                    data-i18n="cancel">
+                                    onClick={() => baseOnCancel(resetForm)}
+                                    data-i18n="cancel"
+                                    type='button'
+                                >
                                     Cancel
                                 </button>
                             </Form>

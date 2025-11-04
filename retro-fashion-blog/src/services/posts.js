@@ -98,9 +98,9 @@ const createOrUpdatePost = async (post, user) => {
     } = post;
 
     const postId = post?.id;
+    let createdOrUpdatedPost = null;
 
     try {
-        let createdOrUpdatedPost = null;
         if(!postId) {
             createdOrUpdatedPost = await db.collection("posts").add({
                 title,
@@ -131,7 +131,7 @@ const createOrUpdatePost = async (post, user) => {
         }
 
         await addTagsIfNotExist(createdOrUpdatedPost, tags);
-
+        return createdOrUpdatedPost;
         console.log("Post created!");
     } catch (err) {
         console.error("Error adding document:", err);

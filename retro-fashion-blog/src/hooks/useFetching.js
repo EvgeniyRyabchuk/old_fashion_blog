@@ -1,4 +1,6 @@
 import {useState} from "react";
+import {toast} from "react-toastify";
+import {Exception} from "sass";
 
 
 export const useFetching = (callback) =>
@@ -10,13 +12,11 @@ export const useFetching = (callback) =>
     {
         try {
             setIsLoading(true);
-            const res = await callback(...args);
-            if(res) {
-                setIsLoading(false);
-                return res;
-            }
+            return await callback(...args);
+
         }
         catch (e) {
+            toast.error(`Something went wrong! ${e.message}`);
             setError(e.message);
         }
         finally {
@@ -24,6 +24,6 @@ export const useFetching = (callback) =>
         }
     }
 
-    return [fetching, isLoading, error];
+    return [fetching, isLoading, error, setIsLoading];
 }
 

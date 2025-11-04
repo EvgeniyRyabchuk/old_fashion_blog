@@ -5,6 +5,7 @@ import PATHS from "@/constants/paths";
 import {removePostById} from "@/services/posts";
 import post from "@pages/Post";
 import {useAuth} from "@/context/AuthContext";
+import {toast} from "react-toastify";
 
 const AdminPostTopPanel = () => {
 
@@ -16,6 +17,7 @@ const AdminPostTopPanel = () => {
     const onPostDelete = async () => {
         if(user && !user.isAdmin) return;
         await removePostById(postId)
+        toast.success("Post deleted successfully.");
         navigate(-1);
     }
 

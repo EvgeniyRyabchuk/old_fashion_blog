@@ -18,6 +18,7 @@ import Spoiler from "@components/Spoiler";
 import {removePostById} from "@/services/posts";
 import {useAuth} from "@/context/AuthContext";
 import Spinner from "@components/Loader/Spinner";
+import {toast} from "react-toastify";
 
 const colName = "posts";
 
@@ -129,7 +130,8 @@ const CreateEditPost = () => {
                 onDeleteClick={async () => {
                     //TODO: test
                     if(!isAuth || !user.isAdmin) return;
-                    await removePostById(id)
+                    await removePostById(id);
+                    toast.success("Post is deleted successfully.");
                     if(posts.length > 1)
                         reload(currentPage);
                     else
@@ -157,15 +159,32 @@ const CreateEditPost = () => {
     console.log(tableRows)
 
 
+    // ================= FETCH POST ==================
+    const [postToEdit, setPostToEdit] = useState(null);
+    const postId = searchParams.get("postId");
+
+    const formTitle = useMemo(() =>  `${postId ? "Update" : "Create"} Post`, [postId]);
+    const saveBtnTitle = useMemo(() =>  `${postId ? "Update" : "Save"} Post`, [postId])
+
+    useEffect(() => {
+        if(postId) setIsSpoilerPostCreateOpen(true);
+    }, []);
+
     return (
         <>
             <section className="content-section post-form-section">
                 <Spoiler
-                    title="Create Post"
+                    title={formTitle}
                     setIsOpen={setIsSpoilerPostCreateOpen}
                     isOpen={isSpoilerPostCreateOpen}
                 >
-                    <PostForm onCommit={() => reload(1) } />
+                    <PostForm
+                        onCommit={() => reload(1) }
+                        saveBtnTitle={saveBtnTitle}
+                        postId={postId}
+                        postToEdit={postToEdit}
+                        setPostToEdit={setPostToEdit}
+                    />
                 </Spoiler>
             </section>
 

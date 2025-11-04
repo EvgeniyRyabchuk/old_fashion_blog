@@ -9,7 +9,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: true,
-    port: 5173, // optional, default is 5173
     open: true // don't auto-open browser
   },
   resolve: {
