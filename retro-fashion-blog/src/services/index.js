@@ -11,7 +11,7 @@ const fetchDataFirestore = async (
     options
 ) => {
 
-
+    console.log(123)
     const sort = options.sort || "createdAt";
 
     // ref for filtered query

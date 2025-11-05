@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import './index.scss';
 import PageNumbers from "@components/Pagination/PageNumber";
+import {useLang} from "@/context/LangContext";
 
 
 const Pagination = ({
@@ -20,6 +21,7 @@ const Pagination = ({
                         pageForLoadMore,
                         isScrollUp = true
 }) => {
+    const { t } = useLang();
     console.log(currentPage)
 
     const pageList = useMemo(() => {
@@ -45,7 +47,7 @@ const Pagination = ({
         <div className={`pagination-wrapper ${items.length > 0 && "is-open"}`}>
             <div className="pagination-controls">
                 <div className="pagination__per-page">
-                    <label htmlFor="perPageSelect" data-i18n="posts-per-page">Posts per page:</label>
+                    <label htmlFor="perPageSelect">{t("posts-per-page") || "Posts per page:"}</label>
                     <select id="perPageSelect"
                             value={perPage}
                             onChange={onPerPageChange}
@@ -63,10 +65,9 @@ const Pagination = ({
                         id="prevPage"
                         className="prev-page"
                         disabled={currentPage === 1}
-                        data-i18n="posts-prev"
                         onClick={() => goToPage(currentPage - 1, isScrollUp)}
                     >
-                        Prev
+                        {t("posts-prev") || "Prev"}
                     </button>
 
                     <PageNumbers
@@ -79,11 +80,10 @@ const Pagination = ({
                     <button
                         id="nextPage"
                         className="next-page"
-                        data-i18n="posts-next"
                         disabled={currentPage >= totalPages || pageForLoadMore >= totalPages}
                         onClick={() => goToPage(currentPage + 1, isScrollUp)}
                     >
-                        Next
+                        {t("posts-next") || "Next"}
                     </button>
 
                     <span id="pageInfo" className="pagination__info">
@@ -96,9 +96,8 @@ const Pagination = ({
             { currentPage < totalPages && pageForLoadMore < totalPages &&
                 <div className="pagination__load-more">
                     <button id="loadMoreBtn"
-                            data-i18n="posts-load-more"
                             onClick={loadMore}>
-                        Load More
+                        {t("posts-load-more") || "Load More"}
                     </button>
                 </div>
             }

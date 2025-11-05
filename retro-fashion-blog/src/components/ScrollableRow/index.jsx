@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import createScrollRow from "@utils/scroll-roll";
 import {useFetching} from "@/hooks/useFetching";
 
-const ScrollableRow = ({ callback, Card, Placeholder, cardProps }) => {
+const ScrollableRow = ({ callback, Card, Placeholder, cardProps, title }) => {
     
     const [items, setItems] = useState([]);
     const [itemsRow, setItemsRow] = useState(null);
@@ -39,7 +39,7 @@ const ScrollableRow = ({ callback, Card, Placeholder, cardProps }) => {
 
     return (
         <section className="content-section" style={{ padding: '20px' }}>
-            <h3 className="main-content-title" data-i18n="section-last-posts">Last Posts</h3>
+            <h3 className="main-content-title" data-i18n="section-last-posts">{title}</h3>
             <div className="post-row-h-scrollable" id="lastPostsSection" ref={section}>
                 <button id="lastPostsLeftBtn" className="left-btn" ref={leftBtn}>◀</button>
                 <button id="lastPostsRightBtn" className="right-btn" ref={rightBtn}>▶</button>

@@ -1,5 +1,5 @@
 import PATHS from "@/constants/paths";
-import categories from "./categories";
+
 
 export default [
   {
@@ -10,12 +10,11 @@ export default [
   {
     name: "All posts",
     link: PATHS.POSTS,
-    dataI18n: "nav-common-nav-posts",
-    // data: categories
+    dataI18n: "nav-all-posts",
   },
   {
     name: "Contact",
-    link: PATHS.ABOUT,
+    link: PATHS.CONTACT,
     dataI18n: "nav-contact"
   },
   {

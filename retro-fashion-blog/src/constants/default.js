@@ -12,7 +12,7 @@ const defEndYear = '2025';
 const defPerPage = 10;
 const defPage = 1;
 
-
+const defSeeMoreTriggerCount = 5;
 
 export {
     defaultStartDate,
@@ -25,5 +25,6 @@ export {
     defPage,
 
     defaultCoverUrl,
-    defaultWideImgUrl
+    defaultWideImgUrl,
+    defSeeMoreTriggerCount
 }

@@ -2,9 +2,11 @@ import React, {useMemo, useState} from 'react';
 import {useAuth} from "@/context/AuthContext";
 import './index.scss';
 import {logout} from "@/services/auth";
-import { Authenticated as ProfileList } from '@components/Layout/StandardLayout/Header/data';
-import {useNavigate} from "react-router-dom";
+import { Authenticated as ProfileList } from '@/constants/navigation';
+import {Link, useNavigate} from "react-router-dom";
 import PATHS from "@/constants/paths";
+import defAvatar from "@assets/images/profile.png";
+import {useLang} from "@/context/LangContext";
 
 const Space = () => {
 
@@ -19,7 +21,7 @@ const ProfileMenu = ({
          isClickable,
          onSelected
     }) => {
-
+    const { t } = useLang();
     const [isOpen, setIsOpen] = useState(false);
     const { user, loading: authLoading } = useAuth();
 
@@ -47,25 +49,38 @@ const ProfileMenu = ({
                 <button className={
                     `${isAside ? "aside-profile-btn switchable-flex" : "profile-btn switchable"}`
                 } >
-                    <span data-i18n="auth-profile">Profile</span>
+
+                    <span >{t("profile-nav-welcome")}</span>
                     <span className="auth-user-name">
                         {!authLoading && user && (
                             <>
-                                :<Space />{user.name}
+                                <Space />{user.name}
                             </>
                         )}
                     </span>
+                    <img
+                        className="profile-btn-image"
+                        width="22"
+                        height="22"
+                        src={user.avatar || defAvatar}
+                        alt=""
+                    />
                 </button>
             </div>
 
             <ul className={`auth-nav-list ${isOpen ? "is-open" : ""}`}>
                 {linkList.map((item, index) => (
                     <li key={index} onClick={() => onSelected(item.link) }>
-                        <a  data-i18n={item.dataI18n}
-                            href={item.link}
-                            onClick={(e) => e.preventDefault()}>
-                            {item.name}
-                        </a>
+                        <Link
+                            data-i18n={item.dataI18n}
+                            to={item.link}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setIsOpen(false);
+                            }}
+                        >
+                            {t(item.dataI18n)}
+                        </Link>
                     </li>
                 ))}
                 <li style={{padding: 0}}>
@@ -77,7 +92,7 @@ const ProfileMenu = ({
                                 navigate(PATHS.HOME);
                                 onSelected();
                             }}>
-                        Logout
+                        {t("profile-nav-logout-btn")}
                     </button>
                 </li>
             </ul>

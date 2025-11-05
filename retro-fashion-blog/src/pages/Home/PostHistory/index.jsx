@@ -5,6 +5,7 @@ import PostCard from "@components/PostCard";
 import {PostCardSize} from "@/constants/sizes";
 import {PostCardLg} from "@components/Loader";
 import ScrollableRow from "@components/ScrollableRow";
+import {useLang} from "@/context/LangContext";
 
 const fetch = async () => {
     const historyStr = localStorage.getItem("postHistory");
@@ -29,13 +30,14 @@ const fetch = async () => {
 
 
 const PostHistory = () => {
-
+    const { t } = useLang();
     return (
         <ScrollableRow
             callback={fetch}
             Card={PostCard}
             cardProps={{ size: PostCardSize.lg }}
             Placeholder={PostCardLg}
+            title={t("section-view-history")}
         />
     );
 };

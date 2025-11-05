@@ -50,3 +50,8 @@ button { @extend .default-btn ; }
     display: flex;
   }
 }
+
+.disable-highlight {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}

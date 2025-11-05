@@ -6,17 +6,24 @@ import {removePostById} from "@/services/posts";
 import post from "@pages/Post";
 import {useAuth} from "@/context/AuthContext";
 import {toast} from "react-toastify";
+import Spinner from "@components/Loader/Spinner";
+import {useFetching} from "@/hooks/useFetching";
+import {useLang} from "@/context/LangContext";
 
 const AdminPostTopPanel = () => {
 
     const { postId } = useParams();
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { t } = useLang();
 
+    const [remove, isRemoveLoading, removeError ] = useFetching(async () => {
+        await removePostById(postId)
+    })
 
     const onPostDelete = async () => {
         if(user && !user.isAdmin) return;
-        await removePostById(postId)
+        remove();
         toast.success("Post deleted successfully.");
         navigate(-1);
     }
@@ -28,18 +35,17 @@ const AdminPostTopPanel = () => {
                     navigate(`${PATHS.ADMIN_POSTS}?postId=${postId}`)
                 }
                 className="btn-warning"
-                data-i18n="post-edit"
             >
-                Edit
+                {t("post-edit") || "Edit"}
             </button>
 
             <button
                 className="btn-danger"
                 id="postDeleteBtn"
-                data-i18n="post-delete"
                 onClick={onPostDelete}
             >
-                Delete
+                {t("post-delete") || "Delete"}
+                { isRemoveLoading && <Spinner style={{marginLeft: "10px"}}/>}
             </button>
         </section>
     );

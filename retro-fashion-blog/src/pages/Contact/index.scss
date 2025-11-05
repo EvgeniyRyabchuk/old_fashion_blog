@@ -1,0 +1,151 @@
+@use '@scss/abstracts' as abs;
+@use '@scss/utilities/helpers';
+
+.contact-page {
+  padding: 15px 30px 10px 30px;
+  width: 100%;
+  
+  .contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    .contact-title {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: abs.$color-text;
+      text-align: center;
+      padding: 20px 0;
+      
+      @media screen and (max-width: abs.$md-bp) {
+        font-size: 2rem;
+      }
+      
+      @media screen and (max-width: abs.$sm-bp) {
+        font-size: 1.75rem;
+      }
+    }
+    
+    .contact-content-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+      
+      @media screen and (max-width: abs.$md-bp) {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-info-section {
+        h2 {
+          color: abs.$color-primary;
+          margin-bottom: 1rem;
+        }
+        
+        .contact-description {
+          font-size: 1.1rem;
+          line-height: 1.7;
+          color: abs.$color-text;
+          margin-bottom: 2rem;
+        }
+        
+        .contact-details {
+          .contact-item {
+            margin-bottom: 1.5rem;
+            
+            h3 {
+              color: abs.$color-primary;
+              margin-bottom: 0.5rem;
+            }
+            
+            p {
+              color: abs.$color-text;
+              margin: 0;
+              line-height: 1.5;
+            }
+          }
+        }
+      }
+      
+      .contact-form-section {
+        h2 {
+          color: abs.$color-primary;
+          margin-bottom: 1rem;
+        }
+        
+        .contact-form {
+          .form-group {
+            margin-bottom: 1.5rem;
+            
+            label {
+              display: block;
+              margin-bottom: 0.5rem;
+              color: abs.$color-text;
+              font-weight: 500;
+            }
+            
+            input, textarea {
+              width: 100%;
+              padding: 12px;
+              border: 1px solid rgba(abs.$color-text-rgb, 0.2);
+              border-radius: 4px;
+              background-color: rgba(abs.$color-bg-rgb, 0.8);
+              color: abs.$color-text;
+              font-size: 1rem;
+              
+              &:focus {
+                outline: none;
+                border-color: abs.$color-primary;
+                box-shadow: 0 0 0 2px rgba(abs.$color-primary-rgb, 0.2);
+              }
+            }
+            
+            textarea {
+              resize: vertical;
+              min-height: 120px;
+            }
+          }
+          
+          .submit-btn {
+            background-color: abs.$color-primary;
+            color: abs.$color-primary-text;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            
+            &:hover {
+              background-color: abs.$color-primary-hover;
+            }
+            
+            &:active {
+              background-color: abs.$color-primary-active;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments for smaller screens
+@media screen and (max-width: abs.$sm-bp) {
+  .contact-page {
+    padding: 10px 15px;
+    
+    .contact-title {
+      font-size: 1.5rem !important;
+    }
+    
+    .contact-content-wrapper {
+      gap: 1.5rem !important;
+      margin: 1.5rem 0 !important;
+      
+      h2 {
+        font-size: 1.3rem !important;
+      }
+    }
+  }
+}

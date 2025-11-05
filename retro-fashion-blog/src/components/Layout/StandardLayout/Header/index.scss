@@ -1,15 +1,7 @@
 @use '@scss/components/buttons';
-@use '@scss/abstracts/index' as abs;
+@use '@scss/abstracts/index' as *;
 @use '@scss/utilities/index.scss';
 
-
-$switchable_bg_color: rgb(195, 195, 195);
-$size-menu-width: 300px;
-
-%profileIconSize {
-  width: 22px;
-  height: 22px;
-}
 
 .top-menu {
   position: relative;
@@ -119,130 +111,11 @@ header {
         min-width: 120px;
       }
       .language-select, .theme-select {
-        background-color: abs.$color-bg;
-        color: abs.$color-text;
+        background-color: $color-bg;
+        color: $color-text;
       }
 
-      .header-search {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        gap: 8px;
-        .search-controll {
-          width: 100%;
-          gap: 3px;
-          .search-close { display: none; background-color: white; }
-        }
-        .search-content {
-          display: none;
-          width: 100%;
-          z-index: 999;
 
-        }
-
-        .see-more {
-          color: abs.$color-bg;
-          &:hover {
-            color: abs.$color-danger;
-
-          }
-        }
-
-        &.active {
-          .search-content.is-open {
-            display: block;
-          }
-          .search-close {
-            border: 2px solid rgb(145, 145, 145);
-            border-radius: 20px;
-            &:hover {
-              border: 2px solid abs.$color-danger;
-              background-color: rgb(255, 255, 255);
-              color: abs.$color-danger;
-            }
-          }
-
-          .search-input,
-          .search-btn,
-          .search-close
-          {
-            display: block;
-          }
-          .search-toggle {
-            display: none !important;
-          }
-        }
-
-        // input + button (default desktop style)
-        .search-input {
-          flex: 1;
-          padding: 8px 12px;
-          font-size: 16px;
-          border: 1px solid #bbb;
-          border-radius: 20px;
-          transition: all 0.25s ease;
-          min-width: 100px;
-          width: 100%;
-          background-color: abs.$color-bg;
-          color: abs.$color-text;
-
-          &:focus {
-            border-color: #5678ff;
-            box-shadow: 0 0 6px rgba(86, 120, 255, 0.3);
-            outline: none;
-          }
-        }
-        .search-btn {
-          padding: 8px 14px;
-          border-radius: 20px;
-          background: linear-gradient(135deg, abs.$color-info, abs.$color-info-active);
-          color: #fff;
-          border: none;
-          cursor: pointer;
-          font-size: 15px;
-          font-weight: 500;
-          transition: background 0.2s ease, transform 0.1s ease;
-
-          &:hover {
-            background: linear-gradient(135deg, abs.$color-info, abs.$color-info-hover);
-          }
-
-          &:active {
-            transform: scale(0.95);
-          }
-
-        }
-        // icon-only button for mobile
-        .search-toggle {
-          display: none;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-
-          @include abs.icon-mask(abs.$icon-svg-search, 30px, abs.$color-text);
-          // background: abs.$color-info url("../images/search.png") no-repeat center/18px;
-          // cursor: pointer;
-          border: none;
-          &:hover {
-            cursor: pointer;
-            background-color: #d2dafa; // only color changes
-          }
-        }
-        .search-close {
-          display: none;
-          background: transparent !important;
-          border: none;
-          font-size: 22px;
-          cursor: pointer;
-          color: abs.$color-text;
-
-        }
-        &.active {
-          .search-close {
-            display: block;
-          }
-        }
-      }
     }
 
 
@@ -266,13 +139,14 @@ header {
         padding: 15px;
 
         &:hover {
-          background-color: rgb(126, 126, 193);
+          background-color: $color-primary-active;
           cursor: pointer;
 
           a {
             color: white;
           }
         }
+
       }
     }
 
@@ -286,13 +160,13 @@ header {
 
 .auth-nav-list {
   position: absolute;
-  background-color: abs.$color-bg;
+  background-color: $color-bg;
   top: 42px;
   right: 0;
   z-index: 99;
   margin: 0;
   width: 100%;
-  box-shadow: 0 0 5px abs.$color-secondary;
+  box-shadow: 0 0 5px $color-secondary;
   li {
     text-align: center;
   }
@@ -313,7 +187,7 @@ header {
 
 .top-menu {
   margin: 0 auto;
-  background-color: abs.$color-bg;
+  background-color: $color-bg;
 
 
   > .top-menu-content {
@@ -331,15 +205,15 @@ header {
       width: $burger-size;
       height: $burger-size;
       cursor: pointer;
-      color: abs.$color-text;
-      @include abs.icon-mask(abs.$icon-svg-burger, 40px, abs.$color-text);
+      color: $color-text;
+      @include icon-mask($icon-svg-burger, 40px, $color-text);
 
       &:hover {
-        background-color: $switchable_bg_color
+        background-color: $color-primary-active;
       }
 
       &.is-open {
-        @include abs.icon-mask(abs.$icon-svg-close, 40px, abs.$color-text);
+        @include icon-mask($icon-svg-close, 40px, $color-text);
       }
     }
   }
@@ -350,51 +224,6 @@ header {
 }
 
 
-.profile-btn-wrapper {
-  position: relative;
-  margin-left: 20px;
-  background-color: abs.$color-warning;
-  &:hover {
-    .profile-btn {
-      background-color: abs.$color-warning-hover;
-    }
-
-    .profile-btn::after {
-      transform: rotate(180deg);
-    }
-  }
-}
-
-
-.profile-btn,
-.aside-profile-btn {
-  box-shadow: 0px 0px 30px -14px #000000;
-  cursor: pointer;
-  font-size: 18px;
-  background-color: rgba(0, 0, 0, 0);
-  display: flex !important;
-  align-items: center;
-  padding: 6px 12px 6px 12px;
-
-  &::before,
-  &::after {
-    @extend %profileIconSize;
-    content: "";
-    transition: 0.5s transform ease;
-    display: block;
-  }
-
-  &::before {
-    @include abs.icon-mask(abs.$icon-svg-profile-round, 20px, abs.$color-text);
-    margin: 5px 10px 5px 5px;
-  }
-
-  &::after {
-    @include abs.icon-mask(abs.$icon-svg-down, 20px, abs.$color-text);
-    margin: 5px 5px 5px 3px;
-  }
-}
-
 
 
 .arrow-down-icon {
@@ -402,76 +231,7 @@ header {
 }
 
 
-.aside-profile-btn-wrapper {
-  min-width: $size-menu-width;
-  // display: flex;
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 15px;
 
-  background-color: abs.$color-warning;
-
-  .form-row {
-    .aside-profile-btn {
-      @extend .d-flex-h-center;
-      width: 100%;
-      margin: 0;
-      background-color: rgba(31, 36, 40, 0.2);
-
-      &::after {
-        transform: rotate(0deg);
-      }
-
-      &.is-open {
-        &::after {
-          transform: rotate(180deg);
-        }
-
-      }
-    }
-  }
-
-
-
-  .auth-nav-list {
-    // height: 0;
-    // max-height: 0;
-    // overflow: hidden;
-    @include abs.animated-appear-via-max-height(false, 0.5s); // Default (collapsed) state
-
-    &.is-open {
-      @include abs.animated-appear-via-max-height(true, 0.5s, 500px); // Open state
-      // height: calc-size(auto, size);
-      //  max-height: 500px;
-      /* Use auto with calc-size() */
-    }
-
-    // transition: 0.3s height ease-in-out;
-    // transition: max-height 0.5s ease-in-out; /* Animate the max-height */
-
-
-    position: static;
-    background-color: abs.$color-bg;
-    color: abs.$color-text;
-    display: block;
-    margin: 0;
-    z-index: 0;
-    overflow-y: hidden;
-
-    li {
-      text-align: center;
-    }
-
-    button {
-      // @extend .default-btn;
-      @extend .btn-danger;
-      margin: 0;
-      padding: 15px 0;
-      width: 100%;
-    }
-  }
-}
 
 $sideMenuWrapperAppearTime: 0.3s;
 
@@ -484,10 +244,10 @@ $sideMenuWrapperAppearTime: 0.3s;
   background-color: rgba(209, 209, 209, 0.5);
   z-index: 999;
 
-  @include abs.animated-disappear-via-visibility($sideMenuWrapperAppearTime);
+  @include animated-disappear-via-visibility($sideMenuWrapperAppearTime);
 
   &.is-open {
-    @include abs.animated-appear-via-visibility($sideMenuWrapperAppearTime);
+    @include animated-appear-via-visibility($sideMenuWrapperAppearTime);
   }
 
   .side-menu {
@@ -495,25 +255,25 @@ $sideMenuWrapperAppearTime: 0.3s;
     overflow: hidden;
     // width: 0px;
     height: 100vh;
-    background-color: abs.$color-bg;
+    background-color: $color-bg;
     position: absolute;
-    top: 0px;
-    left: -$size-menu-width;
+    top: 0;
+    left: -$aside-menu-width;
 
     &.is-open {
-      // width: $size-menu-width;
+      // width: aside-menu-width;
       left: 0;
     }
 
     .top-aside-block {
-      min-width: $size-menu-width;
+      min-width: $aside-menu-width;
       height: 67px;
       text-align: center;
       padding: 25px 20px 20px 20px;
       font-size: 20px;
       //margin-bottom: 20px;
       position: relative;
-      color: abs.$color-text;
+      color: $color-text;
       .close-aside {
         position: absolute;
         width: 45px;
@@ -522,13 +282,11 @@ $sideMenuWrapperAppearTime: 0.3s;
         top: 10px;
         cursor: pointer;
 
-
         &:hover {
-          background-color: $switchable_bg_color;
+          background-color: $color-primary-active;
         }
 
-        @include abs.icon-mask(abs.$icon-svg-close, 40px, abs.$color-text);
-
+        @include icon-mask($icon-svg-close, 40px, $color-text);
       }
     }
 
@@ -538,7 +296,7 @@ $sideMenuWrapperAppearTime: 0.3s;
       display: block !important;
       margin: 0 !important;
       padding: 15px;
-      min-width: $size-menu-width;
+      min-width: $aside-menu-width;
 
       .side-menu-item {
         @extend .d-flex-center;
@@ -549,65 +307,4 @@ $sideMenuWrapperAppearTime: 0.3s;
   }
 }
 
-
-.search-post-list {
-  @extend %menu-list;
-  display: block;
-  a {
-    height: 85px;
-  }
-  li {
-    @extend %menu-list-item;
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin: 7px 0;
-    background-color: abs.$color-bg;
-    border: 2px dashed rgb(119, 119, 119);
-    overflow: hidden;
-    text-align: justify;
-    line-height: 1.3rem;
-
-    a {
-      @extend %default-link;
-      display: flex;
-      padding: 10px;
-      .post-cover {
-        width: 120px;
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-        }
-      }
-    }
-  }
-
-  .post-title-wrapper {
-    // padding: 0px 15px 15px 15px;
-    margin: 0 15px;
-    width: 100%;
-    overflow: hidden;
-  }
-}
-
-
-@media screen and (min-width: abs.$lg-bp) {
-  .search-content {
-    position: absolute;
-    background: linear-gradient(135deg, rgba(abs.$color-secondary-rgb, 0.8),
-            rgba(abs.$color-bg-rgb, 0.8));
-    top: 50px;
-    right: 0;
-    border: 1px solid black;
-    width: 70% !important;
-  }
-  .search-post-list {
-    margin: 5px;
-  }
-
-}
-@media screen and (max-width: abs.$xl-bp) {
-  .search-content { width: 100% !important }
-}
 

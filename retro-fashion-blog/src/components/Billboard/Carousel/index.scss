@@ -1,73 +1,78 @@
 @use '@assets/scss/abstracts' as abs;
-
-  .carousel {
-    width: 70%;
-    position: relative;
-    //background-image: url('@assets/images/carousel/background_cover_1.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    transition: 0.8s background-image ease-in-out;
-    cursor: pointer;
-
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    padding-bottom: 35px;
+@use '@assets/scss/utilities';
 
 
-    .carousel-text {
-      max-width: 80%;
-      margin: 0 auto;
-      padding: 0.1em 0.2em;
-      color: white;
-      font-size: 1.4rem;                 // smaller, calm
-      font-weight: 300;                   // light
-      text-align: center;
-      line-height: 1.2;
-      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); // minimal shadow for readability
-      background-color: rgba(0, 0, 0, 0.2);     // nearly transparent overlay
-      border-radius: 2px;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      pointer-events: none;
-      word-break: break-word;
-      opacity: 0.85;
 
-    }
+.carousel {
+  width: 70%;
+  position: relative;
+  //background-image: url('@assets/images/carousel/background_cover_1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transition: 0.8s background-image ease-in-out;
+  cursor: pointer;
 
-    .bottom-panel,
-    .bottom-decorate {
-      position: absolute;
-      width: 100%;
-      height: 30px;
-      bottom: 0;
-    }
-    .bottom-decorate {
-      opacity: 0.2;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  padding-bottom: 35px;
+
+  @extend .disable-highlight;
+
+  .carousel-text {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 0.1em 0.2em;
+    color: white;
+    font-size: 1.4rem;                 // smaller, calm
+    font-weight: 300;                   // light
+    text-align: center;
+    line-height: 1.2;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); // minimal shadow for readability
+    background-color: rgba(0, 0, 0, 0.2);     // nearly transparent overlay
+    border-radius: 2px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    word-break: break-word;
+    opacity: 0.85;
+
+  }
+
+  .bottom-panel,
+  .bottom-decorate {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    bottom: 0;
+  }
+  .bottom-decorate {
+    opacity: 0.2;
+    background-color: white;
+  }
+  .bottom-panel {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    @include abs.flexbox(row, center, center, null, 5px);
+
+    .dot {
+      width: 40px;
+      height: 10px;
+      border-radius: 10px;
       background-color: white;
-    }
-    .bottom-panel {
-      position: absolute;
-      width: 100%;
-      height: 30px;
-      @include abs.flexbox(row, center, center, null, 5px);
+      opacity: 0.3;
+      transition: opacity 0.3s ease, background-color 0.3s ease;
+      cursor: pointer;
 
-      .dot {
-        width: 40px;
-        height: 10px;
-        border-radius: 10px;
-        background-color: white;
-        opacity: 0.3;
-
-        &:hover {
-          opacity: 0.7;
-          cursor: pointer;
-          background-color: white !important;
-        }
-        &.active {
-          opacity: 0.7;
-          transition: 0.3s opacity ease-in-out;
-        }
+      &:hover {
+        opacity: 0.7;
+        background-color: white !important;
+      }
+      &.active {
+        opacity: 0.7;
       }
     }
   }
+}
+

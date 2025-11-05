@@ -1,7 +1,10 @@
 import React from "react";
 import './index.scss';
+import {useLang} from "@/context/LangContext";
 
 const FilterChips = ({ chips, setChips, onRemove }) => {
+    const { t } = useLang();
+
     const handleRemove = (chip) => {
         setChips((prev) => prev.filter((c) => c.value !== chip.value || c.type !== chip.type));
 
@@ -26,8 +29,8 @@ const FilterChips = ({ chips, setChips, onRemove }) => {
 
     return (
         <div className="selected-filters">
-          <span className="selected-filters__label" data-i18n="posts-selected-filters">
-            Selected Filters:
+          <span className="selected-filters__label">
+            {t("posts-selected-filters") || "Selected Filters:"}
           </span>
 
             <div className="selected-filters__list">
@@ -50,7 +53,7 @@ const FilterChips = ({ chips, setChips, onRemove }) => {
                         </div>
                     ))
                 ) : (
-                    <span className="no-filters">No filters selected</span>
+                    <span className="no-filters">{t("no-filters") || "No filters selected"}</span>
                 )}
             </div>
         </div>

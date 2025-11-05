@@ -19,29 +19,18 @@ import {removePostById} from "@/services/posts";
 import {useAuth} from "@/context/AuthContext";
 import Spinner from "@components/Loader/Spinner";
 import {toast} from "react-toastify";
+import Breadcrumb from "@components/Breadcrumb";
 
 const colName = "posts";
 
-const staticCols = [
-    { dataI18n: "create-edit-t-id",         name: "ID",                 key: "id" },
-    { dataI18n: "create-edit-t-title",      name: "Title",              key: "title" },
-    { dataI18n: "create-edit-t-content",    name: "Content",            key: "content", type: "largeText" },
-    { dataI18n: "create-edit-t-coverUrl",   name: "Cover URL",          key: "coverUrl", type: "img" },
-    { dataI18n: "create-edit-t-category",   name: "Category",           key: "category" },
-    { dataI18n: "create-edit-t-dateRange",  name: "Date Range",         key: "dateRange" },
-    { dataI18n: "create-edit-t-userId",     name: "Creator User ID",    key: "userId" },
-    { dataI18n: "create-edit-t-createdAt",  name: "Created At",         key: "createdAt" },
-    { dataI18n: "create-edit-t-tags",       name: "Tags",               key: "tags" },
-    { dataI18n: "create-edit-t-actions",    name: "Actions",            key: "actions", type: "actions" },
-];
-
 const EditRemove = ({ onDeleteClick, onEditClick}) => {
+    const { t } = useLang();
     const [fetchDeleteRes, isLoading,  error] = useFetching(onDeleteClick);
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
-            <button type="button" onClick={onEditClick}>Edit</button>
+            <button type="button" onClick={onEditClick}>{t("edit") || "Edit"}</button>
             <button type="button" onClick={() => fetchDeleteRes() }>
-                {isLoading ? (<Spinner />) : ("Remove")}
+                {isLoading ? (<Spinner />) : (t("remove") || "Remove")}
             </button>
         </div>
     )
@@ -54,6 +43,19 @@ const CreateEditPost = () => {
     const { user, isAuth } = useAuth();
     const { t, getLocCatName } = useLang();
     const { updateSearchParams, postFilterQueryCreator, setSearchParams, searchParams } = useQueryParams();
+
+    const staticCols = [
+        { name: t("create-edit-t-id") || "ID",         key: "id" },
+        { name: t("create-edit-t-title") || "Title",      key: "title" },
+        { name: t("create-edit-t-content") || "Content",    key: "content", type: "largeText" },
+        { name: t("create-edit-t-coverUrl") || "Cover URL",          key: "coverUrl", type: "img" },
+        { name: t("create-edit-t-category") || "Category",           key: "category" },
+        { name: t("create-edit-t-dateRange") || "Date Range",         key: "dateRange" },
+        { name: t("create-edit-t-userId") || "Creator User ID",    key: "userId" },
+        { name: t("create-edit-t-createdAt") || "Created At",         key: "createdAt" },
+        { name: t("create-edit-t-tags") || "Tags",               key: "tags" },
+        { name: t("create-edit-t-actions") || "Actions",            key: "actions", type: "actions" },
+    ];
 
     const [posts, setPosts] = useState([]);
     const [order, setOrder] = useState("asc");
@@ -163,8 +165,12 @@ const CreateEditPost = () => {
     const [postToEdit, setPostToEdit] = useState(null);
     const postId = searchParams.get("postId");
 
-    const formTitle = useMemo(() =>  `${postId ? "Update" : "Create"} Post`, [postId]);
-    const saveBtnTitle = useMemo(() =>  `${postId ? "Update" : "Save"} Post`, [postId])
+    const formTitle = useMemo(() =>
+        `${postId ? t("update-post") || "Update" : t("create-post") || "Create"}`,
+        [postId, t]);
+    const saveBtnTitle = useMemo(() =>
+        `${postId ? t("update-post") || "Update" : t("save-post") || "Save"}`,
+        [postId, t])
 
     useEffect(() => {
         if(postId) setIsSpoilerPostCreateOpen(true);
@@ -172,6 +178,13 @@ const CreateEditPost = () => {
 
     return (
         <>
+            <Breadcrumb
+                items={[
+                    { to: "/", label: t("nav-home") || "Home" },
+                    { label: t("title-create-edit-post") || "Create or Edit Posts" },
+                ]}
+            />
+
             <section className="content-section post-form-section">
                 <Spoiler
                     title={formTitle}

@@ -11,6 +11,7 @@ import CommentSection from "@pages/Post/CommentSection";
 import AdminPostTopPanel from "@pages/Post/AdminPostTopPanel";
 import StandardWrapperLoader from "@components/Loader/StandardWrapperLoader";
 import {useAuth} from "@/context/AuthContext";
+import PATHS from "@/constants/paths";
 
 
 const Post = () => {
@@ -28,7 +29,7 @@ const Post = () => {
         fetchPost();
     }, [postId]);
 
-    const { getLocCatName } = useLang();
+    const { t, getLocCatName } = useLang();
 
     return (
         <>
@@ -37,8 +38,8 @@ const Post = () => {
             { !isLoading &&
                 <Breadcrumb
                     items={[
-                        { to: "/", label: "Home" },
-                        { to: "/posts", label: "Posts" },
+                        { to: "/", label: t("nav-home") || "Home" },
+                        { to: PATHS.POSTS, label: t("posts-title") || "Posts" },
                         { label: postId }
                     ]}
                 />

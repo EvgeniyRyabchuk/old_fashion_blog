@@ -1,0 +1,128 @@
+## Internationalization Report - Files Needing t() Function
+
+### Pages Directory
+
+#### 1. Contact Page
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\Contact\index.jsx
+- Line 41: `<h1 className="contact-title">Contact Us</h1>`
+- Line 45: `<h2>Get In Touch</h2>`
+- Line 53: `<h3>Email</h3>`
+- Line 54: `<p>contact@retrofashionblog.com</p>` [Note: email addresses typically don't need translation]
+- Line 58: `<h3>Business Inquiries</h3>`
+- Line 59: `<p>business@retrofashionblog.com</p>` [Note: email addresses typically don't need translation]
+- Line 63: `<h3>Social Media</h3>`
+- Line 64: `<p>Follow us @retrofashionblog</p>`
+- Line 70: `<h2>Send Us a Message</h2>`
+- Line 73: `<label htmlFor="name">Name</label>`
+- Line 85: `<label htmlFor="email">Email</label>`
+- Line 97: `<label htmlFor="subject">Subject</label>
+- Line 109: `<label htmlFor="message">Message</label>`
+
+#### 2. About Page
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\About\index.jsx
+- Line 19: `<h1 className="about-title">About Our Retro Fashion Blog</h1>`
+- Line 33: `<h2>Our Mission</h2>`
+- Line 42: `<h2>Our Vision</h2>`
+- Line 52: `<h2>Meet Our Team</h2>`
+- Line 55: `<h3>Fashion Historian</h3>`
+- Line 62: `<h3>Styling Experts</h3>`
+- Line 72: `<h2>Our Values</h2>`
+- Line 75: `<h3>Authenticity</h3>`
+- Line 79: `<h3>Sustainability</h3>`
+- Line 83: `<h3>Education</h3>`
+- Line 87: `<h3>Community</h3>`
+
+#### 3. Status Pages
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\statuses\http\_500ServerError.jsx
+- Line 10: `<h2 style={{ color: '#2c3e50', marginTop: '1rem' }}>Server Error</h2>`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\statuses\http\_404NotFound.jsx
+- Line 10: `<h2 style={{ color: '#2c3e50', marginTop: '1rem' }}>Page Not Found</h2>`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\statuses\http\_403Forbidden.jsx
+- Line 10: `<h2 style={{ color: '#2c3e50', marginTop: '1rem' }}>Forbidden</h2>`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\statuses\http\_401NotAuthorized.jsx
+- Line 10: `<h2 style={{ color: '#2c3e50', marginTop: '1rem' }}>Not Authorized</h2>`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\statuses\http\Maintenance.jsx
+- Line 9: `<h1 style={{ fontSize: '4rem', color: '#f39c12', margin: 0 }}>Maintenance</h1>`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\statuses\http\ComingSoon.jsx
+- Line 9: `<h1 style={{ fontSize: '4rem', color: '#3498db', margin: 0 }}>Coming Soon</h1>`
+
+#### 4. Posts Pages
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\Posts\index.jsx
+- Line 165: `<p>No post</p>`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\Posts\FilterDrawer\index.jsx
+- Line 359: `>Apply</button>`
+- Line 364: `>Reset</button>`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\Posts\FilterDrawer\UI\FilterChips\index.jsx
+- Line 53: `<span className="no-filters">No filters selected</span>`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\Post\CommentSection\index.jsx
+- Line 57: `<Link className="login-btn" to={PATHS.LOGIN}>Login</Link>`
+- Line 58: `<Link className="sign-up-btn" to={PATHS.SIGN_UP}>Sign Up</Link>`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\CreateEditPost\index.jsx
+- Line 42: `<button type="button" onClick={onEditClick}>Edit</button>`
+
+### Components Directory
+
+#### 1. Layout Components
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\components\Layout\StandardLayout\Header\index.jsx
+- Line 75: `<h2 className="header-label" data-i18n="header-blog-title">Old Fashion Blog</h2>` [Note: already has data-i18n]
+- Line 87: `<span data-i18n="header-menu">Menu</span>` [Note: already has data-i18n]
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\components\Layout\StandardLayout\Footer\index.jsx
+- Line 13: `<li className="footer-data-row">telegram_button viber_button</li>` [Note: this may need review]
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\components\ScrollableRow\index.jsx
+- Line 42: `<h3 className="main-content-title" data-i18n="section-last-posts">Last Posts</h3>` [Note: already has data-i18n]
+
+#### 2. Other Components
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\components\Layout\StandardLayout\Header\Selectors\LangSelector.jsx
+- Line 22: `<option value="ru" data-i18n="lang-ru">RU</option>` [Note: already has data-i18n]
+- Line 23: `<option value="ua" data-i18n="lang-ua">UA</option>` [Note: already has data-i18n]
+- Line 24: `<option value="en" data-i18n="lang-en">EN</option>` [Note: already has data-i18n]
+
+### Validation Schema Files
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\CreateEditPost\PostForm\validationSchema.js
+- Line 4: `title: Yup.string().required("Required"),`
+- Line 5: `categoryId: Yup.string().required("Required category"),`
+- Line 6: `dateRangeStart: Yup.date().required("Required"),`
+- Line 7: `dateRangeEnd: Yup.date().required("Required"),`
+- Line 26: `.max(100000, "Content is too long"),`
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\AuthForm\index.jsx
+- Line 14: `email: Yup.string().email("Invalid email address").required("Required"),`
+- Line 16: `.min(6, "Must be at least 6 characters")`
+- Line 17: `.max(100, "Must be less than 100 characters")`
+- Line 18: `.required("Required"),`
+- Line 50: `.min(2, "Must be at least 2 characters")`
+- Line 51: `.max(50, "Must be less than 50 characters")`
+- Line 52: `.required("Required"),`
+- Line 75: `{isAccountExist ? "Log in" : "Sign up"}`
+- Line 84: `placeholder="Name"`
+- Line 99: `placeholder="Email"`
+- Line 112: `placeholder="Password"`
+- Line 123: `{isAccountExist ? "Login": "Sign Up"}`
+- Line 132: `"Don't have an account? "`
+- Line 136: `{'Create Account'}`
+- Line 137: `"Already have an account? "`
+- Line 138: `{"Login"}`
+
+### Form Components
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\CreateEditPost\PostForm\index.jsx
+- Line 249: `<label htmlFor="categoryId" data-i18n="post-category">Category</label>` [Note: already has data-i18n]
+
+File: C:\Users\Jeka\Desktop\old_fashion_blog\retro-fashion-blog\src\pages\CreateEditPost\PostForm\TagInput\index.jsx
+- Line 39: `placeholder="Type a tag and press Enter"`
+
+### Summary
+- For each of the identified locations, add `import { useLang } from "@/context/LangContext";` at the top of the file
+- Add `const { t } = useLang();` in the component function
+- Replace hardcoded strings with `{t("key-name")}` format
+- You may also want to add the corresponding translation keys to your lang files

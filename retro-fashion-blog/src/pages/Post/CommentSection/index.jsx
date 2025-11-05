@@ -8,12 +8,14 @@ import {useFetching} from "@/hooks/useFetching";
 import {addCommentToPost, getCommentsByPostId, removeComment} from "@/services/comments";
 import {getDateTimeFormat} from "@utils/format";
 import {StandardLoader} from "@components/Loader";
+import {useLang} from "@/context/LangContext";
 
 
 const CommentSection = () => {
     console.log('comment-section');
 
     const { user, loading: isAuthLoading, isAuth } = useAuth();
+    const { t } = useLang();
 
     const { postId } = useParams();
 
@@ -51,8 +53,8 @@ const CommentSection = () => {
             { !isAuthLoading && !isAuth &&
                 <div id="authCommentProtection" className="auth-protection">
                     <div className="form-row d-flex-center" style={{margin: "20px 0", gap: "5px"}}>
-                        <p data-i18n="post-auth-required">
-                            To write your comment you need to be authenticated
+                        <p>
+                            {t("post-auth-required") || "To write your comment you need to be authenticated"}
                         </p>
                         <Link className="login-btn" to={PATHS.LOGIN}>Login</Link>
                         <Link className="sign-up-btn" to={PATHS.SIGN_UP}>Sign Up</Link>
@@ -79,9 +81,8 @@ const CommentSection = () => {
                                 className="btn-primary"
                                 type="button"
                                 id="sendCommentBtn"
-                                onClick={onCommentSend}
-                                data-i18n="post-send">
-                                    Send
+                                onClick={onCommentSend}>
+                                    {t("post-send") || "Send"}
                             </button>
                         </div>
                     </div>
@@ -113,10 +114,9 @@ const CommentSection = () => {
                                     type="button"
                                     id="deleteCommentBtn"
                                     onClick={() => onCommentRemove(comment.id)}
-                                    data-i18n="post-remove"
                                     style={{ marginLeft: "auto", display: 'block' }}
                                 >
-                                    Remove
+                                    {t("post-remove") || "Remove"}
                                 </button>
                         }
 

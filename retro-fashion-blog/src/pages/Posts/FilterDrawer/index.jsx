@@ -8,9 +8,6 @@ import Checkbox from "./UI/Checkbox";
 import FilterChips from "./UI/FilterChips";
 import {StandardLoader} from "@components/Loader";
 import {defaultEndDate, defaultStartDate, defEndYear, defStartYear} from "@/constants/default";
-import useQueryParams from "@/hooks/useQueryParams";
-import {toggleBodyScroll} from "@utils/helper";
-import breakpoints from "@/constants/breakpoints";
 
 const FilterDrawer = ({
                           isOpen,
@@ -22,7 +19,7 @@ const FilterDrawer = ({
     console.log("filter drawer ")
 
 
-    const { getLocCatName } = useLang();
+    const { t, getLocCatName } = useLang();
 
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
@@ -296,7 +293,7 @@ const FilterDrawer = ({
                             <form className="filter-drawer__container">
                                 {/* Category */}
                                 <div className="filter-drawer__group">
-                                    <label className="filter-drawer__label" data-i18n="posts-categories">Categories:</label>
+                                    <label className="filter-drawer__label">{t("posts-categories") || "Categories:"}</label>
                                     <div id="categoriesContainer" className="filter-drawer__options categoriesContainer">
                                         {categories.map(category => (
                                             <Checkbox
@@ -311,7 +308,7 @@ const FilterDrawer = ({
                                 </div>
                                 {/*Tags */}
                                 <div className="filter-drawer__group">
-                                    <label className="filter-drawer__label" data-i18n="posts-tags">Tags:</label>
+                                    <label className="filter-drawer__label">{t("posts-tags") || "Tags:"}</label>
                                     <div id="tagsContainer" className="filter-drawer__tags">
                                         {tags.map(tag => (
                                             <Checkbox
@@ -326,7 +323,7 @@ const FilterDrawer = ({
                                 </div>
                                 {/* Date Range */}
                                 <div className="filter-drawer__group">
-                                    <label data-i18n="posts-date-range">Date Range:</label>
+                                    <label>{t("posts-date-range") || "Date Range:"}</label>
                                     <div className="filter-drawer__date-range">
                                         <input
                                             data-type="date-range-start"
@@ -354,14 +351,12 @@ const FilterDrawer = ({
                 <div className="filter-drawer__actions">
                     <button id="applyFilterBtn"
                             type="button"
-                            data-i18n="posts-apply"
                             onClick={onApply}
-                    >Apply</button>
+                    >{t("posts-apply") || "Apply"}</button>
                     <button id="resetFilterBtn"
                             type="reset"
-                            data-i18n="posts-reset"
                             onClick={onReset}
-                    >Reset</button>
+                    >{t("posts-reset") || "Reset"}</button>
                 </div>
             </div>
         </section>

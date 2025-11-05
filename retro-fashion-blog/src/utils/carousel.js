@@ -4,6 +4,21 @@ import PATHS from "@/constants/paths";
 const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, bottomPanel, interval) => {
     let index = 0;
     let intervalId = null;
+    let isTransitioning = false; // Prevent rapid clicks during transition
+
+    // Preload all images to prevent blinking
+    const preloadImages = () => {
+        images.forEach(img => {
+            const imgObj = new Image();
+            imgObj.onload = () => {
+                // Do nothing, just ensure it's loaded
+            };
+            imgObj.src = img.imgUrl;
+        });
+    };
+    
+    // Preload images
+    preloadImages();
 
     if (images.length > 0) {
         displayElem.style.backgroundImage = `url(${images[0].imgUrl})`;
@@ -14,6 +29,10 @@ const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, 
     }
 
     const changeImg = (index) => {
+        // Skip if another transition is in progress
+        if (isTransitioning) return;
+        
+        isTransitioning = true;
         displayElem.style.backgroundImage = `url(${images[index].imgUrl})`;
         const span = displayElem.querySelector("span");
         if (span) span.innerText = images[index].title;
@@ -24,11 +43,16 @@ const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, 
             clearInterval(intervalId);
             startLoop(interval);
         }
+
+        // Reset transition flag after a short delay to allow for fade effect
+        setTimeout(() => {
+            isTransitioning = false;
+        }, 300); // Match this with CSS transition duration if applicable
     }
 
     const onDotClick = (idx) => {
+        if (isTransitioning) return; // Prevent clicks during transition
         changeImg(idx);
-        changeActiveDot(idx);
         index = idx; 
     }
 
@@ -43,6 +67,7 @@ const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, 
         // add listeners after dots exist
         bottomPanel.querySelectorAll(".dot").forEach(dot => {
             dot.addEventListener("click", () => {
+                if (isTransitioning) return; // Prevent clicks during transition
                 const index = parseInt(dot.dataset.imgIndex, 10);
                 onDotClick(index);
             });
@@ -51,15 +76,15 @@ const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, 
 
     const changeActiveDot = (index) => {
         const prev = bottomPanel.querySelector(".active");
-        prev.classList.remove("active");
+        if (prev) prev.classList.remove("active");
         const current = bottomPanel.querySelector(`[data-img-index="${index}"]`);
-        current.classList.add("active");
+        if (current) current.classList.add("active");
     }
 
     createDots();
 
     const moveOverBgUrl = (direction) => {
-        if (images.length <= 1)
+        if (images.length <= 1 || isTransitioning)
             return;
         if (direction === "right") {
             index++;
@@ -77,9 +102,11 @@ const createCarousel = (images, displayElem, carouselLeftBtn, carouselRightBtn, 
     }
 
     carouselLeftBtn.addEventListener("click", (e) => {
+        e.preventDefault(); // Prevent default button behavior that might interfere
         moveOverBgUrl("left")
     });
     carouselRightBtn.addEventListener("click", (e) => {
+        e.preventDefault(); // Prevent default button behavior that might interfere
         moveOverBgUrl("right")
     });
 

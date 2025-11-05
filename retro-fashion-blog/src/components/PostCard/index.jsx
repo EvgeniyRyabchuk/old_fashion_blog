@@ -4,9 +4,10 @@ import {PostCardSize} from '@/constants/sizes';
 import {Link} from "react-router-dom";
 import PATHS from '@/constants/paths';
 import {getPostContentPreview} from "@utils/format";
+import {useLang} from "@/context/LangContext";
 
 const PostCard = ({ post, size }) => {
-
+    const { t } = useLang();
     const containerClass = useMemo(() => {
         const base = 'post-card';
         if(size === PostCardSize.xl) return `${base}-xl`;
@@ -35,7 +36,7 @@ const PostCard = ({ post, size }) => {
             <div className="more-wrapper">
                 <Link to={PATHS.POST(post.id)}
                    className="read-more">
-                    Read More &gt;&gt;
+                    {t("read-more")} &gt;&gt;
                 </Link>
             </div>
         </article>

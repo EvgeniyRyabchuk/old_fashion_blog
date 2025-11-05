@@ -3,6 +3,7 @@ const PATHS = {
     // Public Routes
     HOME: '/',
     ABOUT: '/about',
+    CONTACT: '/contact',
     POSTS: '/posts',
     POST: (postId) => `/posts/${postId}`,
 

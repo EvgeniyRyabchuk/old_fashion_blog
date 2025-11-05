@@ -72,13 +72,11 @@ header, footer, .main-wrapper {
             margin: 5px;
             position: fixed;
             z-index: 1000;
-            top: 70px; // adjust depending on header
+            top: 75px; // adjust depending on header
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(var(--color-bg-rgb), 0.8);
-
-
+            background: abs.$color-primary;
             padding: 10px;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
             border-radius: 10px;

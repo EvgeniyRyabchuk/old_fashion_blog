@@ -8,9 +8,11 @@ import {useMediaQuery} from "@/hooks/useMediaQuery";
 import MaxWBreakpoints from "@/constants/MaxWBreakpoints";
 import {useFetching} from "@/hooks/useFetching";
 import {fetchAllCategories} from "@/services/categories";
+import {useLang} from "@/context/LangContext";
 
 
 const VerticalStand = ({ interval = 6000, animationTime = 2}) => {
+    const { t, getLocCatName } = useLang();
     const isMobile = useMediaQuery(MaxWBreakpoints.xl);
     const [sliderInstance, setSliderInstance] = useState(null);
     const slider = useRef(null);
@@ -58,7 +60,7 @@ const VerticalStand = ({ interval = 6000, animationTime = 2}) => {
                               to={`${PATHS.POSTS}?categories=${item.id}`}
                               style={{backgroundImage: `url(${item.imgUrl})`}}
                         >
-                            <span>{item.name_en}</span>
+                            <span>{getLocCatName(item)}</span>
                         </Link>
                     </div>
 
@@ -72,7 +74,7 @@ const VerticalStand = ({ interval = 6000, animationTime = 2}) => {
                               to={`${PATHS.POSTS}?categories=${item.id}`}
                               style={{backgroundImage: `url(${item.imgUrl})`}}
                         >
-                            <span>{item.name_en}</span>
+                            <span>{getLocCatName(item)}</span>
                         </Link>
                     </div>
                 ))}

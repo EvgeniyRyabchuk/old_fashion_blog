@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import "./index.scss";
 import Dropdown from '@components/Dropdown';
 
-import guestNavListData from './data/common-nav';
+import guestNavListData from '@/constants/navigation/common-nav';
 import LangSelector from "./Selectors/LangSelector";
 import ThemeSelector from "./Selectors/ThemeSelector";
 import SearchSector from "./SearchSector";
@@ -72,7 +72,7 @@ const Header = () => {
         <header>
             <Link className="default-link top-header-link" to={PATHS.HOME}>
                 <div className="header-img-block">
-                    <h2 className="header-label" data-i18n="header-blog-title">Old Fashion Blog</h2>
+                    <h2 className="header-label">Old Fashion Blog</h2>
                 </div>
             </Link>
 

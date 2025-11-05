@@ -1,7 +1,9 @@
 import React, {useEffect, useRef} from 'react';
 import useImgDrapDrop from "@/hooks/useImgDrapDrop";
+import {useLang} from "@/context/LangContext";
 
 const DragDropImage = ({ setFile, file, url, setUrl, defImage, wrapperClassName}) => {
+    const { t } = useLang();
 
     const coverImgInputRef = useRef(null);
     const coverImgPreviewRef = useRef(null);
@@ -68,8 +70,8 @@ const DragDropImage = ({ setFile, file, url, setUrl, defImage, wrapperClassName}
                 />
 
                 <div className="placeholder-content" >
-                    <span data-i18n="click-add-cover-image">
-                        Click to add Cover image
+                    <span>
+                        {t("click-add-cover-image") || "Click to add Cover image"}
                     </span>
                 </div>
             </div>

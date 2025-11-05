@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './index.scss';
 import {Link} from "react-router-dom";
+import {useLang} from "@/context/LangContext";
 
 
 const Dropdown = ({
@@ -12,6 +13,7 @@ const Dropdown = ({
                       isClickable = false
 }) => {
     const [content,setContent] = useState([]);
+    const { t, getLocCatName } = useLang();
 
     const render = (data) => {
         return data.map((item, index) => {
@@ -21,7 +23,6 @@ const Dropdown = ({
                     <li key={index}
                         className={`dropdown root ${onClick ? "on-click" : 'on-hover'}`}
                         onClick={(e) => {
-                            console.log(123)
                             if(isHoverable) onSelected(item.link);
                             if(isClickable) onClick(e);
                         }}
@@ -31,7 +32,7 @@ const Dropdown = ({
                             data-i18n={item.dataI18n}
                             onClick={(e) => e.preventDefault() }
                         >
-                            {item.name}
+                            {t(item.dataI18n)}
                         </a>
                         <ul className="dropdown-menu">
                             {render(item.data)}
@@ -49,7 +50,7 @@ const Dropdown = ({
                            data-i18n={item.dataI18n}
                            onClick={(e) => e.preventDefault()}
                         >
-                            {item.name}
+                            {t(item.dataI18n)}
                         </a>
                     </li>
                 )

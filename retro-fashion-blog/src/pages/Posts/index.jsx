@@ -15,8 +15,6 @@ import useQueryParams from "@/hooks/useQueryParams";
 import {usePaginate} from "@/hooks/usePaginate";
 import {defPage, defPerPage} from "@/constants/default";
 import FilterDrawer from "@pages/Posts/FilterDrawer";
-import {toggleBodyScroll} from "@utils/helper";
-import {useLocation} from "react-router-dom";
 
 
 const colName = "posts";
@@ -102,9 +100,8 @@ const Posts = () => {
         <>
             <Breadcrumb
                 items={[
-                    { to: "/", label: "Home" },
-                    // { to: "/blog", label: "Blog" },
-                    { label: "Posts" },
+                    { to: "/", label: t("nav-home") || "Home" },
+                    { label: t("posts-title") || "Posts" },
                 ]}
             />
 
@@ -120,10 +117,9 @@ const Posts = () => {
                             />
                             <button id="filterToggle"
                                     className="filter-toggle"
-                                    data-i18n="posts-filters"
                                     onClick={() => switchFilter()}
                             >
-                                Filters
+                                {t("posts-filters") || "Filters"}
                             </button>
                         </div>
                     </section>
@@ -147,8 +143,8 @@ const Posts = () => {
             )}
 
             <section className="content-section">
-                {/*<h2 className="main-content-title" id="mainContentTitle" data-i18n="posts-title">Posts</h2>*/}
-                <h3 id="noPostsData" className="no-data switchable" data-i18n="posts-no-data">No data yet</h3>
+                {/*<h2 className="main-content-title" id="mainContentTitle">{t("posts-title") || "Posts"}</h2>*/}
+                <h3 id="noPostsData" className="no-data switchable">{t("posts-no-data") || "No data yet"}</h3>
 
                 <div className="posts-wrapper" id="postsWrapper">
                     {(isPostFetchLoading || paginationLoading) &&
@@ -163,7 +159,7 @@ const Posts = () => {
                         ))
                     }
                     { !isPostFetchLoading && !paginationLoading && posts.length === 0 && (
-                        <p>No post</p>
+                        <p>{t("no-post") || "No post"}</p>
                     ) }
                 </div>
 

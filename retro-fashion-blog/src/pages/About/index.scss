@@ -1,0 +1,169 @@
+@use '@scss/abstracts' as abs;
+@use '@scss/utilities/helpers';
+
+.about-page {
+  padding: 15px 30px 10px 30px;
+  width: 100%;
+  
+  .about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    .about-title {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: abs.$color-text;
+      text-align: center;
+      padding: 20px 0;
+      
+      @media screen and (max-width: abs.$md-bp) {
+        font-size: 2rem;
+      }
+      
+      @media screen and (max-width: abs.$sm-bp) {
+        font-size: 1.75rem;
+      }
+    }
+    
+    .about-content-wrapper {
+      .about-intro {
+        margin: 2rem 0;
+        text-align: center;
+        
+        .about-description {
+          font-size: 1.2rem;
+          line-height: 1.8;
+          color: abs.$color-text;
+          max-width: 800px;
+          margin: 0 auto;
+          
+          @media screen and (max-width: abs.$md-bp) {
+            font-size: 1.1rem;
+          }
+        }
+      }
+      
+      .about-mission-vision {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 3rem 0;
+        
+        @media screen and (max-width: abs.$md-bp) {
+          grid-template-columns: 1fr;
+        }
+        
+        .mission-section,
+        .vision-section {
+          padding: 1.5rem;
+          border-radius: 8px;
+          background-color: rgba(abs.$color-secondary-rgb, 0.05);
+          border-left: 4px solid abs.$color-primary;
+          
+          h2 {
+            color: abs.$color-primary;
+            margin-bottom: 1rem;
+          }
+          
+          p {
+            line-height: 1.7;
+            color: abs.$color-text;
+          }
+        }
+      }
+      
+      .about-team {
+        margin: 3rem 0;
+        
+        h2 {
+          text-align: center;
+          margin-bottom: 2rem;
+          color: abs.$color-text;
+          font-size: 1.8rem;
+        }
+        
+        .team-members {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 1.5rem;
+          
+          .team-member {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background-color: rgba(abs.$color-secondary-rgb, 0.05);
+            
+            h3 {
+              color: abs.$color-primary;
+              margin-bottom: 0.75rem;
+            }
+            
+            p {
+              line-height: 1.6;
+              color: abs.$color-text;
+            }
+          }
+        }
+      }
+      
+      .about-values {
+        margin: 3rem 0;
+        
+        h2 {
+          text-align: center;
+          margin-bottom: 2rem;
+          color: abs.$color-text;
+          font-size: 1.8rem;
+        }
+        
+        .values-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1.5rem;
+          
+          .value-item {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background-color: rgba(abs.$color-secondary-rgb, 0.05);
+            text-align: center;
+            
+            h3 {
+              color: abs.$color-primary;
+              margin-bottom: 0.75rem;
+            }
+            
+            p {
+              line-height: 1.6;
+              color: abs.$color-text;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments for smaller screens
+@media screen and (max-width: abs.$sm-bp) {
+  .about-page {
+    padding: 10px 15px;
+    
+    .about-title {
+      font-size: 1.5rem !important;
+    }
+    
+    .about-mission-vision {
+      gap: 1rem !important;
+      margin: 1.5rem 0 !important;
+    }
+    
+    .about-team,
+    .about-values {
+      margin: 1.5rem 0 !important;
+      
+      h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 1rem !important;
+      }
+    }
+  }
+}

@@ -1,38 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {createCarousel} from "@utils/carousel";
 import './index.scss';
-
-import img1 from '@assets/images/carousel/background_cover_1.png';
-import img2 from '@assets/images/carousel/bg3.png';
-import img3 from '@assets/images/carousel/bg4.png';
-import img4 from '@assets/images/carousel/bg5.png';
 import {useFetching} from "@/hooks/useFetching";
-import {fetchAllCategories} from "@/services/categories";
-import PATHS from "@/constants/paths";
 import {fetchCarouselContent} from "@/services/posts";
 
-// const imagesForCarousel = [
-//     {
-//         title: "Male",
-//         imgUrl: img1,
-//         postId: 1
-//     },
-//     {
-//         title: "Female",
-//         imgUrl: img2,
-//         postId: 2
-//     },
-//     {
-//         title: "Male",
-//         imgUrl: img3,
-//         postId: 3
-//     },
-//     {
-//         title: "Male",
-//         imgUrl: img4,
-//         postId: 4
-//     },
-// ]
 
 const Carousel = ({ carouselInterval = 10000 }) => {
     console.log("Carousel")

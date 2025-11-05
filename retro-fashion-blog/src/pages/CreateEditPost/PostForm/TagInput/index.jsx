@@ -1,7 +1,9 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./index.scss";
+import {useLang} from "@/context/LangContext";
 
 const TagInput = ({ tags, setTags} ) => {
+    const { t } = useLang();
     const [inputValue, setInputValueLocal] = useState("");
 
 
@@ -29,15 +31,14 @@ const TagInput = ({ tags, setTags} ) => {
 
     return (
         <div className="tag-manager">
-            <label htmlFor="tagInput" data-i18n="post-tags-label">
-                Tags:
+            <label htmlFor="tagInput">
+                {t("post-tags-label") || "Tags:"}
             </label>
 
             <input
                 type="text"
                 id="tagInput"
-                placeholder="Type a tag and press Enter"
-                data-i18n-attr="placeholder:tag-input-placeholder"
+                placeholder={t("tag-input-placeholder") || "Type a tag and press Enter"}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}

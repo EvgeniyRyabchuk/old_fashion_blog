@@ -14,7 +14,7 @@ import {toggleBodyScroll, urlToFile} from "@utils/helper";
 import useQueryParams from "@/hooks/useQueryParams";
 import {StandardLoader} from "@components/Loader";
 import Spinner from "@components/Loader/Spinner";
-import validationSchema from './validationSchema'
+import createValidationSchema from './validationSchema'
 import { Formik, Form, Field, ErrorMessage} from "formik";
 import {toast} from "react-toastify";
 
@@ -22,9 +22,9 @@ import {toast} from "react-toastify";
 const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }) => {
 
     const { user, isAuth } = useAuth();
-    const { getLocCatName } = useLang();
+    const { t, getLocCatName } = useLang();
 
-    const { updateSearchParams, postFilterQueryCreator, setSearchParams, searchParams } = useQueryParams();
+    const { updateSearchParams } = useQueryParams();
 
 
     // ================= FETCH CATEGORIES ==================
@@ -193,7 +193,7 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
                 { isFetchPostLoading && <StandardLoader /> }
                 <Formik
                     initialValues={getInitialValues()}
-                    validationSchema={validationSchema}
+                    validationSchema={createValidationSchema(t)}
                     onSubmit={async (values, { resetForm }) => {
                         await onSave(values);
                         clearUpTheForm(resetForm); // ✅ resets to initialValues
@@ -230,15 +230,14 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
                                 <div className="wrapper d-flex-center d-flex-wrap">
                                     <div className="post-create-form-wrapper">
 
-                                        <label htmlFor="title" data-i18n="post-title">
-                                            Title
+                                        <label htmlFor="title">
+                                            {t("post-title") || "Title"}
                                         </label>
                                         <Field
                                             type="text"
                                             id="title"
                                             name="title"
-                                            placeholder="Post title"
-                                            data-i18n-attr="placeholder:post-title-placeholder"
+                                            placeholder={t("post-title-placeholder") || "Post title"}
                                         />
                                         { errors.title && touched.title ? (
                                             <div className="error-message">{errors.title}</div>
@@ -246,7 +245,7 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
 
                                         {/* category */}
                                         <div style={{ margin: "10px 0"}}>
-                                            <label htmlFor="categoryId" data-i18n="post-category">Category</label>
+                                            <label htmlFor="categoryId">{t("post-category") || "Category"}</label>
                                             <Field
                                                 as="select"
                                                 className="category-select"
@@ -254,7 +253,7 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
                                                 id="categoryId"
                                             >
                                                 <option value="" disabled>
-                                                    — Select category —
+                                                    {t("select-category") || "— Select category —"}
                                                 </option>
                                                 {categories.map((category) => (
                                                     <option
@@ -272,7 +271,7 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
 
                                         {/*date_range*/}
                                         <div className="year-range">
-                                            <label htmlFor="dateRangeStart" data-i18n="from">From:</label>
+                                            <label htmlFor="dateRangeStart">{t("from") || "From:"}</label>
                                             <Field
                                                 type="number"
                                                 id="dateRangeStart"
@@ -282,7 +281,7 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
                                                 step="1"
                                             />
 
-                                            <label htmlFor="dateRangeEnd" data-i18n="to">To:</label>
+                                            <label htmlFor="dateRangeEnd">{t("to") || "To:"}</label>
                                             <Field
                                                 type="number"
                                                 id="dateRangeEnd"
@@ -334,7 +333,6 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
                                 <button className="btn-primary"
                                         id="savePost"
                                         type="submit"
-                                        data-i18n="save-post"
                                         style={{ marginRight: "10px" }}
                                 >
                                     {saveBtnTitle}
@@ -345,10 +343,9 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
                                     className="btn-secondary"
                                     id="reset"
                                     onClick={() => baseOnCancel(resetForm)}
-                                    data-i18n="cancel"
                                     type='button'
                                 >
-                                    Cancel
+                                    {t("cancel") || "Cancel"}
                                 </button>
                             </Form>
                         );

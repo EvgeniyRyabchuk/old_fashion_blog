@@ -8,10 +8,12 @@ import PATHS from "@/constants/paths";
 
 const PostsPage = lazy(() => import("@pages/Posts"));
 const PostPage = lazy(() => import("@pages/Post"));
+const Contact = lazy(() => import("@pages/Contact"));
 
 const PublicRoutes = [
     { path: PATHS.HOME, element: <Home />, exact: true },
     { path: PATHS.ABOUT, element: <About />, exact: true},
+    { path: PATHS.CONTACT, element: <Contact />, exact: true},
     { path: PATHS.POSTS, element: <PostsPage />, exact: true},
     { path: PATHS.POST(":postId"), element: <PostPage />, exact: true},
 

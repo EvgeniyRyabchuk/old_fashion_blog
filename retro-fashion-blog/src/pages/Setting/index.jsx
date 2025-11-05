@@ -9,14 +9,17 @@ import {Form, Formik} from "formik";
 import {toast} from "react-toastify";
 import {useFetching} from "@/hooks/useFetching";
 import Spinner from "@components/Loader/Spinner";
-
-const validationSchema = Yup.object({
-    name: Yup.string().required("Required").min(2, "Must be at least 2 characters"),
-})
+import {useLang} from "@/context/LangContext";
+import Breadcrumb from "@components/Breadcrumb";
 
 const Setting = () => {
     console.log('setting')
     const { user, setUser, isAuth } = useAuth();
+    const { t } = useLang();
+    
+    const validationSchema = Yup.object({
+        name: Yup.string().required(t("required") || "Required").min(2, t("name-min-chars") || "Must be at least 2 characters"),
+    });
 
     const [avatarFile, setAvatarFile] = useState(null);
     const [avatarPreview, setAvatarPreview] = useState(user?.avatar || defAvatar);
@@ -56,71 +59,75 @@ const Setting = () => {
     // }, [user]);
 
     return (
-        <div className="content-section" style={{ height: "50vh" }}>
-            <div className="profile-settings">
-                <h2 className="main-content-title" id="mainContentTitle" data-i18n="profile-settings">Profile
-                    Settings
-                </h2>
-                <Formik
-                    initialValues={{ name: user.name }}
-                    validationSchema={validationSchema}
-                    onSubmit={onSave}
-                    validateOnMount={false}
-                    validateOnChange={true}
-                    validateOnBlur={true}
-                >
-                    {({ errors,
-                          touched,
-                          values,
-                          handleChange,
-                      }) => (
-                          <Form>
-                              <div className="avatar-section">
-                                  <div className="avatar-wrapper">
-                                      <img id="avatarPreview"
-                                           src={avatarPreview || defAvatar}
-                                           alt="Avatar"
-                                      />
-                                      <label htmlFor="avatarInput" className="avatar-upload">
-                                          <span>+</span>
-                                      </label>
-                                      <input
-                                          type="file"
-                                          id="avatarInput"
-                                          accept="image/*"
-                                          onChange={onAvatarChange}
-                                      />
-                                  </div>
-                              </div>
-                              <div className="form-section">
-                                  <label htmlFor="displayName" data-i18n="display-name">
-                                      Display Name
-                                  </label>
-                                  <input
-                                      type="text"
-                                      placeholder="Enter your name"
-                                      data-i18n-attr="placeholder:enter-name"
-                                      name="name"
-                                      value={values.name}
-                                      onChange={handleChange}
-                                  />
-                                  { errors.name && touched.name ? (
-                                      <div className="error-message">{errors.name}</div>
-                                  ) : null}
-                              </div>
-                              <button
-                                  id="saveProfileBtn"
-                                  data-i18n="save-changes"
-                                  type="submit"
-                              >
-                                  Save Changes
-                                  { isLoading && <Spinner style={{ marginLeft: "5px" }} /> }
-                              </button>
-                          </Form>
-                    )}
-                </Formik>
+        <>
+            <Breadcrumb
+                items={[
+                    { to: "/", label: t("nav-home") || "Home" },
+                    { label: t("auth-settings") || "Settings" },
+                ]}
+            />
+
+            <div className="content-section" style={{ height: "50vh" }}>
+                <div className="profile-settings">
+                    <h2 className="main-content-title" id="mainContentTitle">{t("profile-settings") || "Profile Settings"}</h2>
+                    <Formik
+                        initialValues={{ name: user.name }}
+                        validationSchema={validationSchema}
+                        onSubmit={onSave}
+                        validateOnMount={false}
+                        validateOnChange={true}
+                        validateOnBlur={true}
+                    >
+                        {({ errors,
+                              touched,
+                              values,
+                              handleChange,
+                          }) => (
+                            <Form>
+                                <div className="avatar-section">
+                                    <div className="avatar-wrapper">
+                                        <img id="avatarPreview"
+                                             src={avatarPreview || defAvatar}
+                                             alt="Avatar"
+                                        />
+                                        <label htmlFor="avatarInput" className="avatar-upload">
+                                            <span>+</span>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="avatarInput"
+                                            accept="image/*"
+                                            onChange={onAvatarChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-section">
+                                    <label htmlFor="displayName">{t("display-name") || "Display Name"}</label>
+                                    <input
+                                        type="text"
+                                        placeholder={t("enter-name") || "Enter your name"}
+                                        name="name"
+                                        value={values.name}
+                                        onChange={handleChange}
+                                    />
+                                    { errors.name && touched.name ? (
+                                        <div className="error-message">{errors.name}</div>
+                                    ) : null}
+                                </div>
+                                <button
+                                    id="saveProfileBtn"
+                                    type="submit"
+                                >
+                                    {t("save-changes") || "Save Changes"}
+                                    { isLoading && <Spinner style={{ marginLeft: "5px" }} /> }
+                                </button>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
             </div>
-        </div>
+        </>
+
     );
 };
 

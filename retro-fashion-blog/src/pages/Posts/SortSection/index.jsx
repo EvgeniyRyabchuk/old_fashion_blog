@@ -1,16 +1,15 @@
 import React from 'react';
 import './index.scss';
-
+import {useLang} from "@/context/LangContext";
 
 
 const SortSection = ({ onFilterToggle, setValue, value, isActive }) => {
-
-
+    const { t } = useLang();
 
     return (
         <div className="filter-sort">
             <div className="filter-sort__sort">
-                <label htmlFor="sort" data-i18n="posts-sort-by">Sort by:</label>
+                <label htmlFor="sort">{t("posts-sort-by") || "Sort by:"}</label>
                 <select
                     id="sort"
                     name="sort"
@@ -23,9 +22,9 @@ const SortSection = ({ onFilterToggle, setValue, value, isActive }) => {
                     className={isActive ? "" : "disabled"}
                     value={value}
                 >
-                    <option value="newest" data-i18n="posts-sort-newest">Newest</option>
-                    <option value="oldest" data-i18n="posts-sort-oldest">Oldest</option>
-                    <option value="popular" data-i18n="posts-sort-popular">Most Popular</option>
+                    <option value="newest">{t("posts-sort-newest") || "Newest"}</option>
+                    <option value="oldest">{t("posts-sort-oldest") || "Oldest"}</option>
+                    <option value="popular">{t("posts-sort-popular") || "Most Popular"}</option>
                 </select>
             </div>
         </div>
