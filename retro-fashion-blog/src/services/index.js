@@ -19,17 +19,19 @@ const fetchDataFirestore = async (
 
     if(options.filterHandler) {
         ref = await options.filterHandler();
+
+        console.log('====================================')
+        if (sort === "newest") {
+            ref = ref.orderBy("createdAt", "desc");
+        } else if (sort === "oldest") {
+            ref = ref.orderBy("createdAt", "asc");
+        } else if (sort === "popular") {
+            ref = ref.orderBy("views", "desc");
+        }
     } else {
         ref = db.collection(colName).orderBy("createdAt", "desc");
     }
-    console.log('====================================')
-    if (sort === "newest") {
-        ref = ref.orderBy("createdAt", "desc");
-    } else if (sort === "oldest") {
-        ref = ref.orderBy("createdAt", "asc");
-    } else if (sort === "popular") {
-        ref = ref.orderBy("views", "desc");
-    }
+
 
     const search = options.search;
     if (options.search) {

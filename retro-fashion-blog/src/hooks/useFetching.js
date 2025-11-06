@@ -16,7 +16,7 @@ export const useFetching = (callback) =>
 
         }
         catch (e) {
-            toast.error(`Something went wrong! ${e.message}`);
+            toast.error(`Something went wrong! ${e.message}`, {  autoClose: false });
             setError(e.message);
         }
         finally {

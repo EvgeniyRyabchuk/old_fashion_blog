@@ -20,21 +20,11 @@ import {useAuth} from "@/context/AuthContext";
 import Spinner from "@components/Loader/Spinner";
 import {toast} from "react-toastify";
 import Breadcrumb from "@components/Breadcrumb";
+import EditRemove from "@components/Table/actions/EditRemove";
 
 const colName = "posts";
 
-const EditRemove = ({ onDeleteClick, onEditClick}) => {
-    const { t } = useLang();
-    const [fetchDeleteRes, isLoading,  error] = useFetching(onDeleteClick);
-    return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-            <button type="button" onClick={onEditClick}>{t("edit") || "Edit"}</button>
-            <button type="button" onClick={() => fetchDeleteRes() }>
-                {isLoading ? (<Spinner />) : (t("remove") || "Remove")}
-            </button>
-        </div>
-    )
-}
+
 
 
 const CreateEditPost = () => {
@@ -61,7 +51,8 @@ const CreateEditPost = () => {
     const [order, setOrder] = useState("asc");
     const [orderField, setOrderField] = useState("newest");
 
-    const [fetchPosts, isPostFetchLoading, error] = useFetching(async ({page, perPage, cursorHandler, options: restOptions }) => {
+    const [fetchPosts, isPostFetchLoading, error] =
+        useFetching(async ({page, perPage, cursorHandler, options: restOptions }) => {
         // const { isLoadMore } = options || {};
         const options= {
             sort: orderField, // must exist in your docs

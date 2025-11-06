@@ -1,31 +1,56 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.scss';
 import Breadcrumb from "../../components/Breadcrumb";
 import { useLang } from "@/context/LangContext";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { sendContactMessage } from "@/services/contact";
+import {useFetching} from "@/hooks/useFetching";
+import Spinner from "@components/Loader/Spinner";
+import {toast} from "react-toastify";
 
 const Contact = () => {
     const { t } = useLang();
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+
+    // Validation schema using Yup
+    const validationSchema = Yup.object({
+        name: Yup.string()
+            .min(2, t("name-min-length") || "Name must be at least 2 characters")
+            .max(50, t("name-max-length") || "Name must be less than 50 characters")
+            .required(t("required") || "Name is required"),
+        email: Yup.string()
+            .email(t("invalid-email-address") || "Invalid email address")
+            .required(t("required") || "Email is required"),
+        subject: Yup.string()
+            .min(5, t("subject-min-length") || "Subject must be at least 5 characters")
+            .max(100, t("subject-max-length") || "Subject must be less than 100 characters")
+            .required(t("required") || "Subject is required"),
+        message: Yup.string()
+            .min(10, t("message-min-length") || "Message must be at least 10 characters")
+            .max(1000, t("message-max-length") || "Message must be less than 1000 characters")
+            .required(t("required") || "Message is required")
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+    const [sendMsg, isLoading, error] = useFetching(async (values) => await sendContactMessage(values))
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // In a real application, you would send this data to a backend
-        console.log('Form submitted:', formData);
-        alert('Thank you for your message! We will get back to you soon.');
-        setFormData({ name: '', email: '', subject: '', message: '' });
+    const handleSubmit = async (values, { setSubmitting, resetForm, setFieldError }) => {
+        try {
+            // Send the contact message to Firebase
+            const result = sendMsg(values);
+            console.log('Contact message sent successfully:', result);
+
+            // Show success message
+            toast.success('Thank you for your message! We will get back to you soon.');
+            
+            // Reset the form
+            resetForm();
+        } catch (error) {
+            console.error('Error sending contact message:', error);
+            // Show error to user
+            alert(`Error: ${error.message || 'Failed to send your message. Please try again.'}`);
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -67,63 +92,82 @@ const Contact = () => {
                         
                         <div className="contact-form-section">
                             <h2>{t("contact-send-message-title") || "Send Us a Message"}</h2>
-                            <form onSubmit={handleSubmit} className="contact-form">
-                                <div className="form-group">
-                                    <label htmlFor="name">{t("contact-name-label") || "Name"}</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        placeholder={t("contact-name-placeholder") || "Enter your name"}
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-                                
-                                <div className="form-group">
-                                    <label htmlFor="email">{t("contact-email-label") || "Email"}</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        placeholder={t("contact-email-placeholder") || "Enter your email"}
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-                                
-                                <div className="form-group">
-                                    <label htmlFor="subject">{t("contact-subject-label") || "Subject"}</label>
-                                    <input
-                                        type="text"
-                                        id="subject"
-                                        name="subject"
-                                        placeholder={t("contact-subject-placeholder") || "Enter subject"}
-                                        value={formData.subject}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-                                
-                                <div className="form-group">
-                                    <label htmlFor="message">{t("contact-message-label") || "Message"}</label>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        placeholder={t("contact-message-placeholder") || "Enter your message"}
-                                        rows="5"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        required
-                                    ></textarea>
-                                </div>
-                                
-                                <button type="submit" className="submit-btn">
-                                    {t("contact-send-button") || "Send Message"}
-                                </button>
-                            </form>
+                            <Formik
+                                initialValues={{
+                                    name: '',
+                                    email: '',
+                                    subject: '',
+                                    message: ''
+                                }}
+                                validationSchema={validationSchema}
+                                onSubmit={handleSubmit}
+                            >
+                                {({ errors, touched }) => (
+                                    <Form className="contact-form">
+                                        <div className="form-group">
+                                            <label htmlFor="name">{t("contact-name-label") || "Name"}</label>
+                                            <Field
+                                                type="text"
+                                                id="name"
+                                                name="name"
+                                                placeholder={t("contact-name-placeholder") || "Enter your name"}
+                                                className={errors.name && touched.name ? "error" : ""}
+                                            />
+                                            {errors.name && touched.name ? (
+                                                <div className="error-message">{errors.name}</div>
+                                            ) : null}
+                                        </div>
+                                        
+                                        <div className="form-group">
+                                            <label htmlFor="email">{t("contact-email-label") || "Email"}</label>
+                                            <Field
+                                                type="email"
+                                                id="email"
+                                                name="email"
+                                                placeholder={t("contact-email-placeholder") || "Enter your email"}
+                                                className={errors.email && touched.email ? "error" : ""}
+                                            />
+                                            {errors.email && touched.email ? (
+                                                <div className="error-message">{errors.email}</div>
+                                            ) : null}
+                                        </div>
+                                        
+                                        <div className="form-group">
+                                            <label htmlFor="subject">{t("contact-subject-label") || "Subject"}</label>
+                                            <Field
+                                                type="text"
+                                                id="subject"
+                                                name="subject"
+                                                placeholder={t("contact-subject-placeholder") || "Enter subject"}
+                                                className={errors.subject && touched.subject ? "error" : ""}
+                                            />
+                                            {errors.subject && touched.subject ? (
+                                                <div className="error-message">{errors.subject}</div>
+                                            ) : null}
+                                        </div>
+                                        
+                                        <div className="form-group">
+                                            <label htmlFor="message">{t("contact-message-label") || "Message"}</label>
+                                            <Field
+                                                as="textarea"
+                                                id="message"
+                                                name="message"
+                                                placeholder={t("contact-message-placeholder") || "Enter your message"}
+                                                rows="5"
+                                                className={errors.message && touched.message ? "error" : ""}
+                                            />
+                                            {errors.message && touched.message ? (
+                                                <div className="error-message">{errors.message}</div>
+                                            ) : null}
+                                        </div>
+                                        
+                                        <button type="submit" className="submit-btn">
+                                            {t("contact-send-button") || "Send Message"}
+                                            { isLoading && <Spinner style={{ marginLeft: "10px" }}/> }
+                                        </button>
+                                    </Form>
+                                )}
+                            </Formik>
                         </div>
                     </div>
                 </div>

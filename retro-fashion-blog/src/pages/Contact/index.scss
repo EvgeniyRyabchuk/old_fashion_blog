@@ -97,11 +97,23 @@
                 border-color: abs.$color-primary;
                 box-shadow: 0 0 0 2px rgba(abs.$color-primary-rgb, 0.2);
               }
+              
+              &.error {
+                border-color: abs.$color-danger;
+                box-shadow: 0 0 0 2px rgba(abs.$color-danger-rgb, 0.2);
+              }
             }
             
             textarea {
               resize: vertical;
               min-height: 120px;
+            }
+            
+            .error-message {
+              color: abs.$color-danger;
+              font-size: 0.875rem;
+              margin-top: 0.25rem;
+              display: block;
             }
           }
           

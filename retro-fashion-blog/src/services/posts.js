@@ -1,12 +1,8 @@
-
-
 import firebase from "firebase/app";
 import {db} from "@/firebase/config";
 import {loadCategoriesToCollection} from "@/services/categories";
 import {addTagsIfNotExist, loadTagsToCollection} from "@/services/tags";
 import addPostToHistory from "@utils/postHistory";
-import {loadToCloudinary} from "@/services/image";
-import {defaultCoverUrl, defaultWideImgUrl} from "@/constants/default";
 import {buildSearchIndex} from "@utils/format";
 
 

@@ -4,6 +4,6 @@ import user from "./user-profile";
 
 export default {
     admin,
-    common,
-    user
+    user,
+    common
 }

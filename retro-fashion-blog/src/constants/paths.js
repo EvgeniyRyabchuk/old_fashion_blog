@@ -28,7 +28,8 @@ const PATHS = {
     
     // Admin Routes
     ADMIN_POSTS: '/admin/posts',
-
+    ADMIN_MESSAGES: '/admin/messages',
+    ADMIN_COMMENTS: '/admin/comments',
     // Dynamic Routes (use a function for consistency)
     // USER_PROFILE: (userId) => `/users/${userId}`,
 };

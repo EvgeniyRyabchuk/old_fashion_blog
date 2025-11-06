@@ -1,0 +1,41 @@
+.content-section.comments-table-section {
+  padding: 20px;
+  
+  .table-wrapper {
+    margin-bottom: 20px;
+  }
+  
+  .go-to-post {
+    margin-bottom: 5px;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    
+    &:hover {
+      color: #0056b3;
+    }
+  }
+  
+  .remove-comment {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    
+    &:hover {
+      background-color: #c82333;
+    }
+    
+    &:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+  }
+  
+  .pagination-wrapper {
+    margin-top: 20px;
+  }
+}
