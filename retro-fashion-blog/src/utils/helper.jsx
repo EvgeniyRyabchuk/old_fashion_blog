@@ -1,6 +1,6 @@
 
-function HtmlContent({ html }) {
-    return <div dangerouslySetInnerHTML={{ __html: html }} />;
+function HtmlContent({ html, ...props }) {
+    return <div {...props} dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 async function urlToFile(url, filename) {

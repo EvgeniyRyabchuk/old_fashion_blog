@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './index.scss';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useFetching} from "@/hooks/useFetching";
 import {fetchPostById} from "@/services/posts";
 import {StandardLoader} from "@components/Loader";
@@ -12,6 +12,8 @@ import AdminPostTopPanel from "@pages/Post/AdminPostTopPanel";
 import StandardWrapperLoader from "@components/Loader/StandardWrapperLoader";
 import {useAuth} from "@/context/AuthContext";
 import PATHS from "@/constants/paths";
+import NotFound from "@pages/NotFound";
+import _404NotFound from "@pages/statuses/http/_404NotFound";
 
 
 const Post = () => {
@@ -20,6 +22,7 @@ const Post = () => {
     const { postId } = useParams();
     const [post, setPost] = useState(null);
     console.log(post || null);
+
     const [fetchPost, isLoading, error] = useFetching(async () => {
         const post = await fetchPostById(postId);
         setPost(post);
@@ -44,7 +47,7 @@ const Post = () => {
                     ]}
                 />
             }
-
+            { error && (<_404NotFound />)}
             {!isLoading && post &&
                 <>
                     { isAuth && user.isAdmin &&
@@ -85,7 +88,13 @@ const Post = () => {
                                 {/* Tags */}
                                 <div className="post-tags" id="postTags">
                                     {post.tags.map(tag => (
-                                        <span key={tag.id} className="tag">#{tag.name}</span>
+                                        <Link
+                                            to={PATHS.POSTS_BY_TAG(tag.id)}
+                                            key={tag.id}
+                                            className="tag"
+                                        >
+                                            #{tag.name}
+                                        </Link>
                                     ))}
                                 </div>
 

@@ -12,7 +12,6 @@ const fetchPostsByIds = async (ids) => {
         .where(firebase.firestore.FieldPath.documentId(), "in", ids)
         .get();
 
-
     const posts = postsSnap.docs.map(p => ({
         id: p.id,
         ...p.data()
@@ -26,20 +25,23 @@ const fetchPostsByIds = async (ids) => {
 }
 
 async function fetchPostById(postId) {
-    const postSnap = await db.collection('posts').doc(postId).get();
-    const post = {
-        id: postSnap.id,
-        ...postSnap.data()
-    }
+        const postSnap = await db.collection('posts').doc(postId).get();
 
-    await loadCategoriesToCollection([post]);
-    await loadTagsToCollection([post]);
-    addPostToHistory(post.id);
+        if (!postSnap.exists) {
+            throw new TypeError(`Post with ID "${postId}" not found`);
+        }
 
-    return post;
+        const post = {
+            id: postSnap.id,
+            ...postSnap.data()
+        }
 
+        await loadCategoriesToCollection([post]);
+        await loadTagsToCollection([post]);
+        addPostToHistory(post.id);
+
+        return post;
 }
-
 
 const fetchLastPosts = async (count = 10) => {
     const snap =
@@ -134,7 +136,6 @@ const createOrUpdatePost = async (post, user) => {
         alert("Error: " + err.message);
     }
 }
-
 
 async function fetchPostsBySearch(term) {
     if(term === "" || !term) {

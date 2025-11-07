@@ -13,20 +13,20 @@ const Td = ({ col, row, index }) => {
         const type = col.type;
 
         if(type === "img")
-            return <img src={content} width={100} height={100} />
+            return <img src={content} width={100} height={100} alt="" />
 
         if(type === "html")
-            return <HtmlContent html={content}/>
+            return <HtmlContent html={content} style={col?.tdContentStyle}/>
 
         if(type === "largeText")
-            return <div className="td-content">{content}</div>
+            return <div className="td-content" style={col?.tdContentStyle}>{content}</div>
 
         if(type === "text" || !type || type === "" || type === "actions")
             return content;
     }
 
     return (
-        <td >
+        <td style={col?.tdStyle} onClick={col?.tdOnClick}>
             {getContent()}
         </td>
     )
@@ -46,7 +46,7 @@ const Table = ({ cols, rows, onRowClick }) => {
                 </thead>
                 <tbody id="postTableBody">
                     { rows && rows.map((row, i) => (
-                        <tr key={row.id} onClick={() => onRowClick(row)}>
+                        <tr key={row.id} onClick={() => onRowClick && onRowClick(row)}>
                             {/*{console.log(row.id)}*/}
                             { cols.map((col, i) => (
                                 <Td key={`${row.id}-${col.key}`} index={i} col={col} row={row} />

@@ -13,10 +13,10 @@ export const useFetching = (callback) =>
         try {
             setIsLoading(true);
             return await callback(...args);
-
         }
         catch (e) {
-            toast.error(`Something went wrong! ${e.message}`, {  autoClose: false });
+            toast.error(`Something went wrong! ${e.message}`, { autoClose: false })
+            console.error(e.message);
             setError(e.message);
         }
         finally {

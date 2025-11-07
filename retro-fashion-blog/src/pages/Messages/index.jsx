@@ -10,11 +10,11 @@ import Pagination from "@components/Pagination";
 import {StandardLoader} from "@components/Loader";
 import Breadcrumb from "@components/Breadcrumb";
 import {toast} from "react-toastify";
-import Remove from "@components/Table/actions/Remove";
 import {deleteContactMessageById} from "@/services/contact";
 import useQueryParams from "@/hooks/useQueryParams";
-import Modal from "@components/Modal";
 import ModalMessage from "@pages/Messages/ModalMessage";
+import TableActions from "@/constants/table-actions";
+import TableAction from "components/Table/TableActions";
 
 const colName = "contact_messages";
 
@@ -31,7 +31,11 @@ const Messages = () => {
         { name: t("messages-t-phone") || "Phone", key: "phone" },
         { name: t("messages-t-status") || "Status", key: "status", type: "html" },
         { name: t("messages-t-createdAt") || "Created At", key: "createdAt" },
-        { name: t("messages-t-actions") || "Actions", key: "actions", type: "actions" },
+        { name: t("messages-t-TableActions") || "Actions",
+            key: "actions",
+            type: "actions",
+            tdOnClick: (e) => e.stopPropagation()
+        },
     ];
 
     const [messages, setMessages] = useState([]);
@@ -92,7 +96,8 @@ const Messages = () => {
         if(!messages || messages.length === 0) return [];
 
         const actionSectionGenerate = (id) => (
-            <Remove
+            <TableAction
+                actions={[TableActions.DELETE]}
                 onDeleteClick={async () => {
                     try {
                         await deleteContactMessageById(id);
@@ -119,10 +124,10 @@ const Messages = () => {
         return messages.map(message => {
             // Create HTML string for status badge to work with 'html' type
             const status = message.status || 'pending';
-            const statusText = t(`status-${status}`) || 
-                              (status === 'in-work' ? 'In Work' : 
+            const statusText = t(`status-${status}`) ||
+                              (status === 'in-work' ? 'In Work' :
                                status.charAt(0).toUpperCase() + status.slice(1));
-            
+
             // Set colors based on new status values
             let bgColor, textColor;
             switch(status) {
@@ -140,7 +145,7 @@ const Messages = () => {
                     textColor = '#856404';
                     break;
             }
-            
+
             const statusHtml = `
                 <span class="status-badge status-${status}" style="
                     padding: 4px 8px;
@@ -188,7 +193,11 @@ const Messages = () => {
             <section className="content-section messages-table-section">
                 <StandardLoader isActive={isMessagesFetchLoading || loading} />
 
-                <Table cols={staticCols} rows={tableRows} onRowClick={onRowClick}  />
+                <Table
+                    cols={staticCols}
+                    rows={tableRows}
+                    onRowClick={onRowClick}
+                />
 
                 <Pagination
                     colName={colName}

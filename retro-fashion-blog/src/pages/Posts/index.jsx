@@ -104,7 +104,12 @@ const Posts = () => {
                     { label: t("posts-title") || "Posts" },
                 ]}
             />
-
+            {
+                search !== "" &&
+                <h2 className="main-content-title" id="mainContentTitle" data-i18n="search_posts_by">
+                    {t("search_posts_by") || "Search Posts by"} "{search}"
+                </h2>
+            }
             {search === "" && (
                 <>
                     <section id="filterSortSection" className={`d-flex`} style={{padding: "10px 30px" }}>
@@ -124,21 +129,36 @@ const Posts = () => {
                         </div>
                     </section>
 
-                    { !isPostFetchLoading && !paginationLoading && (
-                            <FilterDrawer
-                                isOpen={isFilterOpen}
-                                onClose={() => switchFilter() }
-                                reload={reload}
-                                onCommit={(params, isReset = false) => {
-                                    updateSearchParams({sort: orderField, ...params}, isReset);
-                                    reload(1);
-                                    setIsFilterOpen(false);
-                                    // switchFilter();
-                                }}
-                                isActive={!isPostFetchLoading && !paginationLoading}
-                            />
-                        )
-                    }
+                    <FilterDrawer
+                        isOpen={isFilterOpen}
+                        onClose={() => switchFilter() }
+                        reload={reload}
+                        onCommit={(params, isReset = false) => {
+                            updateSearchParams({sort: orderField, ...params}, isReset);
+                            reload(1);
+                            setIsFilterOpen(false);
+                            // switchFilter();
+                        }}
+                        isActive={!isPostFetchLoading && !paginationLoading}
+                        setIsSelectablesLoaded={() => {}}
+                    />
+
+                    {/*{ !isPostFetchLoading && !paginationLoading && (*/}
+                    {/*        <FilterDrawer*/}
+                    {/*            isOpen={isFilterOpen}*/}
+                    {/*            onClose={() => switchFilter() }*/}
+                    {/*            reload={reload}*/}
+                    {/*            onCommit={(params, isReset = false) => {*/}
+                    {/*                updateSearchParams({sort: orderField, ...params}, isReset);*/}
+                    {/*                reload(1);*/}
+                    {/*                setIsFilterOpen(false);*/}
+                    {/*                // switchFilter();*/}
+                    {/*            }}*/}
+                    {/*            isActive={!isPostFetchLoading && !paginationLoading}*/}
+                    {/*            setIsSelectablesLoaded*/}
+                    {/*        />*/}
+                    {/*    )*/}
+                    {/*}*/}
                 </>
             )}
 

@@ -20,7 +20,8 @@ import {useAuth} from "@/context/AuthContext";
 import Spinner from "@components/Loader/Spinner";
 import {toast} from "react-toastify";
 import Breadcrumb from "@components/Breadcrumb";
-import EditRemove from "@components/Table/actions/EditRemove";
+import TableAction from "components/Table/TableActions";
+import TableActions from "@/constants/table-actions";
 
 const colName = "posts";
 
@@ -44,7 +45,7 @@ const CreateEditPost = () => {
         { name: t("create-edit-t-userId") || "Creator User ID",    key: "userId" },
         { name: t("create-edit-t-createdAt") || "Created At",         key: "createdAt" },
         { name: t("create-edit-t-tags") || "Tags",               key: "tags" },
-        { name: t("create-edit-t-actions") || "Actions",            key: "actions", type: "actions" },
+        { name: t("create-edit-t-TableActions") || "Actions",            key: "actions", type: "actions" },
     ];
 
     const [posts, setPosts] = useState([]);
@@ -114,7 +115,8 @@ const CreateEditPost = () => {
         if(!posts && posts.length === 0) return [];
 
         const actionSectionGenerate = (id) => (
-            <EditRemove
+            <TableAction
+                actions={[TableActions.EDIT, TableActions.DELETE]}
                 onEditClick={() => {
                     toggleBodyScroll(false, false, true);
                     setIsSpoilerPostCreateOpen(true);

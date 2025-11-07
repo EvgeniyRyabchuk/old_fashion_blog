@@ -264,6 +264,31 @@ async function seedPostsWithTagsAndComments(count = 5) {
 
   await batch.commit();
   console.log(`✅ Seeded ${count} posts with tags`);
+  
+  // Seed contact messages
+  await seedContactMessages();
+}
+
+async function seedContactMessages(messageCount = 10) {
+  const contactMessagesCol = db.collection("contact_messages");
+
+  const batch = db.batch();
+  
+  for (let i = 0; i < messageCount; i++) {
+    const messageRef = contactMessagesCol.doc();
+    
+    batch.set(messageRef, {
+      createdAt: admin.firestore.Timestamp.fromDate(faker.date.recent({ days: 30 })),
+      email: faker.internet.email(),
+      message: faker.lorem.paragraphs(2),
+      name: faker.person.fullName(),
+      status: "pending",
+      subject: faker.lorem.sentence(),
+    });
+  }
+  
+  await batch.commit();
+  console.log(`✅ Seeded ${messageCount} contact messages`);
 }
 
 seedPostsWithTagsAndComments(postCount)

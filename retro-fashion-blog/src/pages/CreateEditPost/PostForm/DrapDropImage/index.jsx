@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import useImgDrapDrop from "@/hooks/useImgDrapDrop";
 import {useLang} from "@/context/LangContext";
 
-const DragDropImage = ({ setFile, file, url, setUrl, defImage, wrapperClassName}) => {
+const DragDropImage = ({ setFile, file, url, setUrl, defImage, wrapperClassName, placeholderKey = "click-add-cover-image" }) => {
     const { t } = useLang();
 
     const coverImgInputRef = useRef(null);
@@ -71,7 +71,7 @@ const DragDropImage = ({ setFile, file, url, setUrl, defImage, wrapperClassName}
 
                 <div className="placeholder-content" >
                     <span>
-                        {t("click-add-cover-image") || "Click to add Cover image"}
+                        {t(placeholderKey) || (placeholderKey === "click-add-cover-image" ? "Click to add Cover image" : "Click to add Wide Image")}
                     </span>
                 </div>
             </div>

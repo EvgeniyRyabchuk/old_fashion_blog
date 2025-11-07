@@ -303,6 +303,7 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
                                         url={wideImgUrl}
                                         setUrl={setWideImgUrl}
                                         wrapperClassName="post-wide-img-wrapper"
+                                        placeholderKey="click-add-wide-image"
                                     />
                                     {/*Cover Img*/}
                                     <DragDropImage
@@ -311,6 +312,7 @@ const PostForm = ({ onCommit, saveBtnTitle, postId, postToEdit, setPostToEdit  }
                                         url={coverImgUrl}
                                         setUrl={setCoverImgUrl}
                                         wrapperClassName="post-cover-img-wrapper"
+                                        placeholderKey="click-add-cover-image"
                                     />
                                 </div>
 

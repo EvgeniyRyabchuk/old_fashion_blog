@@ -14,7 +14,8 @@ const FilterDrawer = ({
                           onClose,
                           onCommit,
                           searchParams,
-                          isActive
+                          isActive,
+                          setIsSelectablesLoaded
                       }) => {
     console.log("filter drawer ")
 
@@ -91,6 +92,30 @@ const FilterDrawer = ({
                 label = tag.name;
             }
         }
+        console.log(123)
+        // firebase constriction forced action
+
+        chips.forEach((c) => {
+            if (c.type !== type) {
+                const inputs = document.querySelectorAll(`input[data-type="${c.type}"]`);
+                if (inputs.length > 0) {
+                    inputs.forEach((i) => (i.checked = false));
+                }
+            }
+        });
+
+        setChips(chips.filter((c) => c.type === type));
+
+        // chips.forEach((c) => {
+        //     if (c.type !== type) {
+        //         const inputs = document.querySelectorAll(`input[data-type="${c.type}"]`);
+        //         if (inputs && inputs.length > 0)
+        //             inputs.map(i => i.checked = false);
+        //     }
+        // });
+        // setChips(chips.filter((c) => c.type === type));
+        // setChips(chips.filter(c => c.type === type));
+
 
         if (checked) {
             // add chip if not exists
@@ -136,6 +161,7 @@ const FilterDrawer = ({
 
         setCategories(categories);
         setTags(tags);
+        setIsSelectablesLoaded(true);
         // loadFromPostQueryStr();
     })
 

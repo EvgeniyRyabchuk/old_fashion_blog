@@ -10,10 +10,11 @@ import Pagination from "@components/Pagination";
 import {StandardLoader} from "@components/Loader";
 import Breadcrumb from "@components/Breadcrumb";
 import {toast} from "react-toastify";
-import GoToRemove from "@components/Table/actions/GoToRemove";
 import {removeComment} from "@/services/comments";
 import {getAuthUserById} from "@/services/auth";
 import useQueryParams from "@/hooks/useQueryParams";
+import TableAction from "components/Table/TableActions";
+import TableActions from "@/constants/table-actions";
 
 const colName = "comments";
 
@@ -25,9 +26,19 @@ const Comments = () => {
         { name: t("comments-t-id") || "ID", key: "id" },
         { name: t("comments-t-postId") || "Post ID", key: "postId" },
         { name: t("comments-t-author") || "Author", key: "author" },
-        { name: t("comments-t-content") || "Content", key: "content", type: "largeText" },
+        {
+            name: t("comments-t-content") || "Content",
+            key: "content",
+            type: "largeText",
+            tdContentStyle: { maxWidth: "200px" }
+        },
         { name: t("comments-t-createdAt") || "Created At", key: "createdAt" },
-        { name: t("comments-t-actions") || "Actions", key: "actions", type: "actions" },
+        {
+            name: t("comments-t-TableActions") || "Actions",
+            key: "actions",
+            type: "actions",
+            tdStyle: { maxWidth: "140px"}
+        },
     ];
 
     const [comments, setComments] = useState([]);
@@ -119,8 +130,9 @@ const Comments = () => {
         if(!comments || comments.length === 0) return [];
 
         const actionSectionGenerate = (comment) => (
-            <GoToRemove
-                postId={comment.postId}
+            <TableAction
+                actions={[TableActions.GO_TO, TableActions.DELETE]}
+                navigateUrl={`/posts/${comment.postId}`}
                 onDeleteClick={async () => {
                     try {
                         await removeComment(comment.id, true); // isAdmin = true
@@ -166,6 +178,9 @@ const Comments = () => {
             };
         });
     }, [comments]);
+
+
+
 
     return (
         <>

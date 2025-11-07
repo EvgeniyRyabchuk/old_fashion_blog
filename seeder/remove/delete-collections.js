@@ -67,3 +67,4 @@ _delete("posts");
 _delete("categories"); 
 _delete("users"); 
 _delete("admins"); 
+_delete("carousel"); 
